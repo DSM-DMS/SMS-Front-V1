@@ -35,4 +35,7 @@ export const GlobalStyle: GlobalStyleComponent<
     cursor: pointer;
     font: none;
   }
+  * {
+    font-family:"Noto Sans KR";
+  }
 `;
