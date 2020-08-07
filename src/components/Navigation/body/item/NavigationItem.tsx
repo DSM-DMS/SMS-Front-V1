@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FC } from 'react';
 import * as S from './styles';
 import { useDispatch } from 'react-redux';
@@ -13,9 +13,11 @@ interface Props {
 
 const NavigationItem: FC<Props> = ({ src, name, isActive }) => {
   const dispatch = useDispatch();
+
   const onClick = useCallback(() => {
     dispatch(pageMove(name));
   }, [dispatch]);
+
   return (
     <S.Container onClick={onClick} isActive={isActive}>
       <S.Img src={src} />
@@ -24,4 +26,4 @@ const NavigationItem: FC<Props> = ({ src, name, isActive }) => {
   );
 };
 
-export default NavigationItem;
+export default memo(NavigationItem);
