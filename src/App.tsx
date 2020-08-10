@@ -1,7 +1,12 @@
 import React, { FC } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
-import { GlobalStyle, GlobalContainer, GlobalBody } from './GlobalStyle';
+import {
+  GlobalStyle,
+  GlobalContainer,
+  GlobalBody,
+  GlobalInnerBody,
+} from './GlobalStyle';
 import { CirclesRouter } from './routers/index';
 
 const App: FC<{}> = () => {
@@ -12,9 +17,11 @@ const App: FC<{}> = () => {
         <Navigation />
         <GlobalBody>
           <Header />
-          <Switch>
-            <Route exact path="/circles" component={CirclesRouter} />
-          </Switch>
+          <GlobalInnerBody>
+            <Switch>
+              <Route exact path="/circles" component={CirclesRouter} />
+            </Switch>
+          </GlobalInnerBody>
         </GlobalBody>
       </BrowserRouter>
     </GlobalContainer>
@@ -24,8 +31,15 @@ const App: FC<{}> = () => {
 const Header: FC<{}> = () => {
   return (
     <div
-      style={{ height: '100px', backgroundColor: 'red', width: '100%' }}
-    ></div>
+      style={{
+        textAlign: 'right',
+        height: '100px',
+        backgroundColor: 'none',
+        width: '100%',
+      }}
+    >
+      HEADER
+    </div>
   );
 };
 
