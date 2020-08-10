@@ -1,16 +1,31 @@
-import React from 'react';
-import { FC } from 'react';
-import { Switch, BrowserRouter } from 'react-router-dom';
+import React, { FC } from 'react';
+import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
-import { GlobalStyle } from './GlobalStyle';
+import { GlobalStyle, GlobalContainer, GlobalBody } from './GlobalStyle';
+import { CirclesRouter } from './routers/index';
 
 const App: FC<{}> = () => {
   return (
-    <BrowserRouter>
+    <GlobalContainer>
       <GlobalStyle />
-      <Navigation />
-      <Switch></Switch>
-    </BrowserRouter>
+      <BrowserRouter>
+        <Navigation />
+        <GlobalBody>
+          <Header />
+          <Switch>
+            <Route exact path="/circles" component={CirclesRouter} />
+          </Switch>
+        </GlobalBody>
+      </BrowserRouter>
+    </GlobalContainer>
+  );
+};
+
+const Header: FC<{}> = () => {
+  return (
+    <div
+      style={{ height: '100px', backgroundColor: 'red', width: '100%' }}
+    ></div>
   );
 };
 
