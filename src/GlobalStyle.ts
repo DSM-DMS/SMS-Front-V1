@@ -1,4 +1,4 @@
-import {
+import styled, {
   createGlobalStyle,
   GlobalStyleComponent,
   DefaultTheme,
@@ -38,4 +38,13 @@ export const GlobalStyle: GlobalStyleComponent<
   * {
     font-family:"Noto Sans KR";
   }
+`;
+
+export const GlobalContainer = styled.div`
+  display: flex;
+`;
+
+export const GlobalBody = styled.div`
+  flex: 1;
+  background-color: #f6f6f6;
 `;
