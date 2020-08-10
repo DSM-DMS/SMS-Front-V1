@@ -13,3 +13,4 @@ export { default as NavIconNoticeBlue } from './navigation/NavIcon-notice-blue.p
 export { default as NavIconOutsideWhite } from './navigation/NavIcon-outside-white.png';
 export { default as NavIconOutsideBlue } from './navigation/NavIcon-outside-blue.png';
 export { default as IconWhite } from './navigation/Icon-white.png';
+export { default as CloseMenu } from './navigation/CloseMenu.png';
