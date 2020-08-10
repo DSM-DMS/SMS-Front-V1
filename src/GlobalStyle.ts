@@ -47,4 +47,13 @@ export const GlobalContainer = styled.div`
 export const GlobalBody = styled.div`
   flex: 1;
   background-color: #f6f6f6;
+  padding-right: 40px;
+  padding-left: 20px;
+  box-sizing: border-box;
+`;
+
+export const GlobalInnerBody = styled.div`
+  background-color: white;
+  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
 `;
