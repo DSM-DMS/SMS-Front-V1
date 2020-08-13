@@ -25,6 +25,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.min.js',
+    publicPath: '/',
     path: path.resolve(__dirname, 's3-build'),
   },
   plugins: [
