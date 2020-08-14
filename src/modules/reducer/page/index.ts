@@ -1,9 +1,26 @@
-import { PageAction, PAGE_MOVE } from '../../action/page/index';
+import { PageAction, PAGE_MOVE, SUB_PAGE_MOVE } from '../../action/page/index';
 
-const pageReducer = (state: string = '', action: PageAction): string => {
+export interface PageState {
+  mainUrl: string;
+  subUrl: string;
+}
+
+const pageReducer = (
+  state: PageState = { mainUrl: '', subUrl: '' },
+  action: PageAction,
+): PageState => {
   switch (action.type) {
     case PAGE_MOVE: {
-      return action.payload;
+      return {
+        ...state,
+        mainUrl: action.payload,
+      };
+    }
+    case SUB_PAGE_MOVE: {
+      return {
+        ...state,
+        subUrl: action.payload,
+      };
     }
     default: {
       return state;
