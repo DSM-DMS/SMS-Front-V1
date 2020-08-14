@@ -1,22 +1,27 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div<{ isActive: boolean; isClose: boolean }>`
+  box-sizing: border-box;
+  white-space: nowrap;
   position: relative;
   width: 0;
   z-index: 2;
-  transition: 0.3s width;
+  transition: width 0.3s, opacity 0.3s;
+  opacity: 0;
   ${(props) =>
     props.isActive &&
     css`
       border-right: 1px solid #dddddd;
       width: 300px;
       height: 100%;
+      padding: 200px 0 0 30px;
+      opacity: 1;
     `};
 
   ${(props) =>
     props.isClose &&
     css`
-      width: 50px;
+      width: 70px;
     `}
 `;
 
@@ -32,4 +37,10 @@ export const CenterImg = styled.img<{ isClose: boolean }>`
     css`
       transform: translateY(-50%) rotate(180deg);
     `}
+`;
+
+export const HeaderText = styled.div`
+  font-size: 25px;
+  color: black;
+  font-weight: bolder;
 `;
