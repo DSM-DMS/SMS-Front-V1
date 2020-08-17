@@ -42,6 +42,7 @@ export const GlobalStyle: GlobalStyleComponent<
 
 export const GlobalContainer = styled.div`
   display: flex;
+  min-width: 1480px;
 `;
 
 export const GlobalBody = styled.div`
