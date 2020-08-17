@@ -6,14 +6,14 @@ interface UrlObj {
   home: valueType;
   notice: valueType;
   circles: valueType;
-  outside: valueType;
+  outing: valueType;
 }
 
 const urlObj: UrlObj = {
   home: ['홈', ''],
   notice: ['공지', ''],
   circles: ['동아리', '공지사항'],
-  outside: ['외출신청', '유의사항'],
+  outing: ['외출신청', '유의사항'],
 };
 
 interface SubUrlObj {
@@ -37,7 +37,7 @@ const subUrlObj: SubUrlObj = {
 
 export const getNavUrl = (url: string): PageState => {
   const stringArr = url.split('/');
-  const filterStr = stringArr[3] as 'home' | 'notice' | 'circles' | 'outside';
+  const filterStr = stringArr[3] as 'home' | 'notice' | 'circles' | 'outing';
   const urlArr = urlObj[filterStr];
   return {
     mainUrl: urlArr[0],

@@ -11,7 +11,7 @@ import {
   CirclesRouter,
   HomeRouter,
   NoticeRouter,
-  OutsideRouter,
+  OutingRouter,
 } from './routers/index';
 
 const App: FC<{}> = () => {
@@ -27,7 +27,7 @@ const App: FC<{}> = () => {
               <Route path="/home" component={HomeRouter} />
               <Route path="/notice" component={NoticeRouter} />
               <Route path="/circles" component={CirclesRouter} />
-              <Route path="/outside" component={OutsideRouter} />
+              <Route path="/outing" component={OutingRouter} />
               <Redirect to="/home" />
             </Switch>
           </GlobalInnerBody>
