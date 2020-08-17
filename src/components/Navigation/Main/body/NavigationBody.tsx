@@ -11,8 +11,8 @@ import {
   NavIconNoticeBlue,
   NavIconCircleWhite,
   NavIconCircleBlue,
-  NavIconOutsideWhite,
-  NavIconOutsideBlue,
+  NavIconOutingWhite,
+  NavIconOutingBlue,
 } from '../../../../assets';
 import MainSubNavigationItemContainer from '../../Item/MainSubNavigationItemContainer';
 
@@ -53,9 +53,9 @@ export const mainSubArr: MainSubItem[] = [
   {
     name: '외출신청',
     subUrl: '유의사항',
-    route: '/outside/waring',
-    white: NavIconOutsideWhite,
-    blue: NavIconOutsideBlue,
+    route: '/outing/waring',
+    white: NavIconOutingWhite,
+    blue: NavIconOutingBlue,
   },
 ];
 

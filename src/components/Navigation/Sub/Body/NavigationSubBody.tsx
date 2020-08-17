@@ -6,8 +6,8 @@ import {
   NavIconNoticeBlue,
   NavIconCircleWhite,
   NavIconCircleBlue,
-  NavIconOutsideWhite,
-  NavIconOutsideBlue,
+  NavIconOutingWhite,
+  NavIconOutingBlue,
 } from '../../../../assets';
 import { useSelector } from 'react-redux';
 import { stateType } from '../../../../modules/reducer';
@@ -56,8 +56,8 @@ const subNavObj: SubNavObj = {
     },
     {
       name: '외출신청',
-      white: NavIconOutsideWhite,
-      blue: NavIconOutsideBlue,
+      white: NavIconOutingWhite,
+      blue: NavIconOutingBlue,
       route: '/outside/apply',
     },
     {
@@ -78,7 +78,7 @@ const NavigationSubBody: FC<{ page: string }> = ({ page }) => {
           <SubNavigationItemContainer
             isActive={subUrl === name}
             name={name}
-            src={subUrl === route ? blue : white}
+            src={subUrl === name ? blue : white}
             route={route}
             key={index}
           />
