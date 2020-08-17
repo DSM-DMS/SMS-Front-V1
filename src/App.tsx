@@ -21,7 +21,7 @@ const App: FC<{}> = () => {
           <GlobalInnerBody>
             <Switch>
               <Route exact path="/circles" component={CirclesRouter} />
-              <Route path="/" component={MainRouter} />
+              <Route path="/home" component={MainRouter} />
             </Switch>
           </GlobalInnerBody>
         </GlobalBody>
