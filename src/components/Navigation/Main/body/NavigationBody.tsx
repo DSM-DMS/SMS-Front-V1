@@ -1,7 +1,7 @@
 import React from 'react';
 import { FC } from 'react';
 import * as S from './styles';
-import NavigationItem from './item/NavigationItem';
+import MainNavigationItemContainer from '../../Item/MainNavigationItemContainer';
 import { useSelector } from 'react-redux';
 import { stateType } from '../../../../modules/reducer';
 import {
@@ -14,51 +14,72 @@ import {
   NavIconOutsideWhite,
   NavIconOutsideBlue,
 } from '../../../../assets';
+import MainSubNavigationItemContainer from '../../Item/MainSubNavigationItemContainer';
 
-interface NavItem {
+export interface NavItem {
   name: string;
   white: string;
   blue: string;
   route: string;
 }
 
-const navItemArr: NavItem[] = [
+interface MainSubItem extends NavItem {
+  subUrl: string;
+}
+
+export const navItemArr: NavItem[] = [
   {
     name: '홈',
-    route: 'home',
+    route: '/home',
     white: NavIconHomeWhite,
     blue: NavIconHomeBlue,
   },
   {
     name: '공지',
-    route: 'notice',
+    route: '/notice',
     white: NavIconNoticeWhite,
     blue: NavIconNoticeBlue,
   },
+];
+
+export const mainSubArr: MainSubItem[] = [
   {
     name: '동아리',
-    route: 'circles',
+    subUrl: '공지사항',
+    route: '/circles/notice',
     white: NavIconCircleWhite,
     blue: NavIconCircleBlue,
   },
   {
     name: '외출신청',
-    route: '?',
+    subUrl: '유의사항',
+    route: '/outside/waring',
     white: NavIconOutsideWhite,
     blue: NavIconOutsideBlue,
   },
 ];
 
 const NavigationBody: FC = () => {
-  const page = useSelector((state: stateType) => state.page);
+  const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
   return (
     <S.Container>
       {navItemArr.map(({ name, white, blue, route }, index) => (
-        <NavigationItem
-          isActive={name === page}
+        <MainNavigationItemContainer
+          isActive={mainUrl === name}
           name={name}
-          src={page === name ? blue : white}
+          src={mainUrl === name ? blue : white}
           route={route}
+          key={index}
+        />
+      ))}
+
+      {mainSubArr.map(({ name, white, blue, route, subUrl }, index) => (
+        <MainSubNavigationItemContainer
+          isActive={mainUrl === name}
+          name={name}
+          src={mainUrl === name ? blue : white}
+          route={route}
+          subUrl={subUrl}
           key={index}
         />
       ))}
