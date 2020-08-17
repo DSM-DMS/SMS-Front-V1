@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
+
 import Navigation from './components/Navigation/Navigation';
 import {
   GlobalStyle,
@@ -7,7 +8,7 @@ import {
   GlobalBody,
   GlobalInnerBody,
 } from './GlobalStyle';
-import { CirclesRouter } from './routers/index';
+import { CirclesRouter, MainRouter } from './routers';
 
 const App: FC<{}> = () => {
   return (
@@ -20,6 +21,7 @@ const App: FC<{}> = () => {
           <GlobalInnerBody>
             <Switch>
               <Route exact path="/circles" component={CirclesRouter} />
+              <Route path="/" component={MainRouter} />
             </Switch>
           </GlobalInnerBody>
         </GlobalBody>
