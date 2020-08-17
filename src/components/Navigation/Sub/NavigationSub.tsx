@@ -6,11 +6,6 @@ import { CloseMenu } from '../../../assets';
 import { useSelector } from 'react-redux';
 import { stateType } from '../../../modules/reducer';
 
-const pageNameObj = {
-  outside: '외출신청',
-  circles: '동아리',
-};
-
 const NavigationSub: FC<{}> = () => {
   const [isClose, setIsClose] = useState<boolean>(false);
   const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
