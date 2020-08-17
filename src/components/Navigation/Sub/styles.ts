@@ -12,10 +12,11 @@ export const Container = styled.div<{ isActive: boolean; isClose: boolean }>`
     props.isActive &&
     css`
       border-right: 1px solid #dddddd;
-      width: 300px;
+      width: 15vw;
       height: 100%;
       padding: 200px 0 0 30px;
       opacity: 1;
+      min-width: 220px;
     `};
 
   ${(props) =>
