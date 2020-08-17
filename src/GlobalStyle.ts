@@ -55,6 +55,7 @@ export const GlobalBody = styled.div`
 
 export const GlobalInnerBody = styled.div`
   background-color: white;
+  min-width: 635px;
   box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
 `;
