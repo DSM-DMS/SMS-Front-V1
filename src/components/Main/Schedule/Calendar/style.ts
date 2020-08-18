@@ -9,33 +9,30 @@ export const Calendar = styled.div`
 export const CalendarDTemp = styled.div`
   box-sizing: border-box;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-end;
   width: calc(100% / 7);
-  height: calc(100% / 6);
-  font-weight: bold;
-  font-size: 16px;
+  height: 60px;
+  padding: 4px 8px;
+  font-size: 12px;
 `;
 
 export const CalendarDate = styled(CalendarDTemp)`
-  border-radius: 50%;
-  transition: 0.3s;
   color: black;
-  font-size: 20px;
   cursor: pointer;
-  &.prev {
-    color: red;
+  box-sizing: border-box;
+  &.prev,
+  &.next {
+    color: rgba(0, 0, 0, 20%);
     cursor: default;
   }
-  &.between {
-    color: white;
-    background-color: #8d8d8d;
+  &.curr:hover {
+    background-color: #e9e9e9;
   }
   &.selected {
-    background-color: blue;
-    color: white;
+    border: 1.5px solid #5323b2;
   }
-  .cal_line {
+  /* .cal_line {
     height: 20px;
     padding-left: 8px;
     background-color: #c586ff;
@@ -54,14 +51,21 @@ export const CalendarDate = styled(CalendarDTemp)`
   }
   .cal_line_start.cal_line_end {
     border-radius: 4px;
+  } */
+`;
+
+export const CalendarDay = styled(CalendarDTemp)`
+  align-items: flex-end;
+  height: 30px;
+  border-bottom: 2px solid #dddddd;
+  color: rgb(75, 75, 75);
+  font-weight: bold;
+  &.dayOfWeek {
+    border-color: #ff5555;
   }
 `;
 
 export const CalendarDaySpan = styled.span``;
-
-export const CalendarDay = styled(CalendarDTemp)`
-  color: rgb(75, 75, 75);
-`;
 
 export const CalendarSetting = styled.div`
   text-align: center;

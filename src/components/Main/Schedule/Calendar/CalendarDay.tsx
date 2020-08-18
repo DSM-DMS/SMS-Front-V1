@@ -8,7 +8,7 @@ const CalendarDay: React.FC<Props> = () => {
   const setCalendarDay = useMemo(() => {
     const dayArr: string[] = ['일', '월', '화', '수', '목', '금', '토'],
       dayJsx = dayArr.map((id: string) => (
-        <S.CalendarDay className="by" key={id}>
+        <S.CalendarDay className={id === '월' && 'dayOfWeek'} key={id}>
           <S.CalendarDaySpan>{id}</S.CalendarDaySpan>
         </S.CalendarDay>
       ));

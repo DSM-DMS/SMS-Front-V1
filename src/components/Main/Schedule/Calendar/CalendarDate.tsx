@@ -1,4 +1,4 @@
-import React, { ReactElement, useMemo } from 'react';
+import React, { ReactElement, useMemo, MouseEvent } from 'react';
 
 import * as S from './style';
 
@@ -7,24 +7,27 @@ interface Props {
 }
 
 const CalendarDate: React.FC<Props> = ({ today }) => {
+  const fixNum = (num: number): string => (num < 10 ? `0${num}` : String(num));
+
+  const onClickDate = (e: MouseEvent<HTMLDivElement>) => {
+    e.currentTarget.classList.add('selected');
+  };
+
   const getDateHTML = (
     styling: string = '',
     children: number = 0,
     id: string = '',
   ): ReactElement => (
-    <S.CalendarDate key={id} className={styling}>
-      <S.CalendarDaySpan>{children ? children : ''}</S.CalendarDaySpan>
+    <S.CalendarDate key={id} className={styling} onClick={onClickDate}>
+      <S.CalendarDaySpan>{children ? fixNum(children) : ''}</S.CalendarDaySpan>
     </S.CalendarDate>
   );
-
-  const setFixDayCount = (num: number): string =>
-    num < 10 ? `0${num}` : `${num}`;
 
   const setCalendarData = (
     yearCopy: number,
     monthCopy: number,
   ): ReactElement[] => {
-    const fixedMonth: string = setFixDayCount(monthCopy);
+    const fixedMonth: string = fixNum(monthCopy);
     const lastDay: number = new Date(yearCopy, +fixedMonth, 0).getDate();
     const firstDayName: number = new Date(
       yearCopy,
@@ -49,21 +52,18 @@ const CalendarDate: React.FC<Props> = ({ today }) => {
         } else if (i >= 0 && startDayCount <= lastDay) {
           calJSX.push(
             getDateHTML(
-              'month',
+              'curr',
               startDayCount,
-              `${yearCopy}-${fixedMonth}-${setFixDayCount(startDayCount)}`,
+              `${yearCopy}-${fixedMonth}-${fixNum(startDayCount)}`,
             ),
           );
           startDayCount += 1;
         } else {
-          console.log(nextMonDayCount, startDayCount);
           calJSX.push(
             getDateHTML(
-              'month',
+              'next',
               nextMonDayCount,
-              `${yearCopy}-${fixedMonth + 1}-${setFixDayCount(
-                nextMonDayCount,
-              )}`,
+              `${yearCopy}-${fixedMonth + 1}-${fixNum(nextMonDayCount)}`,
             ),
           );
           nextMonDayCount += 1;
