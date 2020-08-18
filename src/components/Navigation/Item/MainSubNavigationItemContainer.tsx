@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, memo } from 'react';
 import NavigationItem from './NavigationItem';
 import { useDispatch } from 'react-redux';
 import { pageMove, subPageMove } from '../../../modules/action/page';
@@ -38,4 +38,4 @@ const MainSubNavigationItemContainer: FC<Props> = ({
   );
 };
 
-export default MainSubNavigationItemContainer;
+export default memo(MainSubNavigationItemContainer);
