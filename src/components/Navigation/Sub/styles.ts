@@ -23,6 +23,7 @@ export const Container = styled.div<{ isActive: boolean; isClose: boolean }>`
     props.isClose &&
     css`
       width: 70px;
+      min-width: 70px;
     `}
 `;
 

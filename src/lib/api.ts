@@ -1,4 +1,5 @@
 import { PageState } from '../modules/reducer/page';
+import { BoardObj } from '../components/Board/Board';
 
 type valueType = [string, string];
 
@@ -38,9 +39,19 @@ const subUrlObj: SubUrlObj = {
 export const getNavUrl = (url: string): PageState => {
   const stringArr = url.split('/');
   const filterStr = stringArr[3] as 'home' | 'notice' | 'circles' | 'outing';
-  const urlArr = urlObj[filterStr];
+  const urlArr = urlObj[filterStr] || ['', ''];
   return {
     mainUrl: urlArr[0],
     subUrl: subUrlObj[stringArr[4]] || urlArr[1],
   };
 };
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+export const CircleBoardFilterFunc = (data: BoardObj[], keyword: string) =>
+  data.filter(
+    ({ title, date }) => title.includes(keyword) || date.includes(keyword),
+  );
+
+export const NoticeFilterFunc = (data: BoardObj[], keyword: string) =>
+  data.filter((item) => item.title.includes(keyword));
+
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
