@@ -4,30 +4,120 @@ import * as S from '../style';
 
 interface Props {}
 
+interface Schedule {
+  schedule: string;
+  startDate: string;
+  endDate: string;
+}
+
+const schedules: Schedule[] = [
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+  {
+    schedule: '스카qweqwe프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+  {
+    schedule: '스카qweqwe프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+  {
+    schedule: '스카프 마무리',
+    startDate: '7.12',
+    endDate: '',
+  },
+  {
+    schedule: '스카프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+  {
+    schedule: '스카qweqwe프',
+    startDate: '7.12',
+    endDate: '7.18',
+  },
+];
+
 const ScheduleDetail: FC<Props> = (): ReactElement => {
   return (
     <S.ScheduleDetail>
-      <header>
-        <h2>세부내용</h2>
-        <p>
-          <span>일정</span>
-          <span>날짜</span>
-        </p>
-      </header>
-      <div>
-        <p>
-          <span>스카프 마무리</span>
-          <span>7.12</span>
-        </p>
-        <p>
-          <span>스카프</span>
-          <span>7.17 - 7.18</span>
-        </p>
-        <p>
-          <span>스카프</span>
-          <span>7.17 - 7.18</span>
-        </p>
-      </div>
+      <S.DetailHeader>
+        <S.DetailTitle>세부내용</S.DetailTitle>
+        <S.DetailHead>
+          <S.DetailHeadData>일정</S.DetailHeadData>
+          <S.DetailHeadData>날짜</S.DetailHeadData>
+        </S.DetailHead>
+      </S.DetailHeader>
+      <S.DetailBody>
+        {schedules.map(({ schedule, startDate, endDate }, i) => (
+          <S.DetailBodyItem key={i}>
+            <S.DetailBodyItemData>{schedule}</S.DetailBodyItemData>
+            <S.DetailBodyItemData>
+              {endDate === '' ? startDate : `${startDate} - ${endDate}`}
+            </S.DetailBodyItemData>
+          </S.DetailBodyItem>
+        ))}
+      </S.DetailBody>
     </S.ScheduleDetail>
   );
 };
