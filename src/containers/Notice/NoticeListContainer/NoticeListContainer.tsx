@@ -2,6 +2,7 @@ import React, { FC, useState, useCallback, ChangeEvent } from 'react';
 import { NavIconNoticeBlue } from '../../../assets';
 import Board from '../../../components/Board/Board';
 import * as S from './styles';
+import { NoticeFilterFunc } from '../../../lib/api';
 
 const date = [
   {
@@ -38,6 +39,7 @@ const NoticeContainer: FC = () => {
         date={false}
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
+        filterFunc={NoticeFilterFunc}
       />
     </S.Container>
   );

@@ -15,6 +15,7 @@ const BoardTableBody: FC<Props> = ({ data }) => {
           title={title}
           viewCount={viewCount}
           date={date}
+          key={id}
         />
       ))}
     </div>

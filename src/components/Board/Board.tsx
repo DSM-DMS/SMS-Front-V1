@@ -13,14 +13,12 @@ export interface BoardObj {
 interface Props {
   title: string;
   imgSrc: string;
-  boardData?: BoardObj[];
+  boardData: BoardObj[];
   date: boolean;
+  filterFunc: (data: BoardObj[], keyword: string) => BoardObj[];
 }
 
-const filterList = (state: BoardObj[], keyword: string) =>
-  state.filter((item) => item.title.includes(keyword));
-
-const Board: FC<Props> = ({ title, imgSrc, boardData, date }) => {
+const Board: FC<Props> = ({ title, imgSrc, boardData, date, filterFunc }) => {
   const [keyword, setKeyword] = useState<string>('');
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -29,8 +27,7 @@ const Board: FC<Props> = ({ title, imgSrc, boardData, date }) => {
   return (
     <S.Container>
       <ListPageHeader title={title} imgSrc={imgSrc} onChange={onChange} />
-      <S.Hr />
-      <BoardTable boardData={filterList(boardData, keyword)} date={date} />
+      <BoardTable boardData={filterFunc(boardData, keyword)} date={date} />
     </S.Container>
   );
 };
