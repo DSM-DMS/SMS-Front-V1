@@ -14,3 +14,4 @@ export { default as NavIconOutingWhite } from './navigation/NavIcon-outing-white
 export { default as NavIconOutingBlue } from './navigation/NavIcon-outing-blue.svg';
 export { default as IconWhite } from './navigation/Icon-white.svg';
 export { default as CloseMenu } from './navigation/CloseMenu.svg';
+export { default as SearchIcon } from './Board/SearchIcon.svg';
