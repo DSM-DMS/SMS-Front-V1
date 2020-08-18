@@ -37,9 +37,6 @@ export const GlobalStyle: GlobalStyleComponent<
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
-  body {
-    line-height: 1;
-  }
   ol, ul {
     list-style: none;
   }
@@ -66,7 +63,7 @@ export const GlobalStyle: GlobalStyleComponent<
     font: none;
   }
   * {
-    font-family:"Noto Sans KR";
+    font-family:"Noto Sans KR" !important;
   }
 `;
 

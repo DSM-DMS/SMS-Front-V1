@@ -52,19 +52,19 @@ const subNavObj: SubNavObj = {
       name: '유의사항',
       white: NavIconNoticeWhite,
       blue: NavIconNoticeBlue,
-      route: '/outside/waring',
+      route: '/outing/waring',
     },
     {
       name: '외출신청',
       white: NavIconOutingWhite,
       blue: NavIconOutingBlue,
-      route: '/outside/apply',
+      route: '/outing/apply',
     },
     {
       name: '내 외출신청 내역',
       white: '',
       blue: '',
-      route: '/outside/history',
+      route: '/outing/history',
     },
   ],
 };
