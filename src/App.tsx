@@ -12,7 +12,7 @@ import {
   HomeRouter,
   NoticeRouter,
   OutingRouter,
-} from './routers/index';
+} from './routers';
 
 const App: FC<{}> = () => {
   return (
