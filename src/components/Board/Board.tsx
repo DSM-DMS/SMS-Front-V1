@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useCallback, ChangeEvent } from 'react';
 import * as S from './styles';
-import PageHeader from '../PageHeader/PageHeader';
 import BoardTable from './Table/Table';
+import { ListPageHeader } from '../../components';
 
 export interface BoardObj {
   id: number;
@@ -17,12 +17,20 @@ interface Props {
   date: boolean;
 }
 
+const filterList = (state: BoardObj[], keyword: string) =>
+  state.filter((item) => item.title.includes(keyword));
+
 const Board: FC<Props> = ({ title, imgSrc, boardData, date }) => {
+  const [keyword, setKeyword] = useState<string>('');
+
+  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  }, []);
   return (
     <S.Container>
-      <PageHeader title={title} imgSrc={imgSrc} />
+      <ListPageHeader title={title} imgSrc={imgSrc} onChange={onChange} />
       <S.Hr />
-      <BoardTable boardData={boardData} date={date} />
+      <BoardTable boardData={filterList(boardData, keyword)} date={date} />
     </S.Container>
   );
 };
