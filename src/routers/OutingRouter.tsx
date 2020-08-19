@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { GlobalInnerBody } from '../GlobalStyle';
 
 import {
   WarningContainer,
