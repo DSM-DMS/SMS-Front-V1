@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useCallback } from 'react';
+import React, { FC, useEffect, useCallback, memo } from 'react';
 import { BoardObj } from '../../../Board';
 import * as S from './styles';
 import { useHistory } from 'react-router';
@@ -18,4 +18,4 @@ const BoardTableItem: FC<BoardObj> = ({ id, title, viewCount, date }) => {
   );
 };
 
-export default BoardTableItem;
+export default memo(BoardTableItem);
