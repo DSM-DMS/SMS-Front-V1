@@ -6,7 +6,6 @@ export const Container = styled.div<{ isActive: boolean }>`
   margin-top: 10px;
   padding: 13px 15px;
   box-sizing: border-box;
-  cursor: pointer;
   align-items: center;
 
   ${(props) =>

@@ -16,14 +16,16 @@ export const Container = styled.div<{ isActive: boolean; isClose: boolean }>`
       height: 100%;
       padding: 200px 0 0 30px;
       opacity: 1;
-      min-width: 220px;
     `};
 
   ${(props) =>
     props.isClose &&
     css`
-      width: 70px;
-      min-width: 70px;
+      min-width: 0px;
+      width: 55px;
+      padding-top: 200px;
+      padding-left: 0;
+      text-align: center;
     `}
 `;
 

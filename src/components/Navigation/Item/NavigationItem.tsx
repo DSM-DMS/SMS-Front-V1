@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React from 'react';
 import { FC } from 'react';
 import * as S from './styles';
 
