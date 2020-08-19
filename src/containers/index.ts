@@ -6,3 +6,4 @@ export { default as CircleNoticeDetailContainer } from './Circle/Notice/Detail/C
 export { default as WarningContainer } from './Outing/WarningContainer';
 export { default as ApplyContainer } from './Outing/ApplyContainer';
 export { default as HistoryContainer } from './Outing/HistoryContainer';
+export { default as CircleWantedContainer } from './Circle/Wanted/CircleWantedContainer';
