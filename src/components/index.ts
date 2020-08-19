@@ -4,3 +4,6 @@ export { default as DetailPageHeader } from './PageHeader/DetailPageHeader';
 export { default as ListPageHeader } from './PageHeader/ListPageHeader';
 export { default as NoticeDetail } from './Notice/NoticeDetail/NoticeDetail';
 export { default as Main } from './Main/Main';
+export { default as OutingWarning } from './Outing/Warning/Warning';
+export { default as OutingApply } from './Outing/Apply/Apply';
+export { default as OutingHistory } from './Outing/History/History';
