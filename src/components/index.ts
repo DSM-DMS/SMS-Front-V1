@@ -9,3 +9,4 @@ export { default as OutingWarning } from './Outing/Warning/Warning';
 export { default as OutingApply } from './Outing/Apply/Apply';
 export { default as OutingHistory } from './Outing/History/History';
 export { default as Category } from './Category/Category';
+export { default as Header } from './Header/Header';
