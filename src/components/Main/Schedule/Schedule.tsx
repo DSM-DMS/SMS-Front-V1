@@ -4,10 +4,13 @@ import * as S from '../style';
 import Calendar from './Calendar/Calendar';
 
 import { arrow } from '../../../assets/main';
+import { Schedule as ISchedule } from '../../../containers/Main/MainContainer';
 
-interface Props {}
+interface Props {
+  schedules: ISchedule[];
+}
 
-const Schedule: FC<Props> = (): ReactElement => {
+const Schedule: FC<Props> = ({ schedules }): ReactElement => {
   const [today, setToday] = useState<Date>(new Date());
 
   const onClickNextMonth = () => {
@@ -26,7 +29,7 @@ const Schedule: FC<Props> = (): ReactElement => {
       <S.ScheduleHeader>
         <S.MainContentTitleCommon>학사일정</S.MainContentTitleCommon>
         <S.ScheduleHeaderDateSetting>
-          <span>{getLocalDate(today)}</span>
+          <span>{getLocalDate(new Date())}</span>
           <S.ScheduleArrow
             src={arrow}
             alt="prevMonth"
@@ -41,7 +44,7 @@ const Schedule: FC<Props> = (): ReactElement => {
           />
         </S.ScheduleHeaderDateSetting>
       </S.ScheduleHeader>
-      <Calendar today={today} />
+      <Calendar today={today} schedules={schedules} />
     </S.Schedule>
   );
 };
