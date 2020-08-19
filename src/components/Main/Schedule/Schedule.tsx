@@ -3,7 +3,7 @@ import React, { FC, ReactElement, useState } from 'react';
 import * as S from '../style';
 import Calendar from './Calendar/Calendar';
 
-import { arrow } from '../../../assets/main';
+import { arrow } from '../../../assets/Main';
 import { Schedule as ISchedule } from '../../../containers/Main/MainContainer';
 
 interface Props {

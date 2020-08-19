@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 
 import * as S from '../style';
 
-import { bike, outingHistory, warning } from '../../../assets/main';
+import { bike, outingHistory, warning } from '../../../assets/Main';
 
 interface Props {}
 
