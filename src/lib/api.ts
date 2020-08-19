@@ -1,5 +1,7 @@
 import { PageState } from '../modules/reducer/page';
 import { BoardObj } from '../components/Board/Board';
+import { useSelector } from 'react-redux';
+import { stateType } from '../modules/reducer';
 
 type valueType = [string, string];
 
@@ -54,4 +56,7 @@ export const CircleBoardFilterFunc = (data: BoardObj[], keyword: string) =>
 export const NoticeFilterFunc = (data: BoardObj[], keyword: string) =>
   data.filter((item) => item.title.includes(keyword));
 
-//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+
+export type CallbackFunc = (state: stateType) => any;
+export const customSelector = (callback: CallbackFunc) => useSelector(callback);

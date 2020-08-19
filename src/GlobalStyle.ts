@@ -82,16 +82,6 @@ export const GlobalBody = styled.div`
 `;
 
 export const GlobalInnerBody = styled.div`
-  background-color: white;
   min-width: 635px;
-  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  ${(): any => {
-    const splitAddr = window.location.href.split('http://localhost:3000/');
-    if (splitAddr.length === 2 && splitAddr[splitAddr.length - 1] === 'home')
-      return css`
-        background-color: #f6f6f6;
-        box-shadow: unset;
-      `;
-  }}
 `;

@@ -10,7 +10,6 @@ export const subPageMove = (payload: string) => ({
   type: SUB_PAGE_MOVE,
   payload,
 });
-
 export type PageAction =
   | ReturnType<typeof pageMove>
   | ReturnType<typeof subPageMove>;

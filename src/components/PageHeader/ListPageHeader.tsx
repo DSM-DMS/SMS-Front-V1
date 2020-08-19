@@ -1,7 +1,8 @@
-import React, { FC, ChangeEvent } from 'react';
+import React, { FC, ChangeEvent, memo } from 'react';
 import * as S from './styles';
 import { Hr } from '../Board/styles';
 import { SearchIcon } from '../../assets';
+import PageHeader from './PageHeader';
 
 interface Props {
   imgSrc: string;
@@ -10,13 +11,11 @@ interface Props {
 }
 
 const ListPageHeader: FC<Props> = ({ imgSrc, title, onChange }) => {
+  console.log('랜더링');
   return (
     <>
       <S.Wrap>
-        <S.Container type={S.LIST}>
-          <S.Img src={imgSrc} type={S.LIST} />
-          <S.Title type={S.LIST}>{title}</S.Title>
-        </S.Container>
+        <PageHeader imgSrc={imgSrc} title={title} type={S.LIST} />
         <S.InputWrap>
           <S.InputBackground>
             <img src={SearchIcon} />
@@ -32,4 +31,4 @@ const ListPageHeader: FC<Props> = ({ imgSrc, title, onChange }) => {
   );
 };
 
-export default ListPageHeader;
+export default memo(ListPageHeader);
