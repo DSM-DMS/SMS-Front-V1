@@ -10,6 +10,7 @@ export const Container = styled.div`
   flex-direction: column;
   color: white;
   min-width: 220px;
+  min-height: 600px;
 `;
 
 export const BackgroundImgWrap = styled.div`

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FC } from 'react';
 import * as S from './styles';
 
@@ -21,4 +21,4 @@ const NavigationItem: FC<Props> = ({ src, name, isActive, onClick }) => {
   );
 };
 
-export default NavigationItem;
+export default memo(NavigationItem);

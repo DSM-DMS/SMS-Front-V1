@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import * as S from './styles';
 
 interface Props {
@@ -16,4 +16,4 @@ const BoardTableHeader: FC<Props> = ({ date }) => {
   );
 };
 
-export default BoardTableHeader;
+export default memo(BoardTableHeader);
