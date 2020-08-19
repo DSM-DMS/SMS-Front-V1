@@ -19,6 +19,7 @@ export const CalendarDTemp = styled.div`
 
 export const CalendarDate = styled(CalendarDTemp)`
   height: 60px;
+  border: 1.5px solid transparent;
   box-sizing: border-box;
   color: rgba(0, 0, 0, 20%);
   cursor: default;
