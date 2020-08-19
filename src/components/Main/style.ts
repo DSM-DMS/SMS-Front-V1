@@ -111,6 +111,7 @@ export const DetailTitle = styled(MainContentTitleCommon)``;
 export const DetailHead = styled.p`
   margin-top: 16px;
   font-size: 12px;
+  font-weight: bold;
 `;
 
 export const DetailHeadData = styled.span`
@@ -139,7 +140,7 @@ export const DetailBody = styled.div`
 `;
 
 export const DetailBodyItem = styled.p`
-  padding: 12px 8px;
+  padding: 8px 4px 8px 12px;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   font-size: 12px;

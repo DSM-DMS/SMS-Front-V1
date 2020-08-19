@@ -6,17 +6,21 @@ import ScheduleDetail from './ScheduleDetail/ScheduleDetail';
 import Outing from './Outing/Outing';
 import Timetable from './Timetable/Timetable';
 
-interface Props {}
+import { Schedule as ISchedule } from '../../containers/Main/MainContainer';
 
-const Main: FC<Props> = (): ReactElement => {
+interface Props {
+  schedules: ISchedule[];
+}
+
+const Main: FC<Props> = ({ schedules }): ReactElement => {
   return (
     <S.MainWrap>
       <S.MainLeft>
-        <Schedule />
+        <Schedule schedules={schedules} />
         <Timetable />
       </S.MainLeft>
       <S.MainRight>
-        <ScheduleDetail />
+        <ScheduleDetail schedules={schedules} />
         <Outing />
       </S.MainRight>
     </S.MainWrap>

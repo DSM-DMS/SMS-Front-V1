@@ -2,103 +2,13 @@ import React, { FC, ReactElement } from 'react';
 
 import * as S from '../style';
 
-interface Props {}
+import { Schedule } from '../../../containers/Main/MainContainer';
 
-interface Schedule {
-  schedule: string;
-  startDate: string;
-  endDate: string;
+interface Props {
+  schedules: Schedule[];
 }
 
-const schedules: Schedule[] = [
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-  {
-    schedule: '스카qweqwe프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-  {
-    schedule: '스카qweqwe프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-  {
-    schedule: '스카프 마무리',
-    startDate: '7.12',
-    endDate: '',
-  },
-  {
-    schedule: '스카프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-  {
-    schedule: '스카qweqwe프',
-    startDate: '7.12',
-    endDate: '7.18',
-  },
-];
-
-const ScheduleDetail: FC<Props> = (): ReactElement => {
+const ScheduleDetail: FC<Props> = ({ schedules }): ReactElement => {
   return (
     <S.ScheduleDetail>
       <S.DetailHeader>
@@ -113,7 +23,7 @@ const ScheduleDetail: FC<Props> = (): ReactElement => {
           <S.DetailBodyItem key={i}>
             <S.DetailBodyItemData>{schedule}</S.DetailBodyItemData>
             <S.DetailBodyItemData>
-              {endDate === '' ? startDate : `${startDate} - ${endDate}`}
+              {startDate === endDate ? startDate : `${startDate} - ${endDate}`}
             </S.DetailBodyItemData>
           </S.DetailBodyItem>
         ))}
