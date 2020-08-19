@@ -36,7 +36,7 @@ const NoticeContainer: FC = () => {
     <S.Container>
       <Board
         boardData={date}
-        date={false}
+        date={true}
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
         filterFunc={NoticeFilterFunc}

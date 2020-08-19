@@ -21,9 +21,10 @@ const MainNavigationItemContainer: FC<Props> = ({
   const dispatch = useDispatch();
 
   const onClick = useCallback(() => {
+    if (isActive) return;
     dispatch(pageMove(name));
     history.push(route);
-  }, [dispatch]);
+  }, [dispatch, isActive]);
 
   return (
     <NavigationItem

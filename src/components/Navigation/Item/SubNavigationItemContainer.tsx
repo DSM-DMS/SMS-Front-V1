@@ -1,8 +1,9 @@
 import React, { FC, useCallback, memo } from 'react';
 import NavigationItem from './NavigationItem';
 import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { subPageMove } from '../../../modules/action/page';
+import { changeSubNavOpen } from '../../../modules/action/subNav';
 
 interface Props {
   name: string;
@@ -21,9 +22,14 @@ const SubNavigationItemContainer: FC<Props> = ({
   const dispatch = useDispatch();
 
   const onClick = useCallback(() => {
+    if (isActive) {
+      dispatch(changeSubNavOpen());
+      return;
+    }
+
     dispatch(subPageMove(name));
     history.push(route);
-  }, [dispatch, route]);
+  }, [dispatch, isActive]);
 
   return (
     <NavigationItem

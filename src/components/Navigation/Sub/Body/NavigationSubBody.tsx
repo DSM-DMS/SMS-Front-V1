@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import * as S from './styles';
 import SubNavigationItemContainer from '../../Item/SubNavigationItemContainer';
 import { useSelector } from 'react-redux';

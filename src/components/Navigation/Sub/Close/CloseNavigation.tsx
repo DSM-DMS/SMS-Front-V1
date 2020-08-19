@@ -5,6 +5,7 @@ import { subNavObj, PageType } from '../../../../lib/static';
 import * as S from './styles';
 import { subPageMove } from '../../../../modules/action/page';
 import { useHistory } from 'react-router';
+import { changeSubNavOpen } from '../../../../modules/action/subNav';
 
 const CloseNavigatin: FC = () => {
   const { mainUrl, subUrl } = useSelector((store: stateType) => store.page);
@@ -18,6 +19,7 @@ const CloseNavigatin: FC = () => {
         <S.ImgWrap
           isActive={name === subUrl}
           onClick={() => {
+            if (name === subUrl) dispatch(changeSubNavOpen());
             dispatch(subPageMove(name));
             history.push(route);
           }}
