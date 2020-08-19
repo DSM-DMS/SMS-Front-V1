@@ -23,14 +23,12 @@ const App: FC<{}> = () => {
         <Navigation />
         <GlobalBody>
           <Header />
-          <GlobalInnerBody>
-            <Switch>
-              <Route path="/home" component={MainRouter} />
-              <Route path="/notice" component={NoticeRouter} />
-              <Route path="/circles" component={CirclesRouter} />
-              <Route path="/outing" component={OutingRouter} />
-            </Switch>
-          </GlobalInnerBody>
+          <Switch>
+            <Route path="/home" component={MainRouter} />
+            <Route path="/notice" component={NoticeRouter} />
+            <Route path="/circles" component={CirclesRouter} />
+            <Route path="/outing" component={OutingRouter} />
+          </Switch>
         </GlobalBody>
       </BrowserRouter>
     </GlobalContainer>
