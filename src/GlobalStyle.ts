@@ -84,4 +84,6 @@ export const GlobalBody = styled.div`
 export const GlobalInnerBody = styled.div`
   min-width: 635px;
   border-radius: 5px;
+  background: white;
+  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.25);
 `;
