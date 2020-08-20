@@ -10,7 +10,8 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  transition: transform 0.7s, background-color 1.5s;
+  transition: transform 0.5s, background-color 1s;
+  white-space: pre-wrap;
 
   img {
     position: absolute;
@@ -19,12 +20,12 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: 0.5s opacity;
+    transition: 0.7s opacity;
   }
 
   &:hover {
     & > img {
-      opacity: 0.2;
+      opacity: 0.13;
     }
     transform: translateY(-20px);
     color: white;
@@ -45,12 +46,13 @@ export const CircleName = styled.div`
 `;
 
 export const CircleIntroduce = styled.div`
+  height: 40px;
   margin-top: 1px;
 `;
 
 export const WantedJob = styled.div`
   font-size: 14px;
-  margin-top: 30px;
+  margin-top: 25px;
 `;
 
 export const Footer = styled.div`

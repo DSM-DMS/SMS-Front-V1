@@ -1,5 +1,5 @@
-import React, { FC, ChangeEvent } from 'react';
-import { SearchInput } from '../default';
+import React, { FC, ChangeEvent, memo } from 'react';
+import { SearchInput } from '../../default';
 import * as S from './styles';
 
 interface Props {
@@ -22,4 +22,4 @@ const Category: FC<Props> = ({ onChange, placeHolder }) => {
   );
 };
 
-export default Category;
+export default memo(Category);
