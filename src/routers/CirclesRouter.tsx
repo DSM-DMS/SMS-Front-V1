@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import {
-  CircleNoticeContainer,
+  CircleNoticeListContainer,
   CircleNoticeDetailContainer,
   CircleWantedContainer,
 } from '../containers';
@@ -16,7 +16,11 @@ const CirclesRouter: FC<{}> = () => {
           path="/circles/notice/:id"
           component={CircleNoticeDetailContainer}
         />
-        <Route exact path="/circles/notice" component={CircleNoticeContainer} />
+        <Route
+          exact
+          path="/circles/notice"
+          component={CircleNoticeListContainer}
+        />
         <Route exact path="/circles/wanted" component={CircleWantedContainer} />
         <Route exact path="/circles/all" render={() => <div>all</div>} />
       </Switch>
