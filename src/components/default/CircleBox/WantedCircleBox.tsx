@@ -6,7 +6,7 @@ export interface WantedCircleBoxData {
   description: string;
   field: string;
   job: string[];
-  whare: string;
+  where: string;
   grade: string;
   imgSrc: string;
   date?: string;
@@ -32,7 +32,7 @@ const WantedCircleBox: FC<WantedCircleBoxData> = ({
   description,
   job,
   field,
-  whare,
+  where,
   grade,
   date,
   imgSrc,
@@ -53,7 +53,7 @@ const WantedCircleBox: FC<WantedCircleBoxData> = ({
       </div>
       <S.Footer>
         <div>
-          <div>{whare}</div>
+          <div>{where}</div>
           <div>모집대상 : {grade}</div>
         </div>
         <div>{dateParse(date)}</div>

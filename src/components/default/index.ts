@@ -5,3 +5,4 @@ export { default as DetailPageHeader } from './PageHeader/DetailPageHeader';
 export { default as ListPageHeader } from './PageHeader/ListPageHeader';
 export { default as PageHeader } from './PageHeader/PageHeader';
 export { default as Category } from './Category/Category';
+export { default as AllCircleBox } from './CircleBox/AllCircleBox';

@@ -29,7 +29,7 @@ const SubNavigationItemContainer: FC<Props> = ({
 
     dispatch(subPageMove(name));
     history.push(route);
-  }, [dispatch, isActive]);
+  }, [dispatch, route]);
 
   return (
     <NavigationItem

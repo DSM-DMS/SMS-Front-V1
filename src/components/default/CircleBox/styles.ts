@@ -72,3 +72,7 @@ export const Date = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const Field = styled.div`
+  font-weight: bold;
+`;

@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { GlobalInnerBody } from '../GlobalStyle';
 import {
   CircleNoticeListContainer,
   CircleNoticeDetailContainer,
   CircleWantedContainer,
+  CircleAllContainer,
 } from '../containers';
-import { GlobalInnerBody } from '../GlobalStyle';
 
 const CirclesRouter: FC<{}> = () => {
   return (
@@ -22,7 +23,7 @@ const CirclesRouter: FC<{}> = () => {
           component={CircleNoticeListContainer}
         />
         <Route exact path="/circles/wanted" component={CircleWantedContainer} />
-        <Route exact path="/circles/all" render={() => <div>all</div>} />
+        <Route exact path="/circles/all" component={CircleAllContainer} />
       </Switch>
     </GlobalInnerBody>
   );
