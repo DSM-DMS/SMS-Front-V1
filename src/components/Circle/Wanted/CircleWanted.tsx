@@ -11,7 +11,7 @@ interface Props {
   data: WantedCircleBoxData[];
 }
 
-const Wanted: FC<Props> = ({ data }) => {
+const CircleWanted: FC<Props> = ({ data }) => {
   const [keyword, setkeyword] = useState<string>('');
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -32,13 +32,13 @@ const Wanted: FC<Props> = ({ data }) => {
       />
       <S.BoxWrap>
         {CircleBoxFilterFunc(data, keyword).map(
-          ({ name, field, description, job, whare, grade, date, imgSrc }) => (
+          ({ name, field, description, job, where, grade, date, imgSrc }) => (
             <WantedCircleBox
               field={field}
               name={name}
               description={description}
               job={job}
-              whare={whare}
+              where={where}
               grade={grade}
               date={date}
               imgSrc={imgSrc}
@@ -50,4 +50,4 @@ const Wanted: FC<Props> = ({ data }) => {
   );
 };
 
-export default Wanted;
+export default CircleWanted;

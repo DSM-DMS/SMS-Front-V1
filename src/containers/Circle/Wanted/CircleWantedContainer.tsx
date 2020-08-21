@@ -8,7 +8,7 @@ const data: WantedCircleBoxData[] = [
     field: '임베디드',
     description: '임베디드를 함께 공부할 열정있는 학생을 모집합니다!',
     job: ['PCB 디자이너 1', 'Hardware 엔지니어 2'],
-    whare: '세미나실 4-4',
+    where: '세미나실 4-4',
     grade: '2학년',
     imgSrc:
       'https://img.insight.co.kr/static/2018/09/12/700/z7n04ul8ig3y27w6l6ok.jpg',
@@ -19,7 +19,7 @@ const data: WantedCircleBoxData[] = [
     field: '임베디드',
     description: '저희는 동아리1 입니다!',
     job: ['동아리1 일원', '동아리2 일원'],
-    whare: '세미나실 1-1',
+    where: '세미나실 1-1',
     grade: '1학년',
     imgSrc:
       'https://img.insight.co.kr/static/2018/09/12/700/z7n04ul8ig3y27w6l6ok.jpg',
@@ -29,7 +29,7 @@ const data: WantedCircleBoxData[] = [
     field: '임베디드',
     description: '저희는 동아리2 입니다!',
     job: ['동아리2 일원', '동아리2 일원'],
-    whare: '세미나실 2-2',
+    where: '세미나실 2-2',
     grade: '2학년',
     imgSrc:
       'https://img.insight.co.kr/static/2018/09/12/700/z7n04ul8ig3y27w6l6ok.jpg',
