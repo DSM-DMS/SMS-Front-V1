@@ -1,9 +1,8 @@
-import React, { FC, ChangeEvent, memo, useEffect, useState } from 'react';
+import React, { FC, ChangeEvent, memo } from 'react';
 import * as S from './styles';
 import { Hr } from '../Board/styles';
-import { SearchIcon } from '../../assets';
 import PageHeader from './PageHeader';
-import { SearchInput } from '../default';
+import { SearchInput } from '../../default';
 
 interface Props {
   imgSrc: string;

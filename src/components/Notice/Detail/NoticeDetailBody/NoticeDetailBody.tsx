@@ -5,7 +5,7 @@ interface Props {
   content: string;
 }
 
-const NoticeDetail: FC<Props> = ({ content }) => {
+const NoticeDetailBody: FC<Props> = ({ content }) => {
   return (
     <S.Container>
       <S.Hr />
@@ -14,4 +14,4 @@ const NoticeDetail: FC<Props> = ({ content }) => {
   );
 };
 
-export default NoticeDetail;
+export default NoticeDetailBody;

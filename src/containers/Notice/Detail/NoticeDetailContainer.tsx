@@ -1,8 +1,9 @@
-import React, { FC, useEffect } from 'react';
-import * as S from './styles';
-import { DetailPageHeader } from '../../../components';
-import { NavIconNoticeBlue } from '../../../assets';
+import React, { FC } from 'react';
 import { NoticeDetail } from '../../../components';
+
+export interface BoardDetail {
+  content: string;
+}
 
 const data = {
   content: `- **동아리 메인**
@@ -24,18 +25,8 @@ const data = {
   수정 완료 버튼을 누르면 동아리 정보가 수정되며 동아리 어드민 페이지로 이동한다.`,
 };
 
-const NoticeDetailContainer: FC = () => {
-  return (
-    <S.Container>
-      <DetailPageHeader
-        title="공지사항"
-        imgSrc={NavIconNoticeBlue}
-        href="/notice"
-      />
-      <S.P>대덕사이버고등학교에 다니고 새인생이 시작됐다~</S.P>
-      <NoticeDetail content={data.content} />
-    </S.Container>
-  );
+const NoticePageContainer: FC = () => {
+  return <NoticeDetail data={data} />;
 };
 
-export default NoticeDetailContainer;
+export default NoticePageContainer;

@@ -1,7 +1,8 @@
 import { PageState } from '../modules/reducer/page';
-import { BoardObj } from '../components/Board/Board';
 import { useSelector } from 'react-redux';
 import { stateType } from '../modules/reducer';
+import { BoardObj } from '../components/default/Board/Board';
+import { WantedCircleBoxData } from '../components/default/CircleBox/WantedCircleBox';
 
 type valueType = [string, string];
 
@@ -60,3 +61,10 @@ export const NoticeFilterFunc = (data: BoardObj[], keyword: string) =>
 
 export type CallbackFunc = (state: stateType) => any;
 export const customSelector = (callback: CallbackFunc) => useSelector(callback);
+
+export const CircleBoxFilterFunc = (
+  date: WantedCircleBoxData[],
+  keyword: string,
+): WantedCircleBoxData[] => {
+  return date.filter((item) => item.name.includes(keyword));
+};
