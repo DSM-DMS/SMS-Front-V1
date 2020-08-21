@@ -1,51 +1,43 @@
-import React, { FC, useState, useCallback, ChangeEvent } from 'react';
-import * as S from './styles';
-import { PageHeader, Category } from '../../../components';
-import { NavIconCircleBlue } from '../../../assets';
-import { Hr } from '../../../components/Board/styles';
-import CircleBox from '../../../components/CircleBox/CircleBox';
+import React, { FC } from 'react';
+import { WantedCircleBoxData } from '../../../components/default/CircleBox/WantedCircleBox';
+import { CircleWanted } from '../../../components';
 
-const WantedContainer: FC = () => {
-  const [keyword, setkeyword] = useState<string>('');
+const data: WantedCircleBoxData[] = [
+  {
+    name: 'VCC',
+    field: '임베디드',
+    description: '임베디드를 함께 공부할 열정있는 학생을 모집합니다!',
+    job: ['PCB 디자이너 1', 'Hardware 엔지니어 2'],
+    where: '세미나실 4-4',
+    grade: '2학년',
+    imgSrc:
+      'https://img.insight.co.kr/static/2018/09/12/700/z7n04ul8ig3y27w6l6ok.jpg',
+    date: '2020-07-25 ~ 08-01',
+  },
+  {
+    name: '동아리1',
+    field: '임베디드',
+    description: '저희는 동아리1 입니다!',
+    job: ['동아리1 일원', '동아리2 일원'],
+    where: '세미나실 1-1',
+    grade: '1학년',
+    imgSrc:
+      'https://img.insight.co.kr/static/2018/09/12/700/z7n04ul8ig3y27w6l6ok.jpg',
+  },
+  {
+    name: '동아리2',
+    field: '임베디드',
+    description: '저희는 동아리2 입니다!',
+    job: ['동아리2 일원', '동아리2 일원'],
+    where: '세미나실 2-2',
+    grade: '2학년',
+    imgSrc:
+      'https://img.insight.co.kr/static/2018/09/12/700/z7n04ul8ig3y27w6l6ok.jpg',
+  },
+];
 
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setkeyword(e.target.value);
-  }, []);
-
-  return (
-    <S.Container>
-      <PageHeader
-        title="동아리 모집"
-        imgSrc={NavIconCircleBlue}
-        type="DETAIL"
-      />
-      <Hr />
-      <Category
-        onChange={onChange}
-        placeHolder="검색할 동아리 이름을 입력하세요"
-      />
-      <S.BoxWrap>
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-        <CircleBox />
-      </S.BoxWrap>
-    </S.Container>
-  );
+const CircleWantedContainer: FC = () => {
+  return <CircleWanted data={data} />;
 };
 
-export default WantedContainer;
+export default CircleWantedContainer;

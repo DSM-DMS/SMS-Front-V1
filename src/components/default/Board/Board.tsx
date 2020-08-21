@@ -1,7 +1,7 @@
 import React, { FC, useState, useCallback, ChangeEvent } from 'react';
 import * as S from './styles';
 import BoardTable from './Table/Table';
-import { ListPageHeader } from '../../components';
+import { ListPageHeader } from '../index';
 
 export interface BoardObj {
   id: number;

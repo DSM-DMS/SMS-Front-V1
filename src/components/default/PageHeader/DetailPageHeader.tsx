@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, memo } from 'react';
 import * as S from './styles';
 import { Hr } from '../Board/styles';
 import PageHeader from './PageHeader';
@@ -21,4 +21,4 @@ const DetailPageHeader: FC<Props> = ({ imgSrc, title, href }) => {
   );
 };
 
-export default DetailPageHeader;
+export default memo(DetailPageHeader);

@@ -1,10 +1,8 @@
 import React, { FC } from 'react';
-import * as S from './styles';
-import { Board } from '../../../../components';
-import { NavIconNoticeBlue } from '../../../../assets';
-import { CircleBoardFilterFunc } from '../../../../lib/api';
+import { CircleNoticeList } from '../../../../components';
+import { BoardObj } from '../../../../components/default/Board/Board';
 
-const date = [
+const data: BoardObj[] = [
   {
     id: 1,
     title: '제목1',
@@ -31,18 +29,8 @@ const date = [
   },
 ];
 
-const CircleNoticeContainer: FC = () => {
-  return (
-    <S.Container>
-      <Board
-        boardData={date}
-        title="동아리 공지사항"
-        imgSrc={NavIconNoticeBlue}
-        date={false}
-        filterFunc={CircleBoardFilterFunc}
-      />
-    </S.Container>
-  );
+const CircleNoticeListContainer: FC = () => {
+  return <CircleNoticeList data={data} />;
 };
 
-export default CircleNoticeContainer;
+export default CircleNoticeListContainer;
