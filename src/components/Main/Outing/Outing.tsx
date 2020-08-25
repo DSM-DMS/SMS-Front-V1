@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 
 import * as S from '../style';
 
-import { bike, outingHistory, warning } from '../../../assets/Main';
+import { MainBike, MainHistory, MainWarning } from '../../../assets';
 
 interface Props {}
 
@@ -12,15 +12,15 @@ const Outing: FC<Props> = (): ReactElement => {
       <S.OutingTitle>외출신청</S.OutingTitle>
       <div>
         <S.OutingItem>
-          <img src={warning} alt="warning" title="warning" />
+          <img src={MainWarning} alt="warning" title="warning" />
           <S.OutingItemDesc>유의사항</S.OutingItemDesc>
         </S.OutingItem>
         <S.OutingItem>
-          <img src={bike} alt="bike" title="bike" />
+          <img src={MainBike} alt="bike" title="bike" />
           <S.OutingItemDesc>외출사항</S.OutingItemDesc>
         </S.OutingItem>
         <S.OutingItem>
-          <img src={outingHistory} alt="outingHistory" title="outingHistory" />
+          <img src={MainHistory} alt="history" title="history" />
           <S.OutingItemDesc>내 외출신청 내역</S.OutingItemDesc>
         </S.OutingItem>
       </div>

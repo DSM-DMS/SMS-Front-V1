@@ -2,7 +2,7 @@ import React, { FC, ReactElement } from 'react';
 
 import * as S from '../style';
 
-import { warningRedBase } from '../../../assets/Outing';
+import { OutingWarningRedBase } from '../../../assets';
 
 interface Props {}
 
@@ -49,7 +49,7 @@ const Warning: FC<Props> = (): ReactElement => {
   return (
     <S.WarningWarp>
       <S.WarningHead>
-        <img src={warningRedBase} alt="warning" title="warning" />
+        <img src={OutingWarningRedBase} alt="warning" title="warning" />
         <S.WarningTitle>유의사항</S.WarningTitle>
       </S.WarningHead>
       <div>
