@@ -3,7 +3,7 @@ import React, { FC, ReactElement, useState } from 'react';
 import * as S from '../style';
 import Calendar from './Calendar/Calendar';
 
-import { arrow } from '../../../assets/Main';
+import { MainArrow } from '../../../assets';
 import { Schedule as ISchedule } from '../../../containers/Main/MainContainer';
 
 interface Props {
@@ -31,13 +31,13 @@ const Schedule: FC<Props> = ({ schedules }): ReactElement => {
         <S.ScheduleHeaderDateSetting>
           <span>{getLocalDate(new Date())}</span>
           <S.ScheduleArrow
-            src={arrow}
+            src={MainArrow}
             alt="prevMonth"
             title="prevMonth"
             onClick={onClickPrevMonth}
           />
           <S.ScheduleArrow
-            src={arrow}
+            src={MainArrow}
             alt="nextMonth"
             title="nextMonth"
             onClick={onClickNextMonth}
