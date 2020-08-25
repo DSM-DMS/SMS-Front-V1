@@ -5,7 +5,7 @@ export { default as Main } from './Main/Main';
 export { default as OutingWarning } from './Outing/Warning/Warning';
 export { default as OutingApply } from './Outing/Apply/Apply';
 export { default as OutingHistory } from './Outing/History/History';
-export { default as Category } from './Category/Category';
+export { default as Category } from './default/Category/Category';
 export { default as Header } from './Header/Header';
 export { default as CircleNoticeDetail } from './Circle/Notice/Detail/CircleNoticeDetail';
 export { default as CircleNoticeList } from './Circle/Notice/List/CircleNoticeList';
