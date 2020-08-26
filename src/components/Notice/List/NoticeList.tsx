@@ -2,7 +2,7 @@ import React, { FC, useState, useCallback, ChangeEvent } from 'react';
 import { NavIconNoticeBlue } from '../../../assets';
 import { Board } from '../../default';
 import * as S from './styles';
-import { NoticeFilterFunc } from '../../../lib/api';
+import { makeFilterFunc } from '../../../lib/api';
 import { BoardObj } from '../../default/Board/Board';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const NoticeContainer: FC<Props> = ({ data }) => {
+  const noticeFilterFunc = makeFilterFunc<BoardObj>(data, (data) => data.title);
   return (
     <S.Container>
       <Board
@@ -17,7 +18,7 @@ const NoticeContainer: FC<Props> = ({ data }) => {
         date={true}
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
-        filterFunc={NoticeFilterFunc}
+        filterFunc={noticeFilterFunc}
       />
     </S.Container>
   );

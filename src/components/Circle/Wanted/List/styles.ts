@@ -10,7 +10,7 @@ export const BoxWrap = styled.div`
   padding-top: 20px;
   max-height: 620px;
   overflow-y: scroll;
-  width: 1135px;
+  min-width: 960px;
   margin: 0 auto;
   margin-top: 20px;
 

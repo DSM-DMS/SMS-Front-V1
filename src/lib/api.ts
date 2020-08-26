@@ -54,17 +54,18 @@ export const CircleBoardFilterFunc = (data: BoardObj[], keyword: string) =>
     ({ title, date }) => title.includes(keyword) || date.includes(keyword),
   );
 
-export const NoticeFilterFunc = (data: BoardObj[], keyword: string) =>
-  data.filter((item) => item.title.includes(keyword));
+// export const NoticeFilterFunc = (data: BoardObj[], keyword: string) =>
+// data.filter((item) => item.title.includes(keyword));
 
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
 
 export type CallbackFunc = (state: stateType) => any;
 export const customSelector = (callback: CallbackFunc) => useSelector(callback);
 
-export const CircleBoxFilterFunc = (
-  date: WantedCircleBoxData[],
-  keyword: string,
-): WantedCircleBoxData[] => {
-  return date.filter((item) => item.name.includes(keyword));
+export const makeFilterFunc = <T>(
+  data: T[],
+  callback: (data: T) => string,
+): ((keyword: string) => T[]) => {
+  return (keyword: string) =>
+    data.filter((item) => callback(item).includes(keyword));
 };
