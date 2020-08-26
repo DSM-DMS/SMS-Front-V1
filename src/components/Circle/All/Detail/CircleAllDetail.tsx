@@ -9,16 +9,18 @@ interface Props {
 
 const CircleAllDetail: FC<Props> = ({ data }) => {
   const {
+    name,
     introduce,
     leader,
     tags,
     imgSrc,
     projects,
+    where,
     peoples: { three, two, one },
   } = data;
   return (
     <S.Container>
-      <S.Title>VCC</S.Title>
+      <S.Title>{name}</S.Title>
       <Hr />
       <S.Flex>
         <S.Left>
@@ -31,7 +33,7 @@ const CircleAllDetail: FC<Props> = ({ data }) => {
           </S.Color>
           <br />
           <S.Color>
-            <p style={{ whiteSpace: 'pre-wrap' }}>
+            <p>
               <b>&gt; 인원</b>
               <p>- 부장 {leader}</p>
               <p>- 3학년 {three.join(', ')}</p>
@@ -48,7 +50,7 @@ const CircleAllDetail: FC<Props> = ({ data }) => {
             <p>
               <b>&gt; 동아리실</b>
             </p>
-            -{data.where}
+            -{where}
           </S.Color>
         </S.Left>
         <S.Right>
