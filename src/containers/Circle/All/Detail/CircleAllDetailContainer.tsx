@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { CircleAllDetail } from '../../../../components';
 
 export interface CircleAllDetail {
+  name:string;
   introduce: string;
   leader: string;
   where: string;
@@ -16,6 +17,7 @@ export interface CircleAllDetail {
 }
 
 const data: CircleAllDetail = {
+  name:"VCC"
   introduce: `VCC는 임베디드 소프트웨어에 연구동아리 입니다. 주로 AVR을 통한 마이크로프로세서 제어에 대해 공부하고,
     이를 활용한 프로젝트를 함께 진행합니다.
    `,
