@@ -15,7 +15,7 @@ interface Props {
   imgSrc: string;
   boardData: BoardObj[];
   date: boolean;
-  filterFunc: (data: BoardObj[], keyword: string) => BoardObj[];
+  filterFunc: (keyword: string) => BoardObj[];
 }
 
 const Board: FC<Props> = ({ title, imgSrc, boardData, date, filterFunc }) => {
@@ -27,7 +27,7 @@ const Board: FC<Props> = ({ title, imgSrc, boardData, date, filterFunc }) => {
   return (
     <S.Container>
       <ListPageHeader title={title} imgSrc={imgSrc} onChange={onChange} />
-      <BoardTable boardData={filterFunc(boardData, keyword)} date={date} />
+      <BoardTable boardData={filterFunc(keyword)} date={date} />
     </S.Container>
   );
 };
