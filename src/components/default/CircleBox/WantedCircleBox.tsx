@@ -1,5 +1,6 @@
-import React, { FC, ReactElement, memo } from 'react';
+import React, { FC, ReactElement, memo, useCallback } from 'react';
 import * as S from './styles';
+import { useHistory } from 'react-router';
 
 export interface WantedCircleBoxData {
   name: string;
