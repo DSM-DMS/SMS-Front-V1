@@ -4,8 +4,9 @@ import { GlobalInnerBody } from '../GlobalStyle';
 import {
   CircleNoticeListContainer,
   CircleNoticeDetailContainer,
-  CircleWantedContainer,
+  CircleWantedListContainer,
   CircleAllContainer,
+  CircleAllDetailContainer,
 } from '../containers';
 
 const CirclesRouter: FC<{}> = () => {
@@ -22,7 +23,16 @@ const CirclesRouter: FC<{}> = () => {
           path="/circles/notice"
           component={CircleNoticeListContainer}
         />
-        <Route exact path="/circles/wanted" component={CircleWantedContainer} />
+        <Route
+          exact
+          path="/circles/wanted"
+          component={CircleWantedListContainer}
+        />
+        <Route
+          exact
+          path="/circles/wanted/:id"
+          component={CircleAllDetailContainer}
+        />
         <Route exact path="/circles/all" component={CircleAllContainer} />
       </Switch>
     </GlobalInnerBody>
