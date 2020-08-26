@@ -22,7 +22,7 @@ const SubNavigationItemContainer: FC<Props> = ({
   const dispatch = useDispatch();
 
   const onClick = useCallback(() => {
-    if (isActive) {
+    if (history.location.pathname === route) {
       dispatch(changeSubNavOpen());
       return;
     }
