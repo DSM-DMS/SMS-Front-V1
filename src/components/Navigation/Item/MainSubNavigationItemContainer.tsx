@@ -23,12 +23,12 @@ const MainSubNavigationItemContainer: FC<Props> = ({
   const history = useHistory();
 
   const onClick = useCallback(() => {
-    if (isActive) return;
+    if (history.location.pathname === route) return;
 
     dispatch(pageMove(name));
     dispatch(subPageMove(subUrl));
     history.push(route);
-  }, [dispatch, isActive]);
+  }, [dispatch, route]);
 
   return (
     <NavigationItem

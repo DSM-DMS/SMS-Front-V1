@@ -9,5 +9,6 @@ export { default as Category } from './default/Category/Category';
 export { default as Header } from './Header/Header';
 export { default as CircleNoticeDetail } from './Circle/Notice/Detail/CircleNoticeDetail';
 export { default as CircleNoticeList } from './Circle/Notice/List/CircleNoticeList';
-export { default as CircleWanted } from './Circle/Wanted/CircleWanted';
+export { default as CircleWantedList } from './Circle/Wanted/List/CircleWantedList';
+export { default as CircleAllDetail } from './Circle/All/Detail/CircleAllDetail';
 export { default as CircleAll } from './Circle/All/CircleAll';

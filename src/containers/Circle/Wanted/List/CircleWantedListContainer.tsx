@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { WantedCircleBoxData } from '../../../components/default/CircleBox/WantedCircleBox';
-import { CircleWanted } from '../../../components';
+import { WantedCircleBoxData } from '../../../../components/default/CircleBox/WantedCircleBox';
+import { CircleWantedList } from '../../../../components';
 
 const data: WantedCircleBoxData[] = [
   {
@@ -37,7 +37,7 @@ const data: WantedCircleBoxData[] = [
 ];
 
 const CircleWantedContainer: FC = () => {
-  return <CircleWanted data={data} />;
+  return <CircleWantedList data={data} />;
 };
 
 export default CircleWantedContainer;

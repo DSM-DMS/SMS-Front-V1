@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import * as S from './styles';
 import { Board } from '../../../../components/default';
 import { NavIconNoticeBlue } from '../../../../assets';
-import { CircleBoardFilterFunc } from '../../../../lib/api';
+import { makeFilterFunc } from '../../../../lib/api';
 import { BoardObj } from '../../../default/Board/Board';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
 }
 
 const CircleNoticeList: FC<Props> = ({ data }) => {
+  const noticeFilerFunc = makeFilterFunc<BoardObj>(data, (data) => data.title);
   return (
     <S.Container>
       <Board
@@ -17,7 +18,7 @@ const CircleNoticeList: FC<Props> = ({ data }) => {
         title="동아리 공지사항"
         imgSrc={NavIconNoticeBlue}
         date={false}
-        filterFunc={CircleBoardFilterFunc}
+        filterFunc={noticeFilerFunc}
       />
     </S.Container>
   );

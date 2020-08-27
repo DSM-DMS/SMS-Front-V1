@@ -21,7 +21,8 @@ const MainNavigationItemContainer: FC<Props> = ({
   const dispatch = useDispatch();
 
   const onClick = useCallback(() => {
-    if (isActive) return;
+    if (history.location.pathname === route) return;
+
     dispatch(pageMove(name));
     history.push(route);
   }, [dispatch, isActive]);

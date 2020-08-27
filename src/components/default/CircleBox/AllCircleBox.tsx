@@ -1,5 +1,6 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import * as S from './styles';
+import { useHistory } from 'react-router';
 
 export interface AllCircleBoxType {
   name: string;
@@ -18,8 +19,13 @@ const AllCircleBox: FC<AllCircleBoxType> = ({
   leader,
   imgSrc,
 }) => {
+  const history = useHistory();
+  const onClick = useCallback(() => {
+    history.push(`/circles/wanted/${name}`);
+  }, []);
+
   return (
-    <S.Container>
+    <S.Container onClick={onClick}>
       <div>
         <S.Header>
           <S.CircleName>{name}</S.CircleName>
