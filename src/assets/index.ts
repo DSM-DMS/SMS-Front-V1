@@ -31,3 +31,5 @@ export { default as OutingWarning } from './Outing/warning.svg';
 export { default as OutingWarningRedBase } from './Outing/warningRedBase.svg';
 export { default as OutingBike } from './Outing/bike.svg';
 export { default as OutingDown } from './Outing/dropDownButton.svg';
+export { default as OutingHistory } from './Outing/history.svg';
+export { default as OutingTriangle } from './Outing/triangle.svg';
