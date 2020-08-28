@@ -7,6 +7,7 @@ import {
   CircleWantedListContainer,
   CircleAllContainer,
   CircleAllDetailContainer,
+  CircleWantedDetailContainer,
 } from '../containers';
 
 const CirclesRouter: FC<{}> = () => {
@@ -31,6 +32,11 @@ const CirclesRouter: FC<{}> = () => {
         <Route
           exact
           path="/circles/wanted/:id"
+          component={CircleWantedDetailContainer}
+        />
+        <Route
+          exact
+          path="/circles/all/:id"
           component={CircleAllDetailContainer}
         />
         <Route exact path="/circles/all" component={CircleAllContainer} />
