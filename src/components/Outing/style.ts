@@ -415,3 +415,94 @@ export const FormSubmitModalSubmitButton = styled(FormButtonCommon)`
 `;
 
 export const HistoryWarp = styled(OutingCommonWrap)``;
+
+export const HistoryHead = styled.header`
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f7f6ff;
+`;
+
+export const HistoryTitle = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+export const HistoryContent = styled.div``;
+
+export const HistoryCardWarp = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+`;
+
+export const HistoryCard = styled.div`
+  padding: 16px;
+  border: 1px solid #dddddd;
+`;
+
+export const CardTop = styled.div``;
+
+export const CardUser = styled.p`
+  position: relative;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  padding-right: 32px;
+  border-right: 2px solid #242424;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    background-image: url(${OutingWarningRedBase});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 16px;
+    height: 16px;
+  }
+`;
+
+export const CardPlace = styled.p`
+  font-size: 12px;
+`;
+
+export const CardBottom = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+`;
+
+export const CardDate = styled.span`
+  font-size: 6px;
+`;
+
+export const CardTime = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  font-weight: bold;
+`;
+
+export const HistoryPageSelector = styled.ul`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const HistoryPageSelectorItem = styled.li`
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  border: 1px solid #d3d3d3;
+  margin: 0 8px;
+  text-align: center;
+  cursor: pointer;
+`;
+
+export const HistoryPageSelectorItemTri = styled.img`
+  width: 50%;
+  height: 50%;
+`;
