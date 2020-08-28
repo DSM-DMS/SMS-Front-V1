@@ -38,8 +38,13 @@ const WantedCircleBox: FC<WantedCircleBoxData> = ({
   date,
   imgSrc,
 }) => {
+  const history = useHistory();
+  const handleClick = useCallback(() => {
+    history.push(`/circles/wanted/${name}`);
+  }, []);
+
   return (
-    <S.Container>
+    <S.Container onClick={handleClick}>
       <div>
         <S.Header>
           <S.CircleName>{name}</S.CircleName>
