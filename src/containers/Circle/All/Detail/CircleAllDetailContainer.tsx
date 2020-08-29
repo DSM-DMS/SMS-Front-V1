@@ -35,7 +35,18 @@ const data: CircleAllDetail = {
 };
 
 const CircleAllDetailContainer: FC = () => {
-  return <CircleAllDetail data={data} />;
+  return (
+    <CircleAllDetail
+      name={data.name}
+      introduce={data.introduce}
+      leader={data.leader}
+      where={data.where}
+      imgSrc={data.imgSrc}
+      tags={data.tags}
+      projects={data.projects}
+      peoples={data.peoples}
+    />
+  );
 };
 
 export default CircleAllDetailContainer;

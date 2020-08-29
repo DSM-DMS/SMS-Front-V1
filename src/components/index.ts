@@ -10,5 +10,6 @@ export { default as Header } from './Header/Header';
 export { default as CircleNoticeDetail } from './Circle/Notice/Detail/CircleNoticeDetail';
 export { default as CircleNoticeList } from './Circle/Notice/List/CircleNoticeList';
 export { default as CircleWantedList } from './Circle/Wanted/List/CircleWantedList';
-export { default as CircleAllDetail } from './Circle/All/Detail/CircleAllDetail';
+export { default as CircleAllDetail } from './default/Info/CircleAllDetail';
+export { default as CircleWantedDetail } from './default/Info/CircleWantedDetail';
 export { default as CircleAll } from './Circle/All/CircleAll';

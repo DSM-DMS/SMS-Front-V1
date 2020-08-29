@@ -21,7 +21,7 @@ const AllCircleBox: FC<AllCircleBoxType> = ({
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.push(`/circles/wanted/${name}`);
+    history.push(`/circles/all/${name}`);
   }, []);
 
   return (
