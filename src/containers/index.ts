@@ -9,3 +9,4 @@ export { default as HistoryContainer } from './Outing/HistoryContainer';
 export { default as CircleWantedListContainer } from './Circle/Wanted/List/CircleWantedListContainer';
 export { default as CircleAllDetailContainer } from './Circle/All/Detail/CircleAllDetailContainer';
 export { default as CircleAllContainer } from './Circle/All/CircleAllContainer';
+export { default as CircleWantedDetailContainer } from './Circle/Wanted/Detail/CircleWantedDetailContainer';
