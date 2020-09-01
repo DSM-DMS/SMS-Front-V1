@@ -35,3 +35,4 @@ export { default as FacebookIcon } from './Circle/facebookIcon.svg';
 export { default as ReComment } from './Circle/reComment.svg';
 export { default as OutingHistory } from './Outing/history.svg';
 export { default as OutingTriangle } from './Outing/triangle.svg';
+export { default as OutingClose } from './Outing/close.svg';
