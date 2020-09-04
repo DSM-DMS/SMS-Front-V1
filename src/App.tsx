@@ -1,13 +1,8 @@
 import React, { FC } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
-import {
-  GlobalStyle,
-  GlobalContainer,
-  GlobalBody,
-  GlobalInnerBody,
-} from './GlobalStyle';
-
+import { GlobalStyle, GlobalContainer, GlobalBody } from './GlobalStyle';
+import { Header } from './components';
 import {
   CirclesRouter,
   NoticeRouter,
@@ -32,21 +27,6 @@ const App: FC<{}> = () => {
         </GlobalBody>
       </BrowserRouter>
     </GlobalContainer>
-  );
-};
-
-const Header: FC<{}> = () => {
-  return (
-    <div
-      style={{
-        textAlign: 'right',
-        height: '100px',
-        backgroundColor: 'none',
-        width: '100%',
-      }}
-    >
-      HEADER
-    </div>
   );
 };
 

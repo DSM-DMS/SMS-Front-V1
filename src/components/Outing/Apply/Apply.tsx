@@ -2,11 +2,11 @@ import React, { FC, ReactElement, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as S from '../style';
-import ApplyHead from './ApplyHead';
-import ApplyDate from './ApplyDate';
-import ApplyTime from './ApplyTime';
-import ApplyPlace from './ApplyPlace';
-import ApplyReason from './ApplyReason';
+import ApplyHead from './Head';
+import ApplyDate from './Date';
+import ApplyTime from './Time';
+import ApplyPlace from './Place';
+import ApplyReason from './Reason';
 
 interface Props {}
 

@@ -1,7 +1,7 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import TextareaAutosize from 'react-autosize-textarea';
 
-import { OutingWarningRedBase } from '../../assets';
+import { OutingWarningRedBase, OutingBalloons } from '../../assets';
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -433,15 +433,25 @@ export const HistoryCardWarp = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 24px;
+  margin-bottom: 60px;
 `;
 
 export const HistoryCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 20%;
+  height: 160px;
   padding: 16px;
   border: 1px solid #dddddd;
+  cursor: pointer;
 `;
 
 export const CardTop = styled.div``;
+
+interface Emergency {
+  emergency: boolean;
+}
 
 export const CardUser = styled.p`
   position: relative;
@@ -456,7 +466,12 @@ export const CardUser = styled.p`
     top: 50%;
     right: 8px;
     transform: translateY(-50%);
-    background-image: url(${OutingWarningRedBase});
+    ${({ emergency }: Emergency) =>
+      emergency
+        ? css`
+            background-image: url(${OutingWarningRedBase});
+          `
+        : ''};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -505,4 +520,139 @@ export const HistoryPageSelectorItem = styled.li`
 export const HistoryPageSelectorItemTri = styled.img`
   width: 50%;
   height: 50%;
+`;
+
+export const HistoryModalWrap = styled.div``;
+
+export const ModalBack = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% - 0.5px), calc(-50% - 0.5px));
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 10%);
+  z-index: 10;
+  cursor: default;
+`;
+
+export const ModalContentWrap = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(calc(-50% - 0.5px), calc(-50% - 0.5px));
+  z-index: 11;
+  border-radius: 8px;
+  background-color: white;
+  cursor: default;
+  background-image: url(${OutingBalloons});
+  background-repeat: no-repeat;
+  background-position: 90% 5%;
+`;
+
+export const ModalApply = styled.div`
+  position: relative;
+  width: 600px;
+  padding: 40px 80px;
+`;
+
+export const ModalTitle = styled.h3`
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dddddd;
+`;
+
+export const ModalList = styled.ul``;
+
+export const ModalItem = styled.li`
+  margin: 10px 0;
+  font-size: 14px;
+`;
+
+export const ModalCategory = styled.span`
+  width: 100px;
+  margin-right: 8px;
+  font-weight: bold;
+`;
+
+export const ModalClose = styled.img`
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  cursor: pointer;
+`;
+
+export const ModalApplyOnlineCard = styled.button`
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  background-color: #10012e;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
+    5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
+`;
+
+export const ModalOnlineCard = styled.div`
+  position: relative;
+  width: 450px;
+  border-radius: 8px;
+  background-color: white;
+  background-image: none;
+`;
+
+export const OnlineCardTitle = styled.h3`
+  padding: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #dddddd;
+`;
+
+export const OnlineCardContentWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+`;
+
+export const OnlineCardUserPictureWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+`;
+
+export const OnlineCardUserPicture = styled.img`
+  height: 160px;
+  width: 140px;
+  padding: 8px;
+  border: 2px dashed #242424;
+`;
+
+export const OnlineCardInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+`;
+
+export const OnlineCardMoveApply = styled.button`
+  background-color: #10012e;
+  color: white;
+  font-size: 16px;
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
+    5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
+`;
+
+export const OnlineCardDate = styled.p`
+  text-align: right;
 `;
