@@ -12,10 +12,9 @@ interface Props {
 
 const CircleAll: FC<Props> = ({ data }) => {
   const [keyword, setkeyword] = useState<string>('');
-  const filterFunc = makeFilterFunc<AllCircleBoxType>(
-    data,
-    (data) => data.name,
-  );
+  const filterFunc = makeFilterFunc<AllCircleBoxType>(data, (data) => [
+    data.name,
+  ]);
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setkeyword(e.target.value);
   }, []);

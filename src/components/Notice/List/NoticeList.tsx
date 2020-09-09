@@ -5,17 +5,21 @@ import * as S from './styles';
 import { makeFilterFunc } from '../../../lib/api';
 import { BoardObj } from '../../default/Board/Board';
 
+const names = ['번호', '제목', '날짜', '조회수'];
+
 interface Props {
   data: BoardObj[];
 }
 
 const NoticeContainer: FC<Props> = ({ data }) => {
-  const noticeFilterFunc = makeFilterFunc<BoardObj>(data, (data) => data.title);
+  const noticeFilterFunc = makeFilterFunc<BoardObj>(data, (data) => [
+    data.title,
+  ]);
   return (
     <S.Container>
       <Board
+        names={names}
         boardData={data}
-        date={true}
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
         filterFunc={noticeFilterFunc}
