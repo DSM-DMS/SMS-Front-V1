@@ -5,6 +5,8 @@ import NavigationSub from './Sub/NavigationSub';
 import { useDispatch } from 'react-redux';
 import { pageMove, subPageMove } from '../../modules/action/page';
 import { getNavUrl } from '../../lib/api';
+import { Route, Switch } from 'react-router';
+import { adminRouter, userRoute, subNavRouter } from '../../lib/static';
 
 const Navigation: FC = () => {
   const dispatch = useDispatch();
@@ -16,8 +18,20 @@ const Navigation: FC = () => {
 
   return (
     <S.Container>
-      <NavigationMain />
-      <NavigationSub />
+      <Switch>
+        <Route
+          path="/admin"
+          render={() => {
+            return <NavigationMain routeData={adminRouter} />;
+          }}
+        />
+        <Route
+          render={() => {
+            return <NavigationMain routeData={userRoute} />;
+          }}
+        />
+      </Switch>
+      <NavigationSub subRouteData={subNavRouter} />
     </S.Container>
   );
 };
