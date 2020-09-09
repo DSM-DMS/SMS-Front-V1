@@ -13,10 +13,9 @@ interface Props {
 
 const CircleWanted: FC<Props> = ({ data }) => {
   const [keyword, setkeyword] = useState<string>('');
-  const filterFunc = makeFilterFunc<WantedCircleBoxData>(
-    data,
-    (data) => data.name,
-  );
+  const filterFunc = makeFilterFunc<WantedCircleBoxData>(data, (data) => [
+    data.name,
+  ]);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setkeyword(e.target.value);

@@ -61,8 +61,15 @@ export const customSelector = (callback: CallbackFunc) => useSelector(callback);
 
 export const makeFilterFunc = <T>(
   data: T[],
-  callback: (data: T) => string,
+  callback: (data: T) => string[],
 ): ((keyword: string) => T[]) => {
+  data.forEach((item) => {
+    console.log(callback(item));
+  });
   return (keyword: string) =>
-    data.filter((item) => callback(item).includes(keyword));
+    data.filter((item) => {
+      return callback(item)
+        .map((str) => str.includes(keyword))
+        .includes(true);
+    });
 };
