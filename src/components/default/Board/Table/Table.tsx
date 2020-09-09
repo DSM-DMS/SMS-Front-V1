@@ -5,13 +5,13 @@ import { BoardObj } from '../Board';
 
 interface Props {
   boardData: BoardObj[];
-  date: boolean;
+  names: string[];
 }
 
-const BoardTable: FC<Props> = ({ boardData, date }) => {
+const BoardTable: FC<Props> = ({ boardData, names }) => {
   return (
     <>
-      <BoardTableHeader date={date} />
+      <BoardTableHeader names={names} />
       <BoardTableBody data={boardData} />
     </>
   );
