@@ -23,4 +23,7 @@ export const Container = styled.div`
   div:nth-child(4) {
     flex: 1;
   }
+  div:nth-child(5) {
+    flex: 1;
+  }
 `;
