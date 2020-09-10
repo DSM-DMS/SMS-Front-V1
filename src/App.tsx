@@ -8,6 +8,7 @@ import {
   NoticeRouter,
   OutingRouter,
   MainRouter,
+  AdminRouter,
 } from './routers';
 
 const App: FC<{}> = () => {
@@ -23,6 +24,7 @@ const App: FC<{}> = () => {
             <Route path="/notice" component={NoticeRouter} />
             <Route path="/circles" component={CirclesRouter} />
             <Route path="/outing" component={OutingRouter} />
+            <Route path="/admin" component={AdminRouter} />
           </Switch>
         </GlobalBody>
       </BrowserRouter>
