@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
 import { CircleAll } from '../../../components';
 import { AllCircleBoxType } from '../../../components/default/CircleBox/AllCircleBox';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updatePosterList } from '../../../modules/action/poster';
 
 const data: AllCircleBoxType[] = [
   {
@@ -141,7 +144,11 @@ const data: AllCircleBoxType[] = [
 ];
 
 const CircleAllContainer: FC = () => {
-  return <CircleAll data={data} />;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updatePosterList(data));
+  }, []);
+  return <CircleAll />;
 };
 
 export default CircleAllContainer;

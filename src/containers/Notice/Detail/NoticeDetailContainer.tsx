@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
 import { NoticeDetail } from '../../../components';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateBoardDetail } from '../../../modules/action/board';
 
 export interface BoardDetail {
   content: string;
@@ -26,7 +29,12 @@ const data = {
 };
 
 const NoticePageContainer: FC = () => {
-  return <NoticeDetail data={data} />;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateBoardDetail(data));
+  }, []);
+  return <NoticeDetail />;
 };
 
 export default NoticePageContainer;
