@@ -9,11 +9,12 @@ interface Props {
 const BoardTableBody: FC<Props> = ({ data }) => {
   return (
     <div>
-      {data.map(({ id, title, viewCount, date }) => (
+      {data.map(({ id, title, viewCount, date, circleName }) => (
         <BoardTableItem
           id={id}
           title={title}
           viewCount={viewCount}
+          circleName={circleName}
           date={date}
           key={id}
         />
