@@ -4,32 +4,11 @@ import { CircleAllDetail } from '../../../containers/Circle/All/Detail/CircleAll
 import AllHeader from './Header/AllHeader';
 import AllBody from './Body/AllBody';
 
-const CircleAllDetail: FC<CircleAllDetail> = ({
-  name,
-  introduce,
-  leader,
-  where,
-  imgSrc,
-  tags,
-  projects,
-  peoples,
-}) => {
-  const { three, two, one } = peoples;
-
+const CircleAllDetail: FC = () => {
   return (
     <S.Container>
-      <AllHeader name={name} />
-      <AllBody
-        introduce={introduce}
-        leader={leader}
-        where={where}
-        three={three}
-        two={two}
-        one={one}
-        imgSrc={imgSrc}
-        tags={tags}
-        projects={projects}
-      />
+      <AllHeader />
+      <AllBody />
     </S.Container>
   );
 };

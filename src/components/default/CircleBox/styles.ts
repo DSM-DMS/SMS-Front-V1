@@ -61,10 +61,14 @@ export const Footer = styled.div`
 
   > div:nth-child(1) {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
   > div:nth-child(2) {
-    width: 85px;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
   }
 `;
 
