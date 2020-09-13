@@ -1,7 +1,6 @@
 import React, { FC, ReactElement, useState } from 'react';
 
 import * as S from './style';
-import SideMenu from './SideMenu';
 import ScheduleModal from './ScheduleModal';
 import DeleteScheduleModal from './DeleteScheduleModal';
 
@@ -35,7 +34,6 @@ const AdminMain: FC<Props> = (): ReactElement => {
       </MainS.MainLeft>
       <MainS.MainRight>
         <ScheduleDetail handleClickShowModal={handleClickShowModal} />
-        <SideMenu />
       </MainS.MainRight>
       {modal &&
         (modalType === 'add' || modalType === 'edit' ? (
