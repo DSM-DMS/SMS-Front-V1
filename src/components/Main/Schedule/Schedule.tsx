@@ -1,16 +1,13 @@
 import React, { FC, ReactElement, useState } from 'react';
 
-import * as S from '../style';
 import Calendar from './Calendar/Calendar';
 
+import * as S from '../style';
 import { MainArrow } from '../../../assets';
-import { Schedule as ISchedule } from '../../../containers/Main/MainContainer';
 
-interface Props {
-  schedules: ISchedule[];
-}
+interface Props {}
 
-const Schedule: FC<Props> = ({ schedules }): ReactElement => {
+const Schedule: FC<Props> = (): ReactElement => {
   const [today, setToday] = useState<Date>(new Date());
 
   const onClickNextMonth = () => {
@@ -44,7 +41,7 @@ const Schedule: FC<Props> = ({ schedules }): ReactElement => {
           />
         </S.ScheduleHeaderDateSetting>
       </S.ScheduleHeader>
-      <Calendar today={today} schedules={schedules} />
+      <Calendar today={today} />
     </S.Schedule>
   );
 };
