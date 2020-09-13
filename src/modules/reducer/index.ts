@@ -4,6 +4,7 @@ import subNavReducer from './subNav/subNav';
 import headerReducer from './header';
 import boardReducer from './board';
 import posterReducer from './poster';
+import scheduleDetailReducer from './scheduleDetail';
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   header: headerReducer,
   board: boardReducer,
   poster: posterReducer,
+  scheduleDetail: scheduleDetailReducer,
 });
 
 export type stateType = ReturnType<typeof rootReducer>;
