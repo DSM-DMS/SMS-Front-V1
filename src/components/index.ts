@@ -14,3 +14,4 @@ export { default as CircleAllDetail } from './default/Info/CircleAllDetail';
 export { default as CircleWantedDetail } from './default/Info/CircleWantedDetail';
 export { default as CircleAll } from './Circle/All/CircleAll';
 export { default as AdminOutingWaitList } from './Admin/Outing/Wait/List/AdminOutingWaitList';
+export { default as AdminMain } from './Admin/Main/Main';
