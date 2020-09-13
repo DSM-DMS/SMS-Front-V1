@@ -1,18 +1,12 @@
-import React, {
-  FC,
-  useState,
-  useCallback,
-  MouseEvent,
-  useEffect,
-  useRef,
-} from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import * as S from './styles';
 import NavigationSubHeader from './Header/NavigationSubHeader';
 import NavigationSubBody from './Body/NavigationSubBody';
-import { CloseMenu } from '../../../assets';
 import { useSelector } from 'react-redux';
 import { stateType } from '../../../modules/reducer';
 import CloseNavigatin from './Close/CloseNavigation';
+import { customSelector } from '../../../lib/api';
+import { SubNavObj } from '../../../lib/static';
 
 function Sleep(delaySecond: number) {
   return new Promise((resolve, reject) => {
@@ -22,15 +16,19 @@ function Sleep(delaySecond: number) {
   });
 }
 
-const NavigationSub: FC<{}> = () => {
-  const [isClose, setIsClose] = useState<boolean>(false);
-  const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
-  const isActive = mainUrl === '동아리' || mainUrl === '외출신청';
-  const ref = useRef<HTMLDivElement>();
+interface Props {
+  subRouteData: SubNavObj;
+}
 
-  const changeIsClose = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    setIsClose((prev) => !prev);
-  }, []);
+const NavigationSub: FC<Props> = ({ subRouteData }) => {
+  const isClose = customSelector((state) => state.subNav.isClose);
+  const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
+  const isActive =
+    mainUrl === '동아리' ||
+    mainUrl === '외출신청' ||
+    mainUrl === '외출 관리' ||
+    mainUrl === '공지사항';
+  const ref = useRef<HTMLDivElement>();
 
   useEffect(() => {
     if (isClose || !isActive) {
@@ -48,19 +46,11 @@ const NavigationSub: FC<{}> = () => {
       {!isClose && isActive && (
         <>
           <NavigationSubHeader>{mainUrl}</NavigationSubHeader>
-          <NavigationSubBody page={mainUrl} />
+          <NavigationSubBody page={mainUrl} subRouteData={subRouteData} />
         </>
       )}
 
-      {isClose && isActive && <CloseNavigatin />}
-
-      {isActive && (
-        <S.CenterImg
-          onClick={changeIsClose}
-          src={CloseMenu}
-          isClose={isClose}
-        />
-      )}
+      {isClose && isActive && <CloseNavigatin subRouteData={subRouteData} />}
     </S.Container>
   );
 };

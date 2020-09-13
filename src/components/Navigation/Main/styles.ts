@@ -1,15 +1,20 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.div<{ colorSet: string }>`
   width: 15vw;
   box-sizing: border-box;
   padding: 40px 0 0 30px;
-  background-color: #5323b2;
+  background-color: ${(props) => props.colorSet};
   position: relative;
   display: flex;
   flex-direction: column;
   color: white;
   min-width: 220px;
+  min-height: 600px;
+
+  .active {
+    color: ${(props) => props.colorSet};
+  }
 `;
 
 export const BackgroundImgWrap = styled.div`

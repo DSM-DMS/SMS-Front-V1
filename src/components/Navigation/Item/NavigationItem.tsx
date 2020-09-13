@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { FC } from 'react';
 import * as S from './styles';
 
@@ -11,7 +11,11 @@ interface Props {
 
 const NavigationItem: FC<Props> = ({ src, name, isActive, onClick }) => {
   return (
-    <S.Container onClick={onClick} isActive={isActive}>
+    <S.Container
+      className={isActive ? 'active' : ''}
+      onClick={onClick}
+      isActive={isActive}
+    >
       <S.Header>
         <S.Img src={src} />
         <S.ItemName>{name}</S.ItemName>
@@ -21,4 +25,4 @@ const NavigationItem: FC<Props> = ({ src, name, isActive, onClick }) => {
   );
 };
 
-export default NavigationItem;
+export default memo(NavigationItem);

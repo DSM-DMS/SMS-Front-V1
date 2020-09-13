@@ -4,16 +4,7 @@ import * as S from './styles';
 import MainNavigationItemContainer from '../../Item/MainNavigationItemContainer';
 import { useSelector } from 'react-redux';
 import { stateType } from '../../../../modules/reducer';
-import {
-  NavIconHomeWhite,
-  NavIconHomeBlue,
-  NavIconNoticeWhite,
-  NavIconNoticeBlue,
-  NavIconCircleWhite,
-  NavIconCircleBlue,
-  NavIconOutingWhite,
-  NavIconOutingBlue,
-} from '../../../../assets';
+
 import MainSubNavigationItemContainer from '../../Item/MainSubNavigationItemContainer';
 
 export interface NavItem {
@@ -23,44 +14,18 @@ export interface NavItem {
   route: string;
 }
 
-interface MainSubItem extends NavItem {
+export interface MainSubItem extends NavItem {
   subUrl: string;
 }
 
-export const navItemArr: NavItem[] = [
-  {
-    name: '홈',
-    route: '/home',
-    white: NavIconHomeWhite,
-    blue: NavIconHomeBlue,
-  },
-  {
-    name: '공지',
-    route: '/notice',
-    white: NavIconNoticeWhite,
-    blue: NavIconNoticeBlue,
-  },
-];
+interface Props {
+  navItemArr: NavItem[];
+  mainSubArr: MainSubItem[];
+}
 
-export const mainSubArr: MainSubItem[] = [
-  {
-    name: '동아리',
-    subUrl: '공지사항',
-    route: '/circles/notice',
-    white: NavIconCircleWhite,
-    blue: NavIconCircleBlue,
-  },
-  {
-    name: '외출신청',
-    subUrl: '유의사항',
-    route: '/outing/waring',
-    white: NavIconOutingWhite,
-    blue: NavIconOutingBlue,
-  },
-];
-
-const NavigationBody: FC = () => {
+const NavigationBody: FC<Props> = ({ navItemArr, mainSubArr }) => {
   const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
+
   return (
     <S.Container>
       {navItemArr.map(({ name, white, blue, route }, index) => (

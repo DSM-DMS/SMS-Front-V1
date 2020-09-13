@@ -4,19 +4,17 @@ export const Container = styled.div<{ isActive: boolean }>`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  cursor: pointer;
   padding: 13px 15px;
   box-sizing: border-box;
   align-items: center;
 
-  ${(props) =>
-    props.isActive &&
-    `{
-    color: #5323b2;
+  &.active {
     background: white;
     border-top-left-radius: 32px;
     border-bottom-left-radius: 32px;
     box-shadow: -5px 5px 10px 1px rgba(0, 0, 0, 0.3);
-  }`}
+  }
 `;
 export const Header = styled.div`
   display: flex;

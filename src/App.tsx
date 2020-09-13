@@ -1,18 +1,14 @@
 import React, { FC } from 'react';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
-import {
-  GlobalStyle,
-  GlobalContainer,
-  GlobalBody,
-  GlobalInnerBody,
-} from './GlobalStyle';
-
+import { GlobalStyle, GlobalContainer, GlobalBody } from './GlobalStyle';
+import { Header } from './components';
 import {
   CirclesRouter,
   NoticeRouter,
   OutingRouter,
   MainRouter,
+  AdminRouter,
 } from './routers';
 
 const App: FC<{}> = () => {
@@ -23,32 +19,16 @@ const App: FC<{}> = () => {
         <Navigation />
         <GlobalBody>
           <Header />
-          <GlobalInnerBody>
-            <Switch>
-              <Route path="/home" component={MainRouter} />
-              <Route path="/notice" component={NoticeRouter} />
-              <Route path="/circles" component={CirclesRouter} />
-              <Route path="/outing" component={OutingRouter} />
-            </Switch>
-          </GlobalInnerBody>
+          <Switch>
+            <Route path="/home" component={MainRouter} />
+            <Route path="/notice" component={NoticeRouter} />
+            <Route path="/circles" component={CirclesRouter} />
+            <Route path="/outing" component={OutingRouter} />
+            <Route path="/admin" component={AdminRouter} />
+          </Switch>
         </GlobalBody>
       </BrowserRouter>
     </GlobalContainer>
-  );
-};
-
-const Header: FC<{}> = () => {
-  return (
-    <div
-      style={{
-        textAlign: 'right',
-        height: '100px',
-        backgroundColor: 'none',
-        width: '100%',
-      }}
-    >
-      HEADER
-    </div>
   );
 };
 
