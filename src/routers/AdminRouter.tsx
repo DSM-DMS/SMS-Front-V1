@@ -1,11 +1,15 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { AdminOutingWaitListContainer } from '../containers';
+
+import {
+  AdminOutingWaitListContainer,
+  AdminMainContainer,
+} from '../containers';
 
 const AdminRouter: FC<{}> = () => {
   return (
     <Switch>
-      <Route exact path="/admin/schedule" />
+      <Route exact path="/admin/home" component={AdminMainContainer} />
       <Route
         exact
         path="/admin/outing"
