@@ -228,57 +228,63 @@ export const DeleteScheduleModal = styled.div`
   box-sizing: border-box;
   text-align: center;
   z-index: 10;
-  > p {
-    margin: 8px 0;
-    font-size: 14px;
-    &:first-child {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      > img {
-        width: 16px;
-        height: 16px;
-        margin-right: 4px;
-      }
-    }
-    &:last-child {
-      letter-spacing: 4px;
-    }
-  }
-  > div {
+`;
+
+export const DeleteScheduleModalLine = styled.p`
+  margin: 8px 0;
+  font-size: 14px;
+  &:first-child {
     display: flex;
     align-items: center;
     justify-content: center;
-    > button {
-      margin: 12px 8px 0;
-      padding: 4px 20px;
-      border: 0;
-      border-radius: 4px;
-      font-size: 14px;
-      transition: 300ms;
-      &:first-child {
-        border: 1px solid #dddddd;
-        background: #fbfbfb;
-        color: #242424;
-        &:hover {
-          transform: rotate(10deg);
-        }
-        &:active {
-          transform: translateY(-5px);
-        }
-      }
-      &:last-child {
-        border: 1px solid #ff5555;
-        background: #ff5555;
-        color: white;
-        &:hover {
-          transform: rotate(-10deg);
-        }
-        &:active {
-          transform: translateY(-5px);
-        }
-      }
+    font-weight: bold;
+  }
+  &:last-child {
+    letter-spacing: 4px;
+  }
+`;
+
+export const DeleteScheduleModalWarning = styled.img`
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+`;
+
+export const DeleteScheduleModalText = styled.span``;
+
+export const DeleteScheduleModalButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const DeleteScheduleModalButton = styled.button`
+  margin: 12px 8px 0;
+  padding: 4px 20px;
+  border: 0;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: 300ms;
+  &:first-child {
+    border: 1px solid #dddddd;
+    background: #fbfbfb;
+    color: #242424;
+    &:hover {
+      transform: rotate(10deg);
+    }
+    &:active {
+      transform: translateY(-5px);
+    }
+  }
+  &:last-child {
+    border: 1px solid #ff5555;
+    background: #ff5555;
+    color: white;
+    &:hover {
+      transform: rotate(-10deg);
+    }
+    &:active {
+      transform: translateY(-5px);
     }
   }
 `;
