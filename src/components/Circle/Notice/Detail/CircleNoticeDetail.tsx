@@ -3,13 +3,11 @@ import { DetailPageHeader } from '../../../../components/default';
 import { NavIconNoticeBlue } from '../../../../assets';
 import * as S from './styles';
 import NoticeDetailBody from '../../../../components/Notice/Detail/NoticeDetailBody/NoticeDetailBody';
-import { BoardDetail } from '../../../../containers/Notice/Detail/NoticeDetailContainer';
+import { customSelector } from '../../../../lib/api';
 
-interface Props {
-  data: BoardDetail;
-}
+const CircleNoticeDetailContainer: FC = () => {
+  const { content } = customSelector((state) => state.board.detail);
 
-const CircleNoticeDetailContainer: FC<Props> = ({ data }) => {
   return (
     <S.Container>
       <DetailPageHeader
@@ -18,7 +16,7 @@ const CircleNoticeDetailContainer: FC<Props> = ({ data }) => {
         href="/circles/notice"
       />
       <p>대덕사이버고등학교에 다니고 새인생이 시작됐다~</p>
-      <NoticeDetailBody content={data.content} />
+      <NoticeDetailBody content={content} />
     </S.Container>
   );
 };

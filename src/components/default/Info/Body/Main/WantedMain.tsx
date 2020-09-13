@@ -3,30 +3,20 @@ import { Comment as CommentType } from '../../../../../containers/Circle/Wanted/
 import * as S from './styles';
 import { DetailContent, Hr, Where, People, Who, Field } from '../../default';
 import Comment from '../../../Comment/Comment';
+import { customSelector } from '../../../../../lib/api';
 
-interface Props {
-  introduce: string;
-  leader: string;
-  where: string;
-  three: string[];
-  two: string[];
-  one: string[];
-  field: string[];
-  grade: number[];
-  comments: CommentType[];
-}
-
-const WantedMain: FC<Props> = ({
-  introduce,
-  leader,
-  three,
-  two,
-  one,
-  where,
-  field,
-  grade,
-  comments,
-}) => {
+const WantedMain: FC = () => {
+  const {
+    introduce,
+    grade,
+    field,
+    leader,
+    three,
+    two,
+    one,
+    where,
+    comments,
+  } = customSelector((state) => state.poster.wanted.detail);
   return (
     <S.Container>
       <S.P>동아리 소개</S.P>

@@ -1,35 +1,47 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { CircleNoticeList } from '../../../../components';
 import { BoardObj } from '../../../../components/default/Board/Board';
+import { updateBoardList } from '../../../../modules/action/board';
+import { customSelector } from '../../../../lib/api';
+import { useDispatch } from 'react-redux';
 
-const data: BoardObj[] = [
+const StaticData: BoardObj[] = [
   {
     id: 1,
+    date: '2020.07.08',
     title: '제목1',
-    date: '동아리1',
+    circleName: '동아리1',
     viewCount: 1,
   },
   {
     id: 2,
+    date: '2020.07.08',
     title: '제목22',
-    date: '동아리2',
+    circleName: '동아리2',
     viewCount: 2,
   },
   {
     id: 3,
+    date: '2020.07.08',
     title: '제목333',
-    date: '동아리3',
+    circleName: '동아리3',
     viewCount: 3,
   },
   {
     id: 4,
+    date: '2020.07.08',
     title: '제목4444',
-    date: '동아리4',
+    circleName: '동아리1',
     viewCount: 4,
   },
 ];
 
 const CircleNoticeListContainer: FC = () => {
+  const data = customSelector((state) => state.board.list);
+  const disaptch = useDispatch();
+  useEffect(() => {
+    disaptch(updateBoardList(StaticData));
+  }, []);
   return <CircleNoticeList data={data} />;
 };
 

@@ -1,6 +1,7 @@
 import React, { FC, ReactElement, memo, useCallback } from 'react';
 import * as S from './styles';
 import { useHistory } from 'react-router';
+import { HashTag } from '../Info/Body/Sub/styles';
 
 export interface WantedCircleBoxData {
   name: string;
@@ -14,6 +15,7 @@ export interface WantedCircleBoxData {
 }
 
 const dateParse = (date: string): ReactElement | string => {
+  if (!date) return '\n|';
   if (!date) return '\n상시모집';
 
   const [date1, date2, date3] = date.split(' ');
@@ -48,7 +50,7 @@ const WantedCircleBox: FC<WantedCircleBoxData> = ({
       <div>
         <S.Header>
           <S.CircleName>{name}</S.CircleName>
-          <div>{field}</div>
+          <div>{where}</div>
         </S.Header>
         <S.CircleIntroduce>{description}</S.CircleIntroduce>
         <S.WantedJob>
@@ -59,8 +61,9 @@ const WantedCircleBox: FC<WantedCircleBoxData> = ({
       </div>
       <S.Footer>
         <div>
-          <div>{where}</div>
-          <div>모집대상 : {grade}</div>
+          <div>
+            <HashTag>{field}</HashTag>
+          </div>
         </div>
         <div>{dateParse(date)}</div>
       </S.Footer>

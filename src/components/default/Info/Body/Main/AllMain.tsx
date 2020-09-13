@@ -1,17 +1,15 @@
 import React, { FC } from 'react';
 import * as S from './styles';
 import { DetailContent, Hr, Where, People } from '../../default';
+import { customSelector } from '../../../../../lib/api';
 
-interface Props {
-  introduce: string;
-  leader: string;
-  three?: string[];
-  two?: string[];
-  one?: string[];
-  where: string;
-}
-
-const AllMain: FC<Props> = ({ where, introduce, leader, three, two, one }) => {
+const AllMain = () => {
+  const {
+    introduce,
+    leader,
+    peoples: { one, two, three },
+    where,
+  } = customSelector((state) => state.poster.all.detail);
   return (
     <S.Container>
       <S.P>동아리 소개</S.P>

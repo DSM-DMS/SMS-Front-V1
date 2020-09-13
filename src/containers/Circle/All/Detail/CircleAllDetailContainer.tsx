@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
 import { CircleAllDetail } from '../../../../components';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { updatePosterDetail } from '../../../../modules/action/poster';
 
 export interface CircleAllDetail {
   name: string;
@@ -35,18 +38,11 @@ const data: CircleAllDetail = {
 };
 
 const CircleAllDetailContainer: FC = () => {
-  return (
-    <CircleAllDetail
-      name={data.name}
-      introduce={data.introduce}
-      leader={data.leader}
-      where={data.where}
-      imgSrc={data.imgSrc}
-      tags={data.tags}
-      projects={data.projects}
-      peoples={data.peoples}
-    />
-  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updatePosterDetail(data));
+  }, []);
+  return <CircleAllDetail />;
 };
 
 export default CircleAllDetailContainer;

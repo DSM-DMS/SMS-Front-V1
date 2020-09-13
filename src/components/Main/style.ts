@@ -106,7 +106,45 @@ export const DetailHeader = styled.header`
   border-bottom: 2px solid #dddddd;
 `;
 
+export const DetailHeaderTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const DetailTitle = styled(MainContentTitleCommon)``;
+
+export const DetailAddSchedule = styled.button`
+  position: relative;
+  border: 1px solid #dddddd;
+  padding: 4px 6px;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  transition: 300ms;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: rgba(35, 178, 173, 0.3);
+    transition: all ease-in 300ms;
+  }
+  &:hover::before {
+    width: 100%;
+    background-color: rgba(35, 178, 173, 0.6);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+  > span {
+    position: relative;
+    color: #868686;
+  }
+`;
 
 export const DetailHead = styled.p`
   margin-top: 16px;
@@ -116,11 +154,12 @@ export const DetailHead = styled.p`
 
 export const DetailHeadData = styled.span`
   display: inline-block;
+  vertical-align: middle;
   &:first-child {
-    width: 65%;
+    width: 55%;
   }
   &:last-child {
-    width: 35%;
+    width: 25%;
   }
 `;
 
@@ -139,7 +178,8 @@ export const DetailBody = styled.div`
   }
 `;
 
-export const DetailBodyItem = styled.p`
+export const DetailBodyItem = styled.div`
+  position: relative;
   padding: 8px 4px 8px 12px;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
@@ -149,10 +189,33 @@ export const DetailBodyItem = styled.p`
 export const DetailBodyItemData = styled.span`
   display: inline-block;
   &:first-child {
-    width: 65%;
+    width: 55%;
   }
   &:last-child {
-    width: 35%;
+    width: 25%;
+  }
+`;
+
+export const DetailBodyItemButtonWrap = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 3%;
+  transform: translateY(-50%);
+`;
+
+export const DetailBodyItemButton = styled.button`
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: #1a73e8;
+  color: white;
+  font-size: 10px;
+  &:first-child {
+    margin-right: 4px;
+    background-color: #1a73e8;
+  }
+  &:last-child {
+    background-color: #c70000;
   }
 `;
 

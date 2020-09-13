@@ -1,5 +1,8 @@
 import React, { FC } from 'react';
 import { CircleWantedDetail } from '../../../../components';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updatePosterDetailWanted } from '../../../../modules/action/poster';
 
 export interface SubComment {
   name: string;
@@ -69,22 +72,11 @@ const data: CircleWantedDetail = {
 };
 
 const CircleWantedDetailContainer: FC = () => {
-  return (
-    <CircleWantedDetail
-      name={data.name}
-      date={data.date}
-      introduce={data.introduce}
-      leader={data.leader}
-      field={data.field}
-      grade={data.grade}
-      where={data.where}
-      imgSrc={data.imgSrc}
-      peoples={data.peoples}
-      tags={data.tags}
-      projects={data.projects}
-      comments={data.comments}
-    />
-  );
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updatePosterDetailWanted(data));
+  }, []);
+  return <CircleWantedDetail />;
 };
 
 export default CircleWantedDetailContainer;

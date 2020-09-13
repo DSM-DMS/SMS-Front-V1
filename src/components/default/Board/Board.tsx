@@ -1,33 +1,26 @@
 import React, { FC, useState, useCallback, ChangeEvent } from 'react';
 import * as S from './styles';
-import BoardTable from './Table/Table';
-import { ListPageHeader } from '../index';
+import BoardTableHeader from './Table/header/BoardTableHeader';
+import BoardTableBody from './Table/body/BoardTableBody';
 
 export interface BoardObj {
   id: number;
   title: string;
   date: string;
+  circleName?: string;
   viewCount: number;
 }
 
 interface Props {
-  title: string;
-  imgSrc: string;
-  boardData: BoardObj[];
-  date: boolean;
-  filterFunc: (keyword: string) => BoardObj[];
+  names: string[];
+  data: BoardObj[];
 }
 
-const Board: FC<Props> = ({ title, imgSrc, boardData, date, filterFunc }) => {
-  const [keyword, setKeyword] = useState<string>('');
-
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
-  }, []);
+const Board: FC<Props> = ({ data, names }) => {
   return (
     <S.Container>
-      <ListPageHeader title={title} imgSrc={imgSrc} onChange={onChange} />
-      <BoardTable boardData={filterFunc(keyword)} date={date} />
+      <BoardTableHeader names={names} />
+      <BoardTableBody data={data} />
     </S.Container>
   );
 };
