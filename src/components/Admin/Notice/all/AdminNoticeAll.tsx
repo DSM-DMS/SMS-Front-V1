@@ -21,7 +21,10 @@ const AdminNoticeAll: FC = () => {
         onChange={changeKeyword}
         title="전체 공지사항"
       />
-      <Board names={names} data={data} />
+      <Board
+        names={names}
+        data={data.filter(({ title }) => title.includes(keyword))}
+      />
     </S.Container>
   );
 };
