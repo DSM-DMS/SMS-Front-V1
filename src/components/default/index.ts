@@ -7,3 +7,4 @@ export { default as PageHeader } from './PageHeader/PageHeader';
 export { default as Category } from './Category/Category';
 export { default as AllCircleBox } from './CircleBox/AllCircleBox';
 export { default as Comment } from './Comment/Comment';
+export { default as OutingCardPage } from './OutingCardPage/OutingCardPage';

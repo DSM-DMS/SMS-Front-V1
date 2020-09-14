@@ -46,3 +46,4 @@ export { default as OutingTriangle } from './Outing/triangle.svg';
 export { default as OutingClose } from './Outing/close.svg';
 export { default as OutingBalloons } from './Outing/balloons.svg';
 export { default as OutingUser } from './Outing/user.svg';
+export { default as ModalClose } from './Outing/modalClose.svg';
