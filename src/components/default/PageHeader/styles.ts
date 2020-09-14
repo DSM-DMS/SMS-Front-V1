@@ -42,13 +42,24 @@ export const Title = styled.div<Type>`
     `}
 `;
 
-export const Button = styled(Link)`
-  background-color: #5323b2;
+export const Button = styled(Link)<{ color: string }>`
   padding: 10px 20px;
   color: white;
   font-size: 12px;
   border-radius: 5px;
   text-decoration: none;
+  background-color: ${(props) => props.color};
+`;
+
+export const DeleteButton = styled.button<{ color: string }>`
+  padding: 10px 20px;
+  color: white;
+  font-size: 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  border: none;
+  background-color: ${(props) => props.color};
+  margin-right: 10px;
 `;
 
 export const Wrap = styled.div`

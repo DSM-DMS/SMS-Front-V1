@@ -11,6 +11,8 @@ const NoticeDetail: FC = () => {
   return (
     <S.Container>
       <DetailPageHeader
+        color="#5323B2"
+        isMine={false}
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
         href="/notice"
