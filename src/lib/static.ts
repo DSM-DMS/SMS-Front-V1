@@ -19,6 +19,9 @@ import {
   NavIconWaringRed,
   NavIconOutingBlack,
   NavIconHistoryBlack,
+  NavIconCircleMint,
+  NavIconUnauthorizedBlack,
+  NavIconUnauthorizedMint,
 } from '../assets';
 import {
   MainSubItem,
@@ -77,8 +80,8 @@ export const adminRouter: RouteData = {
   sub: [
     {
       name: '외출 관리',
-      subUrl: '승인대기 외출증',
       route: '/admin/out/wait',
+      subUrl: '승인대기 외출증',
       white: NavIconOutingWhite,
       blue: NavIconOutingMint,
     },
@@ -160,14 +163,14 @@ export const subNavRouter: SubNavObj = {
     {
       name: '현재 외출 학생',
       url: NavIconCircleBlack,
-      acitveUrl: '',
       route: '/admin/out/now',
+      acitveUrl: NavIconCircleMint,
     },
     {
       name: '미인증 외출증',
-      url: NavIconCircleBlack,
-      acitveUrl: '',
+      url: NavIconUnauthorizedBlack,
       route: '/admin/out/certified',
+      acitveUrl: NavIconUnauthorizedMint,
     },
   ],
   공지사항: [
