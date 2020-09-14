@@ -17,3 +17,4 @@ export { default as AdminOutingWaitList } from './Admin/Outing/Wait/List/AdminOu
 export { default as AdminMain } from './Admin/Main/Main';
 export { default as AdminOutingNowList } from './Admin/Outing/now/list/AdminOutingNowList';
 export { default as AdminOutingCertifiedList } from './Admin/Outing/certified/list/AdminOutingCertifiedList';
+export { default as AdminNoticeAll } from './Admin/Notice/all/AdminNoticeAll';
