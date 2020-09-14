@@ -5,6 +5,7 @@ import {
   AdminOutingNowListContainer,
   AdminOutingWaitListContainer,
   AdminMainContainer,
+  AdminNoticeAllListContainer,
 } from '../containers';
 import { GlobalInnerBody } from '../GlobalStyle';
 
@@ -31,7 +32,12 @@ const AdminRouter: FC<{}> = () => {
           path="/admin/out/certified"
           component={AdminOutingCertifiedListContainer}
         />
-        <Route exact path="/admin/notice" />
+
+        <Route
+          exact
+          path="/admin/notice/all"
+          component={AdminNoticeAllListContainer}
+        />
       </Switch>
     </GlobalInnerBody>
   );
