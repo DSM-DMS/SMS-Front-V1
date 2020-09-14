@@ -77,14 +77,14 @@ export const adminRouter: RouteData = {
   sub: [
     {
       name: '외출 관리',
-      subUrl: '외출 관리',
-      route: '/admin/outing',
+      subUrl: '승인대기 외출증',
+      route: '/admin/out/wait',
       white: NavIconOutingWhite,
       blue: NavIconOutingMint,
     },
     {
       name: '공지사항',
-      subUrl: '공지사항',
+      subUrl: '전체 공지',
       route: '/admin/notice',
       white: NavIconNoticeWhite,
       blue: NavIconNoticeMint,
@@ -152,22 +152,22 @@ export const subNavRouter: SubNavObj = {
   ],
   '외출 관리': [
     {
-      name: '승인대기 외출중',
+      name: '승인대기 외출증',
       url: NavIconOutingBlack,
       acitveUrl: NavIconOutingMint,
-      route: '/admin/outing/a',
+      route: '/admin/out/wait',
     },
     {
       name: '현재 외출 학생',
       url: NavIconCircleBlack,
       acitveUrl: '',
-      route: '/admin/outing/b',
+      route: '/admin/out/now',
     },
     {
       name: '미인증 외출증',
       url: NavIconCircleBlack,
       acitveUrl: '',
-      route: '/admin/outing/c',
+      route: '/admin/out/certified',
     },
   ],
   공지사항: [
