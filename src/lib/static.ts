@@ -88,7 +88,7 @@ export const adminRouter: RouteData = {
     {
       name: '공지사항',
       subUrl: '전체 공지',
-      route: '/admin/notice',
+      route: '/admin/notice/all',
       white: NavIconNoticeWhite,
       blue: NavIconNoticeMint,
     },
