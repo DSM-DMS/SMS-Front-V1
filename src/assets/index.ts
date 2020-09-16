@@ -38,6 +38,8 @@ export { default as MainArrow } from './Main/arrow.svg';
 export { default as MainBike } from './Main/bike.svg';
 export { default as MainHistory } from './Main/outingHistory.svg';
 export { default as MainWarning } from './Main/warning.svg';
+export { default as MainSelector } from './Admin/selector.svg';
+export { default as MainChangeTable } from './Admin/change.svg';
 export { default as OutingWarning } from './Outing/warning.svg';
 export { default as OutingWarningRedBase } from './Outing/warningRedBase.svg';
 export { default as OutingBike } from './Outing/bike.svg';
