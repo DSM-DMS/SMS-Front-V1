@@ -28,6 +28,9 @@ const NavigationSub: FC<Props> = ({ subRouteData }) => {
     mainUrl === '외출신청' ||
     mainUrl === '외출 관리' ||
     mainUrl === '공지사항';
+
+  const isAdmin = mainUrl === '외출 관리' || mainUrl === '공지사항';
+
   const ref = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -42,7 +45,12 @@ const NavigationSub: FC<Props> = ({ subRouteData }) => {
   }, [isClose, isActive]);
 
   return (
-    <S.Container isActive={isActive} isClose={isActive && isClose} ref={ref}>
+    <S.Container
+      colorSet={isAdmin ? '#23B2AD' : '#5323B2'}
+      isActive={isActive}
+      isClose={isActive && isClose}
+      ref={ref}
+    >
       {!isClose && isActive && (
         <>
           <NavigationSubHeader>{mainUrl}</NavigationSubHeader>

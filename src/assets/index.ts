@@ -11,6 +11,7 @@ export { default as BackgroundCircle10 } from './navigation/BackgroundCircle10.p
 export { default as NavIconCircleWhite } from './navigation/NavIcon-circle-white.svg';
 export { default as NavIconCircleBlue } from './navigation/NavIcon-circle-blue.svg';
 export { default as NavIconCircleBlack } from './navigation/NavIcon-circle-black.svg';
+export { default as NavIconCircleMint } from './navigation/NavIcon-circle-mint.svg';
 export { default as NavIconHomeWhite } from './navigation/NavIcon-home-white.svg';
 export { default as NavIconHomeBlue } from './navigation/NavIcon-home-blue.svg';
 export { default as NavIconNoticeWhite } from './navigation/NavIcon-notice-white.svg';
@@ -28,6 +29,8 @@ export { default as NavIconWaringRed } from './navigation/NavIcon-waring-red.svg
 export { default as NavIconHistoryBlack } from './navigation/NavIcon-history-black.svg';
 export { default as NavIconScheduleWhite } from './navigation/NavIcon-schedule-white.svg';
 export { default as NavIconScheduleMint } from './navigation/NavIcon-schedule-mint.svg';
+export { default as NavIconUnauthorizedBlack } from './navigation/NavIcon-unAuthorized-black.svg';
+export { default as NavIconUnauthorizedMint } from './navigation/NavIcon-unAuthorized-mint.svg';
 export { default as IconWhite } from './navigation/Icon-white.svg';
 export { default as CloseMenu } from './navigation/CloseMenu.svg';
 export { default as SearchIcon } from './Board/SearchIcon.svg';
@@ -46,3 +49,4 @@ export { default as OutingTriangle } from './Outing/triangle.svg';
 export { default as OutingClose } from './Outing/close.svg';
 export { default as OutingBalloons } from './Outing/balloons.svg';
 export { default as OutingUser } from './Outing/user.svg';
+export { default as ModalClose } from './Outing/modalClose.svg';
