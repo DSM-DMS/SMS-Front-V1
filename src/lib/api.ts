@@ -6,13 +6,7 @@ import { BoardObj } from '../components/default/Board/Board';
 type valueType = [string, string];
 
 interface UrlObj {
-  home: valueType;
-  notice: valueType;
-  circles: valueType;
-  outing: valueType;
-  admin: {
-    [key: string]: string[];
-  };
+  [key: string]: valueType;
 }
 
 const urlObj: UrlObj = {
@@ -20,10 +14,11 @@ const urlObj: UrlObj = {
   notice: ['공지', ''],
   circles: ['동아리', '공지사항'],
   outing: ['외출신청', '유의사항'],
-  admin: {
-    out: ['외출 관리', '승인대기 외출증'],
-    notice: ['공지사항', '전체 공지'],
-  },
+};
+
+const adminObj: UrlObj = {
+  out: ['외출 관리', '승인대기 외출증'],
+  notice: ['공지사항', '전체 공지'],
 };
 
 interface SubUrlObj {
@@ -45,13 +40,14 @@ const adminUrlObj: SubUrlObj = {
   wait: '승인대기 외출증',
   all: '전체 공지',
   mine: '내가 올린 공지',
-  write: '공지사항 작성',
+  writing: '공지사항 작성',
 };
 
 export const getNavUrl = (url: string): PageState => {
   const stringArr = url.split('/');
   const filterStr = stringArr[3] as 'home' | 'notice' | 'circles' | 'outing';
-  const urlArr = urlObj.admin[stringArr[4]] || urlObj[filterStr] || ['', ''];
+  console.log(filterStr);
+  const urlArr = urlObj[filterStr] || adminObj[stringArr[4]] || ['', ''];
   return {
     mainUrl: urlArr[0],
     subUrl: adminUrlObj[stringArr[5]] || subUrlObj[stringArr[4]] || urlArr[1],

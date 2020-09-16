@@ -11,6 +11,8 @@ const CircleNoticeDetailContainer: FC = () => {
   return (
     <S.Container>
       <DetailPageHeader
+        color="#5323B2"
+        isMine={false}
         title="동아리 공지사항"
         imgSrc={NavIconNoticeBlue}
         href="/circles/notice"

@@ -6,6 +6,9 @@ import {
   AdminOutingWaitListContainer,
   AdminMainContainer,
   AdminNoticeAllListContainer,
+  AdminNoticeAllDetailContainer,
+  AdminNoticeMineContainer,
+  AdminNoticeMineDetailContainer,
 } from '../containers';
 import { GlobalInnerBody } from '../GlobalStyle';
 
@@ -20,23 +23,35 @@ const AdminRouter: FC<{}> = () => {
           path="/admin/out/wait"
           component={AdminOutingWaitListContainer}
         />
-
         <Route
           exact
           path="/admin/out/now"
           component={AdminOutingNowListContainer}
         />
-
         <Route
           exact
           path="/admin/out/certified"
           component={AdminOutingCertifiedListContainer}
         />
-
         <Route
           exact
           path="/admin/notice/all"
           component={AdminNoticeAllListContainer}
+        />
+        <Route
+          exact
+          path="/admin/notice/all/:id"
+          component={AdminNoticeAllDetailContainer}
+        />
+        <Route
+          exact
+          path="/admin/notice/mine"
+          component={AdminNoticeMineContainer}
+        />
+        <Route
+          exact
+          path="/admin/notice/mine/:id"
+          component={AdminNoticeMineDetailContainer}
         />
       </Switch>
     </GlobalInnerBody>
