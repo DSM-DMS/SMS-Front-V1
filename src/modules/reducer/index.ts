@@ -6,6 +6,7 @@ import boardReducer from './board';
 import posterReducer from './poster';
 import scheduleDetailReducer from './scheduleDetail';
 import OutingCardReducer from './OutingCard';
+import jsonReducer from './json';
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   poster: posterReducer,
   scheduleDetail: scheduleDetailReducer,
   outingCard: OutingCardReducer,
+  json: jsonReducer,
 });
 
 export type stateType = ReturnType<typeof rootReducer>;

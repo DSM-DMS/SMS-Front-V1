@@ -1,5 +1,5 @@
 const SET_JSON = 'json/SET_JSON' as const;
-const GET_JSON_SAGA = 'json/GET_JSON_SAGA' as const;
+const GET_JSON_SAGA = 'json/GET_JSON_SAGA' as const; // saga전용 액션을 만들어줌
 
 const setJson = (payload: any) => ({
   type: SET_JSON,
@@ -7,6 +7,7 @@ const setJson = (payload: any) => ({
 });
 
 const getJsonSaga = () => ({
+  //saga전용 actionCreater
   type: GET_JSON_SAGA,
 });
 
