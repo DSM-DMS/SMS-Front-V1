@@ -10,8 +10,16 @@ import {
   MainRouter,
   AdminRouter,
 } from './routers';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { jsonActionCreater } from './modules/action/json';
 
 const App: FC<{}> = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(jsonActionCreater.getJsonSaga());
+  }, []);
+
   return (
     <GlobalContainer>
       <GlobalStyle />
