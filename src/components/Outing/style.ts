@@ -67,17 +67,16 @@ export const ApplyTitle = styled.h2`
   font-weight: bold;
 `;
 
-const boxFade = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-`;
-
 const CircleAni = styled.div`
-  animation: ${boxFade} infinite ease-in-out alternate;
+  animation: boxFade infinite ease-in-out alternate;
+  @keyframes boxFade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 `;
 
 export const ApplyCircle1 = styled(CircleAni)`

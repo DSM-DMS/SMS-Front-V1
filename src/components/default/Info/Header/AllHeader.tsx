@@ -1,12 +1,10 @@
 import React, { FC } from 'react';
 import * as S from './styles';
 import { Hr } from '../../Board/styles';
+import { customSelector } from '../../../../lib/api';
 
-interface Props {
-  name: string;
-}
-
-const AllHeader: FC<Props> = ({ name }) => {
+const AllHeader: FC = () => {
+  const name = customSelector((state) => state.poster.all.detail.name);
   return (
     <>
       <S.Container>

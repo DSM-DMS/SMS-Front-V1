@@ -11,7 +11,11 @@ interface Props {
 
 const NavigationItem: FC<Props> = ({ src, name, isActive, onClick }) => {
   return (
-    <S.Container onClick={onClick} isActive={isActive}>
+    <S.Container
+      className={isActive ? 'active' : ''}
+      onClick={onClick}
+      isActive={isActive}
+    >
       <S.Header>
         <S.Img src={src} />
         <S.ItemName>{name}</S.ItemName>

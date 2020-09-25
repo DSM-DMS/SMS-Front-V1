@@ -2,13 +2,10 @@ import React, { FC } from 'react';
 import * as S from './styles';
 import { Hr } from '../../Board/styles';
 import { FacebookIcon } from '../../../../assets';
+import { customSelector } from '../../../../lib/api';
 
-interface Props {
-  name: string;
-  date: string;
-}
-
-const InfoHeader: FC<Props> = ({ name, date }) => {
+const InfoHeader: FC = () => {
+  const { name, date } = customSelector((state) => state.poster.wanted.detail);
   return (
     <>
       <S.Container>

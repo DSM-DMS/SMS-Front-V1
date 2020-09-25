@@ -11,16 +11,27 @@ export const Container = styled.div`
 
   font-weight: bold;
 
-  div:nth-child(1) {
+  div {
     flex: 1;
   }
+
   div:nth-child(2) {
     flex: 3;
   }
-  div:nth-child(3) {
+`;
+
+export const OutingItemContainer = styled(Container)`
+  div:nth-child(2) {
     flex: 1;
   }
   div:nth-child(4) {
-    flex: 1;
+    flex: 2;
+  }
+  div:nth-child(3) {
+    flex: 3;
+    text-align: left;
+  }
+  div:nth-child(5) {
+    flex: 3;
   }
 `;

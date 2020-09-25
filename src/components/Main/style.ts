@@ -65,6 +65,9 @@ export const Timetable = styled(MainContentCommon)`
 `;
 
 export const TimetableTitle = styled(MainContentTitleCommon)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 4px 8px 12px;
   border-bottom: 2px solid #dddddd;
 `;
@@ -96,6 +99,88 @@ export const TimetableItemDate = styled.span`
   font-weight: normal;
 `;
 
+export const FiltersWrap = styled.div`
+  display: flex;
+`;
+
+export const FilterReset = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #f6f6f6;
+  font-size: 16px;
+  font-weight: bold;
+  > img.rolling {
+    animation: roll 1s alternate;
+    @keyframes roll {
+      from {
+        transform: rotate(0);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+`;
+
+export const FiltersList = styled.ul`
+  position: relative;
+  margin: 0 8px;
+  background: #f6f6f6;
+  font-size: 16px;
+  font-weight: normal;
+  &:hover > ul {
+    display: block;
+  }
+`;
+
+export const FiltersListSelectedWrap = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 8px;
+  padding: 4px 8px;
+  cursor: pointer;
+`;
+
+export const FiltersListSelected = styled.span`
+  margin-right: 8px;
+`;
+
+export const FiltersListInner = styled.ul`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: none;
+  width: 100%;
+  text-align: center;
+  background: #f6f6f6;
+  animation: slide 300ms;
+  z-index: 10;
+  @keyframes slide {
+    from {
+      top: 0;
+      opacity: 0;
+    }
+    to {
+      top: 100%;
+      opacity: 1;
+    }
+  }
+`;
+
+export const FiltersListInnerItem = styled.li`
+  padding: 4px 0;
+  transition: 300ms;
+  cursor: pointer;
+  &:hover {
+    background: #e9e9e9;
+  }
+`;
+
 export const ScheduleDetail = styled(MainContentCommon)`
   height: 75%;
   margin-bottom: 15px;
@@ -106,7 +191,45 @@ export const DetailHeader = styled.header`
   border-bottom: 2px solid #dddddd;
 `;
 
+export const DetailHeaderTop = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 export const DetailTitle = styled(MainContentTitleCommon)``;
+
+export const DetailAddSchedule = styled.button`
+  position: relative;
+  border: 1px solid #dddddd;
+  padding: 4px 6px;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  transition: 300ms;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25%;
+    height: 100%;
+    border-radius: 8px;
+    background-color: rgba(35, 178, 173, 0.3);
+    transition: all ease-in 300ms;
+  }
+  &:hover::before {
+    width: 100%;
+    background-color: rgba(35, 178, 173, 0.6);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
+  > span {
+    position: relative;
+    color: #868686;
+  }
+`;
 
 export const DetailHead = styled.p`
   margin-top: 16px;
@@ -116,11 +239,12 @@ export const DetailHead = styled.p`
 
 export const DetailHeadData = styled.span`
   display: inline-block;
+  vertical-align: middle;
   &:first-child {
-    width: 65%;
+    width: 55%;
   }
   &:last-child {
-    width: 35%;
+    width: 25%;
   }
 `;
 
@@ -139,7 +263,8 @@ export const DetailBody = styled.div`
   }
 `;
 
-export const DetailBodyItem = styled.p`
+export const DetailBodyItem = styled.div`
+  position: relative;
   padding: 8px 4px 8px 12px;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
@@ -149,10 +274,33 @@ export const DetailBodyItem = styled.p`
 export const DetailBodyItemData = styled.span`
   display: inline-block;
   &:first-child {
-    width: 65%;
+    width: 55%;
   }
   &:last-child {
-    width: 35%;
+    width: 25%;
+  }
+`;
+
+export const DetailBodyItemButtonWrap = styled.div`
+  position: absolute;
+  top: 50%;
+  right: 3%;
+  transform: translateY(-50%);
+`;
+
+export const DetailBodyItemButton = styled.button`
+  padding: 4px 8px;
+  border: 0;
+  border-radius: 4px;
+  background: #1a73e8;
+  color: white;
+  font-size: 10px;
+  &:first-child {
+    margin-right: 4px;
+    background-color: #1a73e8;
+  }
+  &:last-child {
+    background-color: #c70000;
   }
 `;
 

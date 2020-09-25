@@ -1,6 +1,9 @@
 import React, { FC } from 'react';
 import { WantedCircleBoxData } from '../../../../components/default/CircleBox/WantedCircleBox';
 import { CircleWantedList } from '../../../../components';
+import { useEffect } from 'react';
+import { updatePosterListWanted } from '../../../../modules/action/poster';
+import { useDispatch } from 'react-redux';
 
 const data: WantedCircleBoxData[] = [
   {
@@ -37,7 +40,11 @@ const data: WantedCircleBoxData[] = [
 ];
 
 const CircleWantedContainer: FC = () => {
-  return <CircleWantedList data={data} />;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updatePosterListWanted(data));
+  });
+  return <CircleWantedList />;
 };
 
 export default CircleWantedContainer;

@@ -1,15 +1,17 @@
 import React, { ReactElement, useMemo, MouseEvent } from 'react';
+import { useSelector } from 'react-redux';
 
 import * as S from './style';
 
-import { Schedule as ISchedule } from '../../../../containers/Main/MainContainer';
+import { stateType } from '../../../../modules/reducer';
 
 interface Props {
   today: Date;
-  schedules: ISchedule[];
 }
 
-const CalendarDate: React.FC<Props> = ({ today, schedules }) => {
+const CalendarDate: React.FC<Props> = ({ today }) => {
+  const { schedules } = useSelector((state: stateType) => state.scheduleDetail);
+
   const setCalendarData = (
     yearCopy: number,
     monthCopy: number,

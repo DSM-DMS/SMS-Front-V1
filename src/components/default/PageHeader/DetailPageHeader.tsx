@@ -6,15 +6,30 @@ import PageHeader from './PageHeader';
 interface Props {
   imgSrc: string;
   title: string;
+  color: string;
   href?: string;
+  isMine: boolean;
 }
 
-const DetailPageHeader: FC<Props> = ({ imgSrc, title, href }) => {
+const DetailPageHeader: FC<Props> = ({
+  isMine,
+  color,
+  imgSrc,
+  title,
+  href,
+}) => {
   return (
     <>
       <S.Wrap>
         <PageHeader imgSrc={imgSrc} title={title} type={S.DETAIL} />
-        {href && <S.Button to={href}>목록으로</S.Button>}
+        <div>
+          {isMine && <S.DeleteButton color={color}>수정</S.DeleteButton>}
+          {href && (
+            <S.Button color={color} to={href}>
+              목록으로
+            </S.Button>
+          )}
+        </div>
       </S.Wrap>
       <Hr />
     </>

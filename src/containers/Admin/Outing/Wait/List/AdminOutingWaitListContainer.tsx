@@ -1,0 +1,198 @@
+import React, { FC } from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import AdminOutingCardWaitList from '../../../../../components/Admin/Outing/Wait/List/AdminOutingCardWaitList';
+import { updateOutingCardList } from '../../../../../modules/action/outingCard';
+
+const data = [
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 2,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 3,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 4,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 5,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 6,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 7,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+  {
+    id: 1,
+    number: 1201,
+    name: '강신희',
+    time: '오후 05:30 - 오후 08:30 ',
+    date: '2020년 07년 17일',
+    where: '신성동 하나로마트',
+    reason: '집',
+  },
+];
+
+const AdminOutingWaitListContainer: FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(updateOutingCardList(data));
+  }, []);
+  return <AdminOutingCardWaitList />;
+};
+
+export default AdminOutingWaitListContainer;

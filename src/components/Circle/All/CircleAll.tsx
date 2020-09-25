@@ -4,17 +4,14 @@ import { PageHeader, Category, AllCircleBox } from '../../default';
 import { NavIconAllBlue } from '../../../assets';
 import { Hr } from '../../../components/default/Board/styles';
 import { AllCircleBoxType } from '../../default/CircleBox/AllCircleBox';
-import { makeFilterFunc } from '../../../lib/api';
+import { makeFilterFunc, customSelector } from '../../../lib/api';
 
-interface Props {
-  data: AllCircleBoxType[];
-}
-
-const CircleAll: FC<Props> = ({ data }) => {
+const CircleAll: FC = () => {
+  const data = customSelector((state) => state.poster.all.list);
   const [keyword, setkeyword] = useState<string>('');
   const filterFunc = makeFilterFunc<AllCircleBoxType>(
     data,
-    (data) => data.name,
+    ({ name }, keyword) => name.includes(keyword),
   );
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setkeyword(e.target.value);
@@ -37,9 +34,9 @@ const CircleAll: FC<Props> = ({ data }) => {
           ({ name, leader, description, field, imgSrc, where }) => (
             <AllCircleBox
               name={name}
-              leader={leader}
               description={description}
               field={field}
+              leader={leader}
               imgSrc={imgSrc}
               where={where}
             />

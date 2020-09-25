@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { stateType } from '../../../modules/reducer';
 import CloseNavigatin from './Close/CloseNavigation';
 import { customSelector } from '../../../lib/api';
+import { SubNavObj } from '../../../lib/static';
 
 function Sleep(delaySecond: number) {
   return new Promise((resolve, reject) => {
@@ -15,10 +16,21 @@ function Sleep(delaySecond: number) {
   });
 }
 
-const NavigationSub: FC<{}> = () => {
+interface Props {
+  subRouteData: SubNavObj;
+}
+
+const NavigationSub: FC<Props> = ({ subRouteData }) => {
   const isClose = customSelector((state) => state.subNav.isClose);
   const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
-  const isActive = mainUrl === '동아리' || mainUrl === '외출신청';
+  const isActive =
+    mainUrl === '동아리' ||
+    mainUrl === '외출신청' ||
+    mainUrl === '외출 관리' ||
+    mainUrl === '공지사항';
+
+  const isAdmin = mainUrl === '외출 관리' || mainUrl === '공지사항';
+
   const ref = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -33,15 +45,20 @@ const NavigationSub: FC<{}> = () => {
   }, [isClose, isActive]);
 
   return (
-    <S.Container isActive={isActive} isClose={isActive && isClose} ref={ref}>
+    <S.Container
+      colorSet={isAdmin ? '#23B2AD' : '#5323B2'}
+      isActive={isActive}
+      isClose={isActive && isClose}
+      ref={ref}
+    >
       {!isClose && isActive && (
         <>
           <NavigationSubHeader>{mainUrl}</NavigationSubHeader>
-          <NavigationSubBody page={mainUrl} />
+          <NavigationSubBody page={mainUrl} subRouteData={subRouteData} />
         </>
       )}
 
-      {isClose && isActive && <CloseNavigatin />}
+      {isClose && isActive && <CloseNavigatin subRouteData={subRouteData} />}
     </S.Container>
   );
 };

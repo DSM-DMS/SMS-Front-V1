@@ -3,17 +3,18 @@ import * as S from './styles';
 import SubNavigationItemContainer from '../../Item/SubNavigationItemContainer';
 import { useSelector } from 'react-redux';
 import { stateType } from '../../../../modules/reducer';
-import { subNavObj, PageType } from '../../../../lib/static';
+import { PageType, SubNavObj } from '../../../../lib/static';
 
 interface Props {
   page: string;
+  subRouteData: SubNavObj;
 }
 
-const NavigationSubBody: FC<Props> = ({ page }) => {
+const NavigationSubBody: FC<Props> = ({ page, subRouteData }) => {
   const subUrl = useSelector((store: stateType) => store.page.subUrl);
   return (
     <S.Container>
-      {subNavObj[page as PageType].map(
+      {subRouteData[page as PageType].map(
         ({ name, url, acitveUrl, route }, index) => (
           <SubNavigationItemContainer
             isActive={subUrl === name}

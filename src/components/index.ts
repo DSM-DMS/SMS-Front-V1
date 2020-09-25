@@ -13,3 +13,10 @@ export { default as CircleWantedList } from './Circle/Wanted/List/CircleWantedLi
 export { default as CircleAllDetail } from './default/Info/CircleAllDetail';
 export { default as CircleWantedDetail } from './default/Info/CircleWantedDetail';
 export { default as CircleAll } from './Circle/All/CircleAll';
+export { default as AdminOutingWaitList } from './Admin/Outing/Wait/List/AdminOutingCardWaitList';
+export { default as AdminMain } from './Admin/Main/Main';
+export { default as AdminOutingNowList } from './Admin/Outing/now/list/AdminOutingNowList';
+export { default as AdminOutingCertifiedList } from './Admin/Outing/certified/list/AdminOutingCertifiedList';
+export { default as AdminNoticeAll } from './Admin/Notice/all/AdminNoticeAll';
+export { default as AdminNoticeAllDetail } from './Admin/Notice/all/AdminNoticeAllDetail';
+export { default as AdminNoticeMine } from './Admin/Notice/mine/AdminNoticeMine';
