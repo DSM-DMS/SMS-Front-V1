@@ -1,18 +1,16 @@
 import React, { FC, ReactElement } from 'react';
 
+import { WithModalProps, EXPIRED, OUT } from './Modal';
 import ModalCategory from './ModalCategory';
 
 import * as S from '../style';
 import { OutingUser, OutingClose } from '../../../assets';
 
-interface Props {
-  handleMode: (mode: 'apply' | 'card') => void;
-  handleModal: (isShow: boolean) => void;
-}
-
-const ModalOnlineCard: FC<Props> = ({
+const ModalOnlineCard: FC<WithModalProps> = ({
   handleMode,
   handleModal,
+  outingState,
+  setOutingState,
 }): ReactElement => {
   return (
     <S.ModalOnlineCard>
@@ -31,6 +29,15 @@ const ModalOnlineCard: FC<Props> = ({
         >
           신청 정보
         </S.OnlineCardMoveApply>
+        {outingState === OUT && (
+          <S.OnlineCardMoveApply
+            onClick={() => {
+              setOutingState(EXPIRED);
+            }}
+          >
+            외출 완료
+          </S.OnlineCardMoveApply>
+        )}
         <S.ModalClose
           src={OutingClose}
           alt="close"
