@@ -26,6 +26,11 @@ export const Container = styled.div<{
   ${(props) =>
     props.isManagementMode &&
     css`
+    ${NavigationMainContainer} {
+      * {
+        color: black !important;
+      }
+    }
       div {
         color: black;
       }
@@ -39,11 +44,7 @@ export const Container = styled.div<{
       }
     `}
 
-  ${NavigationMainContainer} {
-    * {
-      color: black !important;
-    }
-  }
+  
 `;
 
 export const BackgroundImgWrap = styled.div`
