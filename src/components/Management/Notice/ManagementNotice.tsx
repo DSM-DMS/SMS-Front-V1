@@ -26,7 +26,7 @@ const data: BoardObj[] = [
   }
 ];
 
-const ManagementEdit: FC = () => {
+const ManagementNotice: FC = () => {
   return (
     <S.Container>
       <S.Header>
@@ -50,4 +50,4 @@ const ManagementEdit: FC = () => {
   );
 };
 
-export default ManagementEdit;
+export default ManagementNotice;
