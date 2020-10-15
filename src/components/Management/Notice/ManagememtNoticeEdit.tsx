@@ -1,15 +1,15 @@
 import React, { FC } from "react";
 import { useEffect } from "react";
-import { NavIconNoticeMint } from "../../../../assets";
-import { PageHeader } from "../../../default";
-import * as S from "./styles";
+import { NavIconNoticeBlack } from "../../../assets";
+import { PageHeader } from "../../default";
+import * as S from "../../Admin/Notice/writing/styles";
 import EditerJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import { useRef } from "react";
 import { useCallback } from "react";
 
-const AdminNoticeWriting: FC = () => {
+const ManagementNoticeEdit: FC = () => {
   const editerRef = useRef<EditerJS>();
   useEffect(() => {
     const editer = new EditerJS({
@@ -29,7 +29,7 @@ const AdminNoticeWriting: FC = () => {
 
   return (
     <S.Container>
-      <PageHeader imgSrc={NavIconNoticeMint} title="공지사항" type="DETAIL" />
+      <PageHeader imgSrc={NavIconNoticeBlack} title="공지사항" type="DETAIL" />
       <S.Hr />
       <S.TitleInput type="text" placeholder="제목을 입력하세요" />
       <S.Hr />
@@ -61,4 +61,4 @@ const AdminNoticeWriting: FC = () => {
   );
 };
 
-export default AdminNoticeWriting;
+export default ManagementNoticeEdit;

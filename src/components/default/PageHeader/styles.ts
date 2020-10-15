@@ -1,22 +1,22 @@
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 interface Type {
   type?: string;
 }
 
-export const DETAIL = 'DETAIL';
-export const LIST = 'LIST';
+export const DETAIL = "DETAIL";
+export const LIST = "LIST";
 
 export const Img = styled.img<Type>`
-  ${(props) =>
+  ${props =>
     props.type === LIST &&
     css`
       width: 44px;
       height: 44px;
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === DETAIL &&
     css`
       width: 30px;
@@ -25,7 +25,7 @@ export const Img = styled.img<Type>`
 `;
 
 export const Title = styled.div<Type>`
-  ${(props) =>
+  ${props =>
     props.type === LIST &&
     css`
       font-size: 30px;
@@ -33,7 +33,7 @@ export const Title = styled.div<Type>`
       margin-top: 20px;
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === DETAIL &&
     css`
       margin-top: 0;
@@ -48,7 +48,7 @@ export const Button = styled(Link)<{ color: string }>`
   font-size: 12px;
   border-radius: 5px;
   text-decoration: none;
-  background-color: ${(props) => props.color};
+  background-color: ${props => props.color};
 `;
 
 export const DeleteButton = styled.button<{ color: string }>`
@@ -58,7 +58,7 @@ export const DeleteButton = styled.button<{ color: string }>`
   border-radius: 5px;
   text-decoration: none;
   border: none;
-  background-color: ${(props) => props.color};
+  background-color: ${props => props.color};
   margin-right: 10px;
 `;
 
@@ -67,15 +67,20 @@ export const Wrap = styled.div`
   justify-content: space-between;
 `;
 
+export const InputWrap = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
 export const Container = styled.div<Type>`
   display: flex;
-  ${(props) =>
+  ${props =>
     props.type === LIST &&
     css`
       flex-direction: column;
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === DETAIL &&
     css`
       flex-direction: row;
