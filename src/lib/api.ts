@@ -17,12 +17,30 @@ const urlObj: UrlObj = {
 };
 
 const adminObj: UrlObj = {
+  home:["학사 일정", ""],
   out: ['외출 관리', '승인대기 외출증'],
   notice: ['공지사항', '전체 공지'],
 };
 
+const managementObj:UrlObj = {
+  edit:["정보수정", ""],
+  wanted:["모집관리", ""],
+  notice:["공지 관리", ""]
+}
+
+const urlObjWrap = {
+  admin:adminObj,
+  management:managementObj
+}
+
 interface SubUrlObj {
   [key: string]: string;
+}
+
+const managementUrlObj:SubUrlObj = {
+  edit:"none",
+  wanted:"none",
+  notice:"none"
 }
 
 const subUrlObj: SubUrlObj = {
@@ -33,6 +51,11 @@ const subUrlObj: SubUrlObj = {
   apply: '외출신청',
   history: '내 외출신청 내역',
 };
+
+const subUrlObjWrap = {
+  admin:subUrlObj,
+  management:managementUrlObj
+}
 
 const adminUrlObj: SubUrlObj = {
   certified: '미인증 외출증',
@@ -46,11 +69,10 @@ const adminUrlObj: SubUrlObj = {
 export const getNavUrl = (url: string): PageState => {
   const stringArr = url.split('/');
   const filterStr = stringArr[3] as 'home' | 'notice' | 'circles' | 'outing';
-  console.log(filterStr);
-  const urlArr = urlObj[filterStr] || adminObj[stringArr[4]] || ['', ''];
+  const urlArr = urlObj[filterStr] || urlObjWrap[stringArr[3]][stringArr[4]] || ['', ''];
   return {
     mainUrl: urlArr[0],
-    subUrl: adminUrlObj[stringArr[5]] || subUrlObj[stringArr[4]] || urlArr[1],
+    subUrl: adminUrlObj[stringArr[5]] || subUrlObj[stringArr[4]]  || (subUrlObjWrap[stringArr[3]] && subUrlObjWrap[stringArr[3]][stringArr[4]]) || urlArr[1],
   };
 };
 
