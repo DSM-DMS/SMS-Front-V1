@@ -9,13 +9,14 @@ import {
   OutingRouter,
   MainRouter,
   AdminRouter,
+  ManagementRouter,
 } from './routers';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { jsonActionCreater } from './modules/action/json';
 
 const App: FC<{}> = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();  
   useEffect(() => {
     dispatch(jsonActionCreater.getJsonSaga());
   }, []);
@@ -28,11 +29,13 @@ const App: FC<{}> = () => {
         <GlobalBody>
           <Header />
           <Switch>
+          
             <Route path="/home" component={MainRouter} />
             <Route path="/notice" component={NoticeRouter} />
             <Route path="/circles" component={CirclesRouter} />
             <Route path="/outing" component={OutingRouter} />
             <Route path="/admin" component={AdminRouter} />
+            <Route path="/management" component={ManagementRouter} />
           </Switch>
         </GlobalBody>
       </BrowserRouter>
