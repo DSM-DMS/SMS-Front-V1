@@ -22,6 +22,7 @@ import {
   NavIconCircleMint,
   NavIconUnauthorizedBlack,
   NavIconUnauthorizedMint,
+  NavIconHomeBlack,
 } from '../assets';
 import {
   MainSubItem,
@@ -102,8 +103,8 @@ export const managementRouter: RouteData = {
     {
       name: '정보수정',
       route: '/management/edit',
-      white: NavIconHomeBlue,
-      blue: NavIconHomeWhite,
+      white: NavIconHomeBlack,
+      blue: NavIconHomeBlack,
     },
     {
       name: '모집관리',
