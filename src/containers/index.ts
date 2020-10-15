@@ -19,3 +19,4 @@ export { default as AdminNoticeMineContainer } from './Admin/Notice/mine/AdminNo
 export { default as AdminNoticeAllDetailContainer } from './Admin/Notice/all/AdminNoticeAllDetailContainer';
 export { default as AdminNoticeMineDetailContainer } from './Admin/Notice/mine/AdminNoticeMineDetailContainer';
 export { default as AdminNoticeWritingContainer } from './Admin/Notice/writing/AdminNoticeWritingContainer';
+export { default as ManagementEditContainer } from './Management/Edit/ManagememtEditContainer';
