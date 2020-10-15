@@ -17,8 +17,9 @@ const NoticeContainer: FC = () => {
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }, []);
-  return (
-    <S.Container>
+
+  return ( 
+    <S.Container> 
       <ListPageHeader
         onChange={onChange}
         title="공지사항"

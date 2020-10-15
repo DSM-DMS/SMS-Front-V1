@@ -9,7 +9,7 @@ import {
   AdminNoticeAllDetailContainer,
   AdminNoticeMineContainer,
   AdminNoticeMineDetailContainer,
-  AdminNoticeWritingContainer,
+  AdminNoticeWritingContainer
 } from '../containers';
 import { GlobalInnerBody } from '../GlobalStyle';
 
