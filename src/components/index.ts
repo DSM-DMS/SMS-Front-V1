@@ -20,3 +20,4 @@ export { default as AdminOutingCertifiedList } from './Admin/Outing/certified/li
 export { default as AdminNoticeAll } from './Admin/Notice/all/AdminNoticeAll';
 export { default as AdminNoticeAllDetail } from './Admin/Notice/all/AdminNoticeAllDetail';
 export { default as AdminNoticeMine } from './Admin/Notice/mine/AdminNoticeMine';
+export { default as AdminNoticeWriting } from './Admin/Notice/writing/AdminNoticeWriting';

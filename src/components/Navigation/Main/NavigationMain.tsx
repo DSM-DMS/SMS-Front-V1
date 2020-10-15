@@ -22,8 +22,11 @@ interface Props {
 
 const NavigationMain: FC<Props> = ({ routeData }) => {
   return (
-    <S.Container colorSet={routeData.color}>
-      <NavigationHeader />
+    <S.Container
+      colorSet={routeData.color}
+      isManagementMode={routeData.isManagementMode}
+    >
+      <NavigationHeader isManagementMode={routeData.isManagementMode} />
       <NavigationBody navItemArr={routeData.main} mainSubArr={routeData.sub} />
       <S.BackgroundImgWrap>
         {routeData.color === '#23B2AD' ? (
@@ -33,6 +36,8 @@ const NavigationMain: FC<Props> = ({ routeData }) => {
             <S.Circle src={MintBackgroundCircle3} top={410} left={0} />
             <S.Circle src={MintBackgroundCircle4} top={410} left={-40} />
           </>
+        ) : routeData.color === '#FFFFFF' ? (
+          <></>
         ) : (
           <>
             <S.Circle src={BlueBackgroundCircle1} top={90} left={-80} />

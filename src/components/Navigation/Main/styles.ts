@@ -1,6 +1,10 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Container as NavigationMainContainer } from '../Main/header/styles';
 
-export const Container = styled.div<{ colorSet: string }>`
+export const Container = styled.div<{
+  colorSet: string;
+  isManagementMode: boolean;
+}>`
   width: 15vw;
   box-sizing: border-box;
   padding: 40px 0 0 30px;
@@ -14,7 +18,33 @@ export const Container = styled.div<{ colorSet: string }>`
 
   .active {
     color: ${(props) => props.colorSet};
+    > div + div {
+      border-left-color: ${(props) => props.colorSet};
+    }
   }
+
+  ${(props) =>
+    props.isManagementMode &&
+    css`
+    ${NavigationMainContainer} {
+      * {
+        color: black !important;
+      }
+    }
+      div {
+        color: black;
+      }
+      .active {
+        background-color: #f6f6f6 !important;
+        color: black;
+
+        > div + div {
+          border-left-color: black;
+        }
+      }
+    `}
+
+  
 `;
 
 export const BackgroundImgWrap = styled.div`
