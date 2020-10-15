@@ -1,23 +1,23 @@
-import React, { FC } from 'react';
-import { useEffect } from 'react';
-import { NavIconNoticeMint } from '../../../../assets';
-import { PageHeader } from '../../../default';
-import * as S from './styles';
-import EditerJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import { useRef } from 'react';
-import { useCallback } from 'react';
+import React, { FC } from "react";
+import { useEffect } from "react";
+import { NavIconNoticeMint } from "../../../../assets";
+import { PageHeader } from "../../../default";
+import * as S from "./styles";
+import EditerJS from "@editorjs/editorjs";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import { useRef } from "react";
+import { useCallback } from "react";
 
 const AdminNoticeWriting: FC = () => {
   const editerRef = useRef<EditerJS>();
   useEffect(() => {
     const editer = new EditerJS({
-      holder: 'editer',
+      holder: "editer",
       tools: {
         header: Header,
-        list: List,
-      },
+        list: List
+      }
     });
     editerRef.current = editer;
   }, []);
