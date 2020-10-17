@@ -22,3 +22,4 @@ export { default as AdminNoticeWritingContainer } from "./Admin/Notice/writing/A
 export { default as ManagementNoticeContainer } from "./Management/Notice/ManagementNoticeContainer";
 export { default as ManagementNoticeDetailContainer } from "./Management/Notice/ManagementNoticeDetailContainer";
 export { default as ManagementNoticeEditContainer } from "./Management/Notice/ManagementNoticeEditContainer";
+export { default as ManagementWantedDetailContainer } from "./Management/Wanted/ManagementWantedDetailContainer";

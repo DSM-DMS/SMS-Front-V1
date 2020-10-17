@@ -24,3 +24,4 @@ export { default as AdminNoticeWriting } from "./Admin/Notice/writing/AdminNotic
 export { default as ManagementNotice } from "./Management/Notice/ManagementNotice";
 export { default as ManagementNoticeDetail } from "./Management/Notice/ManagementNoticeDetail";
 export { default as ManagementNoticeEdit } from "./Management/Notice/ManagememtNoticeEdit";
+export { default as ManagementWantedDetail } from "./Management/Wanted/ManagementWantedDetail";
