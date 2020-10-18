@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import { DetailPageHeader } from '../../../components/default';
-import { NavIconNoticeBlue } from '../../../assets';
-import NoticeDetailBody from './NoticeDetailBody/NoticeDetailBody';
-import { customSelector } from '../../../lib/api';
+import React, { FC } from "react";
+import * as S from "./styles";
+import { DetailPageHeader } from "../../../components/default";
+import { NavIconNoticeBlue } from "../../../assets";
+import NoticeDetailBody from "./NoticeDetailBody/NoticeDetailBody";
+import { customSelector } from "../../../lib/api";
 
 const NoticeDetail: FC = () => {
-  const { content } = customSelector((state) => state.board.detail);
+  const { content } = customSelector(state => state.board.detail);
 
   return (
     <S.Container>

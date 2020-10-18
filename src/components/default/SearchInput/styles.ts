@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const InputWrap = styled.div`
   display: flex;
@@ -10,6 +10,8 @@ export const InputBackground = styled.div`
   padding: 4px 10px;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  height: 100%;
 `;
 
 export const Input = styled.input`

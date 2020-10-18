@@ -14,6 +14,7 @@ export { default as NavIconCircleBlack } from './navigation/NavIcon-circle-black
 export { default as NavIconCircleMint } from './navigation/NavIcon-circle-mint.svg';
 export { default as NavIconHomeWhite } from './navigation/NavIcon-home-white.svg';
 export { default as NavIconHomeBlue } from './navigation/NavIcon-home-blue.svg';
+export { default as NavIconHomeBlack } from './navigation/NavIcon-home-black.svg';
 export { default as NavIconNoticeWhite } from './navigation/NavIcon-notice-white.svg';
 export { default as NavIconNoticeBlue } from './navigation/NavIcon-notice-blue.svg';
 export { default as NavIconNoticeMint } from './navigation/NavIcon-notice-mint.svg';
@@ -32,6 +33,7 @@ export { default as NavIconScheduleMint } from './navigation/NavIcon-schedule-mi
 export { default as NavIconUnauthorizedBlack } from './navigation/NavIcon-unAuthorized-black.svg';
 export { default as NavIconUnauthorizedMint } from './navigation/NavIcon-unAuthorized-mint.svg';
 export { default as IconWhite } from './navigation/Icon-white.svg';
+export { default as IconBlack } from './navigation/Icon-black.svg';
 export { default as CloseMenu } from './navigation/CloseMenu.svg';
 export { default as SearchIcon } from './Board/SearchIcon.svg';
 export { default as MainArrow } from './Main/arrow.svg';
