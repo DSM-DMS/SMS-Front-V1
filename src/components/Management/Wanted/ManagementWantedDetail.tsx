@@ -1,6 +1,9 @@
 import React, { FC, useState, MouseEvent, useCallback } from "react";
+import { FacebookIcon } from "../../../assets";
 import WantedTopHeader from "../../default/Header/WantedTopHeader/WantedTopHeader";
-import * as S from "./styles";
+import { FaceBookBtn } from "../../default/Info/Header/styles";
+import * as S from "../../../styles/CircleWantedDetail";
+import ManagementWantedMain from "./Main/ManagementWantedMain";
 
 interface Props {}
 
@@ -34,7 +37,7 @@ const ManagementWantedDetail: FC<Props> = () => {
         }}
       />
       <S.Hr />
-      <S.Main></S.Main>
+      <ManagementWantedMain />
     </S.Container>
   );
 };
