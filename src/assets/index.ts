@@ -55,3 +55,7 @@ export { default as OutingBalloons } from "./Outing/balloons.svg";
 export { default as OutingUser } from "./Outing/user.svg";
 export { default as ModalClose } from "./Outing/modalClose.svg";
 export { default as calanderSvg } from "./management/calander.svg";
+export { default as plusMember } from "./management/plus.svg";
+export { default as deleteMember } from "./management/delete.svg";
+export { default as paperclipClubPicture } from "./management/paperclip.svg";
+export { default as Search } from "./management/search.svg";
