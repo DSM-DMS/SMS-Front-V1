@@ -55,3 +55,5 @@ export { default as OutingBalloons } from "./Outing/balloons.svg";
 export { default as OutingUser } from "./Outing/user.svg";
 export { default as ModalClose } from "./Outing/modalClose.svg";
 export { default as calanderSvg } from "./management/calander.svg";
+export { default as NavIconExitBlack } from "./navigation/NavIcon-exit-black.svg";
+export { default as NavIconTrashCanYellow } from "./navigation/NavIcon-trashCan-yellow.svg";
