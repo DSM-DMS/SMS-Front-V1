@@ -10,6 +10,7 @@ import ClubName from "./Name";
 import ClubPicture from "./Picture";
 import ClubPosition from "./Position";
 import MemberAddModal from "./MemberAddModal";
+import ManagementInfoBottom from "./Bottom";
 
 interface IClubInfo {
   name: string;
@@ -65,10 +66,7 @@ const ManagementInfo: FC = () => {
           <ClubFacebookLink />
         </S.CenterRight>
       </S.Center>
-      <S.CenterBottom>
-        <S.BottomCancelButton>취소</S.BottomCancelButton>
-        <S.BottomEditButton>적용</S.BottomEditButton>
-      </S.CenterBottom>
+      <ManagementInfoBottom />
     </S.ManagementInfoWrap>
   );
 };
