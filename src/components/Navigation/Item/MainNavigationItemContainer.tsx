@@ -1,8 +1,8 @@
-import React, { FC, useCallback, memo } from 'react';
-import NavigationItem from './NavigationItem';
-import { useHistory } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { pageMove } from '../../../modules/action/page';
+import React, { FC, useCallback, memo } from "react";
+import NavigationItem from "./NavigationItem";
+import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
+import { pageMove } from "../../../modules/action/page";
 
 interface Props {
   name: string;
@@ -15,7 +15,7 @@ const MainNavigationItemContainer: FC<Props> = ({
   isActive,
   name,
   src,
-  route,
+  route
 }) => {
   const history = useHistory();
   const dispatch = useDispatch();

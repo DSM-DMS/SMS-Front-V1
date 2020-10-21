@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import NavigationHeader from './header/NavigationHeader';
-import NavigationBody from './body/NavigationBody';
+import React, { FC } from "react";
+import * as S from "./styles";
+import NavigationHeader from "./header/NavigationHeader";
+import NavigationBody from "./body/NavigationBody";
+import { NavIconTrashCanYellow, NavIconExitBlack } from "../../../assets";
 import {
   BackgroundCircle1 as BlueBackgroundCircle1,
   BackgroundCircle2 as BlueBackgroundCircle2,
@@ -12,15 +13,23 @@ import {
   BackgroundCircle7 as MintBackgroundCircle1,
   BackgroundCircle8 as MintBackgroundCircle2,
   BackgroundCircle9 as MintBackgroundCircle3,
-  BackgroundCircle10 as MintBackgroundCircle4,
-} from '../../../assets';
-import { RouteData } from '../../../lib/static';
+  BackgroundCircle10 as MintBackgroundCircle4
+} from "../../../assets";
+import { RouteData } from "../../../lib/static";
+import NavigationItem from "../Item/NavigationItem";
+import { useCallback } from "react";
+import { useHistory } from "react-router";
 
 interface Props {
   routeData: RouteData;
 }
 
 const NavigationMain: FC<Props> = ({ routeData }) => {
+  const history = useHistory();
+  const goMain = useCallback(() => {
+    history.push("/home");
+  }, []);
+
   return (
     <S.Container
       colorSet={routeData.color}
@@ -29,14 +38,14 @@ const NavigationMain: FC<Props> = ({ routeData }) => {
       <NavigationHeader isManagementMode={routeData.isManagementMode} />
       <NavigationBody navItemArr={routeData.main} mainSubArr={routeData.sub} />
       <S.BackgroundImgWrap>
-        {routeData.color === '#23B2AD' ? (
+        {routeData.color === "#23B2AD" ? (
           <>
             <S.Circle src={MintBackgroundCircle1} top={150} left={190} />
             <S.Circle src={MintBackgroundCircle2} top={450} left={-140} />
             <S.Circle src={MintBackgroundCircle3} top={410} left={0} />
             <S.Circle src={MintBackgroundCircle4} top={410} left={-40} />
           </>
-        ) : routeData.color === '#FFFFFF' ? (
+        ) : routeData.color === "#FFFFFF" ? (
           <></>
         ) : (
           <>
@@ -49,6 +58,22 @@ const NavigationMain: FC<Props> = ({ routeData }) => {
           </>
         )}
       </S.BackgroundImgWrap>
+      {routeData.isManagementMode && (
+        <S.ManagementMenu>
+          <NavigationItem
+            onClick={goMain}
+            isActive={false}
+            src={NavIconExitBlack}
+            name="동아리 관리 페이지 나가기"
+          />
+          <NavigationItem
+            onClick={() => {}}
+            isActive={false}
+            src={NavIconTrashCanYellow}
+            name="동아리 삭제"
+          />
+        </S.ManagementMenu>
+      )}
     </S.Container>
   );
 };
