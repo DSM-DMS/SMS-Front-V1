@@ -88,7 +88,7 @@ export const ClubFieldLabelRadio = styled.input`
   cursor: pointer;
 `;
 
-export const ClubPosition = styled(ClubCommonStyle)``;
+export const ClubLocation = styled(ClubCommonStyle)``;
 
 export const ClubConcept = styled(ClubCommonStyle)``;
 
@@ -110,6 +110,7 @@ export const ClubMemberItem = styled.li`
   align-items: center;
   justify-content: space-between;
   transition: 0.3s ease-in-out;
+  font-size: 14px;
   &:hover {
     color: #ffffff;
     background-color: #888888;
