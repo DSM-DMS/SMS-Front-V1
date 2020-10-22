@@ -1,15 +1,11 @@
-import React, {
-  ChangeEvent,
-  FC,
-  ReactElement,
-  useCallback,
-  useRef,
-  useState
-} from "react";
+import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
 import { Search } from "../../../assets";
+import { ManagementInfoHandler } from "../../../modules/action/management/info";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {
   handleCloseModal: () => void;
@@ -26,16 +22,19 @@ const initUsers: string[] = [
   "1108 홍길동8"
 ];
 
-const MemberAddModal: FC<Props> = ({ handleCloseModal }): ReactElement => {
+const MemberAddModal: FC<Props> = ({ handleCloseModal }) => {
+  const handler = new ManagementInfoHandler();
   const scrollWrap = useRef<HTMLUListElement>(null);
+  const { members } = useSelector((state: stateType) => state.ManagementInfo);
   const [searchQueue, setSearchQueue] = useState<string[]>([]);
   const [addQueue, setAddResult] = useState<string[]>([]);
 
-  const addMembers = async () => {
+  const addMembers = () => {
     // const url = "http://www.naver.com";
     // const data = {};
     // const config = {};
     // await axios.post(url, data, config);
+    handler.handleMembers([...addQueue, ...members]);
     handleCloseModal();
   };
 
