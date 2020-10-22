@@ -59,3 +59,5 @@ export { default as plusMember } from "./management/plus.svg";
 export { default as deleteMember } from "./management/delete.svg";
 export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
+export { default as NavIconExitBlack } from "./navigation/NavIcon-exit-black.svg";
+export { default as NavIconTrashCanYellow } from "./navigation/NavIcon-trashCan-yellow.svg";
