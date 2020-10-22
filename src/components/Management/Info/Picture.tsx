@@ -5,16 +5,23 @@ import React, {
   ReactElement,
   useCallback,
   useRef,
-  useState
+  useState,
+  ChangeEvent,
+  memo
 } from "react";
+import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
 import { ModalClose, paperclipClubPicture } from "../../../assets";
+import { ManagementInfoHandler } from "../../../modules/action/management/info";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {}
 
 const ClubPicture: FC<Props> = (): ReactElement => {
+  const handler = new ManagementInfoHandler();
+  const { pictureId } = useSelector((state: stateType) => state.ManagementInfo);
   const fileRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLImageElement>(null);
   const [dragged, setDragged] = useState<boolean>(false);
@@ -76,6 +83,10 @@ const ClubPicture: FC<Props> = (): ReactElement => {
     previewRef.current.src = "";
   };
 
+  const handleChangePicture = (e: ChangeEvent<HTMLInputElement>) => {
+    handler.handlePictureId(1);
+  };
+
   return (
     <S.ClubPicture>
       <div>
@@ -124,4 +135,4 @@ const ClubPicture: FC<Props> = (): ReactElement => {
   );
 };
 
-export default ClubPicture;
+export default memo(ClubPicture);
