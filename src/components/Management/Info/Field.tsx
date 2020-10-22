@@ -1,46 +1,50 @@
-import React, { FC, ReactElement } from "react";
+import React, { ChangeEvent, FC, memo, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
 import * as S from "./style";
+
+import {
+  Fields,
+  EMBEDDED,
+  SECURITY,
+  SOFTWARE,
+  ManagementInfoHandler
+} from "../../../modules/action/management/info";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {}
 
 const ClubField: FC<Props> = (): ReactElement => {
+  const handler = new ManagementInfoHandler();
+  const { field } = useSelector((state: stateType) => state.ManagementInfo);
+
+  const handleChangeField = (e: ChangeEvent<HTMLInputElement>) => {
+    handler.handleField(e.target.value as Fields);
+  };
+
   return (
     <S.ClubField>
       <div>
         <p>분야</p>
         <S.ClubFieldLabelWrap>
-          <S.ClubFieldLabel>
-            <S.ClubFieldLabelRadio
-              type="radio"
-              value="SW개발"
-              name="field"
-              id="SW개발"
-            />
-            <span>SW개발</span>
-          </S.ClubFieldLabel>
-          <S.ClubFieldLabel>
-            <S.ClubFieldLabelRadio
-              type="radio"
-              value="임베디드"
-              name="field"
-              id="임베디드"
-            />
-            <span>임베디드</span>
-          </S.ClubFieldLabel>
-          <S.ClubFieldLabel>
-            <S.ClubFieldLabelRadio
-              type="radio"
-              value="정보보안"
-              name="field"
-              id="정보보안"
-            />
-            <span>정보보안</span>
-          </S.ClubFieldLabel>
+          {[SOFTWARE, EMBEDDED, SECURITY].map(f => (
+            <S.ClubFieldLabel key={f}>
+              <S.ClubFieldLabelRadio
+                type="radio"
+                value={f}
+                name="fields"
+                id={f}
+                defaultChecked={f === field}
+                maxLength={30}
+                onChange={handleChangeField}
+              />
+              <span>{f}</span>
+            </S.ClubFieldLabel>
+          ))}
         </S.ClubFieldLabelWrap>
       </div>
     </S.ClubField>
   );
 };
 
-export default ClubField;
+export default memo(ClubField);
