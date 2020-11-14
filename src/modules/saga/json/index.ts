@@ -1,12 +1,12 @@
-import axios from 'axios';
-import { call, put, takeEvery } from 'redux-saga/effects';
-import { jsonAction, jsonActionCreater } from '../../action/json';
+import axios from "axios";
+import { call, put, takeEvery } from "redux-saga/effects";
+import { jsonAction, jsonActionCreater } from "../../action/json";
 
 function* setJsonSaga(action: any) {
   // call(함수, 함수에 들어갈 매개변수1, 함수에 들어갈 매개변수2, 함수에 들어갈 매개변수3....)
   const { data } = yield call(
     axios.get,
-    'https://jsonplaceholder.typicode.com/todos/1',
+    "https://jsonplaceholder.typicode.com/todos/1"
   );
   yield put(jsonActionCreater.setJson(data));
   // put === dispatch

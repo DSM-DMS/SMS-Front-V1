@@ -1,4 +1,4 @@
-import { HeaderAction, RESET_USER, SET_USER } from '../../action/header';
+import { HeaderAction, RESET_USER, SET_USER } from "../../action/header";
 
 export interface PageState {
   mainUrl: string;
@@ -9,17 +9,17 @@ export interface HeaderState {
 }
 
 const headerReducer = (
-  state: HeaderState = { info: '' },
-  action: HeaderAction,
+  state: HeaderState = { info: "" },
+  action: HeaderAction
 ): HeaderState => {
   switch (action.type) {
     case SET_USER:
       return {
-        info: action.payload,
+        info: action.payload
       };
     case RESET_USER:
       return {
-        info: '',
+        info: ""
       };
     default:
       return state;
