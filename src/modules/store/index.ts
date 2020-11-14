@@ -1,24 +1,11 @@
 import { createStore, applyMiddleware } from "redux";
-import { routerMiddleware } from "connected-react-router";
 import createReduxSaga from "redux-saga"; // reduxSaga인스턴스를 만드는 함수를 import
 import { composeWithDevTools } from "redux-devtools-extension";
 
-import rootReducer, { configureRootReducer } from "../reducer";
+import rootReducer from "../reducer";
 import rootSaga from "../saga";
-import customHistory from "../../history";
 
-const reduxSaga = createReduxSaga({
-  context: {
-    history: customHistory
-  }
-}); //인스턴스를 만들어줌
-
-const configureStore = history => {
-  return createStore(
-    configureRootReducer(history),
-    composeWithDevTools(applyMiddleware(routerMiddleware(history), reduxSaga))
-  );
-};
+const reduxSaga = createReduxSaga(); //인스턴스를 만들어줌
 
 const store = createStore(
   rootReducer,
@@ -27,5 +14,4 @@ const store = createStore(
 
 reduxSaga.run(rootSaga); // run메소드에 rootSaga를 넣어줌
 
-export { configureStore };
 export default store;
