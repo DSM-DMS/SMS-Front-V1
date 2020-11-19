@@ -61,3 +61,4 @@ export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
 export { default as NavIconExitBlack } from "./navigation/NavIcon-exit-black.svg";
 export { default as NavIconTrashCanYellow } from "./navigation/NavIcon-trashCan-yellow.svg";
+export { default as PageNotFound } from "./default/page_not_found.svg";
