@@ -1,8 +1,10 @@
-import React, { FC } from 'react';
-import { Switch, BrowserRouter, Route } from 'react-router-dom';
-import Navigation from './components/Navigation/Navigation';
-import { GlobalStyle, GlobalContainer, GlobalBody } from './GlobalStyle';
-import { Header } from './components';
+import React, { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Switch, BrowserRouter, Route } from "react-router-dom";
+
+import Navigation from "./components/Navigation/Navigation";
+import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
+import { Header, PageNotFound } from "./components";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -36,6 +38,7 @@ const App: FC<{}> = () => {
             <Route path="/outing" component={OutingRouter} />
             <Route path="/admin" component={AdminRouter} />
             <Route path="/management" component={ManagementRouter} />
+            <Route path="*" component={PageNotFound} />
           </Switch>
         </GlobalBody>
       </BrowserRouter>
