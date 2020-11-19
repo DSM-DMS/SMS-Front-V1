@@ -1,9 +1,8 @@
 import styled, {
   createGlobalStyle,
   GlobalStyleComponent,
-  DefaultTheme,
-  css,
-} from 'styled-components';
+  DefaultTheme
+} from "styled-components";
 
 export const GlobalStyle: GlobalStyleComponent<
   {},
