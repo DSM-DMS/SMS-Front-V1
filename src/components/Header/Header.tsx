@@ -1,22 +1,34 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import * as S from './style';
+import * as S from "./style";
 
-import { stateType } from '../../modules/reducer';
-import { setUser } from '../../modules/action/header';
+import { stateType } from "../../modules/reducer";
+import {
+  setGrade,
+  setGroup,
+  setName,
+  setNumber,
+  setType
+} from "../../modules/action/header";
 
 const Header: FC<{}> = () => {
   const dispatch = useDispatch();
-  const { info } = useSelector((state: stateType) => state.header);
+  const { grade, group, number, name } = useSelector(
+    (state: stateType) => state.header
+  );
 
   useEffect(() => {
-    dispatch(setUser('2학년 3반  1번 강신희'));
+    dispatch(setType("student"));
+    dispatch(setGrade(2));
+    dispatch(setGroup(1));
+    dispatch(setNumber(15));
+    dispatch(setName("이성진"));
   }, []);
 
   return (
     <S.HeaderWrap>
-      <span>{info}</span>
+      <span>{`${grade}학년 ${group}반 ${number}번 ${name}`}</span>
       <button>로그아웃</button>
     </S.HeaderWrap>
   );
