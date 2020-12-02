@@ -4,7 +4,7 @@ import { Switch, BrowserRouter, Route } from "react-router-dom";
 
 import Navigation from "./components/Navigation/Navigation";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
-import { Header, PageNotFound } from "./components";
+import { Header, Login, PageNotFound } from "./components";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -29,6 +29,7 @@ const App: FC<{}> = () => {
         <GlobalBody>
           <Header />
           <Switch>
+            <Route path="/login" component={Login} />
             <Route path="/home" component={MainRouter} />
             <Route path="/notice" component={NoticeRouter} />
             <Route path="/circles" component={CirclesRouter} />
