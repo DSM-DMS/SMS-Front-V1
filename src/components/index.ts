@@ -26,4 +26,4 @@ export { default as ManagementNoticeDetail } from "./Management/Notice/Managemen
 export { default as ManagementNoticeEdit } from "./Management/Notice/ManagememtNoticeEdit";
 export { default as ManagementWantedDetail } from "./Management/Wanted/ManagementWantedDetail";
 export { default as ManagementInfo } from "./Management/Info/ManagementInfo";
-export { PageNotFound } from "./default";
+export { PageNotFound, Login } from "./default";
