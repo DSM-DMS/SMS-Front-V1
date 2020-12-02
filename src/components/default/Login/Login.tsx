@@ -1,9 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC, useCallback, useState } from "react";
+import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
-import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
+import { postLoginStudent } from "../../../lib/api";
 
 interface Props {}
 
@@ -11,14 +12,28 @@ const Login: FC<Props> = () => {
   const { type } = useSelector((state: stateType) => state.header);
   const [id, setId] = useState<string>("");
   const [pw, setPw] = useState<string>("");
+  const [autoLogin, setAutoLogin] = useState<boolean>(false);
 
-  const login = () => {
-    if (id === "id" && pw === "pw") {
-      alert("로그인 성공");
-    } else {
-      alert("로그인 실패");
+  const login = useCallback(async (id, pw) => {
+    const filtering = (str: string) => str.length >= 4 && str.length <= 16;
+
+    if (filtering(id) && filtering(pw)) {
+      try {
+        const {
+          data: { access_token, student_uuid }
+        } = await postLoginStudent(id, pw);
+
+        localStorage.setItem("access_token", access_token);
+        localStorage.setItem("student_uuid", student_uuid);
+
+        if (autoLogin) {
+          localStorage.setItem("expiration", `${new Date().getTime()}`);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-  };
+  }, []);
 
   return (
     <S.LoginWrap>
@@ -33,7 +48,7 @@ const Login: FC<Props> = () => {
               type="text"
               placeholder="아이디"
               id="id"
-              onChange={e => {
+              onChange={(e) => {
                 setId(e.currentTarget.value);
               }}
               value={id}
@@ -44,19 +59,25 @@ const Login: FC<Props> = () => {
               type="password"
               placeholder="비밀번호"
               id="pw"
-              onKeyPress={e => e.key === "Enter" && login()}
-              onChange={e => {
+              onKeyPress={(e) => e.key === "Enter" && login(id, pw)}
+              onChange={(e) => {
                 setPw(e.currentTarget.value);
               }}
               value={pw}
             />
           </S.LoginLabel>
           <S.AutoLogin>
-            <S.AutoLoginCheckbox type="checkbox" id="auto-login" />
+            <S.AutoLoginCheckbox
+              type="checkbox"
+              id="auto-login"
+              onChange={() => setAutoLogin((prev) => !prev)}
+            />
             <S.AutoLoginLabel htmlFor="auto-login">자동로그인</S.AutoLoginLabel>
           </S.AutoLogin>
         </S.LoginInputsWrap>
-        <S.LoginButton baseColor={type}>로그인</S.LoginButton>
+        <S.LoginButton baseColor={type} onClick={() => login(id, pw)}>
+          로그인
+        </S.LoginButton>
       </S.LoginForm>
     </S.LoginWrap>
   );
