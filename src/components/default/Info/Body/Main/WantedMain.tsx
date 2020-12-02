@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
-import { Comment as CommentType } from '../../../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer';
-import * as S from './styles';
-import { DetailContent, Hr, Where, People, Who, Field } from '../../default';
-import Comment from '../../../Comment/Comment';
-import { customSelector } from '../../../../../lib/api';
+import React, { FC } from "react";
+import { Comment as CommentType } from "../../../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer";
+import * as S from "./styles";
+import { DetailContent, Hr, Where, People, Who, Field } from "../../default";
+import Comment from "../../../Comment/Comment";
+import { customSelector } from "../../../../../lib/utils";
 
 const WantedMain: FC = () => {
   const {
@@ -15,7 +15,7 @@ const WantedMain: FC = () => {
     two,
     one,
     where,
-    comments,
+    comments
   } = customSelector((state) => state.poster.wanted.detail);
   return (
     <S.Container>

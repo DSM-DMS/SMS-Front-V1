@@ -94,5 +94,5 @@ export const makeFilterFunc = <T>(
   data: T[],
   callback: (data: T, str: string) => boolean
 ): ((keyword: string) => T[]) => {
-  return (keyword: string) => data.filter(item => callback(item, keyword));
+  return (keyword: string) => data.filter((item) => callback(item, keyword));
 };

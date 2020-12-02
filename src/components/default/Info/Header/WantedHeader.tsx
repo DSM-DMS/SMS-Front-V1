@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import { Hr } from '../../Board/styles';
-import { FacebookIcon } from '../../../../assets';
-import { customSelector } from '../../../../lib/api';
+import React, { FC } from "react";
+import * as S from "./styles";
+import { Hr } from "../../Board/styles";
+import { FacebookIcon } from "../../../../assets";
+import { customSelector } from "../../../../lib/utils";
 
 const InfoHeader: FC = () => {
   const { name, date } = customSelector((state) => state.poster.wanted.detail);
