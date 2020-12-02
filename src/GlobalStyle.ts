@@ -60,7 +60,6 @@ export const GlobalStyle: GlobalStyleComponent<
   }
   button {
     cursor: pointer;
-    font: none;
   }
   * {
     font-family:"Noto Sans KR" !important;
