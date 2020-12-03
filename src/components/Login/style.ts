@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { UserType } from "../../../modules/action/header";
+import { UserType } from "../../modules/action/header";
 
 interface BaseColor {
   baseColor: UserType;
@@ -104,4 +104,10 @@ export const LoginButton = styled.button<BaseColor>`
       transition: all 0.5s ease-in-out;
     }
   }
+`;
+
+export const ErrorMessage = styled.p`
+  margin-bottom: 12px;
+  color: red;
+  font-size: 14px;
 `;
