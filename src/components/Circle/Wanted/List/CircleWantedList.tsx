@@ -1,18 +1,18 @@
-import React, { FC, useState, useCallback, ChangeEvent } from 'react';
-import * as S from './styles';
-import { PageHeader, Category } from '../../../../components/default';
-import { NavIconCircleBlue } from '../../../../assets';
-import { WantedCircleBox } from '../../../../components/default';
-import { makeFilterFunc, customSelector } from '../../../../lib/api';
-import { WantedCircleBoxData } from '../../../../components/default/CircleBox/WantedCircleBox';
-import { Hr } from '../../../../components/default/Board/styles';
+import React, { FC, useState, useCallback, ChangeEvent } from "react";
+import * as S from "./styles";
+import { PageHeader, Category } from "../../../../components/default";
+import { NavIconCircleBlue } from "../../../../assets";
+import { WantedCircleBox } from "../../../../components/default";
+import { makeFilterFunc, customSelector } from "../../../../lib/utils";
+import { WantedCircleBoxData } from "../../../../components/default/CircleBox/WantedCircleBox";
+import { Hr } from "../../../../components/default/Board/styles";
 
 const CircleWanted: FC = () => {
   const data = customSelector((state) => state.poster.wanted.list);
-  const [keyword, setkeyword] = useState<string>('');
+  const [keyword, setkeyword] = useState<string>("");
   const filterFunc = makeFilterFunc<WantedCircleBoxData>(
     data,
-    ({ name }, keyword) => name.includes(keyword),
+    ({ name }, keyword) => name.includes(keyword)
   );
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +44,7 @@ const CircleWanted: FC = () => {
               date={date}
               imgSrc={imgSrc}
             />
-          ),
+          )
         )}
       </S.BoxWrap>
     </S.Container>
