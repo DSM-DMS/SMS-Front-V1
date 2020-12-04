@@ -1,23 +1,20 @@
-import { AllCircleBoxType } from '../../../components/default/CircleBox/AllCircleBox';
 import {
   PosterAction,
-  UPDATE_POSTER_LIST,
-  UPDATE_POSTER_DETAIL,
-  UPDATE_POSTER_LIST_WANTED,
-  UPDATE_POSTER_DETAIL_WANTED,
-} from '../../action/poster';
-import { CircleAllDetail } from '../../../containers/Circle/All/Detail/CircleAllDetailContainer';
-import { WantedCircleBoxData } from '../../../components/default/CircleBox/WantedCircleBox';
-import { CircleWantedDetail } from '../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer';
+  GET_CIRCLE_INFO_LIST,
+  GET_CIRCLE_INFO_DETAIL,
+  GET_WANTED_INFO_LIST
+} from "../../action/poster";
+import { CircleWantedDetail } from "../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer";
+import { CircleInfo, WantedInfo } from "../../type/poster";
 
 interface PosterState {
   wanted: {
-    list: WantedCircleBoxData[];
+    list: WantedInfo[];
     detail: CircleWantedDetail;
   };
   all: {
-    list: AllCircleBoxType[];
-    detail: CircleAllDetail;
+    list: CircleInfo[];
+    detail: CircleInfo;
   };
 }
 
@@ -25,82 +22,72 @@ const initialState: PosterState = {
   wanted: {
     list: [],
     detail: {
-      name: '',
-      introduce: '',
-      date: '',
-      leader: '',
+      name: "",
+      introduce: "",
+      date: "",
+      leader: "",
       field: [],
       grade: [],
-      where: '',
-      imgSrc: '',
+      where: "",
+      imgSrc: "",
       peoples: {
         three: [],
         two: [],
-        one: [],
+        one: []
       },
       tags: [],
       projects: [],
-      comments: [],
-    },
+      comments: []
+    }
   },
   all: {
     list: [],
     detail: {
-      imgSrc: '',
-      introduce: '',
-      leader: '',
-      name: '',
-      peoples: {
-        one: [],
-        two: [],
-        three: [],
-      },
-      projects: [],
-      tags: [],
-      where: '',
-    },
-  },
+      club_concept: "",
+      club_uuid: "",
+      field: "",
+      floor: 0,
+      introduction: "",
+      leader_uuid: "",
+      link: "",
+      location: "",
+      logo_uri: "",
+      member_uuids: [],
+      name: ""
+    }
+  }
 };
 
 const posterReducer = (
   state: PosterState = initialState,
-  action: PosterAction,
+  action: PosterAction
 ): PosterState => {
   switch (action.type) {
-    case UPDATE_POSTER_LIST: {
+    case GET_CIRCLE_INFO_LIST: {
       return {
         ...state,
         all: {
           ...state.all,
-          list: action.payload,
-        },
+          list: action.payload
+        }
       };
     }
-    case UPDATE_POSTER_DETAIL: {
+    case GET_CIRCLE_INFO_DETAIL: {
       return {
         ...state,
         all: {
           ...state.all,
-          detail: action.payload,
-        },
+          detail: action.payload
+        }
       };
     }
-    case UPDATE_POSTER_LIST_WANTED: {
+    case GET_WANTED_INFO_LIST: {
       return {
         ...state,
         wanted: {
           ...state.wanted,
-          list: action.payload,
-        },
-      };
-    }
-    case UPDATE_POSTER_DETAIL_WANTED: {
-      return {
-        ...state,
-        wanted: {
-          ...state.wanted,
-          detail: action.payload,
-        },
+          list: action.payload
+        }
       };
     }
     default: {
