@@ -22,6 +22,7 @@ import {
   NavIconCircleMint,
   NavIconUnauthorizedBlack,
   NavIconUnauthorizedMint,
+  NavIconHomeBlack,
 } from '../assets';
 import {
   MainSubItem,
@@ -32,6 +33,7 @@ export interface RouteData {
   main: NavItem[];
   sub: MainSubItem[];
   color: string;
+  isManagementMode?: boolean;
 }
 
 export const userRoute: RouteData = {
@@ -94,6 +96,32 @@ export const adminRouter: RouteData = {
     },
   ],
   color: '#23B2AD',
+};
+
+export const managementRouter: RouteData = {
+  main: [
+    {
+      name: '정보수정',
+      route: '/management/edit',
+      white: NavIconHomeBlack,
+      blue: NavIconHomeBlack,
+    },
+    {
+      name: '모집관리',
+      route: '/management/wanted',
+      white: NavIconCircleBlack,
+      blue: NavIconCircleBlack,
+    },
+    {
+      name: '공지 관리',
+      route: '/management/notice',
+      white: NavIconNoticeBlack,
+      blue: NavIconNoticeBlack,
+    },
+  ],
+  sub: [],
+  color: '#FFFFFF',
+  isManagementMode: true,
 };
 
 interface SubNavItem {

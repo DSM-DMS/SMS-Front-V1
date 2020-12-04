@@ -6,10 +6,12 @@ export const LogoText = styled.div`
   font-weight: bolder;
 `;
 
-export const Container = styled.div`
+export const InnerContainer = styled.div`
+  margin-left: 15px;
   display: flex;
   align-items: center;
-  margin-left: 15px;
 `;
+
+export const Container = styled.div``;
 
 export const LogoImg = styled.img``;

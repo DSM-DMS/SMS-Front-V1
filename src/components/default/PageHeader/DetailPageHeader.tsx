@@ -1,7 +1,7 @@
-import React, { FC, memo } from 'react';
-import * as S from './styles';
-import { Hr } from '../Board/styles';
-import PageHeader from './PageHeader';
+import React, { FC, memo } from "react";
+import * as S from "./styles";
+import { Hr } from "../Board/styles";
+import PageHeader from "./PageHeader";
 
 interface Props {
   imgSrc: string;
@@ -9,6 +9,7 @@ interface Props {
   color: string;
   href?: string;
   isMine: boolean;
+  bottom?: boolean;
 }
 
 const DetailPageHeader: FC<Props> = ({
@@ -17,13 +18,16 @@ const DetailPageHeader: FC<Props> = ({
   imgSrc,
   title,
   href,
+  bottom
 }) => {
   return (
     <>
       <S.Wrap>
         <PageHeader imgSrc={imgSrc} title={title} type={S.DETAIL} />
         <div>
-          {isMine && <S.DeleteButton color={color}>수정</S.DeleteButton>}
+          {bottom! && isMine && (
+            <S.DeleteButton color={color}>수정</S.DeleteButton>
+          )}
           {href && (
             <S.Button color={color} to={href}>
               목록으로

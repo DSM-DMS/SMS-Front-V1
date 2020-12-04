@@ -1,9 +1,8 @@
 import styled, {
   createGlobalStyle,
   GlobalStyleComponent,
-  DefaultTheme,
-  css,
-} from 'styled-components';
+  DefaultTheme
+} from "styled-components";
 
 export const GlobalStyle: GlobalStyleComponent<
   {},
@@ -61,7 +60,6 @@ export const GlobalStyle: GlobalStyleComponent<
   }
   button {
     cursor: pointer;
-    font: none;
   }
   * {
     font-family:"Noto Sans KR" !important;

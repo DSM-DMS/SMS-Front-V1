@@ -9,6 +9,7 @@ import {
   AdminNoticeAllDetailContainer,
   AdminNoticeMineContainer,
   AdminNoticeMineDetailContainer,
+  AdminNoticeWritingContainer
 } from '../containers';
 import { GlobalInnerBody } from '../GlobalStyle';
 
@@ -52,6 +53,11 @@ const AdminRouter: FC<{}> = () => {
           exact
           path="/admin/notice/mine/:id"
           component={AdminNoticeMineDetailContainer}
+        />
+        <Route
+          exact
+          path="/admin/notice/writing"
+          component={AdminNoticeWritingContainer}
         />
       </Switch>
     </GlobalInnerBody>

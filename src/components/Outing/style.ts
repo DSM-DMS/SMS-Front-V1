@@ -542,7 +542,6 @@ export const ModalContentWrap = styled.div`
   transform: translate(calc(-50% - 0.5px), calc(-50% - 0.5px));
   z-index: 11;
   border-radius: 8px;
-  background-color: white;
   cursor: default;
   background-image: url(${OutingBalloons});
   background-repeat: no-repeat;
@@ -553,6 +552,7 @@ export const ModalApply = styled.div`
   position: relative;
   width: 600px;
   padding: 40px 80px;
+  background-color: white;
 `;
 
 export const ModalTitle = styled.h3`
@@ -602,7 +602,7 @@ export const ModalOnlineCard = styled.div`
   width: 450px;
   border-radius: 8px;
   background-color: white;
-  background-image: none;
+  background-color: white;
 `;
 
 export const OnlineCardTitle = styled.h3`
@@ -638,7 +638,7 @@ export const OnlineCardInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 20px;
 `;
 
 export const OnlineCardMoveApply = styled.button`
@@ -654,4 +654,19 @@ export const OnlineCardMoveApply = styled.button`
 
 export const OnlineCardDate = styled.p`
   text-align: right;
+`;
+
+export const WithModalAniWrap = styled.div`
+  animation: showUp 300ms cubic-bezier(0.4, 1.6, 1, 1);
+
+  @keyframes showUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 `;
