@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 300px;
@@ -27,7 +27,7 @@ export const Container = styled.div`
     & > img {
       opacity: 0.13;
     }
-    transform: translateY(-20px);
+    transform: translateY(-15px);
     color: white;
     background-color: #5323b2;
   }
@@ -53,6 +53,13 @@ export const CircleIntroduce = styled.div`
 export const WantedJob = styled.div`
   font-size: 14px;
   margin-top: 25px;
+`;
+
+export const DateWrap = styled.div`
+  div,
+  span {
+    font-weight: bold;
+  }
 `;
 
 export const Footer = styled.div`
