@@ -8,6 +8,7 @@ import scheduleDetailReducer from "./scheduleDetail";
 import OutingCardReducer from "./OutingCard";
 import jsonReducer from "./json";
 import ManagementInfo from "./management/info";
+import noticeReducer from "./notice";
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   scheduleDetail: scheduleDetailReducer,
   outingCard: OutingCardReducer,
   json: jsonReducer,
-  ManagementInfo
+  ManagementInfo,
+  notice: noticeReducer
 });
 
 export type stateType = ReturnType<typeof rootReducer>;
