@@ -1,17 +1,17 @@
-import React, { FC, useState, useCallback, ChangeEvent, memo } from 'react';
-import * as S from '../Wanted/List/styles';
-import { PageHeader, Category, AllCircleBox } from '../../default';
-import { NavIconAllBlue } from '../../../assets';
-import { Hr } from '../../../components/default/Board/styles';
-import { AllCircleBoxType } from '../../default/CircleBox/AllCircleBox';
-import { makeFilterFunc, customSelector } from '../../../lib/api';
+import React, { FC, useState, useCallback, ChangeEvent, memo } from "react";
+import * as S from "../Wanted/List/styles";
+import { PageHeader, Category, AllCircleBox } from "../../default";
+import { NavIconAllBlue } from "../../../assets";
+import { Hr } from "../../../components/default/Board/styles";
+import { AllCircleBoxType } from "../../default/CircleBox/AllCircleBox";
+import { makeFilterFunc, customSelector } from "../../../lib/utils";
 
 const CircleAll: FC = () => {
   const data = customSelector((state) => state.poster.all.list);
-  const [keyword, setkeyword] = useState<string>('');
+  const [keyword, setkeyword] = useState<string>("");
   const filterFunc = makeFilterFunc<AllCircleBoxType>(
     data,
-    ({ name }, keyword) => name.includes(keyword),
+    ({ name }, keyword) => name.includes(keyword)
   );
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setkeyword(e.target.value);
@@ -40,7 +40,7 @@ const CircleAll: FC = () => {
               imgSrc={imgSrc}
               where={where}
             />
-          ),
+          )
         )}
       </S.BoxWrap>
     </S.Container>

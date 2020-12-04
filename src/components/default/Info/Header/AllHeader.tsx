@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import { Hr } from '../../Board/styles';
-import { customSelector } from '../../../../lib/api';
+import React, { FC } from "react";
+import * as S from "./styles";
+import { Hr } from "../../Board/styles";
+import { customSelector } from "../../../../lib/utils";
 
 const AllHeader: FC = () => {
   const name = customSelector((state) => state.poster.all.detail.name);

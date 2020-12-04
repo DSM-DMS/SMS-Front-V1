@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import { DetailContent, Hr, Where, People } from '../../default';
-import { customSelector } from '../../../../../lib/api';
+import React, { FC } from "react";
+import * as S from "./styles";
+import { DetailContent, Hr, Where, People } from "../../default";
+import { customSelector } from "../../../../../lib/utils";
 
 const AllMain = () => {
   const {
     introduce,
     leader,
     peoples: { one, two, three },
-    where,
+    where
   } = customSelector((state) => state.poster.all.detail);
   return (
     <S.Container>
