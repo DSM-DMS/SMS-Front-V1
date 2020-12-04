@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
-import { DetailPageHeader } from '../../../../components/default';
-import { NavIconNoticeBlue } from '../../../../assets';
-import * as S from './styles';
-import NoticeDetailBody from '../../../../components/Notice/Detail/NoticeDetailBody/NoticeDetailBody';
-import { customSelector } from '../../../../lib/api';
+import React, { FC } from "react";
+import { DetailPageHeader } from "../../../../components/default";
+import { NavIconNoticeBlue } from "../../../../assets";
+import * as S from "./styles";
+import NoticeDetailBody from "../../../../components/Notice/Detail/NoticeDetailBody/NoticeDetailBody";
+import { customSelector } from "../../../../lib/api";
 
 const CircleNoticeDetailContainer: FC = () => {
-  const { content } = customSelector((state) => state.board.detail);
+  const { content } = customSelector(state => state.board.detail);
 
   return (
     <S.Container>
