@@ -3,5 +3,3 @@ export interface ResponseDefault {
   code: number;
   message: string;
 }
-
-export { ResponseLogin } from "./Login";
