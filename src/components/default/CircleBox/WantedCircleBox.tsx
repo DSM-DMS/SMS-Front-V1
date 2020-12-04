@@ -1,62 +1,54 @@
-import React, { FC, ReactElement, memo, useCallback } from 'react';
-import * as S from './styles';
-import { useHistory } from 'react-router';
-import { HashTag } from '../Info/Body/Sub/styles';
+import React, { FC, ReactElement, memo, useCallback } from "react";
+import * as S from "./styles";
+import { useHistory } from "react-router";
+import { HashTag } from "../Info/Body/Sub/styles";
+import { WantedInfo } from "../../../modules/type/poster";
 
-export interface WantedCircleBoxData {
-  name: string;
-  description: string;
-  field: string;
-  job: string[];
-  where: string;
-  grade: string;
-  imgSrc: string;
-  date?: string;
-}
-
-const dateParse = (date: string): ReactElement | string => {
-  if (!date) return '\n|';
-  if (!date) return '\n상시모집';
-
-  const [date1, date2, date3] = date.split(' ');
-
+const dateParse = (
+  startDateStr: string,
+  endDateStr: string
+): ReactElement | string => {
+  const [endYear, endMonth, endDate] = endDateStr.split("-");
   return (
     <>
-      <div>{date1}</div>
+      <div>{startDateStr}</div>
       <S.Date>
-        <span>~</span> <span>{date3}</span>
+        <span>-</span>{" "}
+        <span>
+          {endMonth} {endDate}
+        </span>
       </S.Date>
     </>
   );
 };
 
-const WantedCircleBox: FC<WantedCircleBoxData> = ({
-  name,
-  description,
-  job,
+const WantedCircleBox: FC<WantedInfo> = ({
+  club_uuid,
+  end_period,
   field,
-  where,
+  recruit_concept,
+  number,
   grade,
-  date,
-  imgSrc,
+  recruitment_uuid,
+  start_period
 }) => {
   const history = useHistory();
   const handleClick = useCallback(() => {
-    history.push(`/circles/wanted/${name}`);
+    history.push(`/circles/wanted/${club_uuid}`);
   }, []);
 
   return (
     <S.Container onClick={handleClick}>
       <div>
         <S.Header>
-          <S.CircleName>{name}</S.CircleName>
-          <div>{where}</div>
+          <S.CircleName>{"동아리 이름"}</S.CircleName>
+          <div>{"위치"}</div>
         </S.Header>
-        <S.CircleIntroduce>{description}</S.CircleIntroduce>
+        <S.CircleIntroduce>{"설명"}</S.CircleIntroduce>
         <S.WantedJob>
-          {job.map((str) => (
+          {/* {job.map(str => (
             <div>*{str}</div>
-          ))}
+          ))} */}
         </S.WantedJob>
       </div>
       <S.Footer>
@@ -65,9 +57,9 @@ const WantedCircleBox: FC<WantedCircleBoxData> = ({
             <HashTag>{field}</HashTag>
           </div>
         </div>
-        <div>{dateParse(date)}</div>
+        <S.DateWrap>{dateParse(start_period, end_period)}</S.DateWrap>
       </S.Footer>
-      <img src={imgSrc} />
+      <img src={""} />
     </S.Container>
   );
 };
