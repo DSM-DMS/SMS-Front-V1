@@ -1,14 +1,5 @@
 import styled from "styled-components";
 
-import { UserType } from "../../modules/action/header";
-
-interface BaseColor {
-  baseColor: UserType;
-}
-
-const STUDENT_BASE_COLOR = "#5323b2";
-const TEACHER_BASE_COLOR = "#23B2AD";
-
 export const LoginWrap = styled.div`
   width: 500px;
   margin: 200px auto 0;
@@ -29,7 +20,21 @@ export const LoginTitle = styled.h1`
 export const LoginSubTitle = styled.p`
   color: #888888;
   font-size: 12px;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+`;
+
+export const LoginTypeWrap = styled.div`
+  display: flex;
+  margin: 8px 0;
+`;
+
+export const LoginTypeLabel = styled.label`
+  display: flex;
+  align-items: center;
+`;
+
+export const LoginTypeText = styled.span`
+  font-size: 14px;
 `;
 
 export const LoginInputsWrap = styled.div`
@@ -68,21 +73,21 @@ export const AutoLoginCheckbox = styled.input`
 
 export const AutoLoginLabel = styled.label`
   color: #242424;
-  font-size: 12px;
+  font-size: 14px;
   cursor: pointer;
 `;
 
-export const LoginButton = styled.button<BaseColor>`
+export const LoginButton = styled.button`
   position: relative;
   width: 100%;
   padding: 10px 12px;
   border: 0;
   color: white;
-  background-color: ${({ baseColor }) =>
-    baseColor === "student" ? STUDENT_BASE_COLOR : TEACHER_BASE_COLOR};
+  background-color: #038fff;
   font-size: 14px;
   box-sizing: border-box;
   overflow: hidden;
+  transition: 0.3s;
   &:before {
     content: "";
     position: absolute;
@@ -110,4 +115,44 @@ export const ErrorMessage = styled.p`
   margin-bottom: 12px;
   color: red;
   font-size: 14px;
+  transition: 0.3s;
+  &.pointing {
+    animation: shake 0.5s;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: translateX(1px);
+    }
+    10% {
+      transform: translateX(-1px);
+    }
+    20% {
+      transform: translateX(-3px);
+    }
+    30% {
+      transform: translateX(3px);
+    }
+    40% {
+      transform: translateX(1px);
+    }
+    50% {
+      transform: translateX(-1px);
+    }
+    60% {
+      transform: translateX(-3px);
+    }
+    70% {
+      transform: translateX(3px);
+    }
+    80% {
+      transform: translateX(-1px);
+    }
+    90% {
+      transform: translateX(1px);
+    }
+    100% {
+      transform: translateX(1px);
+    }
+  }
 `;
