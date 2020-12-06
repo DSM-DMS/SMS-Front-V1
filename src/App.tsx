@@ -4,7 +4,7 @@ import { Switch, BrowserRouter, Route } from "react-router-dom";
 
 import Navigation from "./components/Navigation/Navigation";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
-import { Header, Login, PageNotFound } from "./components";
+import { PageNotFound } from "./components";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -14,9 +14,11 @@ import {
   ManagementRouter
 } from "./routers";
 import { jsonActionCreater } from "./modules/action/json";
+import { LoginContainer, HeaderContainer } from "./containers";
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(jsonActionCreater.getJsonSaga());
   }, []);
@@ -27,7 +29,7 @@ const App: FC<{}> = () => {
       <BrowserRouter>
         <Navigation />
         <GlobalBody>
-          <Header />
+          <HeaderContainer />
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/home" component={MainRouter} />

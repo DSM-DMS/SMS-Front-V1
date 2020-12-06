@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { FC, useEffect } from "react";
+import { Route, Switch, useLocation } from "react-router-dom";
 import {
   AdminOutingCertifiedListContainer,
   AdminOutingNowListContainer,
@@ -9,14 +9,20 @@ import {
   AdminNoticeAllDetailContainer,
   AdminNoticeMineContainer,
   AdminNoticeMineDetailContainer,
-  AdminNoticeWritingContainer
-} from '../containers';
-import { GlobalInnerBody } from '../GlobalStyle';
+  AdminNoticeWritingContainer,
+  LoginContainer
+} from "../containers";
+import { GlobalInnerBody } from "../GlobalStyle";
 
 const AdminRouter: FC<{}> = () => {
+  const pathname = location.pathname;
+
   return (
-    <GlobalInnerBody>
+    <GlobalInnerBody
+      isBackNeed={!(pathname.includes("login") || pathname.includes("home"))}
+    >
       <Switch>
+        <Route exact path="/admin/login" component={LoginContainer} />
         <Route exact path="/admin/home" component={AdminMainContainer} />
         <Route exact path="/admin/schedule" />
         <Route

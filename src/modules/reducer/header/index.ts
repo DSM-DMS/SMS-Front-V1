@@ -6,27 +6,34 @@ import {
   SET_GROUP,
   SET_NUMBER,
   SET_TYPE,
-  SET_NAME
+  SET_NAME,
+  SET_PHONE,
+  SET_PROFILE_URI
 } from "../../action/header";
 
 export interface PageState {
   mainUrl: string;
   subUrl: string;
 }
+
 export interface HeaderState {
   type: UserType;
   grade: number;
   group: number;
-  number: number;
   name: string;
+  student_number: number;
+  phone_number: string;
+  profile_uri: string;
 }
 
 const initialState: HeaderState = {
   type: STUDENT,
   grade: 0,
   group: 0,
-  number: 0,
-  name: ""
+  name: "",
+  student_number: 0,
+  phone_number: "",
+  profile_uri: ""
 };
 
 const headerReducer = (
@@ -47,7 +54,7 @@ const headerReducer = (
     case SET_NUMBER:
       return {
         ...state,
-        number: action.payload.number
+        student_number: action.payload.number
       };
     case SET_TYPE:
       return {
@@ -59,6 +66,17 @@ const headerReducer = (
         ...state,
         name: action.payload.name
       };
+    case SET_PHONE:
+      return {
+        ...state,
+        phone_number: action.payload.phone
+      };
+    case SET_PROFILE_URI:
+      return {
+        ...state,
+        profile_uri: action.payload.profileUri
+      };
+
     default:
       return state;
   }
