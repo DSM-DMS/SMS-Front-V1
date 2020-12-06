@@ -3,7 +3,7 @@ import * as S from "./styles";
 import { DetailPageHeader } from "../../../components/default";
 import { NavIconNoticeBlue } from "../../../assets";
 import NoticeDetailBody from "./NoticeDetailBody/NoticeDetailBody";
-import { customSelector } from "../../../lib/api";
+import { customSelector } from "../../../lib/utils";
 
 const NoticeDetail: FC = () => {
   const { content } = customSelector(state => state.board.detail);

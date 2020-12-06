@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import * as S from "./styles";
 import InfoDetailSub from "./Sub/InfoDetailSub";
 import AllMain from "./Main/AllMain";
-import { customSelector } from "../../../../lib/api";
+import { customSelector } from "../../../../lib/utils";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
 

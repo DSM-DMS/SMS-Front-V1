@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import * as S from "./styles";
 import { Hr } from "../../Board/styles";
-import { customSelector } from "../../../../lib/api";
+import { customSelector } from "../../../../lib/utils";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
 

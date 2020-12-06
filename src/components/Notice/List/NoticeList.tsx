@@ -2,7 +2,7 @@ import React, { FC, useState, useCallback, ChangeEvent } from "react";
 import { NavIconNoticeBlue } from "../../../assets";
 import { Board, ListPageHeader } from "../../default";
 import * as S from "./styles";
-import { makeFilterFunc } from "../../../lib/api";
+import { makeFilterFunc } from "../../../lib/utils";
 import { BoardObj } from "../../default/Board/Board";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";

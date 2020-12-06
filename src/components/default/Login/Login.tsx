@@ -1,25 +1,32 @@
-import React, { FC, useState } from "react";
+import React, { ChangeEvent, FC, MutableRefObject } from "react";
 
 import * as S from "./style";
 
-import { useSelector } from "react-redux";
-import { stateType } from "../../../modules/reducer";
+import { ErrorState } from "../../../containers/Login/LoginContainer";
 
-interface Props {}
+interface Props {
+  id: string;
+  pw: string;
+  autoLogin: boolean;
+  errorMessage: ErrorState;
+  handleId: (e: ChangeEvent<HTMLInputElement>) => void;
+  handlePw: (e: ChangeEvent<HTMLInputElement>) => void;
+  toggleAutoLogin: () => void;
+  login: (id: string, pw: string, autoLogin: boolean) => Promise<any>;
+  errorRef: MutableRefObject<HTMLParagraphElement>;
+}
 
-const Login: FC<Props> = () => {
-  const { type } = useSelector((state: stateType) => state.header);
-  const [id, setId] = useState<string>("");
-  const [pw, setPw] = useState<string>("");
-
-  const login = () => {
-    if (id === "id" && pw === "pw") {
-      alert("로그인 성공");
-    } else {
-      alert("로그인 실패");
-    }
-  };
-
+const Login: FC<Props> = ({
+  id,
+  pw,
+  handleId,
+  handlePw,
+  autoLogin,
+  toggleAutoLogin,
+  errorMessage,
+  login,
+  errorRef
+}) => {
   return (
     <S.LoginWrap>
       <S.LoginForm>
@@ -33,9 +40,7 @@ const Login: FC<Props> = () => {
               type="text"
               placeholder="아이디"
               id="id"
-              onChange={e => {
-                setId(e.currentTarget.value);
-              }}
+              onChange={handleId}
               value={id}
             />
           </S.LoginLabel>
@@ -44,19 +49,24 @@ const Login: FC<Props> = () => {
               type="password"
               placeholder="비밀번호"
               id="pw"
-              onKeyPress={e => e.key === "Enter" && login()}
-              onChange={e => {
-                setPw(e.currentTarget.value);
-              }}
+              onKeyPress={e => e.key === "Enter" && login(id, pw, autoLogin)}
+              onChange={handlePw}
               value={pw}
             />
           </S.LoginLabel>
+          <S.ErrorMessage ref={errorRef}>{errorMessage.message}</S.ErrorMessage>
           <S.AutoLogin>
-            <S.AutoLoginCheckbox type="checkbox" id="auto-login" />
+            <S.AutoLoginCheckbox
+              type="checkbox"
+              id="auto-login"
+              onChange={toggleAutoLogin}
+            />
             <S.AutoLoginLabel htmlFor="auto-login">자동로그인</S.AutoLoginLabel>
           </S.AutoLogin>
         </S.LoginInputsWrap>
-        <S.LoginButton baseColor={type}>로그인</S.LoginButton>
+        <S.LoginButton onClick={() => login(id, pw, autoLogin)}>
+          로그인
+        </S.LoginButton>
       </S.LoginForm>
     </S.LoginWrap>
   );

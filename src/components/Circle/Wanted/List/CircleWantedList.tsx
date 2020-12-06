@@ -3,7 +3,7 @@ import * as S from "./styles";
 import { PageHeader, Category } from "../../../../components/default";
 import { NavIconCircleBlue } from "../../../../assets";
 import { WantedCircleBox } from "../../../../components/default";
-import { makeFilterFunc, customSelector } from "../../../../lib/api";
+import { makeFilterFunc, customSelector } from "../../../../lib/utils";
 import { Hr } from "../../../../components/default/Board/styles";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";

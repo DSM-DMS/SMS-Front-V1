@@ -3,7 +3,7 @@ import * as S from "../Wanted/List/styles";
 import { PageHeader, Category, AllCircleBox } from "../../default";
 import { NavIconAllBlue } from "../../../assets";
 import { Hr } from "../../../components/default/Board/styles";
-import { makeFilterFunc } from "../../../lib/api";
+import { makeFilterFunc } from "../../../lib/utils";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
 import { CircleInfo } from "../../../modules/type/poster";

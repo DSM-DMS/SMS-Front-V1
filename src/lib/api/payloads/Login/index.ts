@@ -1,4 +1,4 @@
-import { ResponseDefault as ResDefault } from "../";
+import { ResDefault } from "../";
 
 export const UNABLE_FORM = "아이디및 비밀번호는 4자 이상 16자 이하여야 합니다." as const;
 export const UNAUTHORIZED = "존재하지 않는 계정의 아이디입니다." as const;

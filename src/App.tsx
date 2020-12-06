@@ -31,7 +31,7 @@ const App: FC<{}> = () => {
         <GlobalBody>
           <HeaderContainer />
           <Switch>
-            <Route path="/login" component={Login} />
+            <Route path="/login" component={LoginContainer} />
             <Route path="/home" component={MainRouter} />
             <Route path="/notice" component={NoticeRouter} />
             <Route path="/circles" component={CirclesRouter} />
