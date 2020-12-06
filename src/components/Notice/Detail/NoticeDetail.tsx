@@ -6,7 +6,7 @@ import NoticeDetailBody from "./NoticeDetailBody/NoticeDetailBody";
 import { customSelector } from "../../../lib/utils";
 
 const NoticeDetail: FC = () => {
-  const { content } = customSelector((state) => state.board.detail);
+  const { content } = customSelector(state => state.board.detail);
 
   return (
     <S.Container>

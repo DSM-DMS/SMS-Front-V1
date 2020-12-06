@@ -6,7 +6,7 @@ import { customSelector } from "../../../../lib/utils";
 
 const WantedBody: FC = () => {
   const { imgSrc, tags, projects } = customSelector(
-    (state) => state.poster.wanted.detail
+    state => state.poster.wanted.detail
   );
   return (
     <S.Container>

@@ -6,7 +6,7 @@ import NoticeDetailBody from "../../../../components/Notice/Detail/NoticeDetailB
 import { customSelector } from "../../../../lib/utils";
 
 const CircleNoticeDetailContainer: FC = () => {
-  const { content } = customSelector((state) => state.board.detail);
+  const { content } = customSelector(state => state.board.detail);
 
   return (
     <S.Container>

@@ -21,7 +21,7 @@ interface Props {
 }
 
 const NavigationSub: FC<Props> = ({ subRouteData }) => {
-  const isClose = customSelector((state) => state.subNav.isClose);
+  const isClose = customSelector(state => state.subNav.isClose);
   const mainUrl = useSelector((store: stateType) => store.page.mainUrl);
   const isActive =
     mainUrl === "동아리" ||

@@ -1,46 +1,31 @@
-import React, { FC } from 'react';
-import { CircleAllDetail } from '../../../../components';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { updatePosterDetail } from '../../../../modules/action/poster';
+import React, { FC } from "react";
+import { CircleAllDetail } from "../../../../components";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import {
+  getCircleInfoDetail,
+  updatePosterDetail
+} from "../../../../modules/action/poster";
+import { CircleInfo } from "../../../../modules/type/poster";
 
-export interface CircleAllDetail {
-  name: string;
-  introduce: string;
-  leader: string;
-  where: string;
-  imgSrc: string;
-  peoples: {
-    three: string[];
-    two: string[];
-    one: string[];
-  };
-  tags: string[];
-  projects: string[];
-}
-
-const data: CircleAllDetail = {
-  name: 'VCC',
-  introduce: `VCC는 임베디드 소프트웨어에 연구동아리 입니다. 주로 AVR을 통한 마이크로프로세서 제어에 대해 공부하고,
-    이를 활용한 프로젝트를 함께 진행합니다.
-   `,
-  leader: '홍성민',
-  where: '4-4 세미나실',
-  imgSrc:
-    'https://0gichul.com/files/attach/images/204/125/877/003/79160512de6dcb7eab93212a13d56fad.jpg',
-  tags: ['임베디드'],
-  projects: ['Now you see me 물방울 마술', 'VCC_RC카'],
-  peoples: {
-    three: ['한기태', '신윤성'],
-    two: ['신유빈', '강신희'],
-    one: ['정환', '장윤주', '유진아'],
-  },
+const data: CircleInfo = {
+  club_concept: "한줄소개",
+  club_uuid: "클럽 uuid",
+  field: "분야",
+  floor: 1,
+  introduction: "소개",
+  leader_uuid: "리더 uuid",
+  link: "페북 링크",
+  location: "장소",
+  logo_uri: "로고 url",
+  member_uuids: ["멤버 uuid1", "멤버 uuid2", "멤버 uuid3"],
+  name: "동아리 이름"
 };
 
 const CircleAllDetailContainer: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(updatePosterDetail(data));
+    dispatch(getCircleInfoDetail(data));
   }, []);
   return <CircleAllDetail />;
 };

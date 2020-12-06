@@ -5,7 +5,7 @@ import { FacebookIcon } from "../../../../assets";
 import { customSelector } from "../../../../lib/utils";
 
 const InfoHeader: FC = () => {
-  const { name, date } = customSelector((state) => state.poster.wanted.detail);
+  const { name, date } = customSelector(state => state.poster.wanted.detail);
   return (
     <>
       <S.Container>

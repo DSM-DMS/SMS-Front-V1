@@ -1,7 +1,7 @@
-import styled, { keyframes, css } from 'styled-components';
-import TextareaAutosize from 'react-autosize-textarea';
+import styled, { keyframes, css } from "styled-components";
+import TextareaAutosize from "react-autosize-textarea";
 
-import { OutingWarningRedBase, OutingBalloons } from '../../assets';
+import { OutingWarningRedBase, OutingBalloons } from "../../assets";
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -123,7 +123,7 @@ export const ApplyCircle3 = styled.div`
   border-radius: 50%;
   box-sizing: border-box;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -144,7 +144,7 @@ export const ApplyCircle4 = styled.div`
   border-radius: 50%;
   box-sizing: border-box;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -337,7 +337,7 @@ export const FormReasonSickDesc = styled.div`
   background-color: white;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 16%);
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 8px;
     right: 8px;
@@ -460,7 +460,7 @@ export const CardUser = styled.p`
   padding-right: 32px;
   border-right: 2px solid #242424;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     right: 8px;
@@ -470,7 +470,7 @@ export const CardUser = styled.p`
         ? css`
             background-image: url(${OutingWarningRedBase});
           `
-        : ''};
+        : ""};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

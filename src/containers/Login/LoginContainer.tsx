@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Login } from "../../components";
-import { postLoginStudent } from "../../lib/api";
+import { postLoginStudent } from "../../lib/api/Login";
 import {
   getStudentInfo,
   getTeacherInfo,
@@ -204,7 +204,7 @@ const LoginContainer: FC<Props> = () => {
   }, []);
 
   const toggleAutoLogin = useCallback(() => {
-    setAutoLogin((prev) => !prev);
+    setAutoLogin(prev => !prev);
   }, [autoLogin]);
 
   // Todo : history listen when user move page

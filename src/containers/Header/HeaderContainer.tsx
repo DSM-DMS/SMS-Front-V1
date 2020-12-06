@@ -1,7 +1,6 @@
 import React, { FC, useCallback } from "react";
 
 import { Header } from "../../components";
-import { ResStudentInfo, ResTeacherInfo } from "../../lib/api/payloads/Login";
 import { UserType } from "../../modules/action/header";
 
 interface Props {}

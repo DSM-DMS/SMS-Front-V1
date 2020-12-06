@@ -16,7 +16,7 @@ const WantedMain: FC = () => {
     one,
     where,
     comments
-  } = customSelector((state) => state.poster.wanted.detail);
+  } = customSelector(state => state.poster.wanted.detail);
   return (
     <S.Container>
       <S.P>동아리 소개</S.P>

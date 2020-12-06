@@ -1,5 +1,5 @@
-import React, { FC, useEffect } from "react";
-import { Route, Switch, useLocation } from "react-router-dom";
+import React, { FC } from "react";
+import { Route, Switch } from "react-router-dom";
 import {
   AdminOutingCertifiedListContainer,
   AdminOutingNowListContainer,
