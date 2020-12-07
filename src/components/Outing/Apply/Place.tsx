@@ -1,23 +1,40 @@
-import React, { FC, ReactElement, Dispatch, SetStateAction } from 'react';
+import React, { FC, ReactElement, ChangeEvent, useState } from "react";
 
-import * as S from '../style';
+import SearchList from "./SearchList";
+
+import * as S from "../style";
+import { OutingPlaceSearch } from "../../../assets";
 
 interface Props {
-  setFormPlace: Dispatch<SetStateAction<string>>;
+  place: string;
+  handlePlace: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ApplyPlace: FC<Props> = ({ setFormPlace }): ReactElement => {
+const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
+  const [searchProp, setSearchProp] = useState([]);
+
+  const searchPlace = () => {
+    console.log(place);
+  };
+
   return (
     <S.FormPlace>
-      <S.ApplyFormItemTitle>장소</S.ApplyFormItemTitle>
+      <S.ApplyFormItemTitle htmlFor="place">장소</S.ApplyFormItemTitle>
       <S.ApplyFormInputWrap>
         <S.FormPlaceInput
           type="text"
-          placeholder="외출 장소를 입력하세요"
-          onChange={(e) => {
-            setFormPlace(e.currentTarget.value);
-          }}
+          id="place"
+          placeholder="외출 장소를 입력하세요."
+          onChange={handlePlace}
+          onKeyDown={e => e.key === "Enter" && searchPlace()}
         />
+        <S.FormPlaceInputSearch
+          src={OutingPlaceSearch}
+          alt="searching"
+          title="searching"
+          onClick={searchPlace}
+        />
+        <SearchList />
       </S.ApplyFormInputWrap>
     </S.FormPlace>
   );

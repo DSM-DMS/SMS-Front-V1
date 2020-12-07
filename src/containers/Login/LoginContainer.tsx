@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { Login } from "../../components";
@@ -15,7 +16,12 @@ import {
   UNABLE_FORM,
   UNAUTHORIZED
 } from "../../lib/api/payloads/Login";
-import { STUDENT, TEACHER, UserType } from "../../modules/action/header";
+import {
+  setInit,
+  STUDENT,
+  TEACHER,
+  UserType
+} from "../../modules/action/header";
 
 interface Props {}
 
@@ -30,6 +36,7 @@ const initErrorState = {
 };
 
 const LoginContainer: FC<Props> = () => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const errorRef = useRef<HTMLParagraphElement>(null);
   const [id, setId] = useState<string>("");
@@ -115,6 +122,7 @@ const LoginContainer: FC<Props> = () => {
 
     localStorage.setItem("sms-user", JSON.stringify(studentForm));
     localStorage.setItem("sms-type", STUDENT);
+    dispatch(setInit(STUDENT, studentForm));
   }, []);
 
   const getTeacherLoginInfo = useCallback(
@@ -149,6 +157,7 @@ const LoginContainer: FC<Props> = () => {
 
     localStorage.setItem("sms-user", JSON.stringify(teacherForm));
     localStorage.setItem("sms-type", TEACHER);
+    dispatch(setInit(TEACHER, teacherForm));
   }, []);
 
   const studentLogin = async (id: string, pw: string, autoLogin: boolean) => {
