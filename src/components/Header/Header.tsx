@@ -1,27 +1,17 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
-import { STUDENT } from "../../modules/action/header";
-import { stateType } from "../../modules/reducer";
+import { STUDENT, UserType } from "../../modules/action/header";
 
 interface Props {
+  smsUser: any;
+  type: UserType;
   logout: () => void;
 }
 
-const Header: FC<Props> = ({ logout }) => {
-  const { type, grade, group, name, student_number } = useSelector(
-    (state: stateType) => state.header
-  );
-
-  if (!type) {
-    return (
-      <S.HeaderWrap>
-        <S.Logout to="./login">로그인</S.Logout>
-      </S.HeaderWrap>
-    );
-  }
+const Header: FC<Props> = ({ smsUser, type, logout }) => {
+  const { grade, group, name, student_number } = smsUser;
 
   return (
     <S.HeaderWrap>
@@ -30,6 +20,7 @@ const Header: FC<Props> = ({ logout }) => {
       ) : (
         <span>{`${name} 선생님`}</span>
       )}
+
       <S.Logout onClick={logout} to="./login">
         로그아웃
       </S.Logout>
