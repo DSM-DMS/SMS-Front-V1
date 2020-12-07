@@ -1,3 +1,9 @@
+import {
+  ResStudentInfo,
+  ResTeacherInfo
+} from "../../../lib/api/payloads/Login";
+
+export const SET_INIT = "header/SET_INIT" as const;
 export const SET_TYPE = "header/SET_TYPE" as const;
 export const SET_GRADE = "header/SET_GRADE" as const;
 export const SET_GROUP = "header/SET_GROUP" as const;
@@ -9,6 +15,13 @@ export const SET_PROFILE_URI = "header/SET_PROFILE_URI" as const;
 export const STUDENT = "student" as const;
 export const TEACHER = "teacher" as const;
 
+export const setInit = (
+  type: UserType | "",
+  user: ResStudentInfo | ResTeacherInfo
+) => ({
+  type: SET_INIT,
+  payload: { type, user }
+});
 export const setType = (type: UserType) => ({
   type: SET_TYPE,
   payload: { type }
@@ -47,4 +60,5 @@ export type HeaderAction =
   | ReturnType<typeof setName>
   | ReturnType<typeof setNumber>
   | ReturnType<typeof setPhone>
-  | ReturnType<typeof setProfileUri>;
+  | ReturnType<typeof setProfileUri>
+  | ReturnType<typeof setInit>;
