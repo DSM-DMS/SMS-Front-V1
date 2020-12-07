@@ -9,3 +9,5 @@ export { default as AllCircleBox } from "./CircleBox/AllCircleBox";
 export { default as Comment } from "./Comment/Comment";
 export { default as OutingCardPage } from "./OutingCardPage/OutingCardPage";
 export { default as Toggle } from "./Toggle/Toggle";
+export { default as PageNotFound } from "./NotFound/NotFound";
+export { default as Login } from "./Login/Login";

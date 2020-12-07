@@ -1,23 +1,29 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC } from "react";
 
-import * as S from './style';
+import * as S from "./style";
 
-import { stateType } from '../../modules/reducer';
-import { setUser } from '../../modules/action/header';
+import { STUDENT, UserType } from "../../modules/action/header";
 
-const Header: FC<{}> = () => {
-  const dispatch = useDispatch();
-  const { info } = useSelector((state: stateType) => state.header);
+interface Props {
+  smsUser: any;
+  type: UserType;
+  logout: () => void;
+}
 
-  useEffect(() => {
-    dispatch(setUser('2학년 3반  1번 강신희'));
-  }, []);
+const Header: FC<Props> = ({ smsUser, type, logout }) => {
+  const { grade, group, name, student_number } = smsUser;
 
   return (
     <S.HeaderWrap>
-      <span>{info}</span>
-      <button>로그아웃</button>
+      {type === STUDENT ? (
+        <span>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</span>
+      ) : (
+        <span>{`${name} 선생님`}</span>
+      )}
+
+      <S.Logout onClick={logout} to="./login">
+        로그아웃
+      </S.Logout>
     </S.HeaderWrap>
   );
 };

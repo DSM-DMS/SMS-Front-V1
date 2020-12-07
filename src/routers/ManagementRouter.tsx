@@ -4,7 +4,8 @@ import {
   ManagementNoticeContainer,
   ManagementNoticeDetailContainer,
   ManagementNoticeEditContainer,
-  ManagementWantedDetailContainer
+  ManagementWantedDetailContainer,
+  ManagementInfoContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
 
@@ -34,6 +35,12 @@ const ManagementRouter: FC = () => {
           exact
           path="/management/wanted"
           component={ManagementWantedDetailContainer}
+        />
+
+        <Route
+          exact
+          path="/management/edit"
+          component={ManagementInfoContainer}
         />
       </Switch>
     </GlobalInnerBody>
