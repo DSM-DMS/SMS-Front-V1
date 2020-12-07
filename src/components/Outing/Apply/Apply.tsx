@@ -8,7 +8,7 @@ import ApplyPlace from "./Place";
 import ApplyReason from "./Reason";
 
 import * as S from "../style";
-import SickMessage from "./SickMessage";
+import ApplyWaring from "./ApplyWarning";
 import { Outing } from "../../../containers/Outing/ApplyContainer";
 
 interface Props {
@@ -80,7 +80,7 @@ const Apply: FC<Props> = ({
             cancelSickOuting={cancelSickOuting}
             applySickOuting={applySickOuting}
           />
-          <SickMessage />
+          <ApplyWaring />
         </S.ApplyForm>
         <S.FormButtonWrap>
           <S.FormButtonSubmit onClick={handleApplyOuting}>
