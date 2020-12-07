@@ -1,11 +1,11 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useState } from "react";
 
-import HistoryCard from './Card';
-import HistorySelector from './Selector';
-import Modal from './Modal';
+import HistoryCard from "./Card";
+import HistorySelector from "./Selector";
+import Modal from "./Modal";
 
-import * as S from '../style';
-import { OutingHistory } from '../../../assets';
+import * as S from "../style";
+import { OutingHistory } from "../../../assets";
 
 interface Props {}
 
@@ -26,7 +26,7 @@ const cards: Card[] = Array(4)
     date: `2020년 07월 1${i + 1}일`,
     outTime: `17:30`,
     inTime: `20:30`,
-    emergency: i % 2 ? true : false,
+    emergency: i % 2 ? true : false
   }));
 
 const History: FC<Props> = (): ReactElement => {
@@ -37,13 +37,13 @@ const History: FC<Props> = (): ReactElement => {
   };
 
   return (
-    <S.HistoryWarp>
+    <S.HistoryWrap>
       <S.HistoryHead>
         <img src={OutingHistory} alt="history" title="history" />
         <S.HistoryTitle>내 외출신청 내역</S.HistoryTitle>
       </S.HistoryHead>
       <div>
-        <S.HistoryCardWarp>
+        <S.HistoryCardWrap>
           {cards.map(({ date, inTime, info, outTime, place, emergency }) => (
             <HistoryCard
               key={info}
@@ -56,11 +56,11 @@ const History: FC<Props> = (): ReactElement => {
               handleModal={handleModal}
             />
           ))}
-        </S.HistoryCardWarp>
+        </S.HistoryCardWrap>
         <HistorySelector />
         {modal && <Modal handleModal={handleModal} />}
       </div>
-    </S.HistoryWarp>
+    </S.HistoryWrap>
   );
 };
 
