@@ -4,7 +4,8 @@ import { apiDefault } from "../client";
 import {
   ResLocationWithDefault,
   ReqOuting,
-  ResOutingWithDefault
+  ResOutingWithDefault,
+  ResHistoryWithDefault
 } from "../payloads/Outing";
 
 export const getNaverLocation = (query: string) => {
@@ -29,4 +30,14 @@ export const postOuting = (body: ReqOuting) => {
     reason,
     situation
   });
+};
+
+export const getHistory = (
+  studentUuid: string,
+  start: number = 0,
+  count: number = 10
+) => {
+  return apiDefault().get<ResHistoryWithDefault>(
+    `/students/uuid/${studentUuid}/outings?start=${start}&count=${count}`
+  );
 };
