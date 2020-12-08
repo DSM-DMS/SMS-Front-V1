@@ -18,18 +18,13 @@ export interface WantedInfo {
   start_period: string;
   end_period: string;
   recruit_concept: string;
-  grade: number;
+  recruit_members: WantedObj[];
+}
+
+export interface WantedObj {
   field: string;
+  grade: number;
   number: number;
 }
 
-export interface WantedInfo {
-  club_uuid: string;
-  recruitment_uuid: string;
-  start_period: string;
-  end_period: string;
-  recruit_concept: string;
-  grade: number;
-  field: string;
-  number: number;
-}
+export interface WantedInfoDetail extends CircleInfo, WantedInfo {}

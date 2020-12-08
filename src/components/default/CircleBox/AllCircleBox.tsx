@@ -19,7 +19,7 @@ const AllCircleBox: FC<CircleInfo> = ({
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.push(`/circles/all/${name}`);
+    history.push(`/circles/all/${club_uuid}`);
   }, []);
 
   return (

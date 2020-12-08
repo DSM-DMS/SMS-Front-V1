@@ -4,13 +4,22 @@ import { Hr } from "../../Board/styles";
 import { customSelector } from "../../../../lib/utils";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
+import { FacebookIcon } from "../../../../assets";
 
 const AllHeader: FC = () => {
-  const name = useSelector((state: stateType) => state.poster.all.detail.name);
+  const { name, link, club_concept } = useSelector(
+    (state: stateType) => state.poster.all.detail
+  );
   return (
     <>
       <S.Container>
-        <S.Title>동아리 이름</S.Title>
+        <S.Title>{name}</S.Title>
+        <S.FlexDiv>
+          <S.FaceBookBtn href={link}>
+            <img src={FacebookIcon} />
+            페이스북 그룹
+          </S.FaceBookBtn>
+        </S.FlexDiv>
       </S.Container>
       <Hr />
     </>
