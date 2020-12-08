@@ -49,7 +49,7 @@ const Login: FC<Props> = ({
               type="password"
               placeholder="비밀번호"
               id="pw"
-              onKeyPress={(e) => e.key === "Enter" && login(id, pw, autoLogin)}
+              onKeyPress={e => e.key === "Enter" && login(id, pw, autoLogin)}
               onChange={handlePw}
               value={pw}
             />
