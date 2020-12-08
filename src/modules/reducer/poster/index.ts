@@ -2,15 +2,15 @@ import {
   PosterAction,
   GET_CIRCLE_INFO_LIST,
   GET_CIRCLE_INFO_DETAIL,
-  GET_WANTED_INFO_LIST
+  GET_WANTED_INFO_LIST,
+  GET_WANTED_INFO_DETAIL
 } from "../../action/poster";
-import { CircleWantedDetail } from "../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer";
-import { CircleInfo, WantedInfo } from "../../type/poster";
+import { CircleInfo, WantedInfo, WantedInfoDetail } from "../../type/poster";
 
 interface PosterState {
   wanted: {
     list: WantedInfo[];
-    detail: CircleWantedDetail;
+    detail: WantedInfoDetail;
   };
   all: {
     list: CircleInfo[];
@@ -22,22 +22,22 @@ const initialState: PosterState = {
   wanted: {
     list: [],
     detail: {
+      club_concept: "",
+      club_uuid: "",
+      field: "",
+      floor: 1,
       name: "",
-      introduce: "",
-      date: "",
-      leader: "",
-      field: [],
-      grade: [],
-      where: "",
-      imgSrc: "",
-      peoples: {
-        three: [],
-        two: [],
-        one: []
-      },
-      tags: [],
-      projects: [],
-      comments: []
+      introduction: "",
+      leader_uuid: "",
+      link: "",
+      location: "",
+      logo_uri: "",
+      member_uuids: [],
+      end_period: "",
+      recruit_concept: "",
+      recruit_members: [],
+      recruitment_uuid: "",
+      start_period: ""
     }
   },
   all: {
@@ -87,6 +87,15 @@ const posterReducer = (
         wanted: {
           ...state.wanted,
           list: action.payload
+        }
+      };
+    }
+    case GET_WANTED_INFO_DETAIL: {
+      return {
+        ...state,
+        wanted: {
+          ...state.wanted,
+          detail: action.payload
         }
       };
     }

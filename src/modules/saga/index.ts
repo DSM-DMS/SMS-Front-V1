@@ -1,10 +1,9 @@
-import { all } from 'redux-saga/effects';
-import jsonSaga from './json';
+import { all } from "redux-saga/effects";
+import jsonSaga from "./json";
+import posterSaga from "./poster";
 
 function* rootSaga() {
-  // rootReducer와 같은역할
-  yield all([jsonSaga()]);
-  // all([saga1(), saga2(), saga3()...])
+  yield all([jsonSaga(), posterSaga()]);
 }
 
 export default rootSaga;
