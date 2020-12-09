@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const HeaderWrap = styled.header`
@@ -12,7 +11,7 @@ export const HeaderWrap = styled.header`
   font-size: 14px;
 `;
 
-export const Logout = styled(Link)`
+export const Logout = styled.button`
   margin-left: 16px;
   border: 0;
   color: #ff5555;
