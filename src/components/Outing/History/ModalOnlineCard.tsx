@@ -6,18 +6,31 @@ import ModalCategory from "./ModalCategory";
 import * as S from "../style";
 import { OutingUser, OutingClose } from "../../../assets";
 import { OutingStatus } from "../../../lib/api/payloads/Outing";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
+import { SERVER } from "../../../lib/api/client";
 
 const ModalOnlineCard: FC<WithModalProps> = ({
   handleMode,
   closeModal,
   outingStatus
 }): ReactElement => {
+  const { profile_uri } = useSelector((state: stateType) => state.header);
+
   return (
     <S.ModalOnlineCard>
       <S.OnlineCardTitle>온라인 외출증</S.OnlineCardTitle>
       <S.OnlineCardContentWrap>
         <S.OnlineCardUserPictureWrap>
-          <S.OnlineCardUserPicture src={OutingUser} alt="user" title="user" />
+          <S.OnlineCardUserPicture
+            src={
+              profile_uri
+                ? `${SERVER.s3Url}/profiles/${profile_uri}`
+                : OutingUser
+            }
+            alt="user"
+            title="user"
+          />
         </S.OnlineCardUserPictureWrap>
         <ModalCategory />
       </S.OnlineCardContentWrap>
@@ -38,7 +51,6 @@ const ModalOnlineCard: FC<WithModalProps> = ({
           title="close"
           onClick={closeModal}
         />
-        <S.OnlineCardDate>2020.07.17</S.OnlineCardDate>
       </S.OnlineCardInfo>
     </S.ModalOnlineCard>
   );
