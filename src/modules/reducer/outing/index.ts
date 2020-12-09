@@ -3,14 +3,15 @@ import {
   SET_OUTING_LIST,
   SET_SELECTED_OUTING
 } from "../../action/outing";
-import { ResHistory, ResHistoryItem } from "../../../lib/api/payloads/Outing";
+import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
 
-export interface OutingState extends ResHistory {
+export interface OutingState {
   selected: ResHistoryItem;
+  histories: ResHistoryItem[];
 }
 
 const initialState: OutingState = {
-  outings: [],
+  histories: [],
   selected: null
 };
 
@@ -22,14 +23,13 @@ const outingReducer = (
     case SET_OUTING_LIST:
       return {
         ...state,
-        outings: action.payload.outings
+        histories: [...state.histories, ...action.payload.histories]
       };
     case SET_SELECTED_OUTING:
       return {
         ...state,
-        selected: action.payload.outing
+        selected: action.payload.history
       };
-
     default: {
       return state;
     }
