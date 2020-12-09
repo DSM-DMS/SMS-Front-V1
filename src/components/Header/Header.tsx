@@ -9,21 +9,13 @@ import { stateType } from "../../modules/reducer";
 
 interface Props {
   logout: () => void;
+  moveLogin: () => void;
 }
 
-const Header: FC<Props> = ({ logout }) => {
-  const history = useHistory();
+const Header: FC<Props> = ({ logout, moveLogin }) => {
   const { type, grade, group, name, student_number } = useSelector(
     (state: stateType) => state.header
   );
-
-  const moveLogin = () => {
-    if (history.location.pathname.includes("admin")) {
-      history.push("/admin/login");
-    } else {
-      history.push("/login");
-    }
-  };
 
   if (!type) {
     return (
