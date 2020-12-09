@@ -22,6 +22,7 @@ import {
   TEACHER,
   UserType
 } from "../../modules/action/header";
+import { pageMove } from "../../modules/action/page";
 
 interface Props {}
 
@@ -186,6 +187,7 @@ const LoginContainer: FC<Props> = () => {
 
         setErrorMessage(initErrorState);
 
+        dispatch(pageMove("홈"));
         history.push("./home");
       } catch (err) {
         const data = err?.response?.data,
