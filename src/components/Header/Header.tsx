@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import * as S from "./style";
 
@@ -11,14 +12,23 @@ interface Props {
 }
 
 const Header: FC<Props> = ({ logout }) => {
+  const history = useHistory();
   const { type, grade, group, name, student_number } = useSelector(
     (state: stateType) => state.header
   );
 
+  const moveLogin = () => {
+    if (history.location.pathname.includes("admin")) {
+      history.push("/admin/login");
+    } else {
+      history.push("/login");
+    }
+  };
+
   if (!type) {
     return (
       <S.HeaderWrap>
-        <S.Logout to="./login">로그인</S.Logout>
+        <S.Logout onClick={moveLogin}>로그인</S.Logout>
       </S.HeaderWrap>
     );
   }
@@ -30,7 +40,12 @@ const Header: FC<Props> = ({ logout }) => {
       ) : (
         <span>{`${name} 선생님`}</span>
       )}
-      <S.Logout onClick={logout} to="./login">
+      <S.Logout
+        onClick={() => {
+          logout();
+          moveLogin();
+        }}
+      >
         로그아웃
       </S.Logout>
     </S.HeaderWrap>
