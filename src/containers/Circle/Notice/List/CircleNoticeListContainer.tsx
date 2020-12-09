@@ -37,7 +37,7 @@ const StaticData: BoardObj[] = [
 ];
 
 const CircleNoticeListContainer: FC = () => {
-  const data = customSelector((state) => state.board.list);
+  const data = customSelector(state => state.board.list);
   const disaptch = useDispatch();
   useEffect(() => {
     disaptch(updateBoardList(StaticData));

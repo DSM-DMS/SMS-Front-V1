@@ -1,12 +1,10 @@
-import React, { ChangeEvent, FC } from "react";
+import React, { ChangeEvent, FC, MutableRefObject } from "react";
 
 import * as S from "./style";
 
-import { ErrorState } from "../../containers/Login/LoginConatiner";
-import { UserType } from "../../modules/action/header";
+import { ErrorState } from "../../containers/Login/LoginContainer";
 
 interface Props {
-  type: UserType;
   id: string;
   pw: string;
   autoLogin: boolean;
@@ -15,10 +13,10 @@ interface Props {
   handlePw: (e: ChangeEvent<HTMLInputElement>) => void;
   toggleAutoLogin: () => void;
   login: (id: string, pw: string, autoLogin: boolean) => Promise<any>;
+  errorRef: MutableRefObject<HTMLParagraphElement>;
 }
 
 const Login: FC<Props> = ({
-  type,
   id,
   pw,
   handleId,
@@ -26,7 +24,8 @@ const Login: FC<Props> = ({
   autoLogin,
   toggleAutoLogin,
   errorMessage,
-  login
+  login,
+  errorRef
 }) => {
   return (
     <S.LoginWrap>
@@ -50,14 +49,12 @@ const Login: FC<Props> = ({
               type="password"
               placeholder="비밀번호"
               id="pw"
-              onKeyPress={(e) => e.key === "Enter" && login(id, pw, autoLogin)}
+              onKeyPress={e => e.key === "Enter" && login(id, pw, autoLogin)}
               onChange={handlePw}
               value={pw}
             />
           </S.LoginLabel>
-          {errorMessage.status && (
-            <S.ErrorMessage>{errorMessage.message}</S.ErrorMessage>
-          )}
+          <S.ErrorMessage ref={errorRef}>{errorMessage.message}</S.ErrorMessage>
           <S.AutoLogin>
             <S.AutoLoginCheckbox
               type="checkbox"
@@ -67,10 +64,7 @@ const Login: FC<Props> = ({
             <S.AutoLoginLabel htmlFor="auto-login">자동로그인</S.AutoLoginLabel>
           </S.AutoLogin>
         </S.LoginInputsWrap>
-        <S.LoginButton
-          baseColor={type}
-          onClick={() => login(id, pw, autoLogin)}
-        >
+        <S.LoginButton onClick={() => login(id, pw, autoLogin)}>
           로그인
         </S.LoginButton>
       </S.LoginForm>

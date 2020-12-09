@@ -1,5 +1,5 @@
-export interface ResponseDefault {
+export interface ResDefault {
   status: number;
-  code: number;
   message: string;
+  code: number;
 }

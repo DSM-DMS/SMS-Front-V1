@@ -1,7 +1,11 @@
-import styled, { keyframes, css } from 'styled-components';
-import TextareaAutosize from 'react-autosize-textarea';
+import styled, { css } from "styled-components";
+import TextareaAutosize from "react-autosize-textarea";
 
-import { OutingWarningRedBase, OutingBalloons } from '../../assets';
+import {
+  OutingWarningRedBase,
+  OutingBalloons,
+  NavIconWaringBlack
+} from "../../assets";
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -11,7 +15,7 @@ export const OutingCommonWrap = styled.div`
   box-sizing: border-box;
 `;
 
-export const WarningWarp = styled(OutingCommonWrap)`
+export const WarningWrap = styled(OutingCommonWrap)`
   padding: 24px 80px;
 `;
 
@@ -50,7 +54,7 @@ export const WarningInnerItem = styled.li`
   }
 `;
 
-export const ApplyWarp = styled(OutingCommonWrap)`
+export const ApplyWrap = styled(OutingCommonWrap)`
   position: relative;
 `;
 
@@ -123,7 +127,7 @@ export const ApplyCircle3 = styled.div`
   border-radius: 50%;
   box-sizing: border-box;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -144,7 +148,7 @@ export const ApplyCircle4 = styled.div`
   border-radius: 50%;
   box-sizing: border-box;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -171,44 +175,37 @@ export const ApplyDescWarning = styled.p`
 `;
 
 export const ApplyForm = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  margin-bottom: 16px;
 `;
 
-export const ApplyFormItemTitle = styled.p`
-  margin-top: 60px;
-  margin-bottom: 4px;
+export const ApplyFormItemTitle = styled.label`
+  width: 100px;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 export const ApplyFormInputWrap = styled.div`
   position: relative;
-  display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  display: flex;
+  width: 35%;
+  margin: 8px 0;
   padding: 8px;
   border: 1px solid #888888;
   border-radius: 4px;
-  &.dateWrap {
-    padding-right: 20px;
-  }
-  &.timeWrap:first-child {
-    margin-right: 12px;
-  }
-  &.timeWrap:last-child {
-    margin-left: 12px;
-  }
+  box-sizing: border-box;
 `;
 
 export const FormDate = styled.div`
-  width: 20%;
+  display: flex;
+  align-items: center;
 `;
 
 export const FormDateText = styled.span`
   color: #dddddd;
   font-size: 14px;
+  user-select: none;
   &.selected {
     color: black;
   }
@@ -226,50 +223,26 @@ export const FormDateInput = styled.input`
   background-color: transparent;
 `;
 
-export const FormTime = styled.div`
-  width: 45%;
-`;
+export const FormTime = styled.div``;
 
 export const FormTimeListWrap = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const FormTimeType = styled.span`
-  margin-right: 12px;
   color: #dddddd;
   font-size: 14px;
+  user-select: none;
   &.selected {
     color: black;
   }
 `;
 
-export const FormTimeListImg = styled.img`
-  width: 24px;
-  cursor: pointer;
-`;
-
-export const FormTimeList = styled.ul`
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  height: 125px;
-  padding-left: 24px;
-  overflow-y: scroll;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 16%);
-  color: #dddddd;
-  text-align: right;
-  font-size: 16px;
-  cursor: pointer;
-  ::-webkit-scrollbar {
-    width: 2px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: white;
-  }
-  ::-webkit-scrollbar-thumb {
-    border-radius: 16px;
-    background-color: #5323b2;
-  }
+export const FormTimeInput = styled.input`
+  height: 100%;
+  border: 0;
+  width: 28px;
 `;
 
 export const FormTimeItem = styled.li`
@@ -283,11 +256,13 @@ export const FormTimeItem = styled.li`
 `;
 
 export const FormPlace = styled.div`
-  width: 25%;
+  display: flex;
+  align-items: center;
 `;
 
 export const FormPlaceInput = styled.input`
   width: 100%;
+  height: 100%;
   padding: 0;
   border: 0;
   font-size: 14px;
@@ -296,12 +271,29 @@ export const FormPlaceInput = styled.input`
   }
 `;
 
-export const FormReason = styled.div`
-  width: 30%;
+export const FormPlaceInputSearch = styled.img`
+  width: 16px;
+  cursor: pointer;
+`;
+
+export const FormPlaceSearchListWrap = styled.div`
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 0;
+  background-color: white;
+  z-index: 1;
+`;
+
+export const FormReason = styled.div``;
+
+export const FormInnerReason = styled.div`
+  display: flex;
+  align-items: center;
 `;
 
 export const FormReasonTextarea = styled(TextareaAutosize)`
   width: 100%;
+  height: 100%;
   border: 0;
   padding: 0;
   font-size: 14px;
@@ -321,6 +313,8 @@ export const FormReasonTextarea = styled(TextareaAutosize)`
 `;
 
 export const FormReasonSick = styled.div`
+  display: flex;
+  margin: 8px 0;
   span {
     color: #5323b2;
     cursor: pointer;
@@ -330,14 +324,12 @@ export const FormReasonSick = styled.div`
 export const FormReasonSickDesc = styled.div`
   position: relative;
   width: 100%;
+  line-height: 1.5;
   font-size: 12px;
-  padding: 8px;
-  padding-right: 24px;
-  border: 1px solid #dddddd;
-  background-color: white;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 16%);
+  padding: 8px 0;
+  box-sizing: border-box;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 8px;
     right: 8px;
@@ -359,25 +351,29 @@ export const FormButtonWrap = styled.div`
 
 const FormButtonCommon = styled.button`
   margin: 0 8px;
-  padding: 8px 16px;
+  padding: 6px 8px;
   border: 0;
-  border-radius: 8px;
-  font-size: 20px;
-  transition: 50ms ease-in-out;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: 120ms;
+  box-shadow: inset -3px -3px 3px rgba(0, 0, 0, 0.2),
+    3px 3px 3px rgba(0, 0, 0, 0.2);
+  &:hover {
+    transform: scale(1.05);
+  }
   &:active {
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
 `;
 
 export const FormButtonCancel = styled(FormButtonCommon)`
-  width: 12%;
-  border: 1px solid black;
+  width: 80px;
   color: #242424;
   background-color: white;
 `;
 
 export const FormButtonSubmit = styled(FormButtonCommon)`
-  width: 12%;
+  width: 80px;
   color: white;
   background-color: #5323b2;
 `;
@@ -400,7 +396,6 @@ export const FormSubmitModalText = styled.p`
 
 export const FormSubmitModalCancelButton = styled(FormButtonCommon)`
   padding: 4px 16px;
-  border: 1px solid black;
   color: #242424;
   background-color: white;
   font-size: 16px;
@@ -413,7 +408,7 @@ export const FormSubmitModalSubmitButton = styled(FormButtonCommon)`
   font-size: 16px;
 `;
 
-export const HistoryWarp = styled(OutingCommonWrap)``;
+export const HistoryWrap = styled(OutingCommonWrap)``;
 
 export const HistoryHead = styled.header`
   margin-bottom: 24px;
@@ -428,9 +423,10 @@ export const HistoryTitle = styled.h2`
 
 export const HistoryContent = styled.div``;
 
-export const HistoryCardWarp = styled.div`
-  display: flex;
-  align-items: center;
+export const HistoryCardWrap = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25%, 30%));
+  row-gap: 40px;
   justify-content: space-between;
   margin-bottom: 60px;
 `;
@@ -439,7 +435,6 @@ export const HistoryCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 20%;
   height: 160px;
   padding: 16px;
   border: 1px solid #dddddd;
@@ -452,25 +447,24 @@ interface Emergency {
   emergency: boolean;
 }
 
-export const CardUser = styled.p`
+export const CardUser = styled.p<Emergency>`
   position: relative;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
   padding-right: 32px;
   border-right: 2px solid #242424;
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     right: 8px;
     transform: translateY(-50%);
-    ${({ emergency }: Emergency) =>
-      emergency
-        ? css`
-            background-image: url(${OutingWarningRedBase});
-          `
-        : ''};
+    ${({ emergency }) =>
+      emergency &&
+      css`
+        background-image: url(${OutingWarningRedBase});
+      `}
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -483,11 +477,7 @@ export const CardPlace = styled.p`
   font-size: 12px;
 `;
 
-export const CardBottom = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-`;
+export const CardBottom = styled.div``;
 
 export const CardDate = styled.span`
   font-size: 6px;
@@ -496,29 +486,26 @@ export const CardDate = styled.span`
 export const CardTime = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 16px;
-  font-weight: bold;
+  margin-top: 8px;
+  font-size: 14px;
 `;
 
-export const HistoryPageSelector = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const HistoryPageSelectorItem = styled.li`
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  border: 1px solid #d3d3d3;
-  margin: 0 8px;
-  text-align: center;
-  cursor: pointer;
-`;
-
-export const HistoryPageSelectorItemTri = styled.img`
-  width: 50%;
-  height: 50%;
+export const MoreButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.2),
+    2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: 60ms;
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 export const HistoryModalWrap = styled.div``;

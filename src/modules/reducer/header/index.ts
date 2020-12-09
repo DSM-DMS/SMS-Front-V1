@@ -1,3 +1,4 @@
+import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 import {
   HeaderAction,
   STUDENT,
@@ -6,27 +7,29 @@ import {
   SET_GROUP,
   SET_NUMBER,
   SET_TYPE,
-  SET_NAME
+  SET_NAME,
+  SET_PHONE,
+  SET_PROFILE_URI,
+  SET_INIT
 } from "../../action/header";
 
 export interface PageState {
   mainUrl: string;
   subUrl: string;
 }
-export interface HeaderState {
-  type: UserType;
-  grade: number;
-  group: number;
-  number: number;
-  name: string;
+
+export interface HeaderState extends ResStudentInfo {
+  type: UserType | "";
 }
 
 const initialState: HeaderState = {
   type: STUDENT,
   grade: 0,
   group: 0,
-  number: 0,
-  name: ""
+  name: "",
+  student_number: 0,
+  phone_number: "",
+  profile_uri: ""
 };
 
 const headerReducer = (
@@ -34,6 +37,12 @@ const headerReducer = (
   action: HeaderAction
 ): HeaderState => {
   switch (action.type) {
+    case SET_INIT:
+      return {
+        ...state,
+        type: action.payload.type,
+        ...action.payload.user
+      };
     case SET_GRADE:
       return {
         ...state,
@@ -47,7 +56,7 @@ const headerReducer = (
     case SET_NUMBER:
       return {
         ...state,
-        number: action.payload.number
+        student_number: action.payload.number
       };
     case SET_TYPE:
       return {
@@ -59,6 +68,17 @@ const headerReducer = (
         ...state,
         name: action.payload.name
       };
+    case SET_PHONE:
+      return {
+        ...state,
+        phone_number: action.payload.phone
+      };
+    case SET_PROFILE_URI:
+      return {
+        ...state,
+        profile_uri: action.payload.profileUri
+      };
+
     default:
       return state;
   }

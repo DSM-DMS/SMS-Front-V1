@@ -1,23 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 
-import { WithModalProps } from './Modal';
-import ModalApply from './ModalApply';
-import ModalOnlineCard from './ModalOnlineCard';
+import { WithModalProps } from "./Modal";
+import ModalApply from "./ModalApply";
+import ModalOnlineCard from "./ModalOnlineCard";
 
-import * as S from '../style';
+import * as S from "../style";
 
-const WithModalAni = (MyComponent: FC<WithModalProps>) => (
-  props: WithModalProps,
-) => {
-  const { handleModal, handleMode, outingState, setOutingState } = props;
-
+const WithModalAni = (MyComponent: FC<WithModalProps>) => ({
+  handleMode,
+  closeModal,
+  outingStatus
+}: WithModalProps) => {
   return (
     <S.WithModalAniWrap>
       <MyComponent
-        handleModal={handleModal}
+        closeModal={closeModal}
         handleMode={handleMode}
-        outingState={outingState}
-        setOutingState={setOutingState}
+        outingStatus={outingStatus}
       />
     </S.WithModalAniWrap>
   );

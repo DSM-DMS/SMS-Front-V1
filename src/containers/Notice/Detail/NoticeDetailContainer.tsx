@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { NoticeDetail } from '../../../components';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { updateBoardDetail } from '../../../modules/action/board';
+import React, { FC } from "react";
+import { NoticeDetail } from "../../../components";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getNoticeDetail } from "../../../modules/action/notice";
 
 export interface BoardDetail {
   content: string;
@@ -25,14 +25,14 @@ const data = {
   3. 카드를 클릭하면 동아리 
   1. 에 들어갈 정보는 다음과 같다.
   2. 우측 하단에 수정 완료 버튼이 있다.
-  수정 완료 버튼을 누르면 동아리 정보가 수정되며 동아리 어드민 페이지로 이동한다.`,
+  수정 완료 버튼을 누르면 동아리 정보가 수정되며 동아리 어드민 페이지로 이동한다.`
 };
 
 const NoticePageContainer: FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(updateBoardDetail(data));
+    dispatch(getNoticeDetail(data));
   }, []);
   return <NoticeDetail />;
 };

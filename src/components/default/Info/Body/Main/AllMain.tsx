@@ -1,23 +1,21 @@
 import React, { FC } from "react";
 import * as S from "./styles";
 import { DetailContent, Hr, Where, People } from "../../default";
-import { customSelector } from "../../../../../lib/utils";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../../modules/reducer";
 
 const AllMain = () => {
-  const {
-    introduce,
-    leader,
-    peoples: { one, two, three },
-    where
-  } = customSelector((state) => state.poster.all.detail);
+  const { introduction, location } = useSelector(
+    (state: stateType) => state.poster.all.detail
+  );
   return (
     <S.Container>
       <S.P>동아리 소개</S.P>
-      <DetailContent>{introduce}</DetailContent>
+      <DetailContent>{introduction}</DetailContent>
       <Hr />
-      <People leader={leader} three={three} two={two} one={one} />
+      <People leader={"리더"} three={[]} two={[]} one={[]} />
       <Hr />
-      <Where>{where}</Where>
+      <Where>{location}</Where>
     </S.Container>
   );
 };

@@ -79,9 +79,15 @@ export const GlobalBody = styled.div`
   box-sizing: border-box;
 `;
 
-export const GlobalInnerBody = styled.div`
+interface IGlobalInnerBody {
+  isBackNeed?: boolean;
+}
+
+export const GlobalInnerBody = styled.div<IGlobalInnerBody>`
   min-width: 635px;
   border-radius: 5px;
-  background: white;
-  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.25);
+  background: ${({ isBackNeed = true }) =>
+    isBackNeed ? "white" : "transparent"};
+  box-shadow: ${({ isBackNeed = true }) =>
+    isBackNeed ? "0px 0px 12px 1px rgba(0, 0, 0, 0.25)" : "none"};
 `;

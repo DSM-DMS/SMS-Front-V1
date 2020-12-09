@@ -2,9 +2,8 @@ import React, { FC } from "react";
 import { NoticeList } from "../../../components";
 import { BoardObj } from "../../../components/default/Board/Board";
 import { useEffect } from "react";
-import { updateBoardList } from "../../../modules/action/board";
 import { useDispatch } from "react-redux";
-import { customSelector } from "../../../lib/utils";
+import { getNoticeList } from "../../../modules/action/notice";
 
 const StaticData: BoardObj[] = [
   {
@@ -36,7 +35,7 @@ const StaticData: BoardObj[] = [
 const NoticeListContainer: FC = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(updateBoardList(StaticData));
+    dispatch(getNoticeList(StaticData));
   }, []);
   return <NoticeList />;
 };

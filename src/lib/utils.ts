@@ -1,7 +1,7 @@
 import { PageState } from "../modules/reducer/page";
 import { useSelector } from "react-redux";
 import { stateType } from "../modules/reducer";
-import { BoardObj } from "../components/default/Board/Board";
+import { SERVER } from "../lib/api/client";
 
 type valueType = [string, string];
 
@@ -94,5 +94,7 @@ export const makeFilterFunc = <T>(
   data: T[],
   callback: (data: T, str: string) => boolean
 ): ((keyword: string) => T[]) => {
-  return (keyword: string) => data.filter((item) => callback(item, keyword));
+  return (keyword: string) => data.filter(item => callback(item, keyword));
 };
+
+export const getImgUrl = url => `${SERVER.s3Url}/${url}`;
