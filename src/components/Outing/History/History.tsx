@@ -1,33 +1,29 @@
 import React, { FC, ReactElement } from "react";
-import { useDispatch } from "react-redux";
 
 import Card from "./Card";
 import Modal from "./Modal";
 
 import * as S from "../style";
 import { OutingHistory } from "../../../assets";
-import { ResHistory, ResHistoryItem } from "../../../lib/api/payloads/Outing";
-import { setSelectedOuting } from "../../../modules/action/outing";
+import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
 
 interface Props {
-  histories: ResHistory;
+  histories: ResHistoryItem[];
   modal: boolean;
   closeModal: () => void;
   openModal: () => void;
+  getHistories: () => Promise<void>;
+  dispatchSelectedOuting: (histories: ResHistoryItem) => void;
 }
 
 const History: FC<Props> = ({
   histories,
   modal,
   openModal,
-  closeModal
+  closeModal,
+  getHistories,
+  dispatchSelectedOuting
 }): ReactElement => {
-  const dispatch = useDispatch();
-
-  const dispatchSelectedOuting = (outing: ResHistoryItem) => {
-    dispatch(setSelectedOuting(outing));
-  };
-
   return (
     <S.HistoryWrap>
       <S.HistoryHead>
@@ -36,7 +32,7 @@ const History: FC<Props> = ({
       </S.HistoryHead>
       <div>
         <S.HistoryCardWrap>
-          {histories.outings.map(outing => (
+          {histories.map(outing => (
             <Card
               key={outing.outing_uuid}
               outing={outing}
@@ -45,7 +41,7 @@ const History: FC<Props> = ({
             />
           ))}
         </S.HistoryCardWrap>
-        <S.MoreButton>더 보기</S.MoreButton>
+        <S.MoreButton onClick={getHistories}>더 보기</S.MoreButton>
         {modal && <Modal closeModal={closeModal} />}
       </div>
     </S.HistoryWrap>
