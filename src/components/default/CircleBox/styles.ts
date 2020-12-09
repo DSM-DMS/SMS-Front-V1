@@ -63,8 +63,8 @@ export const DateWrap = styled.div`
 `;
 
 export const Footer = styled.div`
-  height: 50px;
   display: flex;
+  align-items: center;
 
   > div:nth-child(1) {
     flex: 1;

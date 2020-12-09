@@ -1,117 +1,57 @@
-import React, {
-  FC,
-  ReactElement,
-  useState,
-  Dispatch,
-  SetStateAction,
-} from 'react';
+import React, { FC, ReactElement, ChangeEvent, useCallback } from "react";
 
-import * as S from '../style';
-
-import { OutingDown } from '../../../assets';
+import * as S from "../style";
 
 interface Props {
   formOutTime: string;
   formInTime: string;
-  setFormOutTime: Dispatch<SetStateAction<string>>;
-  setFormInTime: Dispatch<SetStateAction<string>>;
+  handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-
-const fixNumToTime = (num: number): string =>
-  num < 10 ? `0${num}:00` : `${num}:00`;
-const times = (() => {
-  const buffer = [];
-  for (let i = 1; i <= 24; i++) {
-    buffer.push(fixNumToTime(i));
-  }
-  return buffer;
-})();
 
 const ApplyTime: FC<Props> = ({
   formOutTime,
   formInTime,
-  setFormOutTime,
-  setFormInTime,
+  handleInTime,
+  handleOutTime
 }): ReactElement => {
-  const [showOut, setShowOut] = useState<boolean>(false);
-  const [showIn, setShowIn] = useState<boolean>(false);
-
-  const timeList = (
-    setFormFunc: Dispatch<SetStateAction<string>>,
-    setShowFunc: Dispatch<SetStateAction<boolean>>,
-  ) => {
-    return (
-      <S.FormTimeList>
-        {times.map((time) => (
-          <S.FormTimeItem
-            key={time}
-            onClick={() => {
-              if (formOutTime === '') {
-                if (formInTime === '') {
-                  setFormFunc(time);
-                  setShowFunc(false);
-                  return;
-                }
-                if (formInTime <= time) return;
-                setFormFunc(time);
-                setShowFunc(false);
-                return;
-              }
-              if (formInTime === '') {
-                if (formOutTime >= time) return;
-                setFormFunc(time);
-                setShowFunc(false);
-                return;
-              }
-              if (time >= formInTime) return;
-              setFormFunc(time);
-              setShowFunc(false);
-            }}
-          >
-            {time}
-          </S.FormTimeItem>
-        ))}
-      </S.FormTimeList>
-    );
-  };
+  const getTimeText = useCallback((type: string, time: string) => {
+    if (!time) return `${type} 시간을 선택하세요.`;
+    if (time >= "12:00")
+      return `오후 ${parseInt(time.split(":")[0]) - 12}:${time.split(":")[1]}`;
+    return `오전 ${time}`;
+  }, []);
 
   return (
     <S.FormTime>
-      <S.ApplyFormItemTitle>외출 시간</S.ApplyFormItemTitle>
       <S.FormTimeListWrap>
-        <S.ApplyFormInputWrap className="timeWrap">
-          <S.FormTimeType className={formOutTime ? 'selected' : ''}>
-            {formOutTime
-              ? formOutTime >= '12:00'
-                ? `오후 ${formOutTime}`
-                : `오전 ${formOutTime}`
-              : '외출 시간을 선택하세요.'}
+        <S.ApplyFormItemTitle htmlFor="outTime">외출 시간</S.ApplyFormItemTitle>
+        <S.ApplyFormInputWrap>
+          <S.FormTimeType className={formOutTime ? "selected" : ""}>
+            {getTimeText("외출", formOutTime)}
           </S.FormTimeType>
-          <S.FormTimeListImg
-            src={OutingDown}
-            onClick={() => {
-              setShowIn(false);
-              setShowOut((prev) => !prev);
-            }}
+          <S.FormTimeInput
+            type="time"
+            name="date-time"
+            id="outTime"
+            max="15:00"
+            onChange={handleOutTime}
           />
-          {showOut && timeList(setFormOutTime, setShowOut)}
         </S.ApplyFormInputWrap>
-        <S.ApplyFormInputWrap className="timeWrap">
-          <S.FormTimeType className={formInTime ? 'selected' : ''}>
-            {formInTime
-              ? formInTime >= '12:00'
-                ? `오후 ${formInTime}`
-                : `오전 ${formInTime}`
-              : '귀교 시간을 선택하세요.'}
+      </S.FormTimeListWrap>
+      <S.FormTimeListWrap>
+        <S.ApplyFormItemTitle htmlFor="inTime">귀교 시간</S.ApplyFormItemTitle>
+        <S.ApplyFormInputWrap>
+          <S.FormTimeType className={formInTime ? "selected" : ""}>
+            {getTimeText("귀교", formInTime)}
           </S.FormTimeType>
-          <S.FormTimeListImg
-            src={OutingDown}
-            onClick={() => {
-              setShowOut(false);
-              setShowIn((prev) => !prev);
-            }}
+          <S.FormTimeInput
+            type="time"
+            name="date-time"
+            id="inTime"
+            min="13:00"
+            onChange={handleInTime}
           />
-          {showIn && timeList(setFormInTime, setShowIn)}
         </S.ApplyFormInputWrap>
       </S.FormTimeListWrap>
     </S.FormTime>

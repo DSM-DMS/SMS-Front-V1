@@ -1,43 +1,64 @@
-import React, { FC, ReactElement, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { ChangeEvent, FC, FormEvent, ReactElement } from "react";
+import { Link } from "react-router-dom";
 
-import * as S from '../style';
-import ApplyHead from './Head';
-import ApplyDate from './Date';
-import ApplyTime from './Time';
-import ApplyPlace from './Place';
-import ApplyReason from './Reason';
+import ApplyHead from "./Head";
+import ApplyDate from "./Date";
+import ApplyTime from "./Time";
+import ApplyPlace from "./Place";
+import ApplyReason from "./Reason";
 
-interface Props {}
+import * as S from "../style";
+import ApplyWaring from "./ApplyWarning";
+import { Outing } from "../../../containers/Outing/ApplyContainer";
 
-const Apply: FC<Props> = (): ReactElement => {
-  const [formDate, setFormDate] = useState<string>('');
-  const [formOutTime, setFormOutTime] = useState<string>('');
-  const [formInTime, setFormInTime] = useState<string>('');
-  const [formPlace, setFormPlace] = useState<string>('');
-  const [formReason, setFormReason] = useState<string>('');
-  const [formReasonSick, setFormReasonSick] = useState<boolean>(false);
-  const [formModal, setFormModal] = useState<boolean>(false);
+interface Props {
+  formDate: string;
+  formOutTime: string;
+  formInTime: string;
+  formPlace: string;
+  formReason: string;
+  formReasonSick: boolean;
+  onInputDate: (e: FormEvent<HTMLInputElement>) => void;
+  handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
+  handlePlace: (e: ChangeEvent<HTMLInputElement>) => void;
+  cancelSickOuting: () => void;
+  applySickOuting: () => void;
+  handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  applyOuting: (outing: Outing) => Promise<void>;
+}
 
-  // a.replace(/\n/gi, '<br />'); ->
+const Apply: FC<Props> = ({
+  formDate,
+  formInTime,
+  formOutTime,
+  formPlace,
+  formReason,
+  formReasonSick,
+  onInputDate,
+  handleInTime,
+  handleOutTime,
+  handlePlace,
+  cancelSickOuting,
+  applySickOuting,
+  handleReason,
+  applyOuting
+}): ReactElement => {
+  const handleApplyOuting = () => {
+    const outing: Outing = {
+      date: formDate,
+      startTime: formOutTime,
+      endTime: formInTime,
+      place: formPlace,
+      reason: formReason,
+      situation: formReasonSick ? "emergency" : "normal"
+    };
 
-  React.useEffect(() => {
-    console.log(
-      'formDate',
-      formDate,
-      'formOutTime',
-      formOutTime,
-      'formInTime',
-      formInTime,
-      'formPlace',
-      formPlace,
-      'formReason',
-      formReason,
-    );
-  });
+    applyOuting(outing);
+  };
 
   return (
-    <S.ApplyWarp>
+    <S.ApplyWrap>
       <ApplyHead />
       <div>
         <S.ApplyDescWarning>
@@ -45,53 +66,29 @@ const Apply: FC<Props> = (): ReactElement => {
           읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의 책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
-          <ApplyDate formDate={formDate} setFormDate={setFormDate} />
+          <ApplyDate formDate={formDate} onInputDate={onInputDate} />
           <ApplyTime
             formOutTime={formOutTime}
             formInTime={formInTime}
-            setFormOutTime={setFormOutTime}
-            setFormInTime={setFormInTime}
+            handleInTime={handleInTime}
+            handleOutTime={handleOutTime}
           />
-          <ApplyPlace setFormPlace={setFormPlace} />
+          <ApplyPlace handlePlace={handlePlace} place={formPlace} />
           <ApplyReason
-            setFormReason={setFormReason}
             formReasonSick={formReasonSick}
-            setFormReasonSick={setFormReasonSick}
+            handleReason={handleReason}
+            cancelSickOuting={cancelSickOuting}
+            applySickOuting={applySickOuting}
           />
+          <ApplyWaring />
         </S.ApplyForm>
         <S.FormButtonWrap>
-          <S.FormButtonCancel>취소</S.FormButtonCancel>
-          <S.FormButtonSubmit
-            onClick={() => {
-              setFormModal(true);
-            }}
-          >
+          <S.FormButtonSubmit onClick={handleApplyOuting}>
             작성완료
           </S.FormButtonSubmit>
         </S.FormButtonWrap>
       </div>
-      {formModal && (
-        <S.FormSubmitModal>
-          <S.FormSubmitModalText>외출 신청하시겠습니까?</S.FormSubmitModalText>
-          <div>
-            <S.FormSubmitModalCancelButton
-              onClick={() => {
-                setFormModal(false);
-              }}
-            >
-              취소
-            </S.FormSubmitModalCancelButton>
-            <S.FormSubmitModalSubmitButton
-              onClick={() => {
-                setFormModal(false);
-              }}
-            >
-              확인
-            </S.FormSubmitModalSubmitButton>
-          </div>
-        </S.FormSubmitModal>
-      )}
-    </S.ApplyWarp>
+    </S.ApplyWrap>
   );
 };
 
