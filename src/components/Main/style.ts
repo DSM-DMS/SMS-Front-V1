@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const MainWrap = styled.div`
   display: flex;
@@ -126,58 +127,49 @@ export const FilterReset = styled.button`
   }
 `;
 
-export const FiltersList = styled.ul`
-  position: relative;
-  margin: 0 8px;
-  background: #f6f6f6;
-  font-size: 16px;
-  font-weight: normal;
-  &:hover > ul {
-    display: block;
-  }
-`;
-
-export const FiltersListSelectedWrap = styled.p`
+export const FilterDayWrap = styled.label`
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 8px;
-  padding: 4px 8px;
+  padding: 4px 0;
   cursor: pointer;
-`;
-
-export const FiltersListSelected = styled.span`
-  margin-right: 8px;
-`;
-
-export const FiltersListInner = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  width: 100%;
-  text-align: center;
-  background: #f6f6f6;
-  animation: slide 300ms;
-  z-index: 10;
-  @keyframes slide {
-    from {
-      top: 0;
-      opacity: 0;
-    }
-    to {
-      top: 100%;
-      opacity: 1;
-    }
+  &.today {
+    color: #ea0000;
+  }
+  &.selected {
+    color: #0275ff;
   }
 `;
 
-export const FiltersListInnerItem = styled.li`
-  padding: 4px 0;
-  transition: 300ms;
+export const FilterText = styled.span`
+  font-size: 14px;
+  font-weight: normal;
+`;
+
+export const FilterRadio = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  border: 0.5px solid rgb(133, 133, 133);
+  border-radius: 50%;
   cursor: pointer;
-  &:hover {
-    background: #e9e9e9;
+  &.selected {
+    border: 0.5px solid #0275ff;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: #0275ff;
+      border-radius: 50%;
+    }
   }
 `;
 
@@ -208,7 +200,7 @@ export const DetailAddSchedule = styled.button`
   font-size: 14px;
   transition: 300ms;
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -313,7 +305,7 @@ export const OutingTitle = styled(MainContentTitleCommon)`
   border-bottom: 2px solid #dddddd;
 `;
 
-export const OutingItem = styled.div`
+export const OutingItem = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
