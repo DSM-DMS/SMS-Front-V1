@@ -111,7 +111,13 @@ const Timetable: FC<Props> = (): ReactElement => {
           ))}
         </S.FiltersWrap>
       </S.TimetableTitle>
-      <TimeTableList timeTable={timeTable} />
+      {timeTables.length !== 0 ? (
+        <TimeTableList timeTable={timeTable} />
+      ) : (
+        <div style={{ textAlign: "center", color: "red", margin: "10px" }}>
+          시간표를 불러올 수 없습니다. 다시 시도해주세요.
+        </div>
+      )}
     </S.Timetable>
   );
 };
