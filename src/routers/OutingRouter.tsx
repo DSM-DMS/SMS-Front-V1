@@ -11,7 +11,7 @@ import {
 const OutingRouter: FC<{}> = () => {
   return (
     <Switch>
-      <Route exact path="/outing/waring" component={WarningContainer} />
+      <Route exact path="/outing/warning" component={WarningContainer} />
       <Route exact path="/outing/apply" component={ApplyContainer} />
       <Route exact path="/outing/history" component={HistoryContainer} />
       <Route path="/outing/*" component={PageNotFound} />
