@@ -62,7 +62,7 @@ export const userRoute: RouteData = {
     {
       name: "외출신청",
       subUrl: "유의사항",
-      route: "/outing/waring",
+      route: "/outing/warning",
       white: NavIconOutingWhite,
       blue: NavIconOutingBlue
     }
