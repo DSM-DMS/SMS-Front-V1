@@ -1,6 +1,6 @@
 import { ResDefault } from "../index";
 
-export interface ResTimeTable {
+export interface ResTimetable {
   time1: string;
   time2: string;
   time3: string;
@@ -10,4 +10,4 @@ export interface ResTimeTable {
   time7: string;
 }
 
-export interface ResTimeTableWithDefault extends ResTimeTable, ResDefault {}
+export interface ResTimetableWithDefault extends ResTimetable, ResDefault {}

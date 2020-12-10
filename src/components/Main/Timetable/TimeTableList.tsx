@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 
 import * as S from "../style";
-import { ResTimeTable } from "../../../lib/api/payloads/Main";
+import { ResTimetable } from "../../../lib/api/payloads/Main";
 
 interface Props {
-  timeTable: ResTimeTable;
+  timeTable: ResTimetable;
 }
 
-const TimeTableList: FC<Props> = ({ timeTable }) => {
+const TimetableList: FC<Props> = ({ timeTable }) => {
   return (
     <S.TimetableList>
       <S.TimetableItem>
@@ -42,4 +42,4 @@ const TimeTableList: FC<Props> = ({ timeTable }) => {
   );
 };
 
-export default TimeTableList;
+export default TimetableList;
