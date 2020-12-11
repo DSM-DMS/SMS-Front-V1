@@ -2,9 +2,9 @@ import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Switch, BrowserRouter, Route } from "react-router-dom";
 
-import Navigation from "./components/Navigation/Navigation";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
-import { PageNotFound } from "./components";
+import { PageNotFound, Navigation } from "./components";
+import { LoginContainer, HeaderContainer } from "./containers";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -14,12 +14,13 @@ import {
   ManagementRouter
 } from "./routers";
 import { jsonActionCreater } from "./modules/action/json";
-import { LoginContainer, HeaderContainer } from "./containers";
+import { setTimetablesSaga } from "./modules/action/main";
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(setTimetablesSaga());
     dispatch(jsonActionCreater.getJsonSaga());
   }, []);
 

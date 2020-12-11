@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export const SERVER = {
-  hostUrl: "http://10.220.158.111:8080/",
-  version: "v1",
-  s3Url: "https://dms-sms-s3.s3.ap-northeast-2.amazonaws.com"
+  hostUrl: process.env.HOST_URL,
+  version: process.env.VERSION,
+  s3Url: process.env.S3_URL
 };
 
 const SESSION_EXPIRATION_MESSAGE =

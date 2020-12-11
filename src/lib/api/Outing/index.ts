@@ -32,12 +32,8 @@ export const postOuting = (body: ReqOuting) => {
   });
 };
 
-export const getHistory = (
-  studentUuid: string,
-  start: number = 0,
-  count: number = 10
-) => {
+export const getHistory = (studentUuid: string, start: number) => {
   return apiDefault().get<ResHistoryWithDefault>(
-    `/students/uuid/${studentUuid}/outings?start=${start}&count=${count}`
+    `/students/uuid/${studentUuid}/outings?start=${start}&count=10`
   );
 };

@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import * as S from "./style";
 
@@ -8,9 +9,10 @@ import { stateType } from "../../modules/reducer";
 
 interface Props {
   logout: () => void;
+  moveLogin: () => void;
 }
 
-const Header: FC<Props> = ({ logout }) => {
+const Header: FC<Props> = ({ logout, moveLogin }) => {
   const { type, grade, group, name, student_number } = useSelector(
     (state: stateType) => state.header
   );
@@ -18,7 +20,7 @@ const Header: FC<Props> = ({ logout }) => {
   if (!type) {
     return (
       <S.HeaderWrap>
-        <S.Logout to="./login">로그인</S.Logout>
+        <S.Logout onClick={moveLogin}>로그인</S.Logout>
       </S.HeaderWrap>
     );
   }
@@ -30,7 +32,12 @@ const Header: FC<Props> = ({ logout }) => {
       ) : (
         <span>{`${name} 선생님`}</span>
       )}
-      <S.Logout onClick={logout} to="./login">
+      <S.Logout
+        onClick={() => {
+          logout();
+          moveLogin();
+        }}
+      >
         로그아웃
       </S.Logout>
     </S.HeaderWrap>

@@ -1,14 +1,27 @@
 import React, { FC, useCallback, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { Header } from "../../components";
 import { ResStudentInfo } from "../../lib/api/payloads/Login";
 import { setInit, UserType } from "../../modules/action/header";
+import { pageMove } from "../../modules/action/page";
 
 interface Props {}
 
 const HeaderContainer: FC<Props> = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  const moveLogin = () => {
+    dispatch(pageMove("로그인"));
+
+    if (history.location.pathname.includes("admin")) {
+      history.push("/admin/login");
+    } else {
+      history.push("/login");
+    }
+  };
 
   const logout = useCallback(() => {
     dispatch(
@@ -37,7 +50,7 @@ const HeaderContainer: FC<Props> = () => {
     dispatch(setInit(type, smsUser));
   }, []);
 
-  return <Header logout={logout} />;
+  return <Header logout={logout} moveLogin={moveLogin} />;
 };
 
 export default HeaderContainer;

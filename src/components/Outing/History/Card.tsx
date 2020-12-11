@@ -49,15 +49,17 @@ const HistoryCard: FC<Props> = ({
       }}
     >
       <S.CardTop>
-        <S.CardUser
+        <S.CardDate
           emergency={outing_situation.toUpperCase() === "NORMAL" ? false : true}
         >
           {getLocalDate(start_time)}
-        </S.CardUser>
+        </S.CardDate>
         <S.CardPlace>장소 : {place}</S.CardPlace>
       </S.CardTop>
       <S.CardBottom>
-        <S.CardDate>외출 상태 : {OutingStatus[outing_status]}</S.CardDate>
+        <S.CardStatus status={+outing_status}>
+          외출 상태 : {OutingStatus[outing_status]}
+        </S.CardStatus>
         <S.CardTime>
           외출 시간 : {getLocalTime(start_time)} ~ {getLocalTime(end_time)}
         </S.CardTime>
