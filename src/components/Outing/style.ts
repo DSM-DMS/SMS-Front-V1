@@ -1,7 +1,11 @@
-import styled, { keyframes, css } from "styled-components";
+import styled, { css } from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { OutingWarningRedBase, OutingBalloons } from "../../assets";
+import {
+  OutingWarningRedBase,
+  OutingBalloons,
+  NavIconWaringBlack
+} from "../../assets";
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -320,12 +324,9 @@ export const FormReasonSick = styled.div`
 export const FormReasonSickDesc = styled.div`
   position: relative;
   width: 100%;
+  line-height: 1.5;
   font-size: 12px;
-  padding: 8px;
-  padding-right: 24px;
-  border: 1px solid #dddddd;
-  background-color: white;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 16%);
+  padding: 8px 0;
   box-sizing: border-box;
   &::after {
     content: "";
@@ -423,8 +424,9 @@ export const HistoryTitle = styled.h2`
 export const HistoryContent = styled.div``;
 
 export const HistoryCardWrap = styled.div`
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25%, 30%));
+  row-gap: 40px;
   justify-content: space-between;
   margin-bottom: 60px;
 `;
@@ -433,7 +435,6 @@ export const HistoryCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 20%;
   height: 160px;
   padding: 16px;
   border: 1px solid #dddddd;
@@ -446,9 +447,9 @@ interface Emergency {
   emergency: boolean;
 }
 
-export const CardUser = styled.p`
+export const CardUser = styled.p<Emergency>`
   position: relative;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
   padding-right: 32px;
@@ -459,12 +460,11 @@ export const CardUser = styled.p`
     top: 50%;
     right: 8px;
     transform: translateY(-50%);
-    ${({ emergency }: Emergency) =>
-      emergency
-        ? css`
-            background-image: url(${OutingWarningRedBase});
-          `
-        : ""};
+    ${({ emergency }) =>
+      emergency &&
+      css`
+        background-image: url(${OutingWarningRedBase});
+      `}
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
@@ -477,11 +477,7 @@ export const CardPlace = styled.p`
   font-size: 12px;
 `;
 
-export const CardBottom = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-`;
+export const CardBottom = styled.div``;
 
 export const CardDate = styled.span`
   font-size: 6px;
@@ -490,29 +486,26 @@ export const CardDate = styled.span`
 export const CardTime = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 16px;
-  font-weight: bold;
+  margin-top: 8px;
+  font-size: 14px;
 `;
 
-export const HistoryPageSelector = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const HistoryPageSelectorItem = styled.li`
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  border: 1px solid #d3d3d3;
-  margin: 0 8px;
-  text-align: center;
-  cursor: pointer;
-`;
-
-export const HistoryPageSelectorItemTri = styled.img`
-  width: 50%;
-  height: 50%;
+export const MoreButton = styled.button`
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.2),
+    2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: 60ms;
+  &:hover {
+    transform: scale(1.02);
+  }
+  &:active {
+    transform: scale(0.98);
+  }
 `;
 
 export const HistoryModalWrap = styled.div``;

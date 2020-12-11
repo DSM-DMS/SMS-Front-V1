@@ -1,63 +1,54 @@
-import React, { FC, ReactElement, useState, useEffect } from 'react';
+import React, { FC, ReactElement, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import { WithModalApply, WithModalOnlineCard } from './WithModalAni';
+import { WithModalApply, WithModalOnlineCard } from "./WithModalAni";
 
-import * as S from '../style';
-
-export const REJECT = 'reject';
-export const APPROVE = 'approve';
-export const OUT = 'out';
-export const EXPIRED = 'expired';
-
-type OutingActions =
-  | typeof REJECT
-  | typeof APPROVE
-  | typeof OUT
-  | typeof EXPIRED;
+import * as S from "../style";
+import { stateType } from "../../../modules/reducer";
+import { OutingStatus } from "../../../lib/api/payloads/Outing";
 
 interface Props {
-  handleModal: (isShow: boolean) => void;
+  closeModal: () => void;
 }
 
 export interface WithModalProps {
-  handleMode: (mode: 'apply' | 'card') => void;
-  handleModal: (isShow: boolean) => void;
-  outingState: OutingActions;
-  setOutingState: (action: OutingActions) => void;
+  handleMode: (mode: "apply" | "card") => void;
+  closeModal: () => void;
+  outingStatus: string;
 }
 
-const Modal: FC<Props> = ({ handleModal }): ReactElement => {
-  const [mode, setMode] = useState<'apply' | 'card'>('apply');
-  const [outingState, setOutingState] = useState<OutingActions>(APPROVE);
+const Modal: FC<Props> = ({ closeModal }): ReactElement => {
+  const { outing_status } = useSelector(
+    (state: stateType) => state.outing.selected
+  );
+  const [mode, setMode] = useState<"apply" | "card">("apply");
 
-  const handleMode = (mode: 'apply' | 'card') => {
+  const handleMode = (mode: "apply" | "card") => {
     setMode(mode);
   };
 
   useEffect(() => {
     return () => {
-      setMode('apply');
+      setMode("apply");
     };
   }, []);
 
   return (
     <S.HistoryModalWrap>
-      <S.ModalBack />
+      <S.ModalBack onClick={closeModal} />
       <S.ModalContentWrap>
-        {mode === 'apply' && (
+        {mode === "apply" && (
           <WithModalApply
             handleMode={handleMode}
-            handleModal={handleModal}
-            outingState={outingState}
-            setOutingState={setOutingState}
+            closeModal={closeModal}
+            outingStatus={outing_status}
           />
         )}
-        {mode === 'card' && (
+        {mode === "card" && (
           <WithModalOnlineCard
             handleMode={handleMode}
-            handleModal={handleModal}
-            outingState={outingState}
-            setOutingState={setOutingState}
+            closeModal={closeModal}
+            outingStatus={outing_status}
           />
         )}
       </S.ModalContentWrap>

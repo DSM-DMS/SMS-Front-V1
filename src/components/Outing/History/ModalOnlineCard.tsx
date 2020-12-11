@@ -1,16 +1,16 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from "react";
 
-import { WithModalProps, EXPIRED, OUT } from './Modal';
-import ModalCategory from './ModalCategory';
+import { WithModalProps } from "./Modal";
+import ModalCategory from "./ModalCategory";
 
-import * as S from '../style';
-import { OutingUser, OutingClose } from '../../../assets';
+import * as S from "../style";
+import { OutingUser, OutingClose } from "../../../assets";
+import { OutingStatus } from "../../../lib/api/payloads/Outing";
 
 const ModalOnlineCard: FC<WithModalProps> = ({
   handleMode,
-  handleModal,
-  outingState,
-  setOutingState,
+  closeModal,
+  outingStatus
 }): ReactElement => {
   return (
     <S.ModalOnlineCard>
@@ -24,27 +24,19 @@ const ModalOnlineCard: FC<WithModalProps> = ({
       <S.OnlineCardInfo>
         <S.OnlineCardMoveApply
           onClick={() => {
-            handleMode('apply');
+            handleMode("apply");
           }}
         >
           신청 정보
         </S.OnlineCardMoveApply>
-        {outingState === OUT && (
-          <S.OnlineCardMoveApply
-            onClick={() => {
-              setOutingState(EXPIRED);
-            }}
-          >
-            외출 완료
-          </S.OnlineCardMoveApply>
+        {OutingStatus[outingStatus] === OutingStatus[3] && (
+          <S.OnlineCardMoveApply>외출 완료</S.OnlineCardMoveApply>
         )}
         <S.ModalClose
           src={OutingClose}
           alt="close"
           title="close"
-          onClick={() => {
-            handleModal(false);
-          }}
+          onClick={closeModal}
         />
         <S.OnlineCardDate>2020.07.17</S.OnlineCardDate>
       </S.OnlineCardInfo>

@@ -1,39 +1,31 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement } from "react";
+import { useDispatch } from "react-redux";
 
-import HistoryCard from "./Card";
-import HistorySelector from "./Selector";
+import Card from "./Card";
 import Modal from "./Modal";
 
 import * as S from "../style";
 import { OutingHistory } from "../../../assets";
+import { ResHistory, ResHistoryItem } from "../../../lib/api/payloads/Outing";
+import { setSelectedOuting } from "../../../modules/action/outing";
 
-interface Props {}
-
-export interface Card {
-  info: string;
-  place: string;
-  date: string;
-  outTime: string;
-  inTime: string;
-  emergency: boolean;
+interface Props {
+  histories: ResHistory;
+  modal: boolean;
+  closeModal: () => void;
+  openModal: () => void;
 }
 
-const cards: Card[] = Array(4)
-  .fill(0)
-  .map((_, i) => ({
-    info: `230${i + 1}`,
-    place: `신성동 하나로마트`,
-    date: `2020년 07월 1${i + 1}일`,
-    outTime: `17:30`,
-    inTime: `20:30`,
-    emergency: i % 2 ? true : false
-  }));
+const History: FC<Props> = ({
+  histories,
+  modal,
+  openModal,
+  closeModal
+}): ReactElement => {
+  const dispatch = useDispatch();
 
-const History: FC<Props> = (): ReactElement => {
-  const [modal, setModal] = useState<boolean>(false);
-
-  const handleModal = (isShow: boolean) => {
-    setModal(isShow);
+  const dispatchSelectedOuting = (outing: ResHistoryItem) => {
+    dispatch(setSelectedOuting(outing));
   };
 
   return (
@@ -44,21 +36,17 @@ const History: FC<Props> = (): ReactElement => {
       </S.HistoryHead>
       <div>
         <S.HistoryCardWrap>
-          {cards.map(({ date, inTime, info, outTime, place, emergency }) => (
-            <HistoryCard
-              key={info}
-              date={date}
-              inTime={inTime}
-              info={info}
-              outTime={outTime}
-              place={place}
-              emergency={emergency}
-              handleModal={handleModal}
+          {histories.outings.map(outing => (
+            <Card
+              key={outing.outing_uuid}
+              outing={outing}
+              openModal={openModal}
+              handleCard={dispatchSelectedOuting}
             />
           ))}
         </S.HistoryCardWrap>
-        <HistorySelector />
-        {modal && <Modal handleModal={handleModal} />}
+        <S.MoreButton>더 보기</S.MoreButton>
+        {modal && <Modal closeModal={closeModal} />}
       </div>
     </S.HistoryWrap>
   );

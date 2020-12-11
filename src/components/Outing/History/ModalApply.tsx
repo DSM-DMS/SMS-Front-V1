@@ -1,16 +1,16 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from "react";
 
-import { WithModalProps, OUT, APPROVE } from './Modal';
-import ModalCategory from './ModalCategory';
+import { WithModalProps } from "./Modal";
+import ModalCategory from "./ModalCategory";
 
-import * as S from '../style';
-import { OutingClose } from '../../../assets';
+import * as S from "../style";
+import { OutingClose } from "../../../assets";
+import { OutingStatus } from "../../../lib/api/payloads/Outing";
 
 const ModalApply: FC<WithModalProps> = ({
   handleMode,
-  handleModal,
-  outingState,
-  setOutingState,
+  closeModal,
+  outingStatus
 }): ReactElement => {
   return (
     <S.ModalApply>
@@ -20,22 +20,14 @@ const ModalApply: FC<WithModalProps> = ({
         src={OutingClose}
         alt="close modal"
         title="close modal"
-        onClick={() => {
-          handleModal(false);
-        }}
+        onClick={closeModal}
       />
-      {outingState === APPROVE ? (
-        <S.ModalApplyOnlineCard
-          onClick={() => {
-            setOutingState(OUT);
-          }}
-        >
-          외출 하기
-        </S.ModalApplyOnlineCard>
+      {OutingStatus[outingStatus] === OutingStatus[2] ? (
+        <S.ModalApplyOnlineCard>외출 하기</S.ModalApplyOnlineCard>
       ) : (
         <S.ModalApplyOnlineCard
           onClick={() => {
-            handleMode('card');
+            handleMode("card");
           }}
         >
           온라인 학생증
