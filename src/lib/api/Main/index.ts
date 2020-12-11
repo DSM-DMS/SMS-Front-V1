@@ -1,8 +1,8 @@
 import { apiDefault } from "../client";
-import { ResTimeTableWithDefault } from "../payloads/Main";
+import { ResTimetableWithDefault } from "../payloads/Main";
 
-export const getTimeTable = (weekNum: number) => {
-  return apiDefault().get<ResTimeTableWithDefault>(
+export const getTimetable = (weekNum: number) => {
+  return apiDefault().get<ResTimetableWithDefault>(
     `time-tables/week-numbers/${weekNum}`
   );
 };

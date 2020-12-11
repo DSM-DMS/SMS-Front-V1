@@ -313,11 +313,16 @@ export const OutingItem = styled(Link)`
   padding: 6px 12px;
   border: 1px solid #dddddd;
   border-radius: 8px;
+  color: black;
   text-decoration: none;
   cursor: pointer;
   &:first-child {
+    border: 0;
     color: white;
     background-color: #ff5555;
+  }
+  &:hover {
+    filter: drop-shadow(3px 1px 5px #888888);
   }
 `;
 

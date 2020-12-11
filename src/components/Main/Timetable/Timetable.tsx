@@ -1,10 +1,13 @@
 import React, { FC, ReactElement, useState, useRef, useEffect } from "react";
 
+import TimetableList from "./TimetableList";
+
 import * as S from "../style";
 import { MainChangeTable } from "../../../assets";
-import { ResTimeTable } from "../../../lib/api/payloads/Main";
-import TimeTableList from "./TimeTableList";
-import { getTimeTable } from "../../../lib/api/Main";
+import { ResTimetable } from "../../../lib/api/payloads/Main";
+import { getTimetable } from "../../../lib/api/Main";
+import { useDispatch, useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {}
 
@@ -41,8 +44,8 @@ const filterDays = [
 
 const Timetable: FC<Props> = (): ReactElement => {
   const today = new Date().getDay() - 1;
-  const [timeTables, setTimeTables] = useState<ResTimeTable[]>([]);
-  const [timeTable, setTimeTable] = useState<ResTimeTable>(null);
+  const { timetables } = useSelector((state: stateType) => state.main);
+  const [timetable, setTimetable] = useState<ResTimetable>(null);
   const [weekNum, setWeekNum] = useState<number>(today);
   const resetRef = useRef<HTMLImageElement>(null);
 
@@ -61,28 +64,12 @@ const Timetable: FC<Props> = (): ReactElement => {
 
   const handleDay = (i: number) => {
     setWeekNum(i);
-    setTimeTable(timeTables[i]);
-  };
-
-  const initTimeTables = async () => {
-    try {
-      const res = await Promise.all([
-        getTimeTable(1),
-        getTimeTable(2),
-        getTimeTable(3),
-        getTimeTable(4),
-        getTimeTable(5)
-      ]);
-      const mapping = res.map(({ data }) => data);
-
-      setTimeTables(mapping);
-      setTimeTable(mapping[today]);
-    } catch (err) {}
+    setTimetable(timetables[i]);
   };
 
   useEffect(() => {
-    initTimeTables();
-  }, []);
+    setTimetable(timetables[today]);
+  }, [timetables]);
 
   return (
     <S.Timetable>
@@ -111,13 +98,9 @@ const Timetable: FC<Props> = (): ReactElement => {
           ))}
         </S.FiltersWrap>
       </S.TimetableTitle>
-      {timeTables.length !== 0 ? (
-        <TimeTableList timeTable={timeTable} />
-      ) : (
-        <div style={{ textAlign: "center", color: "red", margin: "10px" }}>
-          시간표를 불러올 수 없습니다. 다시 시도해주세요.
-        </div>
-      )}
+      <TimetableList
+        timeTable={timetables.length === 1 ? timetables[0] : timetable}
+      />
     </S.Timetable>
   );
 };
