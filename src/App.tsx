@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, BrowserRouter, Route } from "react-router-dom";
+import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
 import { PageNotFound, Navigation } from "./components";
@@ -39,6 +39,7 @@ const App: FC<{}> = () => {
             <Route path="/outing" component={OutingRouter} />
             <Route path="/admin" component={AdminRouter} />
             <Route path="/management" component={ManagementRouter} />
+            <Redirect path="/" to="/home" />
             <Route path="*" component={PageNotFound} />
           </Switch>
         </GlobalBody>
