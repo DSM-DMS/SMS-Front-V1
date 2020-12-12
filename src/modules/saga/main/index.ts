@@ -1,20 +1,20 @@
 import axios from "axios";
 import { call, put, takeEvery, all } from "redux-saga/effects";
 
-import { SERVER } from "../../../lib/api/client";
+import { apiDefault, SERVER } from "../../../lib/api/client";
 import { ResTimetableWithDefault } from "../../../lib/api/payloads/Main";
 import { setTimetables, SET_TIMETABLES_SAGA } from "../../action/main";
 
 function* fetchTimetables() {
-  const url = `${SERVER.hostUrl}${SERVER.version}`;
+  const timetableUrl = `${SERVER.hostUrl}${SERVER.version}/time-tables/week-numbers`;
 
   try {
     const days: ResTimetableWithDefault[] = yield all([
-      call(axios.get, `${url}/time-tables/week-numbers/1`),
-      call(axios.get, `${url}/time-tables/week-numbers/2`),
-      call(axios.get, `${url}/time-tables/week-numbers/3`),
-      call(axios.get, `${url}/time-tables/week-numbers/4`),
-      call(axios.get, `${url}/time-tables/week-numbers/5`)
+      call(apiDefault().get, `${timetableUrl}/1`),
+      call(apiDefault().get, `${timetableUrl}/2`),
+      call(apiDefault().get, `${timetableUrl}/3`),
+      call(apiDefault().get, `${timetableUrl}/4`),
+      call(apiDefault().get, `${timetableUrl}/5`)
     ]);
 
     yield put(setTimetables(days));
