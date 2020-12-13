@@ -80,8 +80,10 @@ export const Footer = styled.div`
 `;
 
 export const Date = styled.div`
-  display: flex;
-  justify-content: space-between;
+  & > & {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const Field = styled.div`
