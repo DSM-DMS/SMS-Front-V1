@@ -42,6 +42,7 @@ const Login: FC<Props> = ({
               id="id"
               onChange={handleId}
               value={id}
+              autoFocus={true}
             />
           </S.LoginLabel>
           <S.LoginLabel htmlFor="pw">
@@ -56,12 +57,16 @@ const Login: FC<Props> = ({
           </S.LoginLabel>
           <S.ErrorMessage ref={errorRef}>{errorMessage.message}</S.ErrorMessage>
           <S.AutoLogin>
-            <S.AutoLoginCheckbox
-              type="checkbox"
-              id="auto-login"
-              onChange={toggleAutoLogin}
-            />
-            <S.AutoLoginLabel htmlFor="auto-login">자동로그인</S.AutoLoginLabel>
+            <S.AutoLoginLabel htmlFor="auto-login">
+              <input
+                type="checkbox"
+                id="auto-login"
+                onChange={toggleAutoLogin}
+                hidden={true}
+              />
+              <S.AutoLoginCheckbox id="auto-login-checkbox" />
+              <span>자동로그인</span>
+            </S.AutoLoginLabel>
           </S.AutoLogin>
         </S.LoginInputsWrap>
         <S.LoginButton onClick={() => login(id, pw, autoLogin)}>

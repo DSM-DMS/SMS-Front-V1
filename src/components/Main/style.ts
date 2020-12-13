@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 export const MainWrap = styled.div`
   display: flex;
   justify-content: center;
-  background-color: #f7f6ff;
 `;
 
 export const MainLeft = styled.div`
@@ -111,10 +110,8 @@ export const FilterReset = styled.button`
   margin: 0 8px;
   border: 0;
   border-radius: 8px;
-  background: #f6f6f6;
-  font-size: 16px;
-  font-weight: bold;
-  > img.rolling {
+  background: transparent;
+  .rolling {
     animation: roll 1s alternate;
     @keyframes roll {
       from {

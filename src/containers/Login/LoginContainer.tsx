@@ -22,6 +22,7 @@ import {
   TEACHER,
   UserType
 } from "../../modules/action/header";
+import { getTimetablesSaga } from "../../modules/action/main";
 import { pageMove } from "../../modules/action/page";
 
 interface Props {}
@@ -188,6 +189,7 @@ const LoginContainer: FC<Props> = () => {
         setErrorMessage(initErrorState);
 
         dispatch(pageMove("홈"));
+        dispatch(getTimetablesSaga());
         history.push("./home");
       } catch (err) {
         const data = err?.response?.data,

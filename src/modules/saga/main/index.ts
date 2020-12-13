@@ -1,20 +1,25 @@
-import axios from "axios";
 import { call, put, takeEvery, all } from "redux-saga/effects";
 
-import { SERVER } from "../../../lib/api/client";
+import { apiDefault, SERVER } from "../../../lib/api/client";
 import { ResTimetableWithDefault } from "../../../lib/api/payloads/Main";
-import { setTimetables, SET_TIMETABLES_SAGA } from "../../action/main";
+import {
+  getSchedulesSaga,
+  setSchedules,
+  setTimetables,
+  GET_SCHEDULES_SAGA,
+  GET_TIMETABLES_SAGA
+} from "../../action/main";
 
 function* fetchTimetables() {
-  const url = `${SERVER.hostUrl}${SERVER.version}`;
+  const timetableUrl = `${SERVER.hostUrl}${SERVER.version}/time-tables/week-numbers`;
 
   try {
     const days: ResTimetableWithDefault[] = yield all([
-      call(axios.get, `${url}/time-tables/week-numbers/1`),
-      call(axios.get, `${url}/time-tables/week-numbers/2`),
-      call(axios.get, `${url}/time-tables/week-numbers/3`),
-      call(axios.get, `${url}/time-tables/week-numbers/4`),
-      call(axios.get, `${url}/time-tables/week-numbers/5`)
+      call(apiDefault().get, `${timetableUrl}/1`),
+      call(apiDefault().get, `${timetableUrl}/2`),
+      call(apiDefault().get, `${timetableUrl}/3`),
+      call(apiDefault().get, `${timetableUrl}/4`),
+      call(apiDefault().get, `${timetableUrl}/5`)
     ]);
 
     yield put(setTimetables(days));
@@ -53,8 +58,25 @@ function* fetchTimetables() {
   }
 }
 
-function* timetablesSaga() {
-  yield takeEvery(SET_TIMETABLES_SAGA, fetchTimetables);
+function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {
+  const { year, month } = action.payload;
+
+  try {
+    const { data } = yield call(
+      apiDefault().get,
+      `schedules/years/${year}/months/${month}`
+    );
+
+    yield put(setSchedules(data));
+  } catch (err) {
+    const status = err?.response?.status;
+  }
 }
 
-export default timetablesSaga;
+function* mainSaga() {
+  yield takeEvery(GET_TIMETABLES_SAGA, fetchTimetables);
+
+  yield takeEvery(GET_SCHEDULES_SAGA, fetchSchedules);
+}
+
+export default mainSaga;
