@@ -1,10 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, useCallback } from "react";
 import * as S from "./styles";
 import { DetailContent, Hr, Where, People } from "../../default";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../../modules/reducer";
+import PeoepleContainer from "../../../../../containers/default/AllBodyPeopleContainer";
 
 const AllMain = () => {
+  const allMainPeoeple = useCallback(
+    (store: stateType) => ({
+      members: store.poster.all.detail.members,
+      leader_uuid: store.poster.wanted.detail.leader_uuid
+    }),
+    []
+  );
   const { introduction, location } = useSelector(
     (state: stateType) => state.poster.all.detail
   );
@@ -13,7 +21,7 @@ const AllMain = () => {
       <S.P>동아리 소개</S.P>
       <DetailContent>{introduction}</DetailContent>
       <Hr />
-      <People leader={"리더"} three={[]} two={[]} one={[]} />
+      <PeoepleContainer callback={allMainPeoeple} />
       <Hr />
       <Where>{location}</Where>
     </S.Container>
