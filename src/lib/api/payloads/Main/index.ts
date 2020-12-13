@@ -18,4 +18,6 @@ export interface ResSchedule {
 }
 
 export interface ResTimetableWithDefault extends ResTimetable, ResDefault {}
-export interface ResScheduleWithDefault extends ResSchedule, ResDefault {}
+export interface ResScheduleWithDefault extends ResDefault {
+  schedules: ResSchedule[];
+}
