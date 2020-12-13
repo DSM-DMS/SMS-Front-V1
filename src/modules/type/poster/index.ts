@@ -1,3 +1,5 @@
+import { StudentInfo } from "../user";
+
 export interface CircleInfo {
   club_uuid: string;
   leader_uuid: string;
@@ -10,6 +12,10 @@ export interface CircleInfo {
   introduction: string;
   link: string;
   logo_uri: string;
+}
+
+export interface CircleDatailPage extends CircleInfo {
+  members: StudentInfo[];
 }
 
 export interface WantedInfo {
@@ -27,4 +33,6 @@ export interface WantedObj {
   number: number;
 }
 
-export interface WantedInfoDetail extends CircleInfo, WantedInfo {}
+export interface WantedInfoDetail extends CircleInfo, WantedInfo {
+  members: StudentInfo[];
+}

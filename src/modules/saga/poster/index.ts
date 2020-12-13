@@ -1,5 +1,5 @@
 import { call, put, takeEvery } from "redux-saga/effects";
-import { apiDefault } from "../../../lib/api/client";
+import { apiDefault, getStudentDatas } from "../../../lib/api/client";
 import { posterAction, PosterActionCreater } from "../../action/poster";
 
 function* getWantedInfoListSaga() {
@@ -25,9 +25,13 @@ function* getWantedInfoDetailSaga(
     const clubUuid = res.data.club_uuid;
 
     const res2 = yield call(apiDefault().get, `clubs/uuid/${clubUuid}`);
-
+    const members = yield call(getStudentDatas, res2.data.member_uuids);
     yield put(
-      PosterActionCreater.getWantedInfoDetail({ ...res.data, ...res2.data })
+      PosterActionCreater.getWantedInfoDetail({
+        ...res.data,
+        ...res2.data,
+        members: members.map(memberData => memberData.data)
+      })
     );
   } catch (err) {}
 }
@@ -44,7 +48,14 @@ function* getCircleInfoDetailSaga(
 ) {
   try {
     const res = yield call(apiDefault().get, `/clubs/uuid/${action.payload}`);
-    yield put(PosterActionCreater.getCircleInfoDetail(res.data));
+
+    const members = yield call(getStudentDatas, res.data.member_uuids);
+    yield put(
+      PosterActionCreater.getCircleInfoDetail({
+        ...res.data,
+        members: members.map(memberData => memberData.data)
+      })
+    );
   } catch (err) {}
 }
 

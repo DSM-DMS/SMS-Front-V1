@@ -1,4 +1,9 @@
-import { CircleInfo, WantedInfo, WantedInfoDetail } from "../../type/poster";
+import {
+  CircleDatailPage,
+  CircleInfo,
+  WantedInfo,
+  WantedInfoDetail
+} from "../../type/poster";
 
 export const UPDATE_POSTER_LIST = "poster/UPDATE_POSTER_LIST" as const;
 export const UPDATE_POSTER_DETAIL = "poster/UPDATE_POSTER_DETAIL" as const;
@@ -15,7 +20,7 @@ export const GET_WANTED_INFO_LIST_SAGA = "poster/GET_WANTED_INFO_LIST_SAGA" as c
 export const GET_WANTED_INFO_DETAIL = "poster/GET_WANTED_INFO_DETAIL" as const;
 export const GET_WANTED_INFO_DETAIL_SAGA = "poster/GET_WANTED_INFO_DETAIL_SAGA" as const;
 
-export const getCircleInfoDetail = (payload: CircleInfo) => ({
+export const getCircleInfoDetail = (payload: CircleDatailPage) => ({
   type: GET_CIRCLE_INFO_DETAIL,
   payload
 });
