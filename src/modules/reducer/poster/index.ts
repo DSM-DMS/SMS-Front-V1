@@ -5,7 +5,12 @@ import {
   GET_WANTED_INFO_LIST,
   GET_WANTED_INFO_DETAIL
 } from "../../action/poster";
-import { CircleInfo, WantedInfo, WantedInfoDetail } from "../../type/poster";
+import {
+  CircleDatailPage,
+  CircleInfo,
+  WantedInfo,
+  WantedInfoDetail
+} from "../../type/poster";
 
 interface PosterState {
   wanted: {
@@ -14,7 +19,7 @@ interface PosterState {
   };
   all: {
     list: CircleInfo[];
-    detail: CircleInfo;
+    detail: CircleDatailPage;
   };
 }
 
@@ -37,7 +42,8 @@ const initialState: PosterState = {
       recruit_concept: "",
       recruit_members: [],
       recruitment_uuid: "",
-      start_period: ""
+      start_period: "",
+      members: []
     }
   },
   all: {
@@ -53,7 +59,8 @@ const initialState: PosterState = {
       location: "",
       logo_uri: "",
       member_uuids: [],
-      name: ""
+      name: "",
+      members: []
     }
   }
 };
@@ -95,7 +102,10 @@ const posterReducer = (
         ...state,
         wanted: {
           ...state.wanted,
-          detail: action.payload
+          detail: {
+            ...state.wanted.detail,
+            ...action.payload
+          }
         }
       };
     }
