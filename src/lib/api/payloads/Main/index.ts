@@ -10,4 +10,12 @@ export interface ResTimetable {
   time7: string;
 }
 
+export interface ResSchedule {
+  schedule_uuid: string;
+  start_date: number;
+  end_date: number;
+  detail: string;
+}
+
 export interface ResTimetableWithDefault extends ResTimetable, ResDefault {}
+export interface ResScheduleWithDefault extends ResSchedule, ResDefault {}
