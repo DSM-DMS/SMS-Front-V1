@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 
 interface Props {
   histories: ResHistoryItem[];
+  historyStart: number;
   modal: boolean;
   closeModal: () => void;
   openModal: () => void;
@@ -19,6 +20,7 @@ interface Props {
 
 const History: FC<Props> = ({
   histories,
+  historyStart,
   modal,
   openModal,
   closeModal,
@@ -50,7 +52,7 @@ const History: FC<Props> = ({
           </S.HistoryCardWrap>
         )}
 
-        {histories.length !== 0 && (
+        {historyStart === histories.length && (
           <S.MoreButton onClick={getHistories}>더 보기</S.MoreButton>
         )}
         {modal && <Modal closeModal={closeModal} />}
