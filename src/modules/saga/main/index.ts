@@ -1,7 +1,11 @@
+import { AxiosResponse } from "axios";
 import { call, put, takeEvery, all } from "redux-saga/effects";
 
 import { apiDefault, SERVER } from "../../../lib/api/client";
-import { ResTimetableWithDefault } from "../../../lib/api/payloads/Main";
+import {
+  ResScheduleWithDefault,
+  ResTimetableWithDefault
+} from "../../../lib/api/payloads/Main";
 import {
   getSchedulesSaga,
   setSchedules,
@@ -62,15 +66,15 @@ function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {
   const { year, month } = action.payload;
 
   try {
-    const { data } = yield call(
+    const {
+      data: { schedules }
+    }: AxiosResponse<ResScheduleWithDefault> = yield call(
       apiDefault().get,
       `schedules/years/${year}/months/${month}`
     );
 
-    yield put(setSchedules(data));
-  } catch (err) {
-    const status = err?.response?.status;
-  }
+    yield put(setSchedules(schedules));
+  } catch (err) {}
 }
 
 function* mainSaga() {

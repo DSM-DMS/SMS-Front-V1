@@ -7,7 +7,7 @@ import {
 
 export interface TimetableState {
   timetables: ResTimetable[];
-  schedules: ResSchedule;
+  schedules: ResSchedule[];
 }
 
 const initialState: TimetableState = {
@@ -22,12 +22,7 @@ const initialState: TimetableState = {
       time7: "..."
     }
   ],
-  schedules: {
-    detail: "",
-    start_date: 1607767772,
-    end_date: 1607777772,
-    schedule_uuid: "schedule_123123123"
-  }
+  schedules: []
 };
 
 const ManagementInfoReduce = (

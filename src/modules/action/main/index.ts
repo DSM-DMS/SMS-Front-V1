@@ -17,7 +17,7 @@ export const setTimetables = (timetables: ResTimetable[]) => ({
 export const getTimetablesSaga = () => ({
   type: GET_TIMETABLES_SAGA
 });
-export const setSchedules = (schedules: ResSchedule) => ({
+export const setSchedules = (schedules: ResSchedule[]) => ({
   type: SET_SCHEDULES,
   payload: { schedules }
 });
