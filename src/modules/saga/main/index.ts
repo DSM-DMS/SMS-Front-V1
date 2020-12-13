@@ -1,9 +1,14 @@
-import axios from "axios";
 import { call, put, takeEvery, all } from "redux-saga/effects";
 
 import { apiDefault, SERVER } from "../../../lib/api/client";
 import { ResTimetableWithDefault } from "../../../lib/api/payloads/Main";
-import { setTimetables, SET_TIMETABLES_SAGA } from "../../action/main";
+import {
+  getSchedulesSaga,
+  setSchedules,
+  setTimetables,
+  GET_SCHEDULES_SAGA,
+  GET_TIMETABLES_SAGA
+} from "../../action/main";
 
 function* fetchTimetables() {
   const timetableUrl = `${SERVER.hostUrl}${SERVER.version}/time-tables/week-numbers`;
@@ -53,8 +58,25 @@ function* fetchTimetables() {
   }
 }
 
-function* timetablesSaga() {
-  yield takeEvery(SET_TIMETABLES_SAGA, fetchTimetables);
+function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {
+  const { year, month } = action.payload;
+
+  try {
+    const { data } = yield call(
+      apiDefault().get,
+      `schedules/years/${year}/months/${month}`
+    );
+
+    yield put(setSchedules(data));
+  } catch (err) {
+    const status = err?.response?.status;
+  }
 }
 
-export default timetablesSaga;
+function* mainSaga() {
+  yield takeEvery(GET_TIMETABLES_SAGA, fetchTimetables);
+
+  yield takeEvery(GET_SCHEDULES_SAGA, fetchSchedules);
+}
+
+export default mainSaga;

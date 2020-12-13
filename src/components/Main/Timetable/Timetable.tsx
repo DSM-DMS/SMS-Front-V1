@@ -1,12 +1,11 @@
 import React, { FC, ReactElement, useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import TimetableList from "./TimetableList";
 
 import * as S from "../style";
 import { MainChangeTable } from "../../../assets";
 import { ResTimetable } from "../../../lib/api/payloads/Main";
-import { getTimetable } from "../../../lib/api/Main";
-import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
 
 interface Props {}

@@ -1,8 +1,13 @@
-import { ResTimetable } from "../../../lib/api/payloads/Main";
-import { SET_TIMETABLES, TimetableAction } from "../../action/main";
+import { ResSchedule, ResTimetable } from "../../../lib/api/payloads/Main";
+import {
+  TimetableAction,
+  SET_TIMETABLES,
+  SET_SCHEDULES
+} from "../../action/main";
 
 export interface TimetableState {
   timetables: ResTimetable[];
+  schedules: ResSchedule;
 }
 
 const initialState: TimetableState = {
@@ -16,7 +21,13 @@ const initialState: TimetableState = {
       time6: "...",
       time7: "..."
     }
-  ]
+  ],
+  schedules: {
+    detail: "",
+    start_date: 1607767772,
+    end_date: 1607777772,
+    schedule_uuid: "schedule_123123123"
+  }
 };
 
 const ManagementInfoReduce = (
@@ -28,6 +39,11 @@ const ManagementInfoReduce = (
       return {
         ...state,
         timetables: action.payload.timetables
+      };
+    case SET_SCHEDULES:
+      return {
+        ...state,
+        schedules: action.payload.schedules
       };
     default:
       return state;

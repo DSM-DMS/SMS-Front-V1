@@ -419,6 +419,16 @@ export const HistoryTitle = styled.h2`
 
 export const HistoryContent = styled.div``;
 
+export const HistoryNoContent = styled.div`
+  text-align: center;
+  font-size: 18px;
+  word-break: break-all;
+  a {
+    color: #5323b2;
+    text-decoration: none;
+  }
+`;
+
 export const HistoryCardWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25%, 30%));

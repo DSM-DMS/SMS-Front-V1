@@ -1,33 +1,42 @@
-import React, { FC, ReactElement, useState } from "react";
+import React, { FC, ReactElement, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Calendar from "./Calendar/Calendar";
 
 import * as S from "../style";
 import { MainArrow } from "../../../assets";
+import { getSchedulesSaga } from "../../../modules/action/main";
 
 interface Props {}
 
 const Schedule: FC<Props> = (): ReactElement => {
-  const [today, setToday] = useState<Date>(new Date());
+  const dispatch = useDispatch();
+  const [schedulerDate, setSchedulerDate] = useState<Date>(new Date());
 
   const onClickNextMonth = () => {
-    setToday(prev => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    setSchedulerDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1));
   };
 
   const onClickPrevMonth = () => {
-    setToday(prev => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+    setSchedulerDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1));
   };
 
-  const getLocalDate = (date: Date) => {
-    return `${date.getFullYear()}.${date.getMonth() + 1}`;
-  };
+  const getLocalDate = (date: Date) =>
+    `${date.getFullYear()}.${date.getMonth() + 1}`;
+
+  useEffect(() => {
+    const year = schedulerDate.getFullYear();
+    const month = schedulerDate.getMonth() + 1;
+
+    dispatch(getSchedulesSaga(year, month));
+  }, [schedulerDate]);
 
   return (
     <S.Schedule>
       <S.ScheduleHeader>
         <S.MainContentTitleCommon>학사일정</S.MainContentTitleCommon>
         <S.ScheduleHeaderDateSetting>
-          <span>{getLocalDate(today)}</span>
+          <span>{getLocalDate(schedulerDate)}</span>
           <S.ScheduleArrow
             src={MainArrow}
             alt="prevMonth"
@@ -42,7 +51,7 @@ const Schedule: FC<Props> = (): ReactElement => {
           />
         </S.ScheduleHeaderDateSetting>
       </S.ScheduleHeader>
-      <Calendar today={today} />
+      <Calendar today={schedulerDate} />
     </S.Schedule>
   );
 };
