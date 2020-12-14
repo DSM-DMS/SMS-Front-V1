@@ -12,6 +12,10 @@ import {
   EDIT,
   ModalType
 } from "../../../containers/Admin/Main/AdminMainContainer";
+import {
+  ReqCreateSchedule,
+  ReqEditSchedule
+} from "../../../lib/api/payloads/Main";
 
 interface Props {
   modal: boolean;
@@ -20,6 +24,11 @@ interface Props {
   handleShowEdit: () => void;
   handleShowDelete: () => void;
   handleCloseModal: () => void;
+  createSchedule: (createData: ReqCreateSchedule) => Promise<void>;
+  editSchedule: (
+    editData: ReqEditSchedule,
+    schedulerDate: Date
+  ) => Promise<void>;
 }
 
 const AdminMain: FC<Props> = ({
@@ -28,7 +37,9 @@ const AdminMain: FC<Props> = ({
   handleShowAdd,
   handleShowEdit,
   handleShowDelete,
-  handleCloseModal
+  handleCloseModal,
+  createSchedule,
+  editSchedule
 }): ReactElement => {
   return (
     <S.AdminMainWrap>
@@ -44,7 +55,12 @@ const AdminMain: FC<Props> = ({
       </MainS.MainRight>
       {modal &&
         (modalType === ADD || modalType === EDIT ? (
-          <ScheduleModal type={modalType} handleCloseModal={handleCloseModal} />
+          <ScheduleModal
+            type={modalType}
+            handleCloseModal={handleCloseModal}
+            createSchedule={createSchedule}
+            editSchedule={editSchedule}
+          />
         ) : (
           <DeleteScheduleModal handleClickCloseModal={handleCloseModal} />
         ))}
