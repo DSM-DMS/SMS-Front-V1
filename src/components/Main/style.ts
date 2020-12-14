@@ -32,6 +32,7 @@ export const MainContentTitleCommon = styled.h2`
 `;
 
 export const Schedule = styled(MainContentCommon)`
+  flex: 1;
   margin-bottom: 15px;
   margin-right: 15px;
 `;
@@ -171,7 +172,7 @@ export const FilterRadio = styled.div`
 `;
 
 export const ScheduleDetail = styled(MainContentCommon)`
-  height: 75%;
+  flex: 1;
   margin-bottom: 15px;
 `;
 
@@ -228,9 +229,9 @@ export const DetailHead = styled.p`
 
 export const DetailHeadData = styled.span`
   display: inline-block;
-  vertical-align: middle;
+  margin-right: 4px;
   &:first-child {
-    width: 55%;
+    width: 50%;
   }
   &:last-child {
     width: 25%;
@@ -254,27 +255,31 @@ export const DetailBody = styled.div`
 
 export const DetailBodyItem = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
   padding: 8px 4px 8px 12px;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   font-size: 12px;
+  &.prev {
+    color: #888888;
+    background-color: #fbfbfb;
+  }
 `;
 
 export const DetailBodyItemData = styled.span`
   display: inline-block;
+  margin-right: 4px;
   &:first-child {
-    width: 55%;
+    width: 50%;
   }
-  &:last-child {
+  &:nth-child(2) {
     width: 25%;
   }
 `;
 
 export const DetailBodyItemButtonWrap = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 3%;
-  transform: translateY(-50%);
+  flex: 1;
 `;
 
 export const DetailBodyItemButton = styled.button`
