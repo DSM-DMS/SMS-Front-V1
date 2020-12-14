@@ -38,7 +38,7 @@ const ScheduleModal: FC<Props> = ({
   createSchedule,
   editSchedule
 }): ReactElement => {
-  const { schedulerDate, editTargetUuid } = useSelector(
+  const { schedulerDate, targetUuid } = useSelector(
     (state: stateType) => state.main
   );
   const [start, setStart] = useState<string>("");
@@ -58,7 +58,7 @@ const ScheduleModal: FC<Props> = ({
 
   const handleEditSchedule = () => {
     const editData = {
-      scheduleUuid: editTargetUuid,
+      scheduleUuid: targetUuid,
       startDate: +new Date(start) / 1000,
       endDate: +new Date(end) / 1000,
       detail

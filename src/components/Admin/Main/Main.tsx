@@ -29,6 +29,7 @@ interface Props {
     editData: ReqEditSchedule,
     schedulerDate: Date
   ) => Promise<void>;
+  removeSchedule: (scheduleUuid: string, schedulerDate: Date) => Promise<void>;
 }
 
 const AdminMain: FC<Props> = ({
@@ -39,7 +40,8 @@ const AdminMain: FC<Props> = ({
   handleShowDelete,
   handleCloseModal,
   createSchedule,
-  editSchedule
+  editSchedule,
+  removeSchedule
 }): ReactElement => {
   return (
     <S.AdminMainWrap>
@@ -62,7 +64,10 @@ const AdminMain: FC<Props> = ({
             editSchedule={editSchedule}
           />
         ) : (
-          <DeleteScheduleModal handleClickCloseModal={handleCloseModal} />
+          <DeleteScheduleModal
+            handleCloseModal={handleCloseModal}
+            removeSchedule={removeSchedule}
+          />
         ))}
     </S.AdminMainWrap>
   );
