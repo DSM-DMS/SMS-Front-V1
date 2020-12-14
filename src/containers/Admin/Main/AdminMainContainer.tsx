@@ -2,7 +2,11 @@ import React, { FC, ReactElement, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { AdminMain } from "../../../components";
-import { patchSchedules, postSchedules } from "../../../lib/api/Main";
+import {
+  deleteSchedules,
+  patchSchedules,
+  postSchedules
+} from "../../../lib/api/Main";
 import {
   ReqCreateSchedule,
   ReqEditSchedule
@@ -51,12 +55,31 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
   );
 
   const editSchedule = useCallback(
-    async (
-      { scheduleUuid, startDate, endDate, detail }: ReqEditSchedule,
-      schedulerDate: Date
-    ) => {
+    async (editData: ReqEditSchedule, schedulerDate: Date) => {
       try {
-        await patchSchedules(scheduleUuid, startDate, endDate, detail);
+        await patchSchedules(editData);
+
+        dispatch(
+          getSchedulesSaga(
+            schedulerDate.getFullYear(),
+            schedulerDate.getMonth() + 1
+          )
+        );
+      } catch (err) {
+        const status = err.response.status;
+
+        if (status === 403) {
+          return alert("선생님 계정으로 이용해주세요.");
+        }
+      }
+    },
+    []
+  );
+
+  const removeSchedule = useCallback(
+    async (scheduleUuid: string, schedulerDate: Date) => {
+      try {
+        await deleteSchedules(scheduleUuid);
 
         dispatch(
           getSchedulesSaga(
@@ -105,6 +128,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
       handleCloseModal={handleCloseModal}
       createSchedule={createSchedule}
       editSchedule={editSchedule}
+      removeSchedule={removeSchedule}
     />
   );
 };
