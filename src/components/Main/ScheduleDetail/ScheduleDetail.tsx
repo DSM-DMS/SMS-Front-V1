@@ -3,24 +3,21 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import * as S from "../style";
-import { ModalType } from "../../Admin/Main/Main";
 import { stateType } from "../../../modules/reducer";
 
 interface Props {
-  handleClickShowModal?: (type: ModalType) => void;
+  handleShowAdd?: () => void;
+  handleShowEdit?: () => void;
+  handleShowDelete?: () => void;
 }
 
-const ScheduleDetail: FC<Props> = ({ handleClickShowModal }): ReactElement => {
-  const { schedules } = useSelector((state: stateType) => state.main);
+const ScheduleDetail: FC<Props> = ({
+  handleShowAdd,
+  handleShowEdit,
+  handleShowDelete
+}): ReactElement => {
   const location = useLocation();
-
-  const handleShowEdit = () => {
-    handleClickShowModal("edit");
-  };
-
-  const handleShowDelete = () => {
-    handleClickShowModal("delete");
-  };
+  const { schedules } = useSelector((state: stateType) => state.main);
 
   const getLocalDate = (dateNum: number) => {
     const date = new Date(dateNum);
@@ -35,11 +32,7 @@ const ScheduleDetail: FC<Props> = ({ handleClickShowModal }): ReactElement => {
         <S.DetailHeaderTop>
           <S.DetailTitle>세부내용</S.DetailTitle>
           {location.pathname.includes("admin") && (
-            <S.DetailAddSchedule
-              onClick={() => {
-                handleClickShowModal("add");
-              }}
-            >
+            <S.DetailAddSchedule onClick={handleShowAdd}>
               <span>일정 추가</span>
             </S.DetailAddSchedule>
           )}
@@ -50,26 +43,31 @@ const ScheduleDetail: FC<Props> = ({ handleClickShowModal }): ReactElement => {
         </S.DetailHead>
       </S.DetailHeader>
       <S.DetailBody>
-        {schedules.map(({ detail, start_date, end_date, schedule_uuid }) => (
-          <S.DetailBodyItem key={schedule_uuid}>
-            <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
-            <S.DetailBodyItemData>
-              {start_date === end_date
-                ? getLocalDate(start_date)
-                : `${getLocalDate(start_date)} - ${getLocalDate(end_date)}`}
-            </S.DetailBodyItemData>
-            {location.pathname.includes("admin") && (
-              <S.DetailBodyItemButtonWrap>
-                <S.DetailBodyItemButton onClick={handleShowEdit}>
-                  수정
-                </S.DetailBodyItemButton>
-                <S.DetailBodyItemButton onClick={handleShowDelete}>
-                  삭제
-                </S.DetailBodyItemButton>
-              </S.DetailBodyItemButtonWrap>
-            )}
-          </S.DetailBodyItem>
-        ))}
+        {schedules
+          .sort((a, b) => (a.start_date > b.start_date ? -1 : 1))
+          .map(({ detail, start_date, end_date, schedule_uuid }) => (
+            <S.DetailBodyItem
+              key={schedule_uuid}
+              className={+new Date() > end_date ? "prev" : ""}
+            >
+              <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
+              <S.DetailBodyItemData>
+                {start_date === end_date
+                  ? getLocalDate(start_date)
+                  : `${getLocalDate(start_date)} - ${getLocalDate(end_date)}`}
+              </S.DetailBodyItemData>
+              {location.pathname.includes("admin") && (
+                <S.DetailBodyItemButtonWrap>
+                  <S.DetailBodyItemButton onClick={handleShowEdit}>
+                    수정
+                  </S.DetailBodyItemButton>
+                  <S.DetailBodyItemButton onClick={handleShowDelete}>
+                    삭제
+                  </S.DetailBodyItemButton>
+                </S.DetailBodyItemButtonWrap>
+              )}
+            </S.DetailBodyItem>
+          ))}
       </S.DetailBody>
     </S.ScheduleDetail>
   );
