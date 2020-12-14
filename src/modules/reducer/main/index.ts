@@ -8,24 +8,22 @@ import {
 } from "../../action/main";
 
 export interface TimetableState {
-  timetables: ResTimetable[];
+  timetable: ResTimetable;
   schedules: ResSchedule[];
   schedulerDate: Date;
   targetUuid: string;
 }
 
 const initialState: TimetableState = {
-  timetables: [
-    {
-      time1: "-",
-      time2: "-",
-      time3: "-",
-      time4: "-",
-      time5: "-",
-      time6: "-",
-      time7: "-"
-    }
-  ],
+  timetable: {
+    time1: "-",
+    time2: "-",
+    time3: "-",
+    time4: "-",
+    time5: "-",
+    time6: "-",
+    time7: "-"
+  },
   schedules: [],
   schedulerDate: new Date(),
   targetUuid: ""
@@ -39,7 +37,7 @@ const ManagementInfoReduce = (
     case SET_TIMETABLES:
       return {
         ...state,
-        timetables: action.payload.timetables
+        timetable: action.payload.timetable
       };
     case SET_SCHEDULES:
       return {
