@@ -2,12 +2,14 @@ import { ResSchedule, ResTimetable } from "../../../lib/api/payloads/Main";
 import {
   TimetableAction,
   SET_TIMETABLES,
-  SET_SCHEDULES
+  SET_SCHEDULES,
+  SET_SCHEDULER_DATE
 } from "../../action/main";
 
 export interface TimetableState {
   timetables: ResTimetable[];
   schedules: ResSchedule[];
+  schedulerDate: Date;
 }
 
 const initialState: TimetableState = {
@@ -22,7 +24,8 @@ const initialState: TimetableState = {
       time7: "-"
     }
   ],
-  schedules: []
+  schedules: [],
+  schedulerDate: new Date()
 };
 
 const ManagementInfoReduce = (
@@ -39,6 +42,11 @@ const ManagementInfoReduce = (
       return {
         ...state,
         schedules: action.payload.schedules
+      };
+    case SET_SCHEDULER_DATE:
+      return {
+        ...state,
+        schedulerDate: action.payload.date
       };
     default:
       return state;
