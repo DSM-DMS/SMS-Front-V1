@@ -1,24 +1,36 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, ReactElement, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import Calendar from "./Calendar/Calendar";
 
 import * as S from "../style";
 import { MainArrow } from "../../../assets";
-import { getSchedulesSaga } from "../../../modules/action/main";
+import {
+  getSchedulesSaga,
+  setSchedulerDate
+} from "../../../modules/action/main";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {}
 
 const Schedule: FC<Props> = (): ReactElement => {
   const dispatch = useDispatch();
-  const [schedulerDate, setSchedulerDate] = useState<Date>(new Date());
+  const { schedulerDate } = useSelector((state: stateType) => state.main);
 
   const onClickNextMonth = () => {
-    setSchedulerDate(prev => new Date(prev.getFullYear(), prev.getMonth() + 1));
+    const next = new Date(
+      schedulerDate.getFullYear(),
+      schedulerDate.getMonth() + 1
+    );
+    dispatch(setSchedulerDate(next));
   };
 
   const onClickPrevMonth = () => {
-    setSchedulerDate(prev => new Date(prev.getFullYear(), prev.getMonth() - 1));
+    const prev = new Date(
+      schedulerDate.getFullYear(),
+      schedulerDate.getMonth() - 1
+    );
+    dispatch(setSchedulerDate(prev));
   };
 
   const getLocalDate = (date: Date) =>
@@ -51,7 +63,7 @@ const Schedule: FC<Props> = (): ReactElement => {
           />
         </S.ScheduleHeaderDateSetting>
       </S.ScheduleHeader>
-      <Calendar today={schedulerDate} />
+      <Calendar />
     </S.Schedule>
   );
 };

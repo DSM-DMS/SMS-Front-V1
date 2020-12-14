@@ -1,26 +1,80 @@
-import React, { FC, ReactElement, useState, useEffect } from 'react';
+import React, {
+  FC,
+  ReactElement,
+  useState,
+  useEffect,
+  useCallback
+} from "react";
 
-import * as S from './style';
-import CircleBack from './CircleBack';
-import { ModalType } from './Main';
+import * as S from "./style";
+import CircleBack from "./CircleBack";
 
-import { OutingClose } from '../../../assets';
+import { OutingClose } from "../../../assets";
+import {
+  ADD,
+  EDIT,
+  ModalType
+} from "../../../containers/Admin/Main/AdminMainContainer";
+import { postSchedules } from "../../../lib/api/Main";
+import { useDispatch, useSelector } from "react-redux";
+import { getSchedulesSaga } from "../../../modules/action/main";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {
-  handleClickCloseModal?: () => void;
+  handleCloseModal?: () => void;
   type: ModalType;
 }
 
-const ScheduleModal: FC<Props> = ({
-  handleClickCloseModal,
-  type,
-}): ReactElement => {
-  const [start, setStart] = useState<string>('');
-  const [end, setEnd] = useState<string>('');
-  const [detail, setDetail] = useState<string>('');
+const ScheduleModal: FC<Props> = ({ handleCloseModal, type }): ReactElement => {
+  const dispatch = useDispatch();
+  const { schedulerDate } = useSelector((state: stateType) => state.main);
+  const [start, setStart] = useState<string>("");
+  const [end, setEnd] = useState<string>("");
+  const [detail, setDetail] = useState<string>("");
+
+  const getLocalDate = useCallback(
+    (date: Date = new Date()) =>
+      `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+    []
+  );
+
+  const handleCreateSchedule = () => {
+    createNewSchedule(start, end, detail);
+    handleCloseModal();
+  };
+
+  const createNewSchedule = useCallback(
+    async (start: string, end: string, detail: string) => {
+      console.log(start, end, detail);
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+
+      try {
+        await postSchedules(
+          Math.floor(+startDate / 1000),
+          Math.floor(+endDate / 1000),
+          detail
+        );
+
+        dispatch(
+          getSchedulesSaga(
+            schedulerDate.getFullYear(),
+            schedulerDate.getMonth() + 1
+          )
+        );
+      } catch (err) {
+        const status = err.response.status;
+
+        if (status === 403) {
+          return alert("선생님 계정만 일정을 추가할 수 있습니다.");
+        }
+      }
+    },
+    []
+  );
 
   useEffect(() => {
-    if (type === 'edit') {
+    if (type === EDIT) {
       // TODO : get edit information
     }
   }, [type]);
@@ -32,10 +86,10 @@ const ScheduleModal: FC<Props> = ({
           src={OutingClose}
           alt="close"
           title="close"
-          onClick={handleClickCloseModal}
+          onClick={handleCloseModal}
         />
         <S.ScheduleModalTitle>
-          {type === 'add' ? '일정 추가' : '일정 수정'}
+          {type === ADD ? "일정 추가" : "일정 수정"}
         </S.ScheduleModalTitle>
         <S.ScheduleModalForm>
           <S.ScheduleModalFormTimes>
@@ -44,16 +98,17 @@ const ScheduleModal: FC<Props> = ({
               <S.ScheduleModalFormInput
                 type="date"
                 placeholder="시작일을 선택해 주세요."
-                onChange={(e) => {
+                onChange={e => {
                   setStart(e.currentTarget.value);
                 }}
+                min={getLocalDate()}
                 max={end}
               />
               <S.ScheduleModalFormTilde>~</S.ScheduleModalFormTilde>
               <S.ScheduleModalFormInput
                 type="date"
                 placeholder="종료일을 선택해 주세요."
-                onChange={(e) => {
+                onChange={e => {
                   setEnd(e.currentTarget.value);
                 }}
                 min={start}
@@ -66,7 +121,7 @@ const ScheduleModal: FC<Props> = ({
               <S.ScheduleModalFormInput
                 type="text"
                 placeholder="세부 내용을 입력해주세요"
-                onChange={(e) => {
+                onChange={e => {
                   setDetail(e.currentTarget.value);
                 }}
                 value={detail}
@@ -74,11 +129,11 @@ const ScheduleModal: FC<Props> = ({
             </S.ScheduleModalFormInnerWrap>
           </S.ScheduleModalFormDetail>
           <S.ScheduleModalFormButtonWrap>
-            <S.ScheduleModalButton onClick={handleClickCloseModal}>
+            <S.ScheduleModalButton onClick={handleCloseModal}>
               취소
             </S.ScheduleModalButton>
-            <S.ScheduleModalButton onClick={handleClickCloseModal}>
-              {type === 'add' ? '추가' : '수정'}
+            <S.ScheduleModalButton onClick={handleCreateSchedule}>
+              {type === ADD ? "추가" : "수정"}
             </S.ScheduleModalButton>
           </S.ScheduleModalFormButtonWrap>
         </S.ScheduleModalForm>
@@ -86,7 +141,7 @@ const ScheduleModal: FC<Props> = ({
           <CircleBack />
         </S.ScheduleModalCircleBackWrap>
       </S.ScheduleModalWrap>
-      <S.ScheduleModalDarkBack onClick={handleClickCloseModal} />
+      <S.ScheduleModalDarkBack onClick={handleCloseModal} />
     </>
   );
 };

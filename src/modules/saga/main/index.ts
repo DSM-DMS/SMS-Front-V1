@@ -4,6 +4,7 @@ import { call, put, takeEvery, all } from "redux-saga/effects";
 import { apiDefault, SERVER } from "../../../lib/api/client";
 import {
   ResScheduleWithDefault,
+  ResTimetable,
   ResTimetableWithDefault
 } from "../../../lib/api/payloads/Main";
 import {
@@ -18,48 +19,25 @@ function* fetchTimetables() {
   const timetableUrl = `${SERVER.hostUrl}${SERVER.version}/time-tables/week-numbers`;
 
   try {
-    const days: ResTimetableWithDefault[] = yield all([
+    const days: AxiosResponse<ResTimetableWithDefault>[] = yield all([
       call(apiDefault().get, `${timetableUrl}/1`),
       call(apiDefault().get, `${timetableUrl}/2`),
       call(apiDefault().get, `${timetableUrl}/3`),
       call(apiDefault().get, `${timetableUrl}/4`),
       call(apiDefault().get, `${timetableUrl}/5`)
     ]);
+    const forms: ResTimetable[] = days.map(({ data }) => ({
+      time1: data.time1,
+      time2: data.time2,
+      time3: data.time3,
+      time4: data.time4,
+      time5: data.time5,
+      time6: data.time6,
+      time7: data.time7
+    }));
 
-    yield put(setTimetables(days));
-  } catch (err) {
-    const status = err?.response?.status;
-
-    if (status === 403) {
-      yield put(
-        setTimetables([
-          {
-            time1: "학생",
-            time2: "계정",
-            time3: "으로",
-            time4: "로그인",
-            time5: "해주시길",
-            time6: "바랍니다",
-            time7: "."
-          }
-        ])
-      );
-    } else if (status === 404) {
-      yield put(
-        setTimetables([
-          {
-            time1: "X",
-            time2: "X",
-            time3: "X",
-            time4: "X",
-            time5: "X",
-            time6: "X",
-            time7: "X"
-          }
-        ])
-      );
-    }
-  }
+    yield put(setTimetables(forms));
+  } catch (err) {}
 }
 
 function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {

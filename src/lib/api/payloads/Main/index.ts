@@ -9,15 +9,18 @@ export interface ResTimetable {
   time6: string;
   time7: string;
 }
-
 export interface ResSchedule {
   schedule_uuid: string;
   start_date: number;
   end_date: number;
   detail: string;
 }
+export interface ResSchedules {
+  schedule_uuid: string;
+}
 
 export interface ResTimetableWithDefault extends ResTimetable, ResDefault {}
 export interface ResScheduleWithDefault extends ResDefault {
   schedules: ResSchedule[];
 }
+export interface ResSchedulesWithDefault extends ResSchedules, ResDefault {}
