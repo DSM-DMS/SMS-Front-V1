@@ -43,3 +43,5 @@ jspm_packages
 dist
 package
 .env
+
+debug.log

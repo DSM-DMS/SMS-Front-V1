@@ -10,8 +10,9 @@ import * as S from "./styles";
 import { useHistory } from "react-router";
 import { HashTag } from "../Info/Body/Sub/styles";
 import { CircleInfo, WantedInfo } from "../../../modules/type/poster";
-import { apiDefault } from "../../../lib/api/client";
+import { apiDefault, getStudentData } from "../../../lib/api/client";
 import { getImgUrl } from "../../../lib/utils";
+import { StudentInfo } from "../../../modules/type/user";
 
 const dateParse = (
   startDateStr: string,
@@ -23,9 +24,9 @@ const dateParse = (
     <S.Date>
       <div>{startDateStr}</div>
       <S.Date>
-        <span>-</span>{" "}
+        <span>-</span>
         <span>
-          {endMonth} {endDate}
+          {endMonth}-{endDate}
         </span>
       </S.Date>
     </S.Date>
@@ -41,6 +42,7 @@ const WantedCircleBox: FC<WantedInfo> = ({
   start_period
 }) => {
   const [circleInfo, setCircleInfo] = useState<CircleInfo | null>(null);
+
   const history = useHistory();
   const handleClick = useCallback(() => {
     history.push(`/circles/wanted/${recruitment_uuid}`);
