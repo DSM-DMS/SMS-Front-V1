@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useEffect } from "react";
+import React, { FC, ReactElement, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Calendar from "./Calendar/Calendar";
@@ -33,8 +33,10 @@ const Schedule: FC<Props> = (): ReactElement => {
     dispatch(setSchedulerDate(prev));
   };
 
-  const getLocalDate = (date: Date) =>
-    `${date.getFullYear()}.${date.getMonth() + 1}`;
+  const getLocalDate = useCallback(
+    (date: Date) => `${date.getFullYear()}.${date.getMonth() + 1}`,
+    []
+  );
 
   useEffect(() => {
     const year = schedulerDate.getFullYear();

@@ -1,9 +1,11 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, MouseEvent, ReactElement } from "react";
 import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
+import { UserType } from "../../../modules/action/header";
+import { setEditTargetUuid } from "../../../modules/action/main";
 
 interface Props {
   handleShowAdd?: () => void;
@@ -17,13 +19,23 @@ const ScheduleDetail: FC<Props> = ({
   handleShowDelete
 }): ReactElement => {
   const location = useLocation();
-  const { schedules } = useSelector((state: stateType) => state.main);
+  const dispatch = useDispatch();
+  const {
+    main: { schedules },
+    header: { type }
+  } = useSelector((state: stateType) => state);
 
   const getLocalDate = (dateNum: number) => {
     const date = new Date(dateNum);
     const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
 
     return `${padNum(date.getMonth() + 1)}.${padNum(date.getDate())}`;
+  };
+
+  const handleEditSchedule = (e: MouseEvent<HTMLButtonElement>) => {
+    const scheduleUuid = e.currentTarget.dataset.uuid;
+    handleShowEdit();
+    dispatch(setEditTargetUuid(scheduleUuid));
   };
 
   return (
@@ -42,7 +54,7 @@ const ScheduleDetail: FC<Props> = ({
           <S.DetailHeadData>날짜</S.DetailHeadData>
         </S.DetailHead>
       </S.DetailHeader>
-      <S.DetailBody>
+      <S.DetailBody type={type as UserType}>
         {schedules
           .sort((a, b) => (a.start_date > b.start_date ? -1 : 1))
           .map(({ detail, start_date, end_date, schedule_uuid }) => (
@@ -58,7 +70,10 @@ const ScheduleDetail: FC<Props> = ({
               </S.DetailBodyItemData>
               {location.pathname.includes("admin") && (
                 <S.DetailBodyItemButtonWrap>
-                  <S.DetailBodyItemButton onClick={handleShowEdit}>
+                  <S.DetailBodyItemButton
+                    data-uuid={schedule_uuid}
+                    onClick={handleEditSchedule}
+                  >
                     수정
                   </S.DetailBodyItemButton>
                   <S.DetailBodyItemButton onClick={handleShowDelete}>

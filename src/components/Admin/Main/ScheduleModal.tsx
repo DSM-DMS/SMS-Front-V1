@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useCallback
 } from "react";
+import { useSelector } from "react-redux";
 
 import * as S from "./style";
 import CircleBack from "./CircleBack";
@@ -15,19 +16,31 @@ import {
   EDIT,
   ModalType
 } from "../../../containers/Admin/Main/AdminMainContainer";
-import { postSchedules } from "../../../lib/api/Main";
-import { useDispatch, useSelector } from "react-redux";
-import { getSchedulesSaga } from "../../../modules/action/main";
 import { stateType } from "../../../modules/reducer";
+import {
+  ReqCreateSchedule,
+  ReqEditSchedule
+} from "../../../lib/api/payloads/Main";
 
 interface Props {
   handleCloseModal?: () => void;
   type: ModalType;
+  createSchedule: (createData: ReqCreateSchedule) => Promise<void>;
+  editSchedule: (
+    editData: ReqEditSchedule,
+    schedulerDate: Date
+  ) => Promise<void>;
 }
 
-const ScheduleModal: FC<Props> = ({ handleCloseModal, type }): ReactElement => {
-  const dispatch = useDispatch();
-  const { schedulerDate } = useSelector((state: stateType) => state.main);
+const ScheduleModal: FC<Props> = ({
+  handleCloseModal,
+  type,
+  createSchedule,
+  editSchedule
+}): ReactElement => {
+  const { schedulerDate, editTargetUuid } = useSelector(
+    (state: stateType) => state.main
+  );
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
   const [detail, setDetail] = useState<string>("");
@@ -39,39 +52,21 @@ const ScheduleModal: FC<Props> = ({ handleCloseModal, type }): ReactElement => {
   );
 
   const handleCreateSchedule = () => {
-    createNewSchedule(start, end, detail);
+    createSchedule({ schedulerDate, start, end, detail });
     handleCloseModal();
   };
 
-  const createNewSchedule = useCallback(
-    async (start: string, end: string, detail: string) => {
-      console.log(start, end, detail);
-      const startDate = new Date(start);
-      const endDate = new Date(end);
+  const handleEditSchedule = () => {
+    const editData = {
+      scheduleUuid: editTargetUuid,
+      startDate: +new Date(start) / 1000,
+      endDate: +new Date(end) / 1000,
+      detail
+    };
 
-      try {
-        await postSchedules(
-          Math.floor(+startDate / 1000),
-          Math.floor(+endDate / 1000),
-          detail
-        );
-
-        dispatch(
-          getSchedulesSaga(
-            schedulerDate.getFullYear(),
-            schedulerDate.getMonth() + 1
-          )
-        );
-      } catch (err) {
-        const status = err.response.status;
-
-        if (status === 403) {
-          return alert("선생님 계정만 일정을 추가할 수 있습니다.");
-        }
-      }
-    },
-    []
-  );
+    editSchedule(editData, schedulerDate);
+    handleCloseModal();
+  };
 
   useEffect(() => {
     if (type === EDIT) {
@@ -132,7 +127,9 @@ const ScheduleModal: FC<Props> = ({ handleCloseModal, type }): ReactElement => {
             <S.ScheduleModalButton onClick={handleCloseModal}>
               취소
             </S.ScheduleModalButton>
-            <S.ScheduleModalButton onClick={handleCreateSchedule}>
+            <S.ScheduleModalButton
+              onClick={type === ADD ? handleCreateSchedule : handleEditSchedule}
+            >
               {type === ADD ? "추가" : "수정"}
             </S.ScheduleModalButton>
           </S.ScheduleModalFormButtonWrap>

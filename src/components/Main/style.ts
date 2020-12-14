@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+import { STUDENT, UserType } from "../../modules/action/header";
+
 export const MainWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -172,6 +174,8 @@ export const FilterRadio = styled.div`
 `;
 
 export const ScheduleDetail = styled(MainContentCommon)`
+  display: flex;
+  flex-direction: column;
   flex: 1;
   margin-bottom: 15px;
 `;
@@ -238,7 +242,12 @@ export const DetailHeadData = styled.span`
   }
 `;
 
-export const DetailBody = styled.div`
+interface DetailScrollColor {
+  type: UserType;
+}
+
+export const DetailBody = styled.div<DetailScrollColor>`
+  flex: 1;
   height: 320px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -248,7 +257,7 @@ export const DetailBody = styled.div`
     background: white;
   }
   ::-webkit-scrollbar-thumb {
-    background: #5323b2;
+    background: ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
     border-radius: 16px;
   }
 `;

@@ -1,5 +1,19 @@
 import { ResDefault } from "../index";
 
+export interface ReqCreateSchedule {
+  schedulerDate: Date;
+  start: string;
+  end: string;
+  detail: string;
+}
+
+export interface ReqEditSchedule {
+  scheduleUuid: string;
+  startDate: number;
+  endDate: number;
+  detail: string;
+}
+
 export interface ResTimetable {
   time1: string;
   time2: string;
