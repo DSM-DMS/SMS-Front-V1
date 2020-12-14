@@ -4,14 +4,14 @@ import {
   SET_TIMETABLES,
   SET_SCHEDULES,
   SET_SCHEDULER_DATE,
-  SET_EDIT_TARGET_UUID
+  SET_TARGET_UUID
 } from "../../action/main";
 
 export interface TimetableState {
   timetables: ResTimetable[];
   schedules: ResSchedule[];
   schedulerDate: Date;
-  editTargetUuid: string;
+  targetUuid: string;
 }
 
 const initialState: TimetableState = {
@@ -28,7 +28,7 @@ const initialState: TimetableState = {
   ],
   schedules: [],
   schedulerDate: new Date(),
-  editTargetUuid: ""
+  targetUuid: ""
 };
 
 const ManagementInfoReduce = (
@@ -51,10 +51,10 @@ const ManagementInfoReduce = (
         ...state,
         schedulerDate: action.payload.date
       };
-    case SET_EDIT_TARGET_UUID:
+    case SET_TARGET_UUID:
       return {
         ...state,
-        editTargetUuid: action.payload.scheduleUuid
+        targetUuid: action.payload.scheduleUuid
       };
     default:
       return state;

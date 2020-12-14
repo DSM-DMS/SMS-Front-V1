@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
 import { UserType } from "../../../modules/action/header";
-import { setEditTargetUuid } from "../../../modules/action/main";
+import { setTargetUuid } from "../../../modules/action/main";
 
 interface Props {
   handleShowAdd?: () => void;
@@ -34,8 +34,14 @@ const ScheduleDetail: FC<Props> = ({
 
   const handleEditSchedule = (e: MouseEvent<HTMLButtonElement>) => {
     const scheduleUuid = e.currentTarget.dataset.uuid;
+    dispatch(setTargetUuid(scheduleUuid));
     handleShowEdit();
-    dispatch(setEditTargetUuid(scheduleUuid));
+  };
+
+  const handleRemoveSchedule = (e: MouseEvent<HTMLButtonElement>) => {
+    const scheduleUuid = e.currentTarget.dataset.uuid;
+    dispatch(setTargetUuid(scheduleUuid));
+    handleShowDelete();
   };
 
   return (
@@ -76,7 +82,10 @@ const ScheduleDetail: FC<Props> = ({
                   >
                     수정
                   </S.DetailBodyItemButton>
-                  <S.DetailBodyItemButton onClick={handleShowDelete}>
+                  <S.DetailBodyItemButton
+                    data-uuid={schedule_uuid}
+                    onClick={handleRemoveSchedule}
+                  >
                     삭제
                   </S.DetailBodyItemButton>
                 </S.DetailBodyItemButtonWrap>

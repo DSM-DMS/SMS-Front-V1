@@ -8,7 +8,7 @@ export const SET_SCHEDULES = "main/FETCH_SCHEDULES" as const;
 
 export const SET_SCHEDULER_DATE = "main/SET_SCHEDULER_DATE" as const;
 
-export const SET_EDIT_TARGET_UUID = "main/SET_EDIT_TARGET_UUID" as const;
+export const SET_TARGET_UUID = "main/SET_TARGET_UUID" as const;
 
 export const getSchedulesSaga = (year: number, month: number) => ({
   type: GET_SCHEDULES_SAGA,
@@ -29,8 +29,8 @@ export const setSchedulerDate = (date: Date) => ({
   type: SET_SCHEDULER_DATE,
   payload: { date }
 });
-export const setEditTargetUuid = (scheduleUuid: string) => ({
-  type: SET_EDIT_TARGET_UUID,
+export const setTargetUuid = (scheduleUuid: string) => ({
+  type: SET_TARGET_UUID,
   payload: { scheduleUuid }
 });
 
@@ -40,5 +40,5 @@ export type TimetableAction = ReturnType<
   | typeof getTimetablesSaga
   | typeof setSchedules
   | typeof setSchedulerDate
-  | typeof setEditTargetUuid
+  | typeof setTargetUuid
 >;

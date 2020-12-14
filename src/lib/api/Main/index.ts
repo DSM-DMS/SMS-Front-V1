@@ -1,6 +1,6 @@
 import { apiDefault } from "../client";
 import { ResDefault } from "../payloads";
-import { ResSchedulesWithDefault } from "../payloads/Main";
+import { ReqEditSchedule, ResSchedulesWithDefault } from "../payloads/Main";
 
 export const postSchedules = (
   start_date: number,
@@ -14,15 +14,19 @@ export const postSchedules = (
   });
 };
 
-export const patchSchedules = (
-  scheduleUuid: string,
-  startDate: number,
-  endDate: number,
-  detail: string
-) => {
+export const patchSchedules = ({
+  scheduleUuid,
+  startDate,
+  endDate,
+  detail
+}: ReqEditSchedule) => {
   return apiDefault().patch<ResDefault>(`/schedules/uuid/${scheduleUuid}`, {
     start_date: startDate,
     end_date: endDate,
     detail
   });
+};
+
+export const deleteSchedules = (scheduleUuid: string) => {
+  return apiDefault().delete<ResDefault>(`/schedules/uuid/${scheduleUuid}`);
 };
