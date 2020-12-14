@@ -1,14 +1,17 @@
-import React, { FC, useCallback, memo } from 'react';
-import { BoardObj } from '../../../Board';
-import * as S from './styles';
-import { useHistory } from 'react-router';
+import React, { FC, useCallback, memo } from "react";
+import { BoardObj } from "../../../Board";
+import * as S from "./styles";
+import { useHistory } from "react-router";
+import { BoardListitem } from "../../../../../../modules/type/board";
 
-const BoardTableItem: FC<BoardObj> = ({
-  id,
-  title,
-  viewCount,
+const BoardTableItem: FC<BoardListitem> = ({
+  announcement_uuid,
   date,
-  circleName,
+  is_checked,
+  number,
+  title,
+  views,
+  writer_name
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
@@ -17,11 +20,11 @@ const BoardTableItem: FC<BoardObj> = ({
 
   return (
     <S.ItemContainer onClick={onClick}>
-      <div>{id}</div>
+      <div>{number}</div>
       <div>{title}</div>
       <div>{date}</div>
-      {circleName && <div>{circleName}</div>}
-      <div>{viewCount}</div>
+      {/* {views && <div>{circleName}</div>} */}
+      <div>{views}</div>
     </S.ItemContainer>
   );
 };
