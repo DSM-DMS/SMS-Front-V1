@@ -4,10 +4,11 @@ import {
   GET_NOTICE_LIST,
   GET_NOTICE_DETAIL
 } from "../../action/notice";
+import { BoardListitem } from "../../type/board";
 import { NoticeDetail } from "../../type/notice";
 
 interface BoardState {
-  list: BoardObj[];
+  list: BoardListitem[];
   detail: NoticeDetail;
 }
 
