@@ -13,13 +13,13 @@ export interface TimetableState {
 const initialState: TimetableState = {
   timetables: [
     {
-      time1: "...",
-      time2: "...",
-      time3: "...",
-      time4: "...",
-      time5: "...",
-      time6: "...",
-      time7: "..."
+      time1: "-",
+      time2: "-",
+      time3: "-",
+      time4: "-",
+      time5: "-",
+      time6: "-",
+      time7: "-"
     }
   ],
   schedules: []
