@@ -195,33 +195,17 @@ export const DetailTitle = styled(MainContentTitleCommon)``;
 
 export const DetailAddSchedule = styled.button`
   position: relative;
-  border: 1px solid #dddddd;
   padding: 4px 6px;
+  border: 1px solid black;
   border-radius: 8px;
   background-color: white;
   font-size: 14px;
   transition: 300ms;
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    border-radius: 8px;
-    background-color: rgba(35, 178, 173, 0.3);
-    transition: all ease-in 300ms;
-  }
-  &:hover::before {
-    width: 100%;
-    background-color: rgba(35, 178, 173, 0.6);
+  &:hover {
+    transform: scale(1.02);
   }
   &:active {
     transform: scale(0.98);
-  }
-  > span {
-    position: relative;
-    color: #868686;
   }
 `;
 
@@ -273,6 +257,7 @@ export const DetailBodyItem = styled.div`
   &.prev {
     color: #888888;
     background-color: #fbfbfb;
+    opacity: 0.5;
   }
 `;
 
@@ -298,12 +283,16 @@ export const DetailBodyItemButton = styled.button`
   background: #1a73e8;
   color: white;
   font-size: 10px;
+  transition: 0.2s;
   &:first-child {
     margin-right: 4px;
-    background-color: #1a73e8;
+    background-color: #038fff;
   }
   &:last-child {
-    background-color: #c70000;
+    background-color: #ff5555;
+  }
+  &:hover {
+    opacity: 0.7;
   }
 `;
 

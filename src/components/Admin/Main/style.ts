@@ -193,7 +193,7 @@ export const ScheduleModalButton = styled.button`
     color: #242424;
   }
   &:last-child {
-    background: #5323b2;
+    background: #038fff;
     color: white;
   }
   &:hover {
