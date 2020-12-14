@@ -1,5 +1,6 @@
 import {
   OutingAction,
+  RESET_OUTING_LIST,
   SET_OUTING_LIST,
   SET_SELECTED_OUTING
 } from "../../action/outing";
@@ -20,6 +21,11 @@ const outingReducer = (
   action: OutingAction
 ): OutingState => {
   switch (action.type) {
+    case RESET_OUTING_LIST:
+      return {
+        ...state,
+        histories: []
+      };
     case SET_OUTING_LIST:
       return {
         ...state,

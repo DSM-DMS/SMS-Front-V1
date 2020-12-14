@@ -5,6 +5,7 @@ import { OutingHistory } from "../../components";
 import { getHistory } from "../../lib/api/Outing";
 import { ResHistoryItem } from "../../lib/api/payloads/Outing";
 import {
+  resetOutingHistoryList,
   setOutingHistoryList,
   setSelectedHistory
 } from "../../modules/action/outing";
@@ -31,7 +32,7 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
   };
 
   const getHistories = async () => {
-    if (historyStart !== histories.length) {
+    if (historyStart > histories.length) {
       return alert("불러올 외출신청 내역이 없습니다.");
     }
 
@@ -52,12 +53,14 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
   };
 
   useEffect(() => {
+    dispatch(resetOutingHistoryList());
     getHistories();
   }, []);
 
   return (
     <OutingHistory
       histories={histories}
+      historyStart={historyStart}
       modal={modal}
       closeModal={closeModal}
       openModal={openModal}
