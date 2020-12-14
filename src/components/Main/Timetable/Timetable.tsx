@@ -1,105 +1,92 @@
-import React, { FC, ReactElement, useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, {
+  FC,
+  ReactElement,
+  useState,
+  useEffect,
+  useMemo,
+  ChangeEvent
+} from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import TimetableList from "./TimetableList";
 
 import * as S from "../style";
-import { MainChangeTable } from "../../../assets";
-import { ResTimetable } from "../../../lib/api/payloads/Main";
 import { stateType } from "../../../modules/reducer";
+import { getTimetablesSaga } from "../../../modules/action/main";
+import { STUDENT } from "../../../modules/action/header";
 
 interface Props {}
 
-enum Day {
-  "월" = 0,
-  "화" = 1,
-  "수" = 2,
-  "목" = 3,
-  "금" = 4
-}
-
-const filterDays = [
-  {
-    id: "day1",
-    day: "월"
-  },
-  {
-    id: "day2",
-    day: "화"
-  },
-  {
-    id: "day3",
-    day: "수"
-  },
-  {
-    id: "day4",
-    day: "목"
-  },
-  {
-    id: "day5",
-    day: "금"
-  }
-];
+const date = new Date();
 
 const Timetable: FC<Props> = (): ReactElement => {
-  const today = new Date().getDay() - 1;
-  const { timetables } = useSelector((state: stateType) => state.main);
-  const [timetable, setTimetable] = useState<ResTimetable>(null);
-  const [weekNum, setWeekNum] = useState<number>(today);
-  const resetRef = useRef<HTMLImageElement>(null);
+  const dispatch = useDispatch();
+  const {
+    main: { timetable },
+    header: { type }
+  } = useSelector((state: stateType) => state);
+  const [timetableDate, setTimetableDate] = useState<number[]>(
+    date
+      .toLocaleDateString()
+      .split(" ")
+      .map(a => +a.slice(0, a.length - 1))
+  );
 
-  const resetFn = () => {
-    handleDay(today);
+  const getMinLocalDate = useMemo(() => {
+    const t = date;
+    return `${t.getFullYear()}-${t.getMonth() + 1}-01`;
+  }, []);
 
-    resetRef.current.classList.add("rolling");
-    setTimeout(() => {
-      resetRef.current.classList.remove("rolling");
-    }, 1000);
+  const getMaxLocalDate = useMemo(() => {
+    const t = date;
+    const d = new Date(t.getFullYear(), t.getMonth() + 1, 0);
+    return `${t.getFullYear()}-${t.getMonth() + 1}-${d.getDate()}`;
+  }, []);
+
+  const handleTimetableDate = (e: ChangeEvent<HTMLInputElement>) => {
+    const splitDate = e.target.value.split("-").map(d => +d);
+    setTimetableDate(splitDate);
   };
 
-  const classes = (i: number) => {
-    return `${i === today ? "today" : ""} ${i === weekNum ? "selected" : ""}`;
-  };
+  const handleSelectTimetable = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedDate = +e.target.value;
 
-  const handleDay = (i: number) => {
-    setWeekNum(i);
-    setTimetable(timetables[i]);
+    setTimetableDate([date.getFullYear(), date.getMonth() + 1, selectedDate]);
   };
 
   useEffect(() => {
-    setTimetable(timetables[today]);
-  }, [timetables]);
+    if (type === STUDENT) {
+      dispatch(
+        getTimetablesSaga(timetableDate[0], timetableDate[1], timetableDate[2])
+      );
+    }
+  }, [timetableDate, type]);
 
   return (
     <S.Timetable>
       <S.TimetableTitle>
-        <span>우리반 {Day[weekNum]}요일 시간표</span>
+        <span>
+          우리반 {timetableDate[1]}월 {timetableDate[2]}일 시간표
+        </span>
         <S.FiltersWrap>
-          <S.FilterReset>
-            <img
-              ref={resetRef}
-              onClick={resetFn}
-              src={MainChangeTable}
-              title="reset"
-              alt="reset"
-            />
-          </S.FilterReset>
-          {filterDays.map(({ id, day }, i) => (
-            <S.FilterDayWrap
-              htmlFor={id}
-              key={id}
-              className={classes(i)}
-              onClick={() => handleDay(i)}
-            >
-              <S.FilterText>{day}</S.FilterText>
-              <S.FilterRadio className={i === weekNum ? "selected" : ""} />
-            </S.FilterDayWrap>
-          ))}
+          <S.TimetableSelector
+            name="date"
+            id="date"
+            onChange={handleSelectTimetable}
+            defaultValue={date.getDate()}
+          >
+            {Array(
+              new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate()
+            )
+              .fill(0)
+              .map((_, i) => (
+                <option key={i}>{i + 1}</option>
+              ))}
+          </S.TimetableSelector>
+          <span>일</span>
         </S.FiltersWrap>
       </S.TimetableTitle>
-      <TimetableList
-        timeTable={timetables.length === 1 ? timetables[0] : timetable}
-      />
+      <TimetableList timetable={timetable} />
     </S.Timetable>
   );
 };
