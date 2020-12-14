@@ -40,7 +40,6 @@ const initErrorState = {
 const LoginContainer: FC<Props> = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const errorRef = useRef<HTMLParagraphElement>(null);
   const [id, setId] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [autoLogin, setAutoLogin] = useState<boolean>(false);
@@ -57,11 +56,6 @@ const LoginContainer: FC<Props> = () => {
       | typeof UNABLE_FORM
       | typeof UNAUTHORIZED
   ) => {
-    errorRef.current.classList.add("pointing");
-    setTimeout(() => {
-      errorRef.current.classList.remove("pointing");
-    }, 600);
-
     switch (message) {
       case PASSWORD_NOT_MATCHED:
         setErrorMessage({
@@ -189,7 +183,14 @@ const LoginContainer: FC<Props> = () => {
         setErrorMessage(initErrorState);
 
         dispatch(pageMove("홈"));
-        dispatch(getTimetablesSaga());
+        const today = new Date();
+        dispatch(
+          getTimetablesSaga(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            today.getDate()
+          )
+        );
         history.push("./home");
       } catch (err) {
         const data = err?.response?.data,
@@ -205,7 +206,7 @@ const LoginContainer: FC<Props> = () => {
         }
       }
     },
-    [errorRef]
+    []
   );
 
   const handleId = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -220,11 +221,6 @@ const LoginContainer: FC<Props> = () => {
     setAutoLogin(prev => !prev);
   }, [autoLogin]);
 
-  // Todo : history listen when user move page
-  // history.listen((location, action) => {
-  //   console.log(location, action);
-  // });
-
   return (
     <Login
       id={id}
@@ -235,7 +231,6 @@ const LoginContainer: FC<Props> = () => {
       handlePw={handlePw}
       toggleAutoLogin={toggleAutoLogin}
       login={login}
-      errorRef={errorRef}
     />
   );
 };
