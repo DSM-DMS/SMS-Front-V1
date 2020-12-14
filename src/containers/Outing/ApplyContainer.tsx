@@ -111,10 +111,8 @@ const ApplyContainer: FC<Props> = () => {
     if (!checkOutingValidation(outing)) {
       return alert("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
     }
-    const UNIX_KOREA_TIME = 12960;
-
     const getOutingTime = (time: string) =>
-      Math.round((+new Date(`${date}T${time}`) - UNIX_KOREA_TIME) / 1000);
+      Math.round(+new Date(`${date}T${time}`) / 1000);
 
     const outingBody: ReqOuting = {
       start_time: getOutingTime(startTime),
