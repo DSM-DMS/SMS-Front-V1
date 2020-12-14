@@ -4,11 +4,15 @@ import { useSelector } from "react-redux";
 import * as S from "./style";
 
 import { stateType } from "../../../../modules/reducer";
+import { UserType } from "../../../../modules/action/header";
 
 interface Props {}
 
 const CalendarDate: React.FC<Props> = () => {
-  const { schedulerDate } = useSelector((state: stateType) => state.main);
+  const {
+    main: { schedulerDate },
+    header: { type }
+  } = useSelector((state: stateType) => state);
 
   const printCalendar = (
     yearCopy: number,
@@ -54,6 +58,7 @@ const CalendarDate: React.FC<Props> = () => {
       key={id}
       className={styling}
       onClick={styling.match("curr") ? onClickDate : () => {}}
+      type={type as UserType}
     >
       <S.CalendarDaySpan>{children ? fixNum(children) : ""}</S.CalendarDaySpan>
     </S.CalendarDate>
@@ -71,7 +76,7 @@ const CalendarDate: React.FC<Props> = () => {
   const memoizedCalendar = useMemo<ReactElement[]>(
     () =>
       printCalendar(schedulerDate.getFullYear(), schedulerDate.getMonth() + 1),
-    [schedulerDate]
+    [schedulerDate, type]
   );
 
   // const setScheduleData = useMemo(() => {

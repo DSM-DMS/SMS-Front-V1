@@ -1,4 +1,6 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from "styled-components";
+
+import { STUDENT, UserType } from "../../../../modules/action/header";
 
 export const Calendar = styled.div`
   position: relative;
@@ -17,7 +19,11 @@ export const CalendarDTemp = styled.div`
   font-size: 12px;
 `;
 
-export const CalendarDate = styled(CalendarDTemp)`
+interface DateBorderColor {
+  type: UserType;
+}
+
+export const CalendarDate = styled(CalendarDTemp)<DateBorderColor>`
   height: 60px;
   border: 1.5px solid transparent;
   box-sizing: border-box;
@@ -31,7 +37,8 @@ export const CalendarDate = styled(CalendarDTemp)`
     background-color: #e9e9e9;
   }
   &.selected {
-    border: 1.5px solid #5323b2;
+    border: 1.5px solid
+      ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
   }
   &.today > span {
     color: white;
