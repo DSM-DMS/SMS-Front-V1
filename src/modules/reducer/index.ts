@@ -4,7 +4,6 @@ import subNavReducer from "./subNav/subNav";
 import headerReducer from "./header";
 import boardReducer from "./board";
 import posterReducer from "./poster";
-import scheduleDetailReducer from "./scheduleDetail";
 import outingCardReducer from "./outingCard";
 import jsonReducer from "./json";
 import ManagementInfo from "./management/info";
@@ -18,7 +17,6 @@ const rootReducer = combineReducers({
   header: headerReducer,
   board: boardReducer,
   poster: posterReducer,
-  scheduleDetail: scheduleDetailReducer,
   outingCard: outingCardReducer,
   outing: outingReducer,
   json: jsonReducer,
