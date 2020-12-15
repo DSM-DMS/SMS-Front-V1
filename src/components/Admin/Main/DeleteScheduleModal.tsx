@@ -36,7 +36,7 @@ const DeleteScheduleModal: FC<Props> = ({
           <S.DeleteScheduleModalText>일정삭제</S.DeleteScheduleModalText>
         </S.DeleteScheduleModalLine>
         <S.DeleteScheduleModalLine>
-          정말 [ "일정 내용" ] 일정을 삭제 하시겠습니까?
+          일정을 삭제 하시겠습니까?
         </S.DeleteScheduleModalLine>
         <S.DeleteScheduleModalButtonWrap>
           <S.DeleteScheduleModalButton onClick={handleCloseModal}>

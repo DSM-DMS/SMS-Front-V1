@@ -63,8 +63,7 @@ export const AutoLogin = styled.div`
   display: flex;
   align-items: center;
   user-select: none;
-  margin-bottom: 12px;
-
+  margin: 12px 0;
   #auto-login:checked ~ #auto-login-checkbox {
     background-color: #038fff;
     background-image: url(${Check});
@@ -92,6 +91,13 @@ export const AutoLoginLabel = styled.label`
   color: #242424;
   font-size: 14px;
   cursor: pointer;
+  > input {
+    all: unset;
+    opacity: 0;
+    &:focus ~ #auto-login-checkbox {
+      outline: 1px dotted black;
+    }
+  }
 `;
 
 export const LoginButton = styled.button`
@@ -118,10 +124,10 @@ export const LoginButton = styled.button`
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
   }
-  &:hover,
   &:focus {
     color: #fff;
     background-color: #ff5555;
+    border: 1px solid #038fff;
     &:before {
       transform: skewX(-45deg) translateX(550px);
       transition: all 0.5s ease-in-out;
@@ -134,43 +140,4 @@ export const ErrorMessage = styled.p`
   color: red;
   font-size: 14px;
   transition: 0.3s;
-  &.pointing {
-    animation: shake 0.5s;
-  }
-
-  @keyframes shake {
-    0% {
-      transform: translateX(1px);
-    }
-    10% {
-      transform: translateX(-1px);
-    }
-    20% {
-      transform: translateX(-3px);
-    }
-    30% {
-      transform: translateX(3px);
-    }
-    40% {
-      transform: translateX(1px);
-    }
-    50% {
-      transform: translateX(-1px);
-    }
-    60% {
-      transform: translateX(-3px);
-    }
-    70% {
-      transform: translateX(3px);
-    }
-    80% {
-      transform: translateX(-1px);
-    }
-    90% {
-      transform: translateX(1px);
-    }
-    100% {
-      transform: translateX(1px);
-    }
-  }
 `;
