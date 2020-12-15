@@ -32,22 +32,6 @@ const Timetable: FC<Props> = (): ReactElement => {
       .map(a => +a.slice(0, a.length - 1))
   );
 
-  const getMinLocalDate = useMemo(() => {
-    const t = date;
-    return `${t.getFullYear()}-${t.getMonth() + 1}-01`;
-  }, []);
-
-  const getMaxLocalDate = useMemo(() => {
-    const t = date;
-    const d = new Date(t.getFullYear(), t.getMonth() + 1, 0);
-    return `${t.getFullYear()}-${t.getMonth() + 1}-${d.getDate()}`;
-  }, []);
-
-  const handleTimetableDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const splitDate = e.target.value.split("-").map(d => +d);
-    setTimetableDate(splitDate);
-  };
-
   const handleSelectTimetable = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedDate = +e.target.value;
 
