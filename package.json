@@ -27,6 +27,7 @@
     "@editorjs/list": "^1.5.0",
     "axios": "^0.19.2",
     "prettier": "^2.0.5",
+    "query-string": "^6.13.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
