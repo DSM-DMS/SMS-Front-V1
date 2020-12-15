@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import * as S from "./styles";
 import { DetailPageHeader } from "../../../components/default";
 import { NavIconNoticeBlue } from "../../../assets";
@@ -6,7 +6,7 @@ import NoticeDetailBody from "./NoticeDetailBody/NoticeDetailBody";
 import { customSelector } from "../../../lib/utils";
 
 const NoticeDetail: FC = () => {
-  const { content } = customSelector(state => state.board.detail);
+  const { content, title } = customSelector(state => state.notice.detail);
 
   return (
     <S.Container>
@@ -17,8 +17,9 @@ const NoticeDetail: FC = () => {
         imgSrc={NavIconNoticeBlue}
         href="/notice"
       />
-      <S.P>대덕사이버고등학교에 다니고 새인생이 시작됐다~</S.P>
+      <S.P>{title}</S.P>
       <NoticeDetailBody content={content} />
+      <div>dddddddddd</div>
     </S.Container>
   );
 };
