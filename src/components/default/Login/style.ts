@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { Check, CheckBlue } from "../../../assets";
+
 export const LoginWrap = styled.div`
   width: 500px;
   margin: 200px auto 0;
@@ -62,16 +64,31 @@ export const AutoLogin = styled.div`
   align-items: center;
   user-select: none;
   margin-bottom: 12px;
+
+  #auto-login:checked ~ #auto-login-checkbox {
+    background-color: #038fff;
+    background-image: url(${Check});
+    box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
+      3px 3px 5px rgba(0, 0, 0, 0.1);
+  }
 `;
 
-export const AutoLoginCheckbox = styled.input`
+export const AutoLoginCheckbox = styled.div`
   width: 24px;
   height: 24px;
   margin-right: 12px;
+  background-image: url(${CheckBlue});
+  background-size: 14px;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 1),
+    inset 3px 3px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 `;
 
 export const AutoLoginLabel = styled.label`
+  display: flex;
+  align-items: center;
   color: #242424;
   font-size: 14px;
   cursor: pointer;
@@ -88,6 +105,7 @@ export const LoginButton = styled.button`
   box-sizing: border-box;
   overflow: hidden;
   transition: 0.3s;
+  outline: auto;
   &:before {
     content: "";
     position: absolute;
@@ -100,8 +118,8 @@ export const LoginButton = styled.button`
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
   }
-  &:hover {
-    border-bottom: 4px solid darken(#ff5555, 10%);
+  &:hover,
+  &:focus {
     color: #fff;
     background-color: #ff5555;
     &:before {

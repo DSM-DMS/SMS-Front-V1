@@ -1,5 +1,7 @@
 import React, { FC } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
+
+import { PageNotFound } from "../components";
 import {
   AdminOutingCertifiedListContainer,
   AdminOutingNowListContainer,
@@ -65,6 +67,7 @@ const AdminRouter: FC<{}> = () => {
           path="/admin/notice/writing"
           component={AdminNoticeWritingContainer}
         />
+        <Redirect path="/admin" to="/admin/home" />
       </Switch>
     </GlobalInnerBody>
   );

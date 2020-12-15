@@ -1,105 +1,105 @@
-import React, { FC, ReactElement, useState, useRef } from 'react';
+import React, { FC, ReactElement, useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-import Filters from './Filters';
-import FilterWrap from './FilterWrap';
+import TimetableList from "./TimetableList";
 
-import * as S from '../style';
+import * as S from "../style";
+import { MainChangeTable } from "../../../assets";
+import { ResTimetable } from "../../../lib/api/payloads/Main";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {}
 
-const getTimeTable = (i: string) => {
-  const timeTableExample: string[] = [
-    `성직${i}`,
-    `체육${i}`,
-    `문학${i}`,
-    `영어${i}`,
-    `임베디드 시스템${i}`,
-    `임베디드 시스템${i}`,
-    `수학${i}`,
-  ];
-  return timeTableExample;
-};
+enum Day {
+  "월" = 0,
+  "화" = 1,
+  "수" = 2,
+  "목" = 3,
+  "금" = 4
+}
 
-const timeTables = (() => {
-  const a: any = {};
-
-  for (let i = 1; i <= 3; i++) {
-    for (let j = 1; j <= 4; j++) {
-      a[`timeTable${i}_${j}`] = getTimeTable(`${i}_${j}`);
-    }
+const filterDays = [
+  {
+    id: "day1",
+    day: "월"
+  },
+  {
+    id: "day2",
+    day: "화"
+  },
+  {
+    id: "day3",
+    day: "수"
+  },
+  {
+    id: "day4",
+    day: "목"
+  },
+  {
+    id: "day5",
+    day: "금"
   }
-
-  return a;
-})();
-
-const myClassTimeTable: string[] = [
-  '성직',
-  '체육',
-  '문학',
-  '영어',
-  '임베디드 시스템',
-  '임베디드 시스템',
-  '수학',
 ];
 
-const fixNum = (num: number): string => (num < 10 ? `0${num}` : String(num));
-
 const Timetable: FC<Props> = (): ReactElement => {
-  const [grade, setGrade] = useState<number>(0);
-  const [classNum, setClassNum] = useState<number>(0);
+  const today = new Date().getDay() - 1;
+  const { timetables } = useSelector((state: stateType) => state.main);
+  const [timetable, setTimetable] = useState<ResTimetable>(null);
+  const [weekNum, setWeekNum] = useState<number>(today);
   const resetRef = useRef<HTMLImageElement>(null);
 
   const resetFn = () => {
-    setGrade(0);
-    setClassNum(0);
-    resetRef.current.classList.add('rolling');
+    handleDay(today);
+
+    resetRef.current.classList.add("rolling");
     setTimeout(() => {
-      resetRef.current.classList.remove('rolling');
+      resetRef.current.classList.remove("rolling");
     }, 1000);
   };
 
-  const isSelectAll = () => grade !== 0 && classNum !== 0;
+  const classes = (i: number) => {
+    return `${i === today ? "today" : ""} ${i === weekNum ? "selected" : ""}`;
+  };
+
+  const handleDay = (i: number) => {
+    setWeekNum(i);
+    setTimetable(timetables[i]);
+  };
+
+  useEffect(() => {
+    setTimetable(timetables[today]);
+  }, [timetables]);
 
   return (
     <S.Timetable>
       <S.TimetableTitle>
-        {isSelectAll() ? (
-          <span>{`${grade}학년 ${classNum}반`} 시간표</span>
-        ) : (
-          <span>우리반 시간표</span>
-        )}
-        <FilterWrap resetFn={resetFn} resetRef={resetRef}>
-          <Filters
-            filterLen={3}
-            selected={grade}
-            setSelected={setGrade}
-            type="grade"
-          />
-          <Filters
-            filterLen={4}
-            selected={classNum}
-            setSelected={setClassNum}
-            type="class"
-          />
-        </FilterWrap>
+        <span>우리반 {Day[weekNum]}요일 시간표</span>
+        <S.FiltersWrap>
+          <S.FilterReset>
+            <img
+              ref={resetRef}
+              onClick={resetFn}
+              src={MainChangeTable}
+              title="reset"
+              alt="reset"
+            />
+          </S.FilterReset>
+          {filterDays.map(({ id, day }, i) => (
+            <S.FilterDayWrap
+              htmlFor={id}
+              key={id}
+              className={classes(i)}
+              onClick={() => handleDay(i)}
+            >
+              <S.FilterText>{day}</S.FilterText>
+              <S.FilterRadio className={i === weekNum ? "selected" : ""} />
+            </S.FilterDayWrap>
+          ))}
+        </S.FiltersWrap>
       </S.TimetableTitle>
-      <S.TimetableList>
-        {isSelectAll()
-          ? timeTables[`timeTable${grade}_${classNum}`].map(
-              (time: any, i: number) => (
-                <S.TimetableItem key={i}>
-                  <S.TimetableItemDate>{fixNum(i + 1)}</S.TimetableItemDate>
-                  {time}
-                </S.TimetableItem>
-              ),
-            )
-          : myClassTimeTable.map((time: any, i: number) => (
-              <S.TimetableItem key={i}>
-                <S.TimetableItemDate>{fixNum(i + 1)}</S.TimetableItemDate>
-                {time}
-              </S.TimetableItem>
-            ))}
-      </S.TimetableList>
+      <TimetableList
+        timeTable={timetables.length === 1 ? timetables[0] : timetable}
+      />
     </S.Timetable>
   );
 };

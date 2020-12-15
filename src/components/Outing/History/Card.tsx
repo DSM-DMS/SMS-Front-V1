@@ -25,7 +25,7 @@ const HistoryCard: FC<Props> = ({
   const fixNum = useCallback((n: number) => (n < 10 ? `0${n}` : n), []);
 
   const getLocalDate = useCallback((startTime: number) => {
-    const date = new Date(startTime * 1000 + 12960);
+    const date = new Date(startTime * 1000);
     const y = date.getFullYear();
     const m = date.getMonth() + 1;
     const d = date.getDate();
@@ -34,7 +34,7 @@ const HistoryCard: FC<Props> = ({
   }, []);
 
   const getLocalTime = useCallback((time: number) => {
-    const date = new Date(time * 1000 + 12960);
+    const date = new Date(time * 1000);
     const h = date.getHours();
     const m = date.getMinutes();
 
@@ -49,15 +49,17 @@ const HistoryCard: FC<Props> = ({
       }}
     >
       <S.CardTop>
-        <S.CardUser
+        <S.CardDate
           emergency={outing_situation.toUpperCase() === "NORMAL" ? false : true}
         >
           {getLocalDate(start_time)}
-        </S.CardUser>
+        </S.CardDate>
         <S.CardPlace>장소 : {place}</S.CardPlace>
       </S.CardTop>
       <S.CardBottom>
-        <S.CardDate>외출 상태 : {OutingStatus[outing_status]}</S.CardDate>
+        <S.CardStatus status={+outing_status}>
+          외출 상태 : {OutingStatus[outing_status]}
+        </S.CardStatus>
         <S.CardTime>
           외출 시간 : {getLocalTime(start_time)} ~ {getLocalTime(end_time)}
         </S.CardTime>

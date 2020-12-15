@@ -1,16 +1,29 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement, useCallback } from "react";
 
-import * as S from './style';
+import * as S from "./style";
 
-import { OutingWarningRedBase } from '../../../assets';
+import { OutingWarningRedBase } from "../../../assets";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {
-  handleClickCloseModal: () => void;
+  handleCloseModal: () => void;
+  removeSchedule: (scheduleUuid: string, schedulerDate: Date) => Promise<void>;
 }
 
 const DeleteScheduleModal: FC<Props> = ({
-  handleClickCloseModal,
+  handleCloseModal,
+  removeSchedule
 }): ReactElement => {
+  const { targetUuid, schedulerDate } = useSelector(
+    (state: stateType) => state.main
+  );
+
+  const handleRemoveSchedule = useCallback(() => {
+    removeSchedule(targetUuid, schedulerDate);
+    handleCloseModal();
+  }, [targetUuid, schedulerDate]);
+
   return (
     <>
       <S.DeleteScheduleModal>
@@ -23,18 +36,18 @@ const DeleteScheduleModal: FC<Props> = ({
           <S.DeleteScheduleModalText>일정삭제</S.DeleteScheduleModalText>
         </S.DeleteScheduleModalLine>
         <S.DeleteScheduleModalLine>
-          정말 [ {'일정 내용'} ] 일정을 삭제 하시겠습니까?
+          정말 [ "일정 내용" ] 일정을 삭제 하시겠습니까?
         </S.DeleteScheduleModalLine>
         <S.DeleteScheduleModalButtonWrap>
-          <S.DeleteScheduleModalButton onClick={handleClickCloseModal}>
+          <S.DeleteScheduleModalButton onClick={handleCloseModal}>
             취소
           </S.DeleteScheduleModalButton>
-          <S.DeleteScheduleModalButton onClick={handleClickCloseModal}>
+          <S.DeleteScheduleModalButton onClick={handleRemoveSchedule}>
             삭제
           </S.DeleteScheduleModalButton>
         </S.DeleteScheduleModalButtonWrap>
       </S.DeleteScheduleModal>
-      <S.ScheduleModalDarkBack onClick={handleClickCloseModal} />
+      <S.ScheduleModalDarkBack onClick={handleCloseModal} />
     </>
   );
 };

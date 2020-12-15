@@ -15,7 +15,7 @@ const ModalCategory: FC<Props> = (): ReactElement => {
   const fixNum = useCallback((n: number) => (n < 10 ? `0${n}` : n), []);
 
   const getLocalDate = useCallback((startTime: number) => {
-    const date = new Date(startTime * 1000 + 12960);
+    const date = new Date(startTime * 1000);
     const y = date.getFullYear();
     const m = date.getMonth() + 1;
     const d = date.getDate();
@@ -24,7 +24,7 @@ const ModalCategory: FC<Props> = (): ReactElement => {
   }, []);
 
   const getLocalTime = useCallback((time: number) => {
-    const date = new Date(time * 1000 + 12960);
+    const date = new Date(time * 1000);
     const h = date.getHours();
     const m = date.getMinutes();
 

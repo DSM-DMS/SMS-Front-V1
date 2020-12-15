@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const circleSize = {
-  big: '80px',
-  middle: '40px',
-  small: '20px',
+  big: "80px",
+  middle: "40px",
+  small: "20px"
 };
 
 export const AdminMainWrap = styled.div`
@@ -177,6 +177,7 @@ export const ScheduleModalFormButtonWrap = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-top: 12px;
 `;
 
 export const ScheduleModalButton = styled.button`
@@ -192,7 +193,7 @@ export const ScheduleModalButton = styled.button`
     color: #242424;
   }
   &:last-child {
-    background: #5323b2;
+    background: #038fff;
     color: white;
   }
   &:hover {

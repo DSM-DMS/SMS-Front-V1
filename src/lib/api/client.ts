@@ -1,9 +1,10 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
+import { StudentInfo } from "../../modules/type/user";
 
 export const SERVER = {
-  hostUrl: "http://10.220.158.111:8080/",
-  version: "v1",
-  s3Url: "https://dms-sms-s3.s3.ap-northeast-2.amazonaws.com"
+  hostUrl: process.env.HOST_URL,
+  version: process.env.VERSION,
+  s3Url: process.env.S3_URL
 };
 
 const SESSION_EXPIRATION_MESSAGE =
@@ -35,4 +36,17 @@ export const apiDefault = () => {
       Authorization: `Bearer ${accessToken}`
     }
   });
+};
+
+export const getStudentData = (
+  uuid: string
+): Promise<AxiosResponse<StudentInfo>> =>
+  apiDefault().get<StudentInfo>(`/students/uuid/${uuid}`);
+
+export const getStudentDatas = (
+  uuids: string[]
+): Promise<AxiosResponse<StudentInfo>[]> => {
+  return Promise.all<AxiosResponse<StudentInfo>>(
+    uuids.map(async uuid => await getStudentData(uuid))
+  );
 };

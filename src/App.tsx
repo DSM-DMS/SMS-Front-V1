@@ -1,10 +1,10 @@
 import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Switch, BrowserRouter, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 
-import Navigation from "./components/Navigation/Navigation";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
-import { PageNotFound } from "./components";
+import { PageNotFound, Navigation } from "./components";
+import { LoginContainer, HeaderContainer } from "./containers";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -14,10 +14,19 @@ import {
   ManagementRouter
 } from "./routers";
 import { jsonActionCreater } from "./modules/action/json";
-import { LoginContainer, HeaderContainer } from "./containers";
+import { getTimetablesSaga } from "./modules/action/main";
+import { stateType } from "./modules/reducer";
+import { STUDENT } from "./modules/action/header";
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
+  const { type } = useSelector((state: stateType) => state.header);
+
+  useEffect(() => {
+    if (type === STUDENT) {
+      dispatch(getTimetablesSaga());
+    }
+  }, [type]);
 
   useEffect(() => {
     dispatch(jsonActionCreater.getJsonSaga());
@@ -38,6 +47,7 @@ const App: FC<{}> = () => {
             <Route path="/outing" component={OutingRouter} />
             <Route path="/admin" component={AdminRouter} />
             <Route path="/management" component={ManagementRouter} />
+            <Redirect path="/" to="/home" />
             <Route path="*" component={PageNotFound} />
           </Switch>
         </GlobalBody>

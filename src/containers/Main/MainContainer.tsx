@@ -1,10 +1,11 @@
-import React, { FC, ReactElement } from 'react';
-import { Main } from '../../components';
+import React, { FC, ReactElement } from "react";
 
-interface Props { }
+import { Main } from "../../components";
+
+interface Props {}
 
 const MainContainer: FC<Props> = (): ReactElement => {
-  return <Main />; 
+  return <Main />;
 };
 
 export default MainContainer;

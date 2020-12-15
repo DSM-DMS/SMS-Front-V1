@@ -1,11 +1,7 @@
 import styled, { css } from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 
-import {
-  OutingWarningRedBase,
-  OutingBalloons,
-  NavIconWaringBlack
-} from "../../assets";
+import { OutingWarningRedBase, OutingBalloons } from "../../assets";
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -423,6 +419,16 @@ export const HistoryTitle = styled.h2`
 
 export const HistoryContent = styled.div``;
 
+export const HistoryNoContent = styled.div`
+  text-align: center;
+  font-size: 18px;
+  word-break: break-all;
+  a {
+    color: #5323b2;
+    text-decoration: none;
+  }
+`;
+
 export const HistoryCardWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(25%, 30%));
@@ -447,7 +453,7 @@ interface Emergency {
   emergency: boolean;
 }
 
-export const CardUser = styled.p<Emergency>`
+export const CardDate = styled.p<Emergency>`
   position: relative;
   font-size: 16px;
   font-weight: bold;
@@ -479,7 +485,17 @@ export const CardPlace = styled.p`
 
 export const CardBottom = styled.div``;
 
-export const CardDate = styled.span`
+const PENDING = "#0000fe";
+const REJECT = "#ff9f59";
+const APPROVE = "#62d462";
+
+interface Status {
+  status: number;
+}
+
+export const CardStatus = styled.span<Status>`
+  color: ${({ status }) =>
+    status < 0 ? REJECT : status < 3 ? PENDING : APPROVE};
   font-size: 6px;
 `;
 
@@ -637,10 +653,6 @@ export const OnlineCardMoveApply = styled.button`
   border-radius: 4px;
   box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
     5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
-`;
-
-export const OnlineCardDate = styled.p`
-  text-align: right;
 `;
 
 export const WithModalAniWrap = styled.div`
