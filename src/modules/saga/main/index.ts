@@ -1,11 +1,9 @@
 import { AxiosResponse } from "axios";
-import { call, put, takeEvery, CallEffect } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 
 import { apiDefault, SERVER } from "../../../lib/api/client";
 import {
-  ResSchedulesWithDefault,
   ResScheduleWithDefault,
-  ResTimetable,
   ResTimetableWithDefault
 } from "../../../lib/api/payloads/Main";
 import {
