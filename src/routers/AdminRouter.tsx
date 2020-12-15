@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 
-import { PageNotFound } from "../components";
 import {
   AdminOutingCertifiedListContainer,
   AdminOutingNowListContainer,
@@ -12,7 +11,8 @@ import {
   AdminNoticeMineContainer,
   AdminNoticeMineDetailContainer,
   AdminNoticeWritingContainer,
-  LoginContainer
+  LoginContainer,
+  PasswordChangeContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
 
@@ -24,6 +24,11 @@ const AdminRouter: FC<{}> = () => {
       isBackNeed={!(pathname.includes("login") || pathname.includes("home"))}
     >
       <Switch>
+        <Route
+          exact
+          path="/admin/pw-change"
+          component={PasswordChangeContainer}
+        />
         <Route exact path="/admin/login" component={LoginContainer} />
         <Route exact path="/admin/home" component={AdminMainContainer} />
         <Route exact path="/admin/schedule" />
