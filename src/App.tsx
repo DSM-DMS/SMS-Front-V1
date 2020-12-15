@@ -4,7 +4,11 @@ import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
 import { PageNotFound, Navigation } from "./components";
-import { LoginContainer, HeaderContainer } from "./containers";
+import {
+  LoginContainer,
+  HeaderContainer,
+  PasswordChangeContainer
+} from "./containers";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -30,6 +34,7 @@ const App: FC<{}> = () => {
         <GlobalBody>
           <HeaderContainer />
           <Switch>
+            <Route path="/pw-change" component={PasswordChangeContainer} />
             <Route path="/login" component={LoginContainer} />
             <Route path="/home" component={MainRouter} />
             <Route path="/notice" component={NoticeRouter} />
