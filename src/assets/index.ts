@@ -72,4 +72,4 @@ export { default as Search } from "./management/search.svg";
 export { default as PageNotFound } from "./default/page_not_found.svg";
 
 export { default as Check } from "./Login/check.svg";
-export { default as CheckBlue } from "./Login/checkBlue.svg";
+export { default as CheckGray } from "./Login/checkGray.svg";

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { Check, CheckBlue } from "../../../assets";
+import { Check, CheckGray } from "../../../assets";
 
 export const LoginWrap = styled.div`
   width: 500px;
@@ -76,7 +76,7 @@ export const AutoLoginCheckbox = styled.div`
   width: 24px;
   height: 24px;
   margin-right: 12px;
-  background-image: url(${CheckBlue});
+  background-image: url(${CheckGray});
   background-size: 14px;
   background-position: center;
   background-repeat: no-repeat;
@@ -124,10 +124,11 @@ export const LoginButton = styled.button`
     height: 100%;
     background-color: rgba(255, 255, 255, 0.5);
   }
-  &:focus {
+  &:focus,
+  &:hover {
     color: #fff;
     background-color: #ff5555;
-    border: 1px solid #038fff;
+    outline: 1px solid #038fff;
     &:before {
       transform: skewX(-45deg) translateX(550px);
       transition: all 0.5s ease-in-out;
