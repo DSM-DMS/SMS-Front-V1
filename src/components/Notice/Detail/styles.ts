@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 50px 70px;
@@ -7,3 +7,5 @@ export const Container = styled.div`
 export const P = styled.p`
   margin: 15px 0;
 `;
+
+export const MovePage = styled.div``;
