@@ -23,7 +23,7 @@ const BoardTableItem: FC<BoardListitem> = ({
       <div>{number}</div>
       <div>{title}</div>
       <div>{date}</div>
-      {/* {views && <div>{circleName}</div>} */}
+      <div>{writer_name}</div>
       <div>{views}</div>
     </S.ItemContainer>
   );
