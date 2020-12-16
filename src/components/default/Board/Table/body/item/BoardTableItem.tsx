@@ -14,7 +14,7 @@ const BoardTableItem: FC<BoardListItem> = ({
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.push(`./${announcement_uuid}`);
+    history.push(`/notice/${announcement_uuid}`);
   }, []);
 
   return (
