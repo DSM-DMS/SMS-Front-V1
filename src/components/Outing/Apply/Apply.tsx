@@ -9,7 +9,11 @@ import ApplyReason from "./Reason";
 
 import * as S from "../style";
 import ApplyWaring from "./ApplyWarning";
-import { Outing } from "../../../containers/Outing/ApplyContainer";
+import {
+  EMERGENCY,
+  NORMAL,
+  Outing
+} from "../../../containers/Outing/ApplyContainer";
 
 interface Props {
   formDate: string;
@@ -51,7 +55,7 @@ const Apply: FC<Props> = ({
       endTime: formInTime,
       place: formPlace,
       reason: formReason,
-      situation: formReasonSick ? "emergency" : "normal"
+      situation: formReasonSick ? EMERGENCY : NORMAL
     };
 
     applyOuting(outing);

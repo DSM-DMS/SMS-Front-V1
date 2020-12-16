@@ -1,4 +1,5 @@
 import { ResDefault } from "../";
+import { SituationType } from "../../../../containers/Outing/ApplyContainer";
 
 export enum OutingStatus {
   "선생님 거절" = -2,
@@ -36,7 +37,7 @@ export interface ReqOuting {
   end_time: number;
   place: string;
   reason: string;
-  situation: "normal" | "emergency";
+  situation: SituationType;
 }
 
 export interface ResOuting {

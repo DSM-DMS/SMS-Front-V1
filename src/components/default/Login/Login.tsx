@@ -13,7 +13,6 @@ interface Props {
   handlePw: (e: ChangeEvent<HTMLInputElement>) => void;
   toggleAutoLogin: () => void;
   login: (id: string, pw: string, autoLogin: boolean) => Promise<any>;
-  errorRef: MutableRefObject<HTMLParagraphElement>;
 }
 
 const Login: FC<Props> = ({
@@ -24,8 +23,7 @@ const Login: FC<Props> = ({
   autoLogin,
   toggleAutoLogin,
   errorMessage,
-  login,
-  errorRef
+  login
 }) => {
   return (
     <S.LoginWrap>
@@ -42,6 +40,7 @@ const Login: FC<Props> = ({
               id="id"
               onChange={handleId}
               value={id}
+              autoFocus={true}
             />
           </S.LoginLabel>
           <S.LoginLabel htmlFor="pw">
@@ -54,19 +53,28 @@ const Login: FC<Props> = ({
               value={pw}
             />
           </S.LoginLabel>
-          <S.ErrorMessage ref={errorRef}>{errorMessage.message}</S.ErrorMessage>
+          <S.ErrorMessage>{errorMessage.message}</S.ErrorMessage>
+          <S.LoginButton onClick={() => login(id, pw, autoLogin)}>
+            로그인
+          </S.LoginButton>
           <S.AutoLogin>
-            <S.AutoLoginCheckbox
-              type="checkbox"
-              id="auto-login"
-              onChange={toggleAutoLogin}
-            />
-            <S.AutoLoginLabel htmlFor="auto-login">자동로그인</S.AutoLoginLabel>
+            <S.AutoLoginLabel htmlFor="auto-login">
+              <input
+                type="checkbox"
+                id="auto-login"
+                onChange={toggleAutoLogin}
+                onKeyPress={e => {
+                  if (e.key === "Enter") {
+                    e.currentTarget.checked = !e.currentTarget.checked;
+                    toggleAutoLogin();
+                  }
+                }}
+              />
+              <S.AutoLoginCheckbox id="auto-login-checkbox" />
+              <span>자동로그인</span>
+            </S.AutoLoginLabel>
           </S.AutoLogin>
         </S.LoginInputsWrap>
-        <S.LoginButton onClick={() => login(id, pw, autoLogin)}>
-          로그인
-        </S.LoginButton>
       </S.LoginForm>
     </S.LoginWrap>
   );

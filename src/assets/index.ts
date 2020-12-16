@@ -70,3 +70,9 @@ export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
 
 export { default as PageNotFound } from "./default/page_not_found.svg";
+
+export { default as Check } from "./Login/check.svg";
+export { default as CheckGray } from "./Login/checkGray.svg";
+
+export { default as Eye } from "./PasswordChange/eye.svg";
+export { default as EyeOff } from "./PasswordChange/eyeOff.svg";

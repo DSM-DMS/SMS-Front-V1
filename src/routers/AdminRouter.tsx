@@ -1,5 +1,6 @@
 import React, { FC } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+
 import {
   AdminOutingCertifiedListContainer,
   AdminOutingNowListContainer,
@@ -10,18 +11,26 @@ import {
   AdminNoticeMineContainer,
   AdminNoticeMineDetailContainer,
   AdminNoticeWritingContainer,
-  LoginContainer
+  LoginContainer,
+  PasswordChangeContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
 
 const AdminRouter: FC<{}> = () => {
+  const location = useLocation();
   const pathname = location.pathname;
+  const noWhiteBack: string[] = ["login", "home", "pw-change"];
 
   return (
     <GlobalInnerBody
-      isBackNeed={!(pathname.includes("login") || pathname.includes("home"))}
+      isBackNeed={!noWhiteBack.some(path => pathname.includes(path))}
     >
       <Switch>
+        <Route
+          exact
+          path="/admin/pw-change"
+          component={PasswordChangeContainer}
+        />
         <Route exact path="/admin/login" component={LoginContainer} />
         <Route exact path="/admin/home" component={AdminMainContainer} />
         <Route exact path="/admin/schedule" />
@@ -65,6 +74,7 @@ const AdminRouter: FC<{}> = () => {
           path="/admin/notice/writing"
           component={AdminNoticeWritingContainer}
         />
+        <Redirect path="/admin" to="/admin/home" />
       </Switch>
     </GlobalInnerBody>
   );

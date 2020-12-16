@@ -1,27 +1,23 @@
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { Login } from "../../components";
 import { postLoginStudent } from "../../lib/api/Login";
-import {
-  getStudentInfo,
-  getTeacherInfo,
-  postLoginTeacher
-} from "../../lib/api/Login";
+import { postLoginTeacher } from "../../lib/api/Login";
 import {
   PASSWORD_NOT_MATCHED,
-  ResStudentInfo,
-  ResTeacherInfo,
   UNABLE_FORM,
   UNAUTHORIZED
 } from "../../lib/api/payloads/Login";
 import {
-  setInit,
+  getStudentInfoSaga,
+  getTeacherInfoSaga,
   STUDENT,
   TEACHER,
   UserType
 } from "../../modules/action/header";
+import { getTimetablesSaga } from "../../modules/action/main";
 import { pageMove } from "../../modules/action/page";
 
 interface Props {}
@@ -39,7 +35,6 @@ const initErrorState = {
 const LoginContainer: FC<Props> = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const errorRef = useRef<HTMLParagraphElement>(null);
   const [id, setId] = useState<string>("");
   const [pw, setPw] = useState<string>("");
   const [autoLogin, setAutoLogin] = useState<boolean>(false);
@@ -56,123 +51,64 @@ const LoginContainer: FC<Props> = () => {
       | typeof UNABLE_FORM
       | typeof UNAUTHORIZED
   ) => {
-    errorRef.current.classList.add("pointing");
-    setTimeout(() => {
-      errorRef.current.classList.remove("pointing");
-    }, 600);
-
-    switch (message) {
-      case PASSWORD_NOT_MATCHED:
-        setErrorMessage({
-          status: true,
-          message: PASSWORD_NOT_MATCHED
-        });
-        return;
-      case UNABLE_FORM:
-        setErrorMessage({
-          status: true,
-          message: UNABLE_FORM
-        });
-        return;
-      case UNAUTHORIZED:
-        setErrorMessage({
-          status: true,
-          message: UNAUTHORIZED
-        });
-        return;
-      default:
-        return;
-    }
+    setErrorMessage({
+      status: true,
+      message
+    });
   };
+
+  const storageHandler = useCallback(
+    (type: UserType, autoLogin: boolean, accessToken: string, uuid: string) => {
+      const MillisecondOfHour = 3600000;
+
+      if (autoLogin) localStorage.removeItem("expiration");
+      else
+        localStorage.setItem("expiration", `${Date.now() + MillisecondOfHour}`);
+      localStorage.setItem("access_token", accessToken);
+      localStorage.setItem(`${type}_uuid`, uuid);
+      localStorage.removeItem(`${type === STUDENT ? TEACHER : STUDENT}_uuid`);
+    },
+    []
+  );
 
   const getStudentLoginInfo = useCallback(
     async (id: string, pw: string, autoLogin: boolean) => {
       const { data } = await postLoginStudent(id, pw);
       const { access_token, student_uuid } = data;
-      const MillisecondOfHour = 3600000;
 
-      autoLogin
-        ? localStorage.removeItem("expiration")
-        : localStorage.setItem(
-            "expiration",
-            `${new Date().getTime() + MillisecondOfHour}`
-          );
-
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("student_uuid", student_uuid);
-      localStorage.removeItem("teacher_uuid");
+      storageHandler(STUDENT, autoLogin, access_token, student_uuid);
 
       return student_uuid;
     },
     []
   );
 
-  const setStudentInfoOnStorage = useCallback(async (studentUuid: string) => {
-    const {
-      data: { grade, group, name, phone_number, student_number, profile_uri }
-    } = await getStudentInfo(studentUuid);
-
-    const studentForm: ResStudentInfo = {
-      grade,
-      group,
-      student_number,
-      name,
-      phone_number,
-      profile_uri
-    };
-
-    localStorage.setItem("sms-user", JSON.stringify(studentForm));
-    localStorage.setItem("sms-type", STUDENT);
-    dispatch(setInit(STUDENT, studentForm));
-  }, []);
-
   const getTeacherLoginInfo = useCallback(
     async (id: string, pw: string, autoLogin: boolean) => {
       const { data } = await postLoginTeacher(id, pw);
       const { access_token, teacher_uuid } = data;
 
-      autoLogin
-        ? localStorage.removeItem("expiration")
-        : localStorage.setItem("expiration", `${new Date().getTime()}`);
-
-      localStorage.setItem("access_token", access_token);
-      localStorage.setItem("teacher_uuid", teacher_uuid);
-      localStorage.removeItem("student_uuid");
+      storageHandler(TEACHER, autoLogin, access_token, teacher_uuid);
 
       return teacher_uuid;
     },
     []
   );
 
-  const setTeacherInfoOnStorage = useCallback(async (teacherUuid: string) => {
-    const {
-      data: { grade, group, name, phone_number }
-    } = await getTeacherInfo(teacherUuid);
-
-    const teacherForm: ResTeacherInfo = {
-      grade,
-      group,
-      name,
-      phone_number
-    };
-
-    localStorage.setItem("sms-user", JSON.stringify(teacherForm));
-    localStorage.setItem("sms-type", TEACHER);
-    dispatch(setInit(TEACHER, teacherForm));
-  }, []);
-
   const studentLogin = async (id: string, pw: string, autoLogin: boolean) => {
-    const student_uuid = await getStudentLoginInfo(id, pw, autoLogin);
-    await setStudentInfoOnStorage(student_uuid);
+    const studentUuid = await getStudentLoginInfo(id, pw, autoLogin);
+    dispatch(getStudentInfoSaga(studentUuid));
   };
 
   const teacherLogin = async (id: string, pw: string, autoLogin: boolean) => {
-    const student_uuid = await getTeacherLoginInfo(id, pw, autoLogin);
-    await setTeacherInfoOnStorage(student_uuid);
+    const teacherUuid = await getTeacherLoginInfo(id, pw, autoLogin);
+    dispatch(getTeacherInfoSaga(teacherUuid));
   };
 
   const login = useCallback(
     async (id: string, pw: string, autoLogin: boolean) => {
+      const today = new Date();
+
       if (!(loginFilter(id) && loginFilter(pw))) {
         errorMessageMacro(UNABLE_FORM);
         return;
@@ -188,22 +124,30 @@ const LoginContainer: FC<Props> = () => {
         setErrorMessage(initErrorState);
 
         dispatch(pageMove("홈"));
+        dispatch(
+          getTimetablesSaga(
+            today.getFullYear(),
+            today.getMonth() + 1,
+            today.getDate()
+          )
+        );
         history.push("./home");
       } catch (err) {
         const data = err?.response?.data,
           status = data?.status,
           code = data?.code;
 
-        if (status === 404) {
-          errorMessageMacro(UNAUTHORIZED);
-        } else if (status === 409 && (code === -401 || code === -411)) {
+        if (
+          status === 404 ||
+          (status === 409 && (code === -401 || code === -411))
+        ) {
           errorMessageMacro(UNAUTHORIZED);
         } else if (status === 409 && (code === -402 || code === -412)) {
           errorMessageMacro(PASSWORD_NOT_MATCHED);
         }
       }
     },
-    [errorRef]
+    []
   );
 
   const handleId = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -218,11 +162,6 @@ const LoginContainer: FC<Props> = () => {
     setAutoLogin(prev => !prev);
   }, [autoLogin]);
 
-  // Todo : history listen when user move page
-  // history.listen((location, action) => {
-  //   console.log(location, action);
-  // });
-
   return (
     <Login
       id={id}
@@ -233,7 +172,6 @@ const LoginContainer: FC<Props> = () => {
       handlePw={handlePw}
       toggleAutoLogin={toggleAutoLogin}
       login={login}
-      errorRef={errorRef}
     />
   );
 };

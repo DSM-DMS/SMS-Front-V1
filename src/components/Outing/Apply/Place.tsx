@@ -4,6 +4,7 @@ import SearchList from "./SearchList";
 
 import * as S from "../style";
 import { OutingPlaceSearch } from "../../../assets";
+import { ResLocationWithDefault } from "../../../lib/api/payloads/Outing";
 
 interface Props {
   place: string;
@@ -11,11 +12,9 @@ interface Props {
 }
 
 const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
-  const [searchProp, setSearchProp] = useState([]);
+  const [searchProp, setSearchProp] = useState<ResLocationWithDefault[]>([]);
 
-  const searchPlace = () => {
-    console.log(place);
-  };
+  const searchPlace = () => {};
 
   return (
     <S.FormPlace>
@@ -26,7 +25,7 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
           id="place"
           placeholder="외출 장소를 입력하세요."
           onChange={handlePlace}
-          onKeyDown={e => e.key === "Enter" && searchPlace()}
+          onKeyPress={e => e.key === "Enter" && searchPlace()}
         />
         <S.FormPlaceInputSearch
           src={OutingPlaceSearch}

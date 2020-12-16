@@ -1,10 +1,14 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, BrowserRouter, Route } from "react-router-dom";
+import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 
-import Navigation from "./components/Navigation/Navigation";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
-import { PageNotFound } from "./components";
+import { PageNotFound, Navigation } from "./components";
+import {
+  LoginContainer,
+  HeaderContainer,
+  PasswordChangeContainer
+} from "./containers";
 import {
   CirclesRouter,
   NoticeRouter,
@@ -14,7 +18,6 @@ import {
   ManagementRouter
 } from "./routers";
 import { jsonActionCreater } from "./modules/action/json";
-import { LoginContainer, HeaderContainer } from "./containers";
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -31,6 +34,7 @@ const App: FC<{}> = () => {
         <GlobalBody>
           <HeaderContainer />
           <Switch>
+            <Route path="/pw-change" component={PasswordChangeContainer} />
             <Route path="/login" component={LoginContainer} />
             <Route path="/home" component={MainRouter} />
             <Route path="/notice" component={NoticeRouter} />
@@ -38,6 +42,7 @@ const App: FC<{}> = () => {
             <Route path="/outing" component={OutingRouter} />
             <Route path="/admin" component={AdminRouter} />
             <Route path="/management" component={ManagementRouter} />
+            <Redirect path="/" to="/home" />
             <Route path="*" component={PageNotFound} />
           </Switch>
         </GlobalBody>

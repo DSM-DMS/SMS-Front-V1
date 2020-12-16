@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
 
 import * as S from "./style";
 
@@ -28,10 +27,11 @@ const Header: FC<Props> = ({ logout, moveLogin }) => {
   return (
     <S.HeaderWrap>
       {type === STUDENT ? (
-        <span>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</span>
+        <S.UserInfo>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</S.UserInfo>
       ) : (
-        <span>{`${name} 선생님`}</span>
+        <S.UserInfo>{`${name} 선생님`}</S.UserInfo>
       )}
+      <S.MovePasswordChange to="pw-change">비밀번호 변경</S.MovePasswordChange>
       <S.Logout
         onClick={() => {
           logout();

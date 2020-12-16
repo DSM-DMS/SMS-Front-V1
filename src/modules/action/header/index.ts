@@ -12,6 +12,9 @@ export const SET_NAME = "header/SET_NAME" as const;
 export const SET_PHONE = "header/SET_PHONE" as const;
 export const SET_PROFILE_URI = "header/SET_PROFILE_URI" as const;
 
+export const GET_STUDENT_INFO_SAGA = "header/GET_STUDENT_INFO_SAGA" as const;
+export const GET_TEACHER_INFO_SAGA = "header/GET_TEACHER_INFO_SAGA" as const;
+
 export const STUDENT = "student" as const;
 export const TEACHER = "teacher" as const;
 
@@ -50,15 +53,26 @@ export const setProfileUri = (profileUri: string) => ({
   type: SET_PROFILE_URI,
   payload: { profileUri }
 });
+export const getStudentInfoSaga = (studentUuid: string) => ({
+  type: GET_STUDENT_INFO_SAGA,
+  payload: { studentUuid }
+});
+export const getTeacherInfoSaga = (teacherUuid: string) => ({
+  type: GET_TEACHER_INFO_SAGA,
+  payload: { teacherUuid }
+});
 
 export type UserType = typeof STUDENT | typeof TEACHER;
 
-export type HeaderAction =
-  | ReturnType<typeof setType>
-  | ReturnType<typeof setGrade>
-  | ReturnType<typeof setGroup>
-  | ReturnType<typeof setName>
-  | ReturnType<typeof setNumber>
-  | ReturnType<typeof setPhone>
-  | ReturnType<typeof setProfileUri>
-  | ReturnType<typeof setInit>;
+export type HeaderAction = ReturnType<
+  | typeof setType
+  | typeof setGrade
+  | typeof setGroup
+  | typeof setName
+  | typeof setNumber
+  | typeof setPhone
+  | typeof setProfileUri
+  | typeof setInit
+  | typeof getStudentInfoSaga
+  | typeof getTeacherInfoSaga
+>;
