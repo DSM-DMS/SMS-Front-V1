@@ -1,10 +1,9 @@
 import React, { FC, useCallback, memo } from "react";
-import { BoardObj } from "../../../Board";
 import * as S from "./styles";
 import { useHistory } from "react-router";
-import { BoardListitem } from "../../../../../../modules/type/board";
+import { BoardListItem } from "../../../../../../lib/api/payloads/Board";
 
-const BoardTableItem: FC<BoardListitem> = ({
+const BoardTableItem: FC<BoardListItem> = ({
   announcement_uuid,
   date,
   is_checked,
@@ -15,7 +14,7 @@ const BoardTableItem: FC<BoardListitem> = ({
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.push(`${history.location.pathname}/${announcement_uuid}`);
+    history.push(`./${announcement_uuid}`);
   }, []);
 
   return (
