@@ -1,14 +1,14 @@
 import { BoardObj } from "../../../components/default/Board/Board";
+import { BoardListItem } from "../../../lib/api/payloads/Board";
 import {
   NoticeAction,
   GET_NOTICE_LIST,
   GET_NOTICE_DETAIL
 } from "../../action/notice";
-import { BoardListitem } from "../../type/board";
 import { NoticeDetail } from "../../type/notice";
 
 interface BoardState {
-  list: BoardListitem[];
+  list: BoardListItem[];
   detail: NoticeDetail;
 }
 

@@ -11,11 +11,11 @@ import * as S from "./styles";
 import { makeFilterFunc } from "../../../lib/utils";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
-import { BoardListitem } from "../../../modules/type/board";
+import { BoardListItem } from "../../../lib/api/payloads/Board";
 
 const NoticeContainer: FC = () => {
   const data = useSelector((state: stateType) => state.notice.list);
-  const noticeFilterFunc = makeFilterFunc<BoardListitem>(
+  const noticeFilterFunc = makeFilterFunc<BoardListItem>(
     data,
     ({ title }, keyword) => title.includes(keyword)
   );

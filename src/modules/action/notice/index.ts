@@ -1,5 +1,5 @@
 import { BoardObj } from "../../../components/default/Board/Board";
-import { BoardListitem } from "../../type/board";
+import { BoardListItem } from "../../../lib/api/payloads/Board";
 import { NoticeDetail } from "../../type/notice";
 
 export const GET_NOTICE_LIST = "notice/GET_NOTICE_LIST" as const;
@@ -11,7 +11,7 @@ export const GET_NOTICE_DETAIL_SAGA = "notice/GET_NOTICE_DETAIL_SAGA" as const;
 export const GET_CIRCLE_NOTICE_LIST_SAGA = "notice/GET_CIRCLE_NOTICE_LIST_SAGA" as const;
 export const GET_CIRCLE_NOTICE_DETAIL_SAGA = "notice/GET_CIRCLE_NOTICE_DETAIL_SAGA" as const;
 
-export const getNoticeList = (payload: BoardListitem[]) => ({
+export const getNoticeList = (payload: BoardListItem[]) => ({
   type: GET_NOTICE_LIST,
   payload
 });

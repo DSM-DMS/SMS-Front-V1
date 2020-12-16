@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-import { BoardListitem } from "../../../../../modules/type/board";
-import { BoardObj } from "../../Board";
+import { BoardListItem } from "../../../../../lib/api/payloads/Board";
 import BoardTableItem from "./item/BoardTableItem";
 
 interface Props {
-  data: BoardListitem[];
+  data: BoardListItem[];
 }
 
 const BoardTableBody: FC<Props> = ({ data }) => {

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
-import { BoardListitem } from "../../../../modules/type/board";
+import { BoardListItem } from "../../../../lib/api/payloads/Board";
 
 const names = ["번호", "제목", "날짜", "동아리", "조회수"];
 
@@ -18,7 +18,7 @@ const CircleNoticeList: FC = () => {
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }, []);
-  const noticeFilerFunc = makeFilterFunc<BoardListitem>(
+  const noticeFilerFunc = makeFilterFunc<BoardListItem>(
     data,
     ({ date, title }, keyword) =>
       title.includes(keyword) || date.includes(keyword)
