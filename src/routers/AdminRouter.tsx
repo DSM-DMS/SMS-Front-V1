@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 
 import {
   AdminOutingCertifiedListContainer,
@@ -17,11 +17,13 @@ import {
 import { GlobalInnerBody } from "../GlobalStyle";
 
 const AdminRouter: FC<{}> = () => {
+  const location = useLocation();
   const pathname = location.pathname;
+  const noWhiteBack: string[] = ["login", "home", "pw-change"];
 
   return (
     <GlobalInnerBody
-      isBackNeed={!(pathname.includes("login") || pathname.includes("home"))}
+      isBackNeed={!noWhiteBack.some(path => pathname.includes(path))}
     >
       <Switch>
         <Route
