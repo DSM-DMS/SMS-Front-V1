@@ -1,7 +1,6 @@
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 import {
   HeaderAction,
-  STUDENT,
   UserType,
   SET_GRADE,
   SET_GROUP,
@@ -23,7 +22,7 @@ export interface HeaderState extends ResStudentInfo {
 }
 
 const initialState: HeaderState = {
-  type: STUDENT,
+  type: "",
   grade: 0,
   group: 0,
   name: "",

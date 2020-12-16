@@ -91,7 +91,7 @@ export const TimetableItem = styled.li`
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  word-break: keep-all;
+  word-break: break-all;
 `;
 
 export const TimetableItemDate = styled.span`
@@ -104,73 +104,14 @@ export const TimetableItemDate = styled.span`
 
 export const FiltersWrap = styled.div`
   display: flex;
+  align-items: center;
 `;
 
-export const FilterReset = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: 0 8px;
+export const TimetableSelector = styled.select`
+  padding: 8px;
   border: 0;
-  border-radius: 8px;
-  background: transparent;
-  .rolling {
-    animation: roll 1s alternate;
-    @keyframes roll {
-      from {
-        transform: rotate(0);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-  }
-`;
-
-export const FilterDayWrap = styled.label`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 8px;
-  padding: 4px 0;
-  cursor: pointer;
-  &.today {
-    color: #ea0000;
-  }
-  &.selected {
-    color: #0275ff;
-  }
-`;
-
-export const FilterText = styled.span`
-  font-size: 14px;
-  font-weight: normal;
-`;
-
-export const FilterRadio = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  margin: 0 5px;
-  border: 0.5px solid rgb(133, 133, 133);
-  border-radius: 50%;
-  cursor: pointer;
-  &.selected {
-    border: 0.5px solid #0275ff;
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background-color: #0275ff;
-      border-radius: 50%;
-    }
-  }
+  background-color: white;
+  font-size: 16px;
 `;
 
 export const ScheduleDetail = styled(MainContentCommon)`
@@ -297,7 +238,7 @@ export const DetailBodyItemButton = styled.button`
 `;
 
 export const Outing = styled(MainContentCommon)`
-  height: 40%;
+  height: 30%;
 `;
 
 export const OutingTitle = styled(MainContentTitleCommon)`

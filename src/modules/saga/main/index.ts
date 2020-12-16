@@ -1,10 +1,9 @@
 import { AxiosResponse } from "axios";
-import { call, put, takeEvery, all } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 
 import { apiDefault, SERVER } from "../../../lib/api/client";
 import {
   ResScheduleWithDefault,
-  ResTimetable,
   ResTimetableWithDefault
 } from "../../../lib/api/payloads/Main";
 import {
@@ -12,31 +11,21 @@ import {
   setSchedules,
   setTimetables,
   GET_SCHEDULES_SAGA,
-  GET_TIMETABLES_SAGA
+  GET_TIMETABLES_SAGA,
+  getTimetablesSaga
 } from "../../action/main";
 
-function* fetchTimetables() {
-  const timetableUrl = `${SERVER.hostUrl}${SERVER.version}/time-tables/week-numbers`;
+function* fetchTimetables(action: ReturnType<typeof getTimetablesSaga>) {
+  const { year, month, day } = action.payload;
+  const timetableUrl = `${SERVER.hostUrl}${SERVER.version}/time-tables/years/${year}/months/${month}/days/${day}`;
 
   try {
-    const days: AxiosResponse<ResTimetableWithDefault>[] = yield all([
-      call(apiDefault().get, `${timetableUrl}/1`),
-      call(apiDefault().get, `${timetableUrl}/2`),
-      call(apiDefault().get, `${timetableUrl}/3`),
-      call(apiDefault().get, `${timetableUrl}/4`),
-      call(apiDefault().get, `${timetableUrl}/5`)
-    ]);
-    const forms: ResTimetable[] = days.map(({ data }) => ({
-      time1: data.time1,
-      time2: data.time2,
-      time3: data.time3,
-      time4: data.time4,
-      time5: data.time5,
-      time6: data.time6,
-      time7: data.time7
-    }));
+    const { data }: AxiosResponse<ResTimetableWithDefault> = yield call(
+      apiDefault().get,
+      timetableUrl
+    );
 
-    yield put(setTimetables(forms));
+    yield put(setTimetables(data));
   } catch (err) {}
 }
 

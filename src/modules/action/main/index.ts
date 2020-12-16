@@ -14,12 +14,17 @@ export const getSchedulesSaga = (year: number, month: number) => ({
   type: GET_SCHEDULES_SAGA,
   payload: { year, month }
 });
-export const setTimetables = (timetables: ResTimetable[]) => ({
+export const setTimetables = (timetable: ResTimetable) => ({
   type: SET_TIMETABLES,
-  payload: { timetables }
+  payload: { timetable }
 });
-export const getTimetablesSaga = () => ({
-  type: GET_TIMETABLES_SAGA
+export const getTimetablesSaga = (
+  year: number,
+  month: number,
+  day: number
+) => ({
+  type: GET_TIMETABLES_SAGA,
+  payload: { year, month, day }
 });
 export const setSchedules = (schedules: ResSchedule[]) => ({
   type: SET_SCHEDULES,

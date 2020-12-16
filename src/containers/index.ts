@@ -26,3 +26,4 @@ export { default as ManagementWantedDetailContainer } from "./Management/Wanted/
 export { default as ManagementInfoContainer } from "./Management/Info/ManagementInfoContainer";
 export { default as LoginContainer } from "./Login/LoginContainer";
 export { default as HeaderContainer } from "./Header/HeaderContainer";
+export { default as PasswordChangeContainer } from "./PasswordChange/PasswordChangeContainer";

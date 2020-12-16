@@ -12,13 +12,18 @@ import { ReqOuting, ResOutingWithDefault } from "../../lib/api/payloads/Outing";
 
 interface Props {}
 
+export const NORMAL = "normal" as const;
+export const EMERGENCY = "emergency" as const;
+
+export type SituationType = typeof NORMAL | typeof EMERGENCY;
+
 export interface Outing {
   date: string;
   startTime: string;
   endTime: string;
   place: string;
   reason: string;
-  situation: "normal" | "emergency";
+  situation: SituationType;
 }
 
 const ApplyContainer: FC<Props> = () => {
