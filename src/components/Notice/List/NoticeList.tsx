@@ -13,8 +13,6 @@ import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
 import { BoardListitem } from "../../../modules/type/board";
 
-const names = ["번호", "제목", "날짜", "글쓴이", "조회수"];
-
 const NoticeContainer: FC = () => {
   const data = useSelector((state: stateType) => state.notice.list);
   const noticeFilterFunc = makeFilterFunc<BoardListitem>(
@@ -33,7 +31,10 @@ const NoticeContainer: FC = () => {
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
       />
-      <Board names={names} data={noticeFilterFunc(keyword)} />
+      <Board
+        names={["번호", "제목", "날짜", "글쓴이", "조회수"]}
+        data={noticeFilterFunc(keyword)}
+      />
     </S.Container>
   );
 };
