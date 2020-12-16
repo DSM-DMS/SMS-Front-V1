@@ -11,11 +11,11 @@ export interface BoardDetail {
 
 const NoticePageContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
+  const id: string = (match.params as any).id;
 
   useEffect(() => {
-    const id: string = (match.params as any).id;
     dispatch(getNoticeDetailSaga(id));
-  }, []);
+  }, [id]);
   return <NoticeDetail />;
 };
 
