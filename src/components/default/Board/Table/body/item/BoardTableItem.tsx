@@ -1,27 +1,29 @@
-import React, { FC, useCallback, memo } from 'react';
-import { BoardObj } from '../../../Board';
-import * as S from './styles';
-import { useHistory } from 'react-router';
+import React, { FC, useCallback, memo } from "react";
+import * as S from "./styles";
+import { useHistory } from "react-router";
+import { BoardListItem } from "../../../../../../lib/api/payloads/Board";
 
-const BoardTableItem: FC<BoardObj> = ({
-  id,
-  title,
-  viewCount,
+const BoardTableItem: FC<BoardListItem> = ({
+  announcement_uuid,
   date,
-  circleName,
+  is_checked,
+  number,
+  title,
+  views,
+  writer_name
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.push(`${history.location.pathname}/${id}`);
+    history.push(`/notice/${announcement_uuid}`);
   }, []);
 
   return (
     <S.ItemContainer onClick={onClick}>
-      <div>{id}</div>
+      <div>{number}</div>
       <div>{title}</div>
       <div>{date}</div>
-      {circleName && <div>{circleName}</div>}
-      <div>{viewCount}</div>
+      <div>{writer_name}</div>
+      <div>{views}</div>
     </S.ItemContainer>
   );
 };
