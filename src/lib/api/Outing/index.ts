@@ -10,8 +10,8 @@ import {
 
 export const getNaverLocation = (query: string) => {
   const encodingUrl = window.encodeURI(query);
-  return axios.get<ResLocationWithDefault>(
-    `https://openapi.naver.com/v1/search/local.json?query=${encodingUrl}&display=10&start=1&sort=random`,
+  return axios.get<ResLocationWithDefault[]>(
+    `/search/local.json?start=1&sort=random&display=5&query=${encodingUrl}`,
     {
       headers: {
         "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,

@@ -23,11 +23,7 @@ const ModalOnlineCard: FC<WithModalProps> = ({
       <S.OnlineCardContentWrap>
         <S.OnlineCardUserPictureWrap>
           <S.OnlineCardUserPicture
-            src={
-              profile_uri
-                ? `${SERVER.s3Url}/profiles/${profile_uri}`
-                : OutingUser
-            }
+            src={profile_uri ? `${SERVER.s3Url}/${profile_uri}` : OutingUser}
             alt="user"
             title="user"
           />
