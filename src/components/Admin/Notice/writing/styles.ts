@@ -1,7 +1,8 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 50px 70px;
+  padding-bottom: 20px;
 
   h1,
   h2,
@@ -84,11 +85,11 @@ export const Editer = styled.div`
   box-shadow: 0px 0px 20px 1px rgb(0, 0, 0, 0.2);
   box-sizing: border-box;
   padding: 20px 100px;
-  min-height: 500px;
 `;
 
 export const Footer = styled.div`
-  padding: 5px 10px;
+  padding: 10px;
+  margin-top: 10px;
   display: flex;
   justify-content: flex-end;
 `;
@@ -102,8 +103,8 @@ export const Button = styled.button<{
     margin-right: 10px;
   }
   font-size: 15px;
-  border: 1px solid ${(props) => props.borderColor};
-  color: ${(props) => props.color};
-  background-color: ${(props) => props.backgroundColor};
+  border: 1px solid ${props => props.borderColor};
+  color: ${props => props.color};
+  background-color: ${props => props.backgroundColor};
   padding: 5px 20px;
 `;

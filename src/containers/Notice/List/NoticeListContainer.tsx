@@ -7,10 +7,10 @@ import { RouteChildrenProps } from "react-router-dom";
 
 const NoticeListContainer: FC<RouteChildrenProps> = ({ location }) => {
   const dispatch = useDispatch();
+  const page = qs.parse(location.search).page || 0;
   useEffect(() => {
-    const page = qs.parse(location.search).page || 0;
     dispatch(getNoticeListSaga(Number(page)));
-  }, []);
+  }, [page]);
   return <NoticeList />;
 };
 

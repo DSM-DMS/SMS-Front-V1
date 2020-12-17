@@ -98,3 +98,33 @@ export const makeFilterFunc = <T>(
 };
 
 export const getImgUrl = url => `${SERVER.s3Url}/${url}`;
+
+export const makeQuery = (object: any) => {
+  return Object.keys(object).reduce(
+    (state, key) => `${state}${key}=${object[key]}&`,
+    ""
+  );
+};
+
+export const getHourMinute = (date: Date): string => {
+  const hour = `${date.getHours()}`.padStart(2, "0");
+  const minute = `${date.getMinutes()}`.padStart(2, "0");
+
+  return `${hour}:${minute}`;
+};
+
+export const getOutingCardTime = (
+  timestamp1: number,
+  timestamp2: number
+): [string, string, string] => {
+  const date1: Date = new Date(timestamp1 * 1000);
+  const date2: Date = new Date(timestamp2 * 1000);
+
+  const [year, month, date] = date1.toLocaleDateString().split(".");
+
+  const date1Time: string = getHourMinute(date1);
+  const date2Time: string = getHourMinute(date2);
+
+  const dateStr = `${year}년${month}월${date}일`;
+  return [dateStr, date1Time, date2Time];
+};

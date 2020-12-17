@@ -9,7 +9,7 @@ const names = ["번호", "제목", "날짜", "조회수"];
 
 const AdminNoticeAll: FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const data = useSelector((state: stateType) => state.board.list);
+  const data = useSelector((state: stateType) => state.notice.list);
   const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }, []);
