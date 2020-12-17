@@ -323,7 +323,7 @@ export const ProgressBar = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 2px;
+  height: 4px;
   background-color: red;
   animation: progress 1s;
 
