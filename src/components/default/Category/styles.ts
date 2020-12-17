@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Triangle = styled.div`
   width: 0;
@@ -27,4 +27,8 @@ export const Category = styled.div`
       margin-left: 5px;
     }
   }
+`;
+
+export const Count = styled.span`
+  color: #5323b2;
 `;
