@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  useState,
-  useCallback,
-  ChangeEvent,
-  useEffect
-} from "react";
+import React, { FC, useState, useCallback, ChangeEvent } from "react";
 import { NavIconNoticeBlue } from "../../../assets";
 import { Board, ListPageHeader } from "../../default";
 import * as S from "./styles";
