@@ -1,40 +1,117 @@
-import React, { FC, ReactElement, ChangeEvent, useState } from "react";
+import React, {
+  FC,
+  ReactElement,
+  ChangeEvent,
+  useState,
+  useCallback
+} from "react";
 
 import SearchList from "./SearchList";
 
 import * as S from "../style";
 import { OutingPlaceSearch } from "../../../assets";
-import { ResLocationWithDefault } from "../../../lib/api/payloads/Outing";
+import { ResNaverLocalItem } from "../../../lib/api/payloads/Outing";
+import { getNaverSearchLocal } from "../../../lib/api/Outing";
 
 interface Props {
   place: string;
-  handlePlace: (e: ChangeEvent<HTMLInputElement>) => void;
+  handlePlace: (value: string) => void;
+}
+
+interface ModalInputs {
+  searchWord: string;
+  selectedRoadAddress: string;
 }
 
 const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
-  const [searchProp, setSearchProp] = useState<ResLocationWithDefault[]>([]);
+  const [modal, setModal] = useState<boolean>(false);
+  const [placeResult, setPlaceResult] = useState<ResNaverLocalItem[]>([]);
+  const [
+    { searchWord, selectedRoadAddress },
+    setModalInputs
+  ] = useState<ModalInputs>({
+    searchWord: "",
+    selectedRoadAddress: ""
+  });
 
-  const searchPlace = () => {};
+  const handlePlaceResult = (result: ResNaverLocalItem[]) => {
+    setPlaceResult(result);
+  };
+
+  const handleSearchWord = useCallback((searchWord: string) => {
+    setModalInputs(prev => ({ ...prev, searchWord }));
+  }, []);
+
+  const handleSelectedRoadAddress = useCallback(
+    (selectedRoadAddress: string) => {
+      setModalInputs(prev => ({ ...prev, selectedRoadAddress }));
+    },
+    []
+  );
+
+  const handleShowModal = useCallback(() => {
+    setModal(true);
+  }, []);
+
+  const handleHideModal = useCallback(() => {
+    setModal(false);
+  }, []);
+
+  const handleSearchLocation = () => {
+    if (place.trim() === "") {
+      return alert("장소 검색은 최소 1글자 이상 입력해야합니다.");
+    }
+
+    searchLocation(place);
+  };
+
+  const searchLocation = useCallback(async (place: string) => {
+    try {
+      const { data } = await getNaverSearchLocal(place);
+
+      setPlaceResult(data.item);
+    } catch (err) {
+      const status = err?.response?.status;
+
+      if (status === 423) {
+        return alert("한 번 검색한 후에는 5초 이후에 다시 검색할 수 있습니다.");
+      }
+    }
+  }, []);
 
   return (
     <S.FormPlace>
       <S.ApplyFormItemTitle htmlFor="place">장소</S.ApplyFormItemTitle>
-      <S.ApplyFormInputWrap>
-        <S.FormPlaceInput
-          type="text"
-          id="place"
-          placeholder="외출 장소를 입력하세요."
-          onChange={handlePlace}
-          onKeyPress={e => e.key === "Enter" && searchPlace()}
+      <S.PlaceSearchWrap>
+        <S.FormPlaceInputWrap>
+          <S.FormPlaceInput>
+            {searchWord === "" ? "외출 장소를 검색하세요" : searchWord}
+          </S.FormPlaceInput>
+          <S.FormPlaceInputSearch
+            src={OutingPlaceSearch}
+            alt="show modal"
+            title="show modal"
+            onClick={handleShowModal}
+          />
+        </S.FormPlaceInputWrap>
+        <S.FormPlaceInputWrap>
+          <S.FormPlaceInput>
+            {selectedRoadAddress === "" ? "도로명 주소" : selectedRoadAddress}
+          </S.FormPlaceInput>
+        </S.FormPlaceInputWrap>
+      </S.PlaceSearchWrap>
+      {modal && (
+        <SearchList
+          place={place}
+          handlePlace={handlePlace}
+          placeResult={placeResult}
+          handlePlaceResult={handlePlaceResult}
+          handleSearchLocation={handleSearchLocation}
+          handleHideModal={handleHideModal}
+          handleSearchWord={handleSearchWord}
+          handleSelectedRoadAddress={handleSelectedRoadAddress}
         />
-        <S.FormPlaceInputSearch
-          src={OutingPlaceSearch}
-          alt="searching"
-          title="searching"
-          onClick={searchPlace}
-        />
-        <SearchList />
-      </S.ApplyFormInputWrap>
+      )}
     </S.FormPlace>
   );
 };
