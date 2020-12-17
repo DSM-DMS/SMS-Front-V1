@@ -1,13 +1,11 @@
-import React, { FC, useMemo, useState } from 'react';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { stateType } from '../../../modules/reducer';
-import OutingCardModal from '../Modal/OutingCardModal/OutingCardModal';
-import OutingCard from '../OutingCard/OutingCard';
-import * as S from './styles';
-
-const names = ['번호', '학번', '이름', '외출시간', '사유'];
+import React, { FC, useMemo, useState } from "react";
+import { useEffect } from "react";
+import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
+import OutingCardModal from "../Modal/OutingCardModal/OutingCardModal";
+import OutingCard from "../OutingCard/OutingCard";
+import * as S from "./styles";
 
 interface Props {
   title: string;
@@ -27,17 +25,8 @@ const OutingCardPage: FC<Props> = ({ title, isClicked }) => {
         </div>
       </S.Header>
       <S.CardContainer>
-        {data.map(({ id, number, name, date, time, where, reason }) => (
-          <OutingCard
-            isClicked={isClicked}
-            id={id}
-            number={number}
-            name={name}
-            date={date}
-            time={time}
-            where={where}
-            reason={reason}
-          />
+        {data.map(data => (
+          <OutingCard {...data} isClicked={isClicked} />
         ))}
       </S.CardContainer>
       <OutingCardModal />
