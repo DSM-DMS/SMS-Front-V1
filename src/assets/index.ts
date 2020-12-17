@@ -57,6 +57,7 @@ export { default as OutingHistory } from "./Outing/history.svg";
 export { default as ModalClose } from "./Outing/modalClose.svg";
 export { default as OutingPlaceSearch } from "./Outing/search.svg";
 export { default as OutingClose } from "./Outing/close.svg";
+export { default as OutingCloseWhite } from "./Outing/closeWhite.svg";
 export { default as OutingBike } from "./Outing/bike.svg";
 export { default as OutingUser } from "./Outing/user.svg";
 
