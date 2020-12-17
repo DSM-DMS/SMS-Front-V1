@@ -1,16 +1,13 @@
-import React, {
-  FC,
-  ReactElement,
-  ChangeEvent,
-  useState,
-  useCallback
-} from "react";
+import React, { FC, ReactElement, useState, useCallback } from "react";
 
 import SearchList from "./SearchList";
 
 import * as S from "../style";
 import { OutingPlaceSearch } from "../../../assets";
-import { ResNaverLocalItem } from "../../../lib/api/payloads/Outing";
+import {
+  ResNaverLocalItem,
+  ResNaverLocalWithDefault
+} from "../../../lib/api/payloads/Outing";
 import { getNaverSearchLocal } from "../../../lib/api/Outing";
 
 interface Props {
@@ -25,7 +22,9 @@ interface ModalInputs {
 
 const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
   const [modal, setModal] = useState<boolean>(false);
-  const [placeResult, setPlaceResult] = useState<ResNaverLocalItem[]>([]);
+  const [placeResult, setPlaceResult] = useState<ResNaverLocalWithDefault>(
+    null
+  );
   const [
     { searchWord, selectedRoadAddress },
     setModalInputs
@@ -33,10 +32,6 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
     searchWord: "",
     selectedRoadAddress: ""
   });
-
-  const handlePlaceResult = (result: ResNaverLocalItem[]) => {
-    setPlaceResult(result);
-  };
 
   const handleSearchWord = useCallback((searchWord: string) => {
     setModalInputs(prev => ({ ...prev, searchWord }));
@@ -69,7 +64,7 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
     try {
       const { data } = await getNaverSearchLocal(place);
 
-      setPlaceResult(data.item);
+      setPlaceResult(data);
     } catch (err) {
       const status = err?.response?.status;
 
@@ -105,7 +100,6 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
           place={place}
           handlePlace={handlePlace}
           placeResult={placeResult}
-          handlePlaceResult={handlePlaceResult}
           handleSearchLocation={handleSearchLocation}
           handleHideModal={handleHideModal}
           handleSearchWord={handleSearchWord}

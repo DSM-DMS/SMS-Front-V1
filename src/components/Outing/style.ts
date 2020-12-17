@@ -318,6 +318,25 @@ export const FormPlaceSearchListWrap = styled.div`
   z-index: 10;
 `;
 
+export const ProgressBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: red;
+  animation: progress 1s;
+
+  @keyframes progress {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+`;
+
 export const PlaceSearchHeader = styled.header`
   display: flex;
   align-items: center;
@@ -375,27 +394,16 @@ export const PlaceSearchList = styled.ul`
   overflow-y: scroll;
 `;
 
-export const PlaceSearchItem = styled.li`
+export const PlaceSearchItem = styled.li<{ time: number }>`
   width: 100%;
   padding: 8px;
   border-bottom: 1px solid #dddddd;
   background-color: transparent;
   box-sizing: border-box;
   cursor: pointer;
+  animation: slideIn ${({ time }) => 1000 + time}ms;
   &:hover {
     background-color: #deceff;
-  }
-  > p {
-    display: flex;
-    & > span:first-child {
-      width: 20%;
-      color: #5323b2;
-      font-size: 11px;
-    }
-    & > span:last-child {
-      width: 80%;
-      font-size: 12px;
-    }
   }
   #title {
     color: black;
@@ -405,6 +413,17 @@ export const PlaceSearchItem = styled.li`
   }
   #address {
     color: #444;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 `;
 
