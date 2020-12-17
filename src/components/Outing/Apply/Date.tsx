@@ -38,7 +38,7 @@ const ApplyDate: FC<Props> = ({ formDate, onInputDate }): ReactElement => {
       <S.ApplyFormItemTitle>날짜</S.ApplyFormItemTitle>
       <S.ApplyFormInputWrap className="dateWrap">
         <S.FormDateText className={formDate ? "selected" : ""}>
-          {formDate ? getFixedDate : "외출 날짜를 선택하세요."}
+          {formDate ? getFixedDate : "외출 날짜를 선택하세요"}
         </S.FormDateText>
         <S.FormDateInput type="date" min={getMinDate} onInput={onInputDate} />
       </S.ApplyFormInputWrap>

@@ -87,7 +87,7 @@ export const TimetableItem = styled.li`
   justify-content: center;
   height: 100px;
   padding: 8px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
