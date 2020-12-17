@@ -1,4 +1,6 @@
 import React, { FC, ReactElement } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import Card from "./Card";
 import Modal from "./Modal";
@@ -6,7 +8,7 @@ import Modal from "./Modal";
 import * as S from "../style";
 import { OutingHistory } from "../../../assets";
 import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
-import { Link } from "react-router-dom";
+import { subPageMove } from "../../../modules/action/page";
 
 interface Props {
   histories: ResHistoryItem[];
@@ -27,6 +29,8 @@ const History: FC<Props> = ({
   getHistories,
   dispatchSelectedOuting
 }): ReactElement => {
+  const dispatch = useDispatch();
+
   return (
     <S.HistoryWrap>
       <S.HistoryHead>
@@ -34,10 +38,18 @@ const History: FC<Props> = ({
         <S.HistoryTitle>내 외출신청 내역</S.HistoryTitle>
       </S.HistoryHead>
       <S.HistoryContent>
-        {histories.length === 0 ? (
+        {historyStart === 0 && (
+          <div>외출증을 불러오는 중입니다. 잠시만 기다려주세요.</div>
+        )}
+        {historyStart !== 0 && histories.length === 0 ? (
           <S.HistoryNoContent>
             외출신청 내역이 없습니다.
-            <Link to="/outing/apply"> 외출신청하러 가기!</Link>
+            <Link
+              to="/outing/apply"
+              onClick={() => dispatch(subPageMove("외출신청"))}
+            >
+              외출신청하러 가기!
+            </Link>
           </S.HistoryNoContent>
         ) : (
           <S.HistoryCardWrap>
