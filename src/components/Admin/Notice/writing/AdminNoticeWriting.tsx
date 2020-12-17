@@ -43,18 +43,10 @@ const AdminNoticeWriting: FC = () => {
           backgroundColor="#23B2AD"
           onClick={saveHandler}
         >
-          첨부파일
+          작성
         </S.Button>
         <S.Button color="black" borderColor="#DDDDDD" backgroundColor="#FBFBFB">
           취소
-        </S.Button>
-        <S.Button
-          color="white"
-          borderColor="#23B2AD"
-          backgroundColor="#23B2AD"
-          onClick={saveHandler}
-        >
-          작성
         </S.Button>
       </S.Footer>
     </S.Container>
