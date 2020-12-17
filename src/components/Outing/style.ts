@@ -256,15 +256,34 @@ export const FormPlace = styled.div`
   align-items: center;
 `;
 
-export const FormPlaceInput = styled.input`
+export const PlaceSearchWrap = styled.div`
+  width: 35%;
+`;
+
+export const FormPlaceInputWrap = styled.div`
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  min-width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f6f6f6;
+  box-sizing: border-box;
+  &:last-child {
+    min-width: calc(100% + 100px);
+  }
+`;
+
+export const FormPlaceInput = styled.p`
   width: 100%;
   height: 100%;
   padding: 0;
   border: 0;
   font-size: 14px;
-  &::placeholder {
-    color: #dddddd;
-  }
+  color: #888888;
+  background-color: transparent;
 `;
 
 export const FormPlaceInputSearch = styled.img`
@@ -272,12 +291,143 @@ export const FormPlaceInputSearch = styled.img`
   cursor: pointer;
 `;
 
-export const FormPlaceSearchListWrap = styled.div`
-  position: absolute;
-  top: calc(100% + 1px);
+export const FormPlaceSearchBack = styled.div`
+  position: fixed;
+  top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+`;
+
+export const FormPlaceSearchListWrap = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 600px;
+  border-radius: 4px;
   background-color: white;
-  z-index: 1;
+  box-shadow: 0 3px 5px #555;
+  overflow-y: scroll;
+  box-sizing: border-box;
+  z-index: 10;
+`;
+
+export const PlaceSearchHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-radius: 4px 4px 0 0;
+  color: white;
+  background-color: #242424;
+  #title {
+    font-size: 16px;
+  }
+  #close {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+  }
+`;
+
+export const PlaceSearchInputWrap = styled.div`
+  padding: 10px 30px;
+`;
+
+export const PlaceSearchInputBox = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #888888;
+  cursor: text;
+  #searchInput {
+    width: 100%;
+    border: 0;
+  }
+  #search {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+`;
+
+export const PlaceSearchInfoMessage = styled.p`
+  color: #888888;
+  font-size: 12px;
+`;
+
+export const PlaceSearchListBox = styled.div`
+  flex: 1;
+  padding: 30px 10px 20px;
+  background-color: #f7f6ff;
+`;
+
+export const PlaceSearchList = styled.ul`
+  height: 400px;
+  border-bottom: 1px solid #888888;
+  overflow-y: scroll;
+`;
+
+export const PlaceSearchItem = styled.li`
+  width: 100%;
+  padding: 8px;
+  border-bottom: 1px solid #dddddd;
+  background-color: transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+  &:hover {
+    background-color: #deceff;
+  }
+  > p {
+    display: flex;
+    & > span:first-child {
+      width: 20%;
+      color: #5323b2;
+      font-size: 11px;
+    }
+    & > span:last-child {
+      width: 80%;
+      font-size: 12px;
+    }
+  }
+  #title {
+    color: black;
+  }
+  #roadAddress {
+    color: #242424;
+  }
+  #address {
+    color: #444;
+  }
+`;
+
+export const PlaceSearchResultText = styled.p`
+  display: flex;
+  & > span:first-child {
+    width: 20%;
+    color: #5323b2;
+    font-size: 11px;
+  }
+  & > span:last-child {
+    width: 80%;
+    font-size: 12px;
+  }
+  &#title b {
+    font-weight: 500;
+  }
+  &#address {
+    color: #444;
+  }
+  &#roadAddress {
+    color: #666;
+  }
 `;
 
 export const FormReason = styled.div``;
@@ -309,30 +459,78 @@ export const FormReasonTextarea = styled(TextareaAutosize)`
 `;
 
 export const FormReasonSick = styled.div`
-  display: flex;
+  position: relative;
   margin: 8px 0;
-  span {
-    color: #5323b2;
-    cursor: pointer;
+  width: calc(35% + 100px);
+  color: #242424;
+  text-align: right;
+  font-size: 12px;
+`;
+
+export const FormReasonSickCheckboxLabel = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  &:hover ~ #warning {
+    display: block;
+  }
+`;
+
+export const FormReasonSickCheckbox = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+  border: 0;
+  outline: 1px solid #888888;
+  &.checked {
+    outline: 0;
+    background-color: #5323b2;
+  }
+  #check {
+    width: 12px;
+    height: 12px;
   }
 `;
 
 export const FormReasonSickDesc = styled.div`
-  position: relative;
-  width: 100%;
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  display: none;
+  width: calc(100% - 100px);
   line-height: 1.5;
-  font-size: 12px;
   padding: 8px 0;
+  border-radius: 4px;
+  color: #242424;
+  font-size: 12px;
   box-sizing: border-box;
+  z-index: 7;
+  background-color: white;
+  box-shadow: 0 3px 6px #00000030;
+  padding: 8px 12px;
   &::after {
     content: "";
     position: absolute;
     top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
+    left: 12px;
+    width: 12px;
+    height: 12px;
     background: url(${OutingWarningRedBase}) no-repeat;
     background-size: contain;
+  }
+  > p {
+    text-align: right;
+  }
+  > div {
+    position: relative;
+    text-align: left;
   }
 `;
 
