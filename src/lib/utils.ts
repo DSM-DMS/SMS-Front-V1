@@ -47,7 +47,7 @@ const subUrlObj: SubUrlObj = {
   notice: "공지사항",
   wanted: "부원 모집",
   all: "동아리 전체보기",
-  waring: "유의사항",
+  warning: "유의사항",
   apply: "외출신청",
   history: "내 외출신청 내역"
 };

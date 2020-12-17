@@ -84,23 +84,23 @@ const ApplyContainer: FC<Props> = () => {
     [formOutTime]
   );
 
-  const handlePlace = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setFormPlace(e.currentTarget.value);
+  const handlePlace = useCallback((value: string) => {
+    setFormPlace(value);
   }, []);
 
-  const cancelSickOuting = () => {
+  const cancelSickOuting = useCallback(() => {
     setFormReasonSick(false);
-  };
+  }, []);
 
-  const applySickOuting = () => {
+  const applySickOuting = useCallback(() => {
     setFormReasonSick(true);
-  };
+  }, []);
 
   const handleReason = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormReason(e.currentTarget.value);
   }, []);
 
-  const checkOutingValidation = (outing: Outing) => {
+  const checkOutingValidation = useCallback((outing: Outing) => {
     const { date, startTime, endTime, place, reason } = outing;
     return date.trim() === "" ||
       startTime.trim() === "" ||
@@ -109,7 +109,7 @@ const ApplyContainer: FC<Props> = () => {
       reason.trim() === ""
       ? false
       : true;
-  };
+  }, []);
 
   const applyOuting = useCallback(async (outing: Outing) => {
     const { date, startTime, endTime, place, reason, situation } = outing;
