@@ -13,6 +13,8 @@ interface Props {
   handleShowDelete?: () => void;
 }
 
+const date = new Date();
+
 const ScheduleDetail: FC<Props> = ({
   handleShowAdd,
   handleShowEdit,
@@ -66,7 +68,15 @@ const ScheduleDetail: FC<Props> = ({
           .map(({ detail, start_date, end_date, schedule_uuid }) => (
             <S.DetailBodyItem
               key={schedule_uuid}
-              className={+new Date() > end_date ? "prev" : ""}
+              className={
+                +new Date(
+                  date.getFullYear(),
+                  date.getMonth(),
+                  date.getDate()
+                ) >= end_date
+                  ? "prev"
+                  : ""
+              }
             >
               <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
               <S.DetailBodyItemData>
