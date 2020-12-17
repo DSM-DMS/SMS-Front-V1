@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
+import OutingCardFilter from "../Filter/OutingCardFilter";
 import OutingCardModal from "../Modal/OutingCardModal/OutingCardModal";
 import OutingCard from "../OutingCard/OutingCard";
 import * as S from "./styles";
@@ -19,10 +20,7 @@ const OutingCardPage: FC<Props> = ({ title, isClicked }) => {
     <S.Container>
       <S.Header>
         <S.HeaderText>{title}</S.HeaderText>
-        <div>
-          <div>필터링</div>
-          <button>초기화</button>
-        </div>
+        <OutingCardFilter />
       </S.Header>
       <S.CardContainer>
         {data.map(data => (
