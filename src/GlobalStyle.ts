@@ -65,6 +65,11 @@ export const GlobalStyle: GlobalStyleComponent<
   * {
     font-family:"Noto Sans KR" !important;
   }
+
+  #editer {
+    height:570px;
+    overflow-y:auto;
+  }
 `;
 
 export const GlobalContainer = styled.div`
