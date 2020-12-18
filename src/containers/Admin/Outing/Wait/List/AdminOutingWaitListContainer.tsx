@@ -1,5 +1,4 @@
-import React, { FC } from "react";
-import { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import AdminOutingCardWaitList from "../../../../../components/Admin/Outing/Wait/List/AdminOutingCardWaitList";
 import { OutingStatus } from "../../../../../lib/api/payloads/Outing";
