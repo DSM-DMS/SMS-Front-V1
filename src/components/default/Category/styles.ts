@@ -32,3 +32,15 @@ export const Category = styled.div`
 export const Count = styled.span`
   color: #5323b2;
 `;
+
+export const WriteCatrgoty = styled.div`
+  display: flex;
+  align-items: stretch;
+  padding-bottom: 3px;
+`;
+
+export const Hr = styled.div`
+  width: 2px;
+  margin: 0 5px;
+  background-color: #888888;
+`;
