@@ -1,9 +1,24 @@
-import React, { FC, useCallback, useState } from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
+import { OutingCardFilter } from "../../../lib/api/payloads/OutingCard";
 import * as S from "./styles";
 
-const OutingCardFilter: FC = () => {
+interface Props {
+  onChange: (data: OutingCardFilter) => void;
+}
+
+const OutingCardFilter: FC<Props> = ({ onChange }) => {
   const [settingIsOpen, setSetiingIsOpen] = useState<boolean>(false);
   const [typeIsFloor, setTypeIsFloor] = useState<boolean>(false);
+  const [filterData, setFilterData] = useState<OutingCardFilter>({});
+
+  const changeHandler = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFilterData(prev => {
+      const newState = { ...prev, [name]: Number(value) };
+      onChange(newState);
+      return newState;
+    });
+  }, []);
 
   const changeSetiingIsOpen = useCallback(() => {
     setSetiingIsOpen(prev => !prev);
@@ -12,6 +27,13 @@ const OutingCardFilter: FC = () => {
   const changeTypeisFloor = useCallback(() => {
     setTypeIsFloor(prev => !prev);
   }, []);
+
+  const resetFilter = useCallback(() => {
+    onChange({});
+    setFilterData({});
+  }, []);
+
+  const { floor, grade, group } = filterData;
 
   return (
     <>
@@ -30,16 +52,12 @@ const OutingCardFilter: FC = () => {
               {typeIsFloor ? (
                 <>
                   <S.SelectWrap>
-                    <span>방과후</span>
-                    <select>
-                      <option value="1">자습</option>
-                      <option value="2">자습</option>
-                      <option value="3">자습</option>
-                    </select>
-                  </S.SelectWrap>
-                  <S.SelectWrap>
                     <span>층</span>
-                    <select>
+                    <select
+                      name="floor"
+                      value={floor || 1}
+                      onChange={changeHandler}
+                    >
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -52,7 +70,11 @@ const OutingCardFilter: FC = () => {
                 <>
                   <S.SelectWrap>
                     <span>학년</span>
-                    <select>
+                    <select
+                      name="grade"
+                      value={grade || 1}
+                      onChange={changeHandler}
+                    >
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -60,7 +82,11 @@ const OutingCardFilter: FC = () => {
                   </S.SelectWrap>
                   <S.SelectWrap>
                     <span>반</span>
-                    <select>
+                    <select
+                      name="group"
+                      value={group || 1}
+                      onChange={changeHandler}
+                    >
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -72,7 +98,7 @@ const OutingCardFilter: FC = () => {
             </S.HiddenWrap>
           )}
         </S.FilterBasic>
-        <S.ResetBtn>초기화</S.ResetBtn>
+        <S.ResetBtn onClick={resetFilter}>초기화</S.ResetBtn>
       </S.Container>
     </>
   );
