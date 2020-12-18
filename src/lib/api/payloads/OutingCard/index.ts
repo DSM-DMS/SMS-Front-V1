@@ -1,3 +1,5 @@
+import { OutingStatus } from "../Outing";
+
 export interface ResOutingCardListItem {
   outing_uuid: string;
   name: string;
@@ -13,9 +15,12 @@ export interface ResOutingCardListItem {
   is_late: boolean;
 }
 
-export interface ReqOutingCardFilter {
+export interface OutingCardFilter {
   grade?: number;
   group?: number;
-  floor?: string;
+  floor?: number;
+}
+
+export interface ReqOutingCardFilter extends OutingCardFilter {
   status: number;
 }
