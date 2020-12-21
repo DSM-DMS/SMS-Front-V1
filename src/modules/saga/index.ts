@@ -6,6 +6,7 @@ import mainSaga from "./main";
 import noticeSaga from "./notion";
 import headerSaga from "./header";
 import outingCardSaga from "./outingCard";
+import writeSaga from "./write";
 
 function* rootSaga() {
   yield all([
@@ -14,7 +15,8 @@ function* rootSaga() {
     mainSaga(),
     noticeSaga(),
     headerSaga(),
-    outingCardSaga()
+    outingCardSaga(),
+    writeSaga()
   ]);
 }
 
