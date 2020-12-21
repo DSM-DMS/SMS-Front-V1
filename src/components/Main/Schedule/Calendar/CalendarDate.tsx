@@ -185,8 +185,6 @@ const CalendarDate: React.FC<Props> = () => {
               );
             }
 
-            console.log("overlap", overlap);
-
             prevOverlapCount = overlapCount;
             prev = overlap;
             overlapCount = 0;
