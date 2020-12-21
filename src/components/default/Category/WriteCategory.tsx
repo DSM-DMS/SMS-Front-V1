@@ -1,101 +1,136 @@
-import React, { ChangeEvent, FC, useCallback, useState } from "react";
+import React, {
+  FC,
+  useCallback,
+  useEffect,
+  useState,
+  ChangeEvent
+} from "react";
 import { BoardWriteFilter } from "../../../lib/api/payloads/Board";
 import * as S from "./styles";
-
-interface MakeWriteFilter {
-  name: string;
-  keyName: string;
-  values: {
-    key: string;
-    value: number;
-  }[];
-}
-
-const filterDatas: MakeWriteFilter[] = [
-  {
-    name: "학년",
-    keyName: "target_grade",
-    values: [
-      {
-        key: "1학년",
-        value: 1
-      },
-      {
-        key: "2학년",
-        value: 2
-      },
-      {
-        key: "3학년",
-        value: 3
-      }
-    ]
-  },
-  {
-    name: "반",
-    keyName: "target_group",
-    values: [
-      {
-        key: "1반",
-        value: 1
-      },
-      {
-        key: "2반",
-        value: 2
-      },
-      {
-        key: "3반",
-        value: 3
-      },
-      {
-        key: "4반",
-        value: 4
-      }
-    ]
-  }
-];
 
 interface Props {
   onChange: (data: BoardWriteFilter) => void;
 }
 
+export interface BoardWriteFilterSate {
+  grade: [number, number, number];
+  group: [number, number, number, number];
+}
+
 const WriteCategory: FC<Props> = ({ onChange }) => {
-  const [filterData, setFilterData] = useState<BoardWriteFilter>({});
+  const [filterData, setFilterData] = useState<BoardWriteFilterSate>({
+    grade: [0, 0, 0],
+    group: [0, 0, 0, 0]
+  });
+
+  useEffect(() => {
+    const grade: number = Number(
+      filterData.grade.reduce(
+        (state, value) => (value ? state + `${value}` : state),
+        ""
+      )
+    );
+
+    const group: number = Number(
+      filterData.group.reduce(
+        (state, value) => (value ? state + `${value}` : state),
+        ""
+      )
+    );
+    onChange({ target_group: group, target_grade: grade });
+  }, [filterData]);
+
   const changeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value, checked } = e.target;
-    setFilterData(prev => {
-      const newState: BoardWriteFilter = {
+    const { name, value: targetI, checked } = e.target;
+    if (!checked) {
+      setFilterData(prev => ({
         ...prev,
-        [name]: !checked ? 0 : value
-      };
-      onChange(newState);
-      return newState;
-    });
+        [name]: prev[name].map((value, i) =>
+          i + 1 === Number(targetI) ? 0 : value
+        )
+      }));
+      return;
+    }
+    setFilterData(prev => ({
+      ...prev,
+      [name]: prev[name].map((value, i) =>
+        i + 1 === Number(targetI) ? i + 1 : value
+      )
+    }));
   }, []);
 
   return (
     <S.WriteCatrgoty>
-      {filterDatas.map(({ name, values, keyName }, i) => {
-        return (
-          <>
-            <span>{name}</span>
-            {values.map(({ value, key }) => (
-              <div>
-                <label>
-                  <input
-                    name={keyName}
-                    value={value}
-                    onChange={changeHandler}
-                    checked={filterData[keyName] === value}
-                    type="checkbox"
-                  />
-                  <span>{key}</span>
-                </label>
-              </div>
-            ))}
-            {filterDatas[i + 1] && <S.Hr />}
-          </>
-        );
-      })}
+      <span>학년</span>
+      <div>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="grade"
+            value="1"
+            type="checkbox"
+          />
+          <span>1학년</span>
+        </label>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="grade"
+            value="2"
+            type="checkbox"
+          />
+          <span>2학년</span>
+        </label>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="grade"
+            value="3"
+            type="checkbox"
+          />
+          <span>3학년</span>
+        </label>
+      </div>
+      <S.Hr />
+      <span>반</span>
+      <div>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="group"
+            value="1"
+            type="checkbox"
+          />
+          <span>1반</span>
+        </label>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="group"
+            value="2"
+            type="checkbox"
+          />
+          <span>2반</span>
+        </label>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="group"
+            value="3"
+            type="checkbox"
+          />
+          <span>3반</span>
+        </label>
+        <label>
+          <input
+            onChange={changeHandler}
+            name="group"
+            value="4"
+            type="checkbox"
+          />
+          <span>4반</span>
+        </label>
+      </div>
     </S.WriteCatrgoty>
   );
 };
