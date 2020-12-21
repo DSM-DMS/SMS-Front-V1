@@ -139,6 +139,8 @@ export const getWeekOfMonth = (d: Date) => {
     weeksInMonth = index + Math.ceil((lastDateOfMonth + firstWeekday - 7) / 7),
     week = index + Math.floor(offsetDate / 7);
 
-  if (week < 2 + index) return week;
-  return week === weeksInMonth ? index + 5 : week;
+  return week;
+
+  // if (week < 2 + index) return week;
+  // return week === weeksInMonth ? index + 5 : week;
 };
