@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
 import { PageNotFound, Navigation } from "./components";
