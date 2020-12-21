@@ -128,3 +128,10 @@ export const getOutingCardTime = (
   const dateStr = `${year}년${month}월${date}일`;
   return [dateStr, date1Time, date2Time];
 };
+
+export const isIncludeEmpty = (datas: any[] | object): boolean => {
+  for (let i in datas) {
+    if (!datas[i]) return true;
+  }
+  return false;
+};
