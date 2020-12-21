@@ -28,7 +28,7 @@ const CircleWanted: FC = () => {
 
   useEffect(() => {
     apiDefault()
-      .get<{ count: number }>("/clubs/count")
+      .get<{ count: number }>("/recruitments/count")
       .then(res => {
         setCircleCount(res.data.count);
       });
