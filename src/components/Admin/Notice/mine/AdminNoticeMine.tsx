@@ -1,18 +1,16 @@
-import React from 'react';
-import { useCallback } from 'react';
-import { useState } from 'react';
-import { ChangeEvent } from 'react';
-import { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { NavIconNoticeMint } from '../../../../assets';
-import { stateType } from '../../../../modules/reducer';
-import { Board, ListPageHeader } from '../../../default';
-import * as S from './styles';
-
-const names = ['번호', '제목', '날짜', '조회수'];
+import React from "react";
+import { useCallback } from "react";
+import { useState } from "react";
+import { ChangeEvent } from "react";
+import { FC } from "react";
+import { useSelector } from "react-redux";
+import { NavIconNoticeMint } from "../../../../assets";
+import { stateType } from "../../../../modules/reducer";
+import { Board, ListPageHeader } from "../../../default";
+import * as S from "./styles";
 
 const AdminNoticeMine: FC = () => {
-  const [keyword, setKeyword] = useState<string>('');
+  const [keyword, setKeyword] = useState<string>("");
   const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }, []);
@@ -24,7 +22,8 @@ const AdminNoticeMine: FC = () => {
         onChange={changeKeyword}
         title="내가 올린 공지사항"
       />
-      <Board data={data} names={names} />
+
+      <Board data={data} names={["번호", "제목", "날짜", "글쓴이", "조회수"]} />
     </S.Container>
   );
 };
