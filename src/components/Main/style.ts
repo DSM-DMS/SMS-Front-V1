@@ -172,8 +172,7 @@ interface DetailScrollColor {
 }
 
 export const DetailBody = styled.div<DetailScrollColor>`
-  flex: 1;
-  height: 320px;
+  height: 470px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 2px;
