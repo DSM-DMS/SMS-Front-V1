@@ -26,15 +26,18 @@
     "@editorjs/header": "^2.5.0",
     "@editorjs/list": "^1.5.0",
     "axios": "^0.19.2",
+    "css-loader": "^5.0.1",
     "prettier": "^2.0.5",
     "query-string": "^6.13.7",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
+    "react-toastify": "^6.2.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-saga": "^1.1.3",
+    "style-loader": "^2.0.0",
     "styled-components": "^5.1.1"
   },
   "scripts": {
