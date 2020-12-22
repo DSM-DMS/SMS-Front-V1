@@ -17,11 +17,13 @@ function* getOutingCardListSaga(
       getOutingCardList,
       action.payload
     );
-    console.log(res.data);
 
     yield put(getOutingCardListCreater(res.data.outings));
   } catch (err) {}
 }
+
+function* approveOutingCardSaga() {}
+function* rejectOutingCardSaga() {}
 
 function* outingCardSaga() {
   yield takeEvery(GET_OUTING_CARD_LIST_SAGA, getOutingCardListSaga);
