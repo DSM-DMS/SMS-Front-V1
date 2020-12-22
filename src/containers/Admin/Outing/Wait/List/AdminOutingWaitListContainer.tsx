@@ -9,7 +9,7 @@ const AdminOutingWaitListContainer: FC = () => {
   useEffect(() => {
     dispatch(
       getOutingCardListSaga({
-        status: OutingStatus["외출증 신청"]
+        status: OutingStatus["선생님 승인 "]
       })
     );
   }, []);
