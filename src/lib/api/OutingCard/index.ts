@@ -12,3 +12,7 @@ export const getOutingCardList = (filterObj: ReqOutingCardFilter) => {
     `/outings/with-filter?${query}`
   );
 };
+
+export const actionOutingCard = (action: string) => {
+  // apiDefault().post(`/outings/uuid/${outing_uuid}`);
+};
