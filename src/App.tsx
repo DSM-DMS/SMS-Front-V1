@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
+import { Switch, Router, Route, Redirect } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
@@ -19,6 +19,7 @@ import {
   ManagementRouter
 } from "./routers";
 import { jsonActionCreater } from "./modules/action/json";
+import { history } from "./modules/store";
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const App: FC<{}> = () => {
   return (
     <GlobalContainer>
       <GlobalStyle />
-      <BrowserRouter>
+      <Router history={history}>
         <Navigation />
         <GlobalBody>
           <HeaderContainer />
@@ -47,7 +48,7 @@ const App: FC<{}> = () => {
             <Route path="*" component={PageNotFound} />
           </Switch>
         </GlobalBody>
-      </BrowserRouter>
+      </Router>
     </GlobalContainer>
   );
 };
