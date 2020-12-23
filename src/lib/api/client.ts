@@ -22,7 +22,7 @@ export const apiDefault = () => {
 
     if (expTime < now) {
       localStorage.removeItem("access_token");
-      localStorage.removeItem("student_uuid");
+      localStorage.removeItem("uuid");
       localStorage.removeItem("expiration");
 
       alert(SESSION_EXPIRATION_MESSAGE);

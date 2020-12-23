@@ -15,7 +15,7 @@ const PasswordChangeContainer: FC<Props> = () => {
 
   const changePassword = useCallback(
     async (type: UserType, currentPw: string, revisionPw: string) => {
-      const uuid = localStorage.getItem(`${type}_uuid`);
+      const uuid = localStorage.getItem(`uuid`);
       try {
         if (type === STUDENT) {
           await putStudentPassword(uuid, currentPw, revisionPw);
