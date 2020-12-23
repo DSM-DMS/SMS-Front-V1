@@ -23,6 +23,18 @@ export const CLOSE_OUTING_CARD_MODAL = "outingCard/CLOSE_OUTING_CARD_MODAL" as c
 
 export const GET_OUTING_CARD_LIST_SAGA = "outingCard/GET_OUTING_CARD_LIST_SAGA" as const;
 
+export const REJECT_OUTING_CARD_SAGA = "outingCard/REJECT_OUTING_CARD_SAGA" as const;
+export const APPROVE_OUTING_CARD_SAGA = "outingCard/APPROVE_OUTING_CARD_SAGA" as const;
+
+export const rejectOutingCardSaga = (payload: string) => ({
+  type: REJECT_OUTING_CARD_SAGA,
+  payload
+});
+export const approveOutingCardSaga = (payload: string) => ({
+  type: APPROVE_OUTING_CARD_SAGA,
+  payload
+});
+
 export const getOutingCardList = (payload: ResOutingCardListItem[]) => ({
   type: GET_OUTING_CARD_LIST,
   payload
@@ -56,4 +68,6 @@ export type OutingCardAction =
   | ReturnType<typeof updateOutingCardModal>
   | ReturnType<typeof getOutingCardList>
   | ReturnType<typeof ShowOutingCardModal>
-  | ReturnType<typeof CloseOutingCardModal>;
+  | ReturnType<typeof CloseOutingCardModal>
+  | ReturnType<typeof rejectOutingCardSaga>
+  | ReturnType<typeof approveOutingCardSaga>;
