@@ -17,11 +17,13 @@ const BoardTableItem: FC<BoardListItem> = ({
     history.push(`${history.location.pathname}/${announcement_uuid}`);
   }, []);
 
+  const dateStr = new Date(Number(date)).toLocaleDateString();
+
   return (
     <S.ItemContainer onClick={onClick}>
       <div>{number}</div>
       <div>{title}</div>
-      <div>{date}</div>
+      <div>{dateStr}</div>
       <div>{writer_name}</div>
       <div>{views}</div>
     </S.ItemContainer>
