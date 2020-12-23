@@ -28,6 +28,11 @@ export interface OutingCardFilter {
   floor?: number;
 }
 
+export interface SetOutingCard {
+  action: OutingActions;
+  outing_uuid: string;
+}
+
 export interface ReqOutingCardFilter extends OutingCardFilter {
   status: number;
 }

@@ -2,7 +2,8 @@ import { makeQuery } from "../../utils";
 import { apiDefault } from "../client";
 import {
   ReqOutingCardFilter,
-  ResOutingCardListItem
+  ResOutingCardListItem,
+  SetOutingCard
 } from "../payloads/OutingCard";
 
 export const getOutingCardList = (filterObj: ReqOutingCardFilter) => {
@@ -13,6 +14,8 @@ export const getOutingCardList = (filterObj: ReqOutingCardFilter) => {
   );
 };
 
-export const actionOutingCard = (action: string) => {
-  // apiDefault().post(`/outings/uuid/${outing_uuid}`);
+export const setActionOutingCard = (payload: SetOutingCard) => {
+  const { outing_uuid, action } = payload;
+
+  return apiDefault().post(`/outings/uuid/${outing_uuid}/actions/${action}`);
 };
