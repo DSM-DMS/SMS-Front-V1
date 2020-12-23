@@ -44,21 +44,24 @@ export const ParentAction = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  > button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 12px 24px;
-    border: 0;
-    border-radius: 16px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  > button:first-child {
-    background-color: #038fff;
-  }
-  > button:last-child {
-    background-color: #ff5555;
-  }
+`;
+
+export const ParentActionBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 16px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+`;
+
+export const ParentApproveBtn = styled(ParentActionBtn)`
+  background-color: #038fff;
+`;
+
+export const ParentRejectBtn = styled(ParentActionBtn)`
+  background-color: #ff5555;
 `;

@@ -10,8 +10,8 @@ interface Props {
 const ParentAction: FC<Props> = ({ approveOuting, rejectOuting }) => {
   return (
     <S.ParentAction>
-      <button onClick={approveOuting}>승인</button>
-      <button onClick={rejectOuting}>거절</button>
+      <S.ParentApproveBtn onClick={approveOuting}>승인</S.ParentApproveBtn>
+      <S.ParentRejectBtn onClick={rejectOuting}>거절</S.ParentRejectBtn>
     </S.ParentAction>
   );
 };
