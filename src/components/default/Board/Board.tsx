@@ -1,4 +1,4 @@
-import React, { FC, useState, useCallback, ChangeEvent } from "react";
+import React, { FC } from "react";
 import * as S from "./styles";
 import BoardTableHeader from "./Table/header/BoardTableHeader";
 import BoardTableBody from "./Table/body/BoardTableBody";
