@@ -6,7 +6,7 @@ import { OutingCardPage } from "../../../../default";
 const AdminOutingCardWaitList: FC = () => {
   return (
     <OutingCardPage
-      status={OutingStatus["선생님 승인"]}
+      status={OutingStatus["학부모 승인 "]}
       title="승인대기"
       isClicked={true}
     />
