@@ -39,7 +39,7 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
     try {
       const {
         data: { outings }
-      } = await getHistory(localStorage.getItem("student_uuid"), historyStart);
+      } = await getHistory(localStorage.getItem("uuid"), historyStart);
 
       dispatch(setOutingHistoryList(outings));
       setHistoryStart(prev => (prev += 9));
