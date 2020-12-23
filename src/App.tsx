@@ -20,6 +20,7 @@ import {
 } from "./routers";
 import { jsonActionCreater } from "./modules/action/json";
 import { history } from "./modules/store";
+import { ToastContainer } from "react-toastify";
 
 const App: FC<{}> = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const App: FC<{}> = () => {
   return (
     <GlobalContainer>
       <GlobalStyle />
+      <ToastContainer autoClose={2000} />
       <Router history={history}>
         <Navigation />
         <GlobalBody>
