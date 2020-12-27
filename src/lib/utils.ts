@@ -134,8 +134,8 @@ export const isIncludeEmpty = (datas: any[] | object): boolean => {
     if (!datas[i]) return true;
   }
   return false;
-
-  export const getWeekOfMonth = (d: Date) => {
+};
+export const getWeekOfMonth = (d: Date) => {
   const month = d.getMonth(),
     year = d.getFullYear(),
     firstWeekday = new Date(year, month, 1).getDay(),

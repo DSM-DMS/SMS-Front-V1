@@ -33,7 +33,8 @@ const App: FC<{}> = () => {
   return (
     <>
       {location.pathname.includes("parent") ? (
-        <BrowserRouter>
+        <Router history={history}>
+          <ToastContainer autoClose={2000} />
           <GlobalStyle />
           <Switch>
             <Route
@@ -41,14 +42,12 @@ const App: FC<{}> = () => {
               component={ParentContainer}
             />
           </Switch>
-        </GlobalBody>
-      </Router>
-    </GlobalContainer>
-        </BrowserRouter>
+        </Router>
       ) : (
         <GlobalContainer>
           <GlobalStyle />
-          <BrowserRouter>
+          <Router history={history}>
+            <ToastContainer autoClose={2000} />
             <Navigation />
             <GlobalBody>
               <HeaderContainer />
@@ -65,9 +64,10 @@ const App: FC<{}> = () => {
                 <Route path="*" component={PageNotFound} />
               </Switch>
             </GlobalBody>
-          </BrowserRouter>
+          </Router>
         </GlobalContainer>
       )}
+    </>
   );
 };
 
