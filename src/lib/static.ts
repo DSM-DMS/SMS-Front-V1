@@ -22,7 +22,10 @@ import {
   NavIconCircleMint,
   NavIconUnauthorizedBlack,
   NavIconUnauthorizedMint,
-  NavIconHomeBlack
+  NavIconHomeBlack,
+  NavIconAllMint,
+  NavIconWriteBlack,
+  NavIconWriteMint
 } from "../assets";
 import {
   MainSubItem,
@@ -205,19 +208,19 @@ export const subNavRouter: SubNavObj = {
     {
       name: "전체 공지",
       url: NavIconAllBlack,
-      acitveUrl: "",
+      acitveUrl: NavIconAllMint,
       route: "/admin/notice/all"
     },
     {
       name: "내가 올린 공지",
-      url: NavIconWaringBlack,
-      acitveUrl: "",
+      url: NavIconNoticeBlack,
+      acitveUrl: NavIconNoticeMint,
       route: "/admin/notice/mine"
     },
     {
       name: "공지사항 작성",
-      url: "",
-      acitveUrl: "",
+      url: NavIconWriteBlack,
+      acitveUrl: NavIconWriteMint,
       route: "/admin/notice/writing"
     }
   ]

@@ -10,31 +10,21 @@ interface Props {
 const NoticeDetailBody: FC<Props> = ({ content }) => {
   const editerRef = useRef<EditerJS>();
   useEffect(() => {
+    if (!content) return;
     const editer = new EditerJS({
-      holder: "content",
+      holder: "editer",
       tools: {
         header: Header
       },
-      data: {
-        time: 1608026241908,
-        blocks: [
-          { type: "header", data: { text: "시간이 됬어 아츄~", level: 1 } },
-          { type: "header", data: { text: "시간이 됬어 아츄~", level: 2 } },
-          { type: "header", data: { text: "시간이 됬어 아츄~", level: 3 } },
-          { type: "header", data: { text: "시간이 됬어 아츄~", level: 4 } },
-          { type: "header", data: { text: "시간이 됬어 아츄~", level: 5 } },
-          { type: "header", data: { text: "시간이 됬어 아츄~", level: 6 } }
-        ],
-        version: "2.19.0"
-      }
+      data: JSON.parse(content)
     });
     editerRef.current = editer;
-  }, []);
+  }, [content]);
 
   return (
     <S.Container>
       <S.Hr />
-      <S.Content id="content"></S.Content>
+      <S.Content id="editer"></S.Content>
     </S.Container>
   );
 };

@@ -4,8 +4,13 @@ import * as S from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
 import { useCallback } from "react";
-import { CloseOutingCardModal } from "../../../../modules/action/outingCard";
+import {
+  approveOutingCardSaga,
+  CloseOutingCardModal,
+  rejectOutingCardSaga
+} from "../../../../modules/action/outingCard";
 import { getOutingCardTime } from "../../../../lib/utils";
+import { ToastContainer } from "react-toastify";
 
 const OutingCardModal: FC = () => {
   const dispatch = useDispatch();
@@ -29,6 +34,13 @@ const OutingCardModal: FC = () => {
     isOpen: state.outingCard.modalIsOpen
   }));
 
+  const approveOutingCard = useCallback(() => {
+    dispatch(approveOutingCardSaga(data.outing_uuid));
+  }, [data.outing_uuid]);
+  const rejectOutingCard = useCallback(() => {
+    dispatch(rejectOutingCardSaga(data.outing_uuid));
+  }, [data.outing_uuid]);
+
   const closeModal = useCallback(() => {
     dispatch(CloseOutingCardModal());
   }, []);
@@ -50,6 +62,7 @@ const OutingCardModal: FC = () => {
     <>
       {isOpen && (
         <S.Container>
+          <ToastContainer autoClose={2000} />
           <S.Modal>
             <h1>신청정보</h1>
             <hr />
@@ -87,8 +100,12 @@ const OutingCardModal: FC = () => {
                 </div>
               </div>
               <div>
-                <S.Button color="#242424">승인</S.Button>
-                <S.Button color="#FF5555">거절</S.Button>
+                <S.Button color="#242424" onClick={approveOutingCard}>
+                  승인
+                </S.Button>
+                <S.Button color="#FF5555" onClick={rejectOutingCard}>
+                  거절
+                </S.Button>
               </div>
             </S.Content>
             <S.CloseButton onClick={closeModal} />

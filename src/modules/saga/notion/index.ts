@@ -8,7 +8,9 @@ import {
   GET_NOTICE_LIST_SAGA,
   getCircleNoticeListSaga as getCircleNoticeListSagaCreater,
   getNoticeDetail,
-  GET_CIRCLE_NOTICE_LIST_SAGA
+  GET_CIRCLE_NOTICE_LIST_SAGA,
+  getWriterNoticeListSaga as getWriterNoticeListSagaCreater,
+  GET_WRITER_NOTICE_LIST_SAGA
 } from "../../action/notice";
 
 function* getNoticeListSaga(
@@ -47,10 +49,22 @@ function* getNoticeDetailSaga(
   } catch (err) {}
 }
 
+function* getWriteNoticeListSaga(
+  action: ReturnType<typeof getWriterNoticeListSagaCreater>
+) {
+  const res = yield call(
+    apiDefault().get,
+    `/announcements/writer-uuid/${action.payload}`
+  );
+  yield put(getNoticeList(res.data.announcements));
+  console.log(res);
+}
+
 function* noticeSaga() {
   yield takeEvery(GET_NOTICE_LIST_SAGA, getNoticeListSaga);
   yield takeEvery(GET_NOTICE_DETAIL_SAGA, getNoticeDetailSaga);
   yield takeEvery(GET_CIRCLE_NOTICE_LIST_SAGA, getCircleNoticeListSaga);
+  yield takeEvery(GET_WRITER_NOTICE_LIST_SAGA, getWriteNoticeListSaga);
 }
 
 export default noticeSaga;

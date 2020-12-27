@@ -1,5 +1,4 @@
-import React, { FC } from "react";
-import { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import AdminOutingCardWaitList from "../../../../../components/Admin/Outing/Wait/List/AdminOutingCardWaitList";
 import { OutingStatus } from "../../../../../lib/api/payloads/Outing";
@@ -10,7 +9,7 @@ const AdminOutingWaitListContainer: FC = () => {
   useEffect(() => {
     dispatch(
       getOutingCardListSaga({
-        status: OutingStatus["외출증 신청"]
+        status: OutingStatus["학부모 승인 "]
       })
     );
   }, []);
