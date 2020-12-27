@@ -1,21 +1,22 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   padding: 10px;
+  position: relative;
 `;
 
 export const Header = styled.div`
   display: flex;
-
-  & > div:nth-child(2) {
-    display: flex;
-    justify-content: space-between;
-    width: 120px;
-  }
+  padding: 10px;
+  box-sizing: border-box;
+  width: calc(100% + 20px);
+  transform: translateX(-10px);
+  border-bottom: 2px solid #dddddd;
 `;
 
 export const HeaderText = styled.div`
   flex: 1;
+  font-weight: bold;
 `;
 
 export const CardContainer = styled.div`

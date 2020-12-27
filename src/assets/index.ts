@@ -12,6 +12,8 @@ export { default as NavIconCircleWhite } from "./navigation/NavIcon-circle-white
 export { default as NavIconCircleBlue } from "./navigation/NavIcon-circle-blue.svg";
 export { default as NavIconCircleBlack } from "./navigation/NavIcon-circle-black.svg";
 export { default as NavIconCircleMint } from "./navigation/NavIcon-circle-mint.svg";
+export { default as NavIconWriteBlack } from "./navigation/NavIcon-write-black.svg";
+export { default as NavIconWriteMint } from "./navigation/NavIcon-write-mint.svg";
 export { default as NavIconHomeWhite } from "./navigation/NavIcon-home-white.svg";
 export { default as NavIconHomeBlue } from "./navigation/NavIcon-home-blue.svg";
 export { default as NavIconHomeBlack } from "./navigation/NavIcon-home-black.svg";
@@ -25,6 +27,7 @@ export { default as NavIconOutingBlack } from "./navigation/NavIcon-outing-black
 export { default as NavIconOutingMint } from "./navigation/NavIcon-outing-mint.svg";
 export { default as NavIconAllBlue } from "./navigation/NavIcon-all-blue.svg";
 export { default as NavIconAllBlack } from "./navigation/NavIcon-all-black.svg";
+export { default as NavIconAllMint } from "./navigation/NavIcon-all-mint.svg";
 export { default as NavIconWaringBlack } from "./navigation/NavIcon-waring-black.svg";
 export { default as NavIconWaringRed } from "./navigation/NavIcon-waring-red.svg";
 export { default as NavIconHistoryBlack } from "./navigation/NavIcon-history-black.svg";
@@ -57,6 +60,7 @@ export { default as OutingHistory } from "./Outing/history.svg";
 export { default as ModalClose } from "./Outing/modalClose.svg";
 export { default as OutingPlaceSearch } from "./Outing/search.svg";
 export { default as OutingClose } from "./Outing/close.svg";
+export { default as OutingCloseWhite } from "./Outing/closeWhite.svg";
 export { default as OutingBike } from "./Outing/bike.svg";
 export { default as OutingUser } from "./Outing/user.svg";
 

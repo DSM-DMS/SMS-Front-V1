@@ -37,8 +37,7 @@ const HeaderContainer: FC<Props> = () => {
     localStorage.setItem("sms-user", JSON.stringify({}));
     localStorage.setItem("sms-type", "");
     localStorage.removeItem("access_token");
-    localStorage.removeItem("teacher_uuid");
-    localStorage.removeItem("student_uuid");
+    localStorage.removeItem("uuid");
     localStorage.removeItem("expiration");
   }, []);
 

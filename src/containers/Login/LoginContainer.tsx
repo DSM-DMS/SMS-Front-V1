@@ -65,7 +65,7 @@ const LoginContainer: FC<Props> = () => {
       else
         localStorage.setItem("expiration", `${Date.now() + MillisecondOfHour}`);
       localStorage.setItem("access_token", accessToken);
-      localStorage.setItem(`${type}_uuid`, uuid);
+      localStorage.setItem(`uuid`, uuid);
       localStorage.removeItem(`${type === STUDENT ? TEACHER : STUDENT}_uuid`);
     },
     []
