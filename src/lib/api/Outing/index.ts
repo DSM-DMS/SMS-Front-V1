@@ -1,11 +1,12 @@
 import axios from "axios";
 
-import { apiDefault } from "../client";
+import { apiDefault, SERVER } from "../client";
 import {
   ResLocationWithDefault,
   ReqOuting,
   ResOutingWithDefault,
-  ResHistoryWithDefault
+  ResHistoryWithDefault,
+  ResNaverLocalWithDefault
 } from "../payloads/Outing";
 
 export const getNaverLocation = (query: string) => {
@@ -34,6 +35,12 @@ export const postOuting = (body: ReqOuting) => {
 
 export const getHistory = (studentUuid: string, start: number) => {
   return apiDefault().get<ResHistoryWithDefault>(
-    `/students/uuid/${studentUuid}/outings?start=${start}&count=10`
+    `/students/uuid/${studentUuid}/outings?start=${start}&count=9`
+  );
+};
+
+export const getNaverSearchLocal = (keyword: string) => {
+  return apiDefault().get<ResNaverLocalWithDefault>(
+    `${SERVER.hostUrl}naver-open-api/search/local?keyword=${keyword}`
   );
 };

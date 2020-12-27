@@ -40,6 +40,10 @@ function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {
       `schedules/years/${year}/months/${month}`
     );
 
+    schedules.sort((a, b) =>
+      a.start_date < b.start_date ? -1 : a.end_date < b.end_date ? -1 : 1
+    );
+
     yield put(setSchedules(schedules));
   } catch (err) {}
 }

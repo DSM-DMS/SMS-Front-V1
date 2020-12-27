@@ -8,7 +8,8 @@ import { PageNotFound, Navigation } from "./components";
 import {
   LoginContainer,
   HeaderContainer,
-  PasswordChangeContainer
+  PasswordChangeContainer,
+  ParentContainer
 } from "./containers";
 import {
   CirclesRouter,
@@ -30,28 +31,43 @@ const App: FC<{}> = () => {
   }, []);
 
   return (
-    <GlobalContainer>
-      <GlobalStyle />
-      <ToastContainer autoClose={2000} />
-      <Router history={history}>
-        <Navigation />
-        <GlobalBody>
-          <HeaderContainer />
+    <>
+      {location.pathname.includes("parent") ? (
+        <BrowserRouter>
+          <GlobalStyle />
           <Switch>
-            <Route path="/pw-change" component={PasswordChangeContainer} />
-            <Route path="/login" component={LoginContainer} />
-            <Route path="/home" component={MainRouter} />
-            <Route path="/notice" component={NoticeRouter} />
-            <Route path="/circles" component={CirclesRouter} />
-            <Route path="/outing" component={OutingRouter} />
-            <Route path="/admin" component={AdminRouter} />
-            <Route path="/management" component={ManagementRouter} />
-            <Redirect path="/" to="/home" />
-            <Route path="*" component={PageNotFound} />
+            <Route
+              path="/parent/outing/:confirmUuid"
+              component={ParentContainer}
+            />
           </Switch>
         </GlobalBody>
       </Router>
     </GlobalContainer>
+        </BrowserRouter>
+      ) : (
+        <GlobalContainer>
+          <GlobalStyle />
+          <BrowserRouter>
+            <Navigation />
+            <GlobalBody>
+              <HeaderContainer />
+              <Switch>
+                <Route path="/pw-change" component={PasswordChangeContainer} />
+                <Route path="/login" component={LoginContainer} />
+                <Route path="/home" component={MainRouter} />
+                <Route path="/notice" component={NoticeRouter} />
+                <Route path="/circles" component={CirclesRouter} />
+                <Route path="/outing" component={OutingRouter} />
+                <Route path="/admin" component={AdminRouter} />
+                <Route path="/management" component={ManagementRouter} />
+                <Redirect path="/" to="/home" />
+                <Route path="*" component={PageNotFound} />
+              </Switch>
+            </GlobalBody>
+          </BrowserRouter>
+        </GlobalContainer>
+      )}
   );
 };
 

@@ -47,7 +47,7 @@ const subUrlObj: SubUrlObj = {
   notice: "공지사항",
   wanted: "부원 모집",
   all: "동아리 전체보기",
-  waring: "유의사항",
+  warning: "유의사항",
   apply: "외출신청",
   history: "내 외출신청 내역"
 };
@@ -134,4 +134,19 @@ export const isIncludeEmpty = (datas: any[] | object): boolean => {
     if (!datas[i]) return true;
   }
   return false;
+
+  export const getWeekOfMonth = (d: Date) => {
+  const month = d.getMonth(),
+    year = d.getFullYear(),
+    firstWeekday = new Date(year, month, 1).getDay(),
+    lastDateOfMonth = new Date(year, month + 1, 0).getDate(),
+    offsetDate = d.getDate() + firstWeekday - 1,
+    index = 1, // start index at 0 or 1, your choice
+    weeksInMonth = index + Math.ceil((lastDateOfMonth + firstWeekday - 7) / 7),
+    week = index + Math.floor(offsetDate / 7);
+
+  return week;
+
+  // if (week < 2 + index) return week;
+  // return week === weeksInMonth ? index + 5 : week;
 };

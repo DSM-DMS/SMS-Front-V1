@@ -13,6 +13,8 @@ interface Props {
   handleShowDelete?: () => void;
 }
 
+const date = new Date();
+
 const ScheduleDetail: FC<Props> = ({
   handleShowAdd,
   handleShowEdit,
@@ -61,37 +63,40 @@ const ScheduleDetail: FC<Props> = ({
         </S.DetailHead>
       </S.DetailHeader>
       <S.DetailBody type={type as UserType}>
-        {schedules
-          .sort((a, b) => (a.start_date > b.start_date ? -1 : 1))
-          .map(({ detail, start_date, end_date, schedule_uuid }) => (
-            <S.DetailBodyItem
-              key={schedule_uuid}
-              className={+new Date() > end_date ? "prev" : ""}
-            >
-              <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
-              <S.DetailBodyItemData>
-                {start_date === end_date
-                  ? getLocalDate(start_date)
-                  : `${getLocalDate(start_date)} - ${getLocalDate(end_date)}`}
-              </S.DetailBodyItemData>
-              {location.pathname.includes("admin") && (
-                <S.DetailBodyItemButtonWrap>
-                  <S.DetailBodyItemButton
-                    data-uuid={schedule_uuid}
-                    onClick={handleEditSchedule}
-                  >
-                    수정
-                  </S.DetailBodyItemButton>
-                  <S.DetailBodyItemButton
-                    data-uuid={schedule_uuid}
-                    onClick={handleRemoveSchedule}
-                  >
-                    삭제
-                  </S.DetailBodyItemButton>
-                </S.DetailBodyItemButtonWrap>
-              )}
-            </S.DetailBodyItem>
-          ))}
+        {schedules.map(({ detail, start_date, end_date, schedule_uuid }) => (
+          <S.DetailBodyItem
+            key={schedule_uuid}
+            className={
+              +new Date(date.getFullYear(), date.getMonth(), date.getDate()) >=
+              end_date
+                ? "prev"
+                : ""
+            }
+          >
+            <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
+            <S.DetailBodyItemData>
+              {start_date === end_date
+                ? getLocalDate(start_date)
+                : `${getLocalDate(start_date)} - ${getLocalDate(end_date)}`}
+            </S.DetailBodyItemData>
+            {location.pathname.includes("admin") && (
+              <S.DetailBodyItemButtonWrap>
+                <S.DetailBodyItemButton
+                  data-uuid={schedule_uuid}
+                  onClick={handleEditSchedule}
+                >
+                  수정
+                </S.DetailBodyItemButton>
+                <S.DetailBodyItemButton
+                  data-uuid={schedule_uuid}
+                  onClick={handleRemoveSchedule}
+                >
+                  삭제
+                </S.DetailBodyItemButton>
+              </S.DetailBodyItemButtonWrap>
+            )}
+          </S.DetailBodyItem>
+        ))}
       </S.DetailBody>
     </S.ScheduleDetail>
   );

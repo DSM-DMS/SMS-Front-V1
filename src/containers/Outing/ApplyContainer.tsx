@@ -84,32 +84,38 @@ const ApplyContainer: FC<Props> = () => {
     [formOutTime]
   );
 
-  const handlePlace = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setFormPlace(e.currentTarget.value);
+  const handlePlace = useCallback((value: string) => {
+    setFormPlace(value);
   }, []);
 
-  const cancelSickOuting = () => {
+  const cancelSickOuting = useCallback(() => {
     setFormReasonSick(false);
-  };
+  }, []);
 
-  const applySickOuting = () => {
+  const applySickOuting = useCallback(() => {
     setFormReasonSick(true);
-  };
+  }, []);
 
   const handleReason = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setFormReason(e.currentTarget.value);
   }, []);
 
-  const checkOutingValidation = (outing: Outing) => {
+  const checkOutingValidation = useCallback((outing: Outing) => {
     const { date, startTime, endTime, place, reason } = outing;
+    const now = +new Date();
+    const targetStartTime = +new Date(`${date}T${startTime}`);
+    const targetEndTime = +new Date(`${date}T${endTime}`);
+
     return date.trim() === "" ||
       startTime.trim() === "" ||
       endTime.trim() === "" ||
+      now > targetStartTime ||
+      now > targetEndTime ||
       place.trim() === "" ||
       reason.trim() === ""
       ? false
       : true;
-  };
+  }, []);
 
   const applyOuting = useCallback(async (outing: Outing) => {
     const { date, startTime, endTime, place, reason, situation } = outing;
@@ -137,7 +143,7 @@ const ApplyContainer: FC<Props> = () => {
       const code = data?.code;
 
       if (status === 400) {
-        alert("외출 시작 시간이 귀교 시간보다 더 늦습니다.");
+        alert("외출 시간을 다시 설정해주세요.");
       } else if (status === 403) {
         alert("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
       } else if (status === 409 && code === -2401) {
