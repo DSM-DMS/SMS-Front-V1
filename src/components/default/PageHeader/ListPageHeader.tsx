@@ -17,7 +17,7 @@ const ListPageHeader: FC<Props> = ({ imgSrc, title, onChange }) => {
         <PageHeader imgSrc={imgSrc} title={title} type={S.LIST} />
         <S.InputWrap>
           <SearchInput
-            placeHolder="검색할 동아리 이름을 입력하세요."
+            placeHolder="제목 또는 글쓴이를 입력하세요"
             onChange={onChange}
           />
         </S.InputWrap>
