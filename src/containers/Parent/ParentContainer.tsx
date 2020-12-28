@@ -43,14 +43,15 @@ const ApproveContainer: FC<Props> = () => {
     action: ParentActions,
     confirmUuid: string
   ) => {
+    const typeText = action === ParentActions.PARENT_APPROVE ? "승인" : "거절";
+    if (!confirm(`자녀의 외출증을 ${typeText}하시겠습니까?`)) {
+      return;
+    }
     try {
       await postOutingAction(outing_uuid, action, confirmUuid);
 
-      if (action === ParentActions.PARENT_APPROVE) {
-        alert("자녀의 외출증을 승인했습니다.");
-      } else {
-        alert("자녀의 외출증을 거절했습니다.");
-      }
+      alert(`자녀의 외출증을 ${typeText}했습니다.`);
+      history.push("/login");
     } catch (err) {
       const data = err?.response?.data;
       const status = data?.status;
