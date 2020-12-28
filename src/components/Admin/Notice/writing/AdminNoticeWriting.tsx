@@ -6,16 +6,14 @@ import React, {
   useCallback,
   ChangeEvent
 } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { NavIconNoticeMint } from "../../../../assets";
 import { PageHeader } from "../../../default";
 import * as S from "./styles";
 import EditerJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
-import WriteCategory, {
-  BoardWriteFilterSate
-} from "../../../default/Category/WriteCategory";
+import WriteCategory from "../../../default/Category/WriteCategory";
 import { BoardWriteFilter } from "../../../../lib/api/payloads/Board";
 import { useDispatch } from "react-redux";
 import { writeActionCreater } from "../../../../modules/action/write";
@@ -78,7 +76,6 @@ const AdminNoticeWriting: FC = () => {
 
   return (
     <S.Container>
-      <ToastContainer autoClose={2000} />
       <PageHeader imgSrc={NavIconNoticeMint} title="공지사항" type="DETAIL" />
       <S.Hr />
       <S.TitleInput

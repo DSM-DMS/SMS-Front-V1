@@ -1,7 +1,5 @@
 import React, { FC, useState, MouseEvent, useCallback } from "react";
-import { FacebookIcon } from "../../../assets";
 import WantedTopHeader from "../../default/Header/WantedTopHeader/WantedTopHeader";
-import { FaceBookBtn } from "../../default/Info/Header/styles";
 import * as S from "../../../styles/CircleWantedDetail";
 import ManagementWantedMain from "./Main/ManagementWantedMain";
 
