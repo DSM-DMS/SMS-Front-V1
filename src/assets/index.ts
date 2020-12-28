@@ -70,6 +70,7 @@ export { default as ReComment } from "./Circle/reComment.svg";
 export { default as calanderSvg } from "./management/calander.svg";
 export { default as plusMember } from "./management/plus.svg";
 export { default as deleteMember } from "./management/delete.svg";
+export { default as deleteBtn } from "./management/deleteBtn.svg";
 export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
 
@@ -80,3 +81,4 @@ export { default as CheckGray } from "./Login/checkGray.svg";
 
 export { default as Eye } from "./PasswordChange/eye.svg";
 export { default as EyeOff } from "./PasswordChange/eyeOff.svg";
+export { default as addBtn } from "./management/addBtn.svg";
