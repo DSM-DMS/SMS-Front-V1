@@ -27,3 +27,4 @@ export { default as LoginContainer } from "./Login/LoginContainer";
 export { default as HeaderContainer } from "./Header/HeaderContainer";
 export { default as PasswordChangeContainer } from "./PasswordChange/PasswordChangeContainer";
 export { default as ParentContainer } from "./Parent/ParentContainer";
+export { default as ManagementNoticeWriteContainer } from "./Management/Notice/ManagementNoticeWriteContainer";
