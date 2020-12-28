@@ -61,6 +61,14 @@ export const IntroduceText = styled.div`
   font-size: 15px;
 `;
 
+export const AddBtn = styled.button`
+  margin: 0 6px;
+  width: 70px;
+  height: 28px;
+  background: #f6f6f6;
+  border: none;
+`;
+
 export const GrayTile = styled.div`
   color: #888888;
   font-weight: bold;
