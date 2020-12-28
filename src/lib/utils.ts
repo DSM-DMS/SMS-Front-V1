@@ -129,6 +129,12 @@ export const getOutingCardTime = (
   return [dateStr, date1Time, date2Time];
 };
 
+export const isIncludeEmpty = (datas: any[] | object): boolean => {
+  for (let i in datas) {
+    if (!datas[i]) return true;
+  }
+  return false;
+};
 export const getWeekOfMonth = (d: Date) => {
   const month = d.getMonth(),
     year = d.getFullYear(),

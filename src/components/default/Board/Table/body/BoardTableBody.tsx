@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import { BoardListItem } from "../../../../../lib/api/payloads/Board";
 import BoardTableItem from "./item/BoardTableItem";
+import * as S from "../styles";
 
 interface Props {
   data: BoardListItem[];
@@ -8,11 +9,11 @@ interface Props {
 
 const BoardTableBody: FC<Props> = ({ data }) => {
   return (
-    <div>
+    <S.BoardListDiv>
       {data.map(datas => (
         <BoardTableItem {...datas} />
       ))}
-    </div>
+    </S.BoardListDiv>
   );
 };
 

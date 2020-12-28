@@ -24,7 +24,32 @@ const ApplyDate: FC<Props> = ({ formDate, onInputDate }): ReactElement => {
     return `${y}-${m < 10 ? `0${m}` : m}-${d < 10 ? `0${d}` : d}`;
   }, []);
 
-  const getFixedDate = useMemo(() => {
+  const getMaxDate = useMemo((): string => {
+    const min = getMinDate;
+    const date = new Date();
+    const lastDate = new Date(
+      date.getFullYear(),
+      date.getMonth() + 1,
+      0
+    ).getDate();
+    const splitMin = min.split("-");
+    let y = +splitMin[0];
+    let m = +splitMin[1];
+    let d = +splitMin[2] + 7;
+
+    if (d > lastDate) {
+      d = d - lastDate;
+      m++;
+    }
+    if (m > 12) {
+      m = 1;
+      y++;
+    }
+
+    return `${y}-${m < 10 ? `0${m}` : m}-${d < 10 ? `0${d}` : d}`;
+  }, []);
+
+  const getLocalDate = useMemo(() => {
     const selected: Date = new Date(formDate);
     const y = selected.getFullYear();
     const m = selected.getMonth() + 1;
@@ -38,9 +63,14 @@ const ApplyDate: FC<Props> = ({ formDate, onInputDate }): ReactElement => {
       <S.ApplyFormItemTitle>날짜</S.ApplyFormItemTitle>
       <S.ApplyFormInputWrap className="dateWrap">
         <S.FormDateText className={formDate ? "selected" : ""}>
-          {formDate ? getFixedDate : "외출 날짜를 선택하세요"}
+          {formDate ? getLocalDate : "외출 날짜를 선택하세요"}
         </S.FormDateText>
-        <S.FormDateInput type="date" min={getMinDate} onInput={onInputDate} />
+        <S.FormDateInput
+          type="date"
+          min={getMinDate}
+          max={getMaxDate}
+          onInput={onInputDate}
+        />
       </S.ApplyFormInputWrap>
     </S.FormDate>
   );

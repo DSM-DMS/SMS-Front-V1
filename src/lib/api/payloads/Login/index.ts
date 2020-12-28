@@ -30,11 +30,6 @@ export interface ResTeacherInfo {
   phone_number: string;
 }
 
-export interface ResParentInfo {
-  name: string;
-  phone_number: string;
-}
-
 export interface ResStudentLoginWithDefault
   extends ResStudentLogin,
     ResDefault {}
@@ -43,4 +38,3 @@ export interface ResTeacherLoginWithDefault
     ResDefault {}
 export interface ResStudentInfoWithDefault extends ResStudentInfo, ResDefault {}
 export interface ResTeacherInfoWithDefault extends ResTeacherInfo, ResDefault {}
-export interface ResParentInfoWithDefault extends ResParentInfo, ResDefault {}

@@ -9,7 +9,6 @@ import {
   AdminNoticeAllListContainer,
   AdminNoticeAllDetailContainer,
   AdminNoticeMineContainer,
-  AdminNoticeMineDetailContainer,
   AdminNoticeWritingContainer,
   LoginContainer,
   PasswordChangeContainer
@@ -67,7 +66,7 @@ const AdminRouter: FC<{}> = () => {
         <Route
           exact
           path="/admin/notice/mine/:id"
-          component={AdminNoticeMineDetailContainer}
+          component={AdminNoticeAllDetailContainer}
         />
         <Route
           exact
