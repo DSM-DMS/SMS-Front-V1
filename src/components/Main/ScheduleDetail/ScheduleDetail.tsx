@@ -14,6 +14,7 @@ interface Props {
 }
 
 const date = new Date();
+const fixedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
 const ScheduleDetail: FC<Props> = ({
   handleShowAdd,
@@ -66,12 +67,7 @@ const ScheduleDetail: FC<Props> = ({
         {schedules.map(({ detail, start_date, end_date, schedule_uuid }) => (
           <S.DetailBodyItem
             key={schedule_uuid}
-            className={
-              +new Date(date.getFullYear(), date.getMonth(), date.getDate()) >=
-              end_date
-                ? "prev"
-                : ""
-            }
+            className={+fixedDate + 36060000 > end_date ? "prev" : ""}
           >
             <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
             <S.DetailBodyItemData>

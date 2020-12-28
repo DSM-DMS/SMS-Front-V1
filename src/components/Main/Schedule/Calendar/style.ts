@@ -77,7 +77,6 @@ export const CalendarBarCommon = styled.div`
   padding-left: 2px;
   outline: 1px solid white;
   color: white;
-  background: #1a73e8;
   font-size: 8px;
   box-sizing: border-box;
   overflow: hidden;
@@ -90,6 +89,7 @@ interface Bar {
   sDay: number;
   eDay: number;
   overlap: number;
+  backgroundColor: string;
 }
 
 export const CalendarBar = styled(CalendarBarCommon)<Bar>`
@@ -101,6 +101,10 @@ export const CalendarBar = styled(CalendarBarCommon)<Bar>`
   }}px;
   left: ${({ sDay }) => `calc(100% / 7 * ${sDay});`};
   width: ${({ sDay, eDay }) => `calc((100% / 7) * (${eDay} - ${sDay} + 1))`};
+  background-color: ${({ backgroundColor }) => backgroundColor};
+  &.prev {
+    background-color: gray;
+  }
 `;
 
 export const CalendarMore = styled.button`

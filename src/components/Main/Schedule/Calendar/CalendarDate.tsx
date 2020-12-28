@@ -19,6 +19,15 @@ interface ScheduleBuffer {
   6: ResSchedule[];
 }
 
+enum BackgroundColor {
+  "#1e9ce2" = 0,
+  "#f2532b" = 1,
+  "#3ab57a" = 2
+}
+
+const date = new Date();
+const fixedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
 const CalendarDate: React.FC<Props> = () => {
   const {
     main: { schedulerDate, schedules },
@@ -109,6 +118,35 @@ const CalendarDate: React.FC<Props> = () => {
     return { sWeek, eWeek, sDay, eDay };
   };
 
+  const getOverlapCondition = (
+    i: number,
+    prev: number,
+    prevOverlapCount: number,
+    overlapCount: number,
+    sameCount: number
+  ) => {
+    let overlap: number;
+    if (overlapCount === 0) overlap = overlapCount;
+    else if (sameCount > 0) overlap = i;
+    else if (prevOverlapCount === overlapCount) {
+      if (sameCount > 0) overlap = i;
+      else if (prevOverlapCount === overlapCount)
+        overlap = prevOverlapCount - overlapCount;
+      else {
+        overlap =
+          prev - overlapCount <= 0 ? prev + overlapCount : prev - overlapCount;
+      }
+    } else {
+      if (overlapCount < i) overlap = overlapCount;
+      else if (overlapCount > i) overlap = i;
+      else if (overlapCount > prevOverlapCount)
+        overlap = prevOverlapCount + overlapCount;
+      else overlap = overlapCount;
+    }
+
+    return overlap;
+  };
+
   const initializeBuffer = useCallback(
     (schedules: ResSchedule[], buffer: ScheduleBuffer) => {
       schedules.forEach(schedule => {
@@ -151,25 +189,13 @@ const CalendarDate: React.FC<Props> = () => {
               }
             );
 
-            if (overlapCount === 0) overlap = overlapCount;
-            else if (sameCount > 0) overlap = i;
-            else if (prevOverlapCount === overlapCount) {
-              if (sameCount > 0) overlap = i;
-              else if (prevOverlapCount === overlapCount)
-                overlap = prevOverlapCount - overlapCount;
-              else {
-                overlap =
-                  prev - overlapCount <= 0
-                    ? prev + overlapCount
-                    : prev - overlapCount;
-              }
-            } else {
-              if (overlapCount < i) overlap = overlapCount;
-              else if (overlapCount > i) overlap = i;
-              else if (overlapCount > prevOverlapCount)
-                overlap = prevOverlapCount + overlapCount;
-              else overlap = overlapCount;
-            }
+            overlap = getOverlapCondition(
+              i,
+              prev,
+              prevOverlapCount,
+              overlapCount,
+              sameCount
+            );
 
             if (overlap < 3) {
               result.push(
@@ -179,6 +205,8 @@ const CalendarDate: React.FC<Props> = () => {
                   eDay={eDay}
                   weekOfMonth={+week}
                   overlap={overlap}
+                  className={+fixedDate + 36060000 > eDate ? "prev" : ""}
+                  backgroundColor={BackgroundColor[overlap]}
                 >
                   {detail}
                 </S.CalendarBar>
@@ -217,7 +245,6 @@ const CalendarDate: React.FC<Props> = () => {
   return (
     <>
       {memoizedCalendar}
-      {/* {setScheduleData} */}
       {scheduler}
     </>
   );
