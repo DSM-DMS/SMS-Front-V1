@@ -72,18 +72,6 @@ export const CalendarDaySpan = styled.span`
   text-align: center;
 `;
 
-export const CalendarBarCommon = styled.div`
-  position: absolute;
-  padding-left: 2px;
-  outline: 1px solid white;
-  color: white;
-  font-size: 8px;
-  box-sizing: border-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-`;
-
 interface Bar {
   weekOfMonth: number;
   sDay: number;
@@ -92,7 +80,8 @@ interface Bar {
   backgroundColor: string;
 }
 
-export const CalendarBar = styled(CalendarBarCommon)<Bar>`
+export const CalendarBar = styled.div<Bar>`
+  position: absolute;
   top: ${({ weekOfMonth, overlap }) => {
     const lineHeight = 17;
     const weekHeight = 80;
@@ -101,29 +90,21 @@ export const CalendarBar = styled(CalendarBarCommon)<Bar>`
   }}px;
   left: ${({ sDay }) => `calc(100% / 7 * ${sDay});`};
   width: ${({ sDay, eDay }) => `calc((100% / 7) * (${eDay} - ${sDay} + 1))`};
+  padding-left: 2px;
+  outline: 1px solid white;
+  color: white;
   background-color: ${({ backgroundColor }) => backgroundColor};
+  font-size: 8px;
+  box-sizing: border-box;
+  cursor: pointer;
   &.prev {
     background-color: gray;
   }
 `;
 
-export const CalendarMore = styled.button`
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  width: 12px;
-  height: 12px;
-  line-height: 12px;
-  border: 0;
-  font-size: 12px;
-  text-align: center;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 10;
-  &:hover {
-    transform: scale(1.5);
-  }
+export const CalendarBarDetail = styled.p`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

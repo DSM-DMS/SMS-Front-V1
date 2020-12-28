@@ -26,7 +26,12 @@ enum BackgroundColor {
 }
 
 const date = new Date();
-const fixedDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+const fixedDate = new Date(
+  date.getFullYear(),
+  date.getMonth(),
+  date.getDate(),
+  9
+);
 
 const CalendarDate: React.FC<Props> = () => {
   const {
@@ -37,10 +42,15 @@ const CalendarDate: React.FC<Props> = () => {
   const padNum = (num: number): string => (num < 10 ? `0${num}` : num + "");
 
   const onClickDate = (e: MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.parentElement.childNodes.forEach(el => {
-      (el as HTMLDivElement).classList.remove("selected");
+    const classList = e.currentTarget.classList;
+    if (classList.contains("selected")) {
+      classList.remove("selected");
+      return;
+    }
+    Array.from(e.currentTarget.parentNode.children).forEach(el => {
+      el.classList.remove("selected");
     });
-    e.currentTarget.classList.add("selected");
+    classList.add("selected");
   };
 
   const getDateJSX = (
@@ -54,7 +64,6 @@ const CalendarDate: React.FC<Props> = () => {
       onClick={styling.match("curr") ? onClickDate : () => {}}
       type={type as UserType}
     >
-      {styling.match("curr") && <S.CalendarMore>+</S.CalendarMore>}
       <S.CalendarDaySpan>{children && padNum(children)}</S.CalendarDaySpan>
     </S.CalendarDate>
   );
@@ -201,14 +210,14 @@ const CalendarDate: React.FC<Props> = () => {
               result.push(
                 <S.CalendarBar
                   key={schedule_uuid}
-                  sDay={sDay}
-                  eDay={eDay}
-                  weekOfMonth={+week}
-                  overlap={overlap}
-                  className={+fixedDate + 36060000 > eDate ? "prev" : ""}
                   backgroundColor={BackgroundColor[overlap]}
+                  className={+fixedDate > eDate ? "prev" : ""}
+                  eDay={eDay}
+                  overlap={overlap}
+                  sDay={sDay}
+                  weekOfMonth={+week}
                 >
-                  {detail}
+                  <S.CalendarBarDetail>{detail}</S.CalendarBarDetail>
                 </S.CalendarBar>
               );
             }
