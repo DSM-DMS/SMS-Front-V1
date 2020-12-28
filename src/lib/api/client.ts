@@ -1,10 +1,14 @@
 import axios, { AxiosResponse } from "axios";
+import AES256 from "aes-everywhere";
+
 import { StudentInfo } from "../../modules/type/user";
 
 export const SERVER = {
   hostUrl: process.env.HOST_URL,
   version: process.env.VERSION,
-  s3Url: process.env.S3_URL
+  s3Url: process.env.S3_URL,
+  securityBasePlain: process.env.SECURITY_BASE_PLAIN,
+  securityPassPhrase: process.env.SECURITY_PASS_PHRASE
 };
 
 const SESSION_EXPIRATION_MESSAGE =
@@ -33,7 +37,11 @@ export const apiDefault = () => {
   return axios.create({
     baseURL: `${BASE_URL}`,
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`,
+      "Request-Security": AES256.encrypt(
+        `${SERVER.securityBasePlain}:${(+new Date() + "").slice(0, 10)}`,
+        SERVER.securityPassPhrase
+      )
     }
   });
 };
