@@ -70,7 +70,7 @@ export const Timetable = styled(MainContentCommon)`
 export const TimetableTitle = styled(MainContentTitleCommon)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 8px 4px 8px 12px;
   border-bottom: 2px solid #dddddd;
 `;
@@ -105,13 +105,36 @@ export const TimetableItemDate = styled.span`
 export const FiltersWrap = styled.div`
   display: flex;
   align-items: center;
+  span {
+    margin: 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
-export const TimetableSelector = styled.select`
-  padding: 8px;
+export const TimetableSelector = styled.button`
   border: 0;
-  background-color: white;
-  font-size: 16px;
+  background-color: transparent;
+  &:hover {
+    outline: 1px solid #e2e2e2;
+  }
+`;
+
+export const TimetableChangerCommon = styled.div`
+  width: 0px;
+  height: 0px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+`;
+
+export const TimetableChangerLeft = styled(TimetableChangerCommon)`
+  border-right: 8px solid transparent;
+  border-right-color: gray;
+`;
+
+export const TimetableChangerRight = styled(TimetableChangerCommon)`
+  border-left: 8px solid transparent;
+  border-left-color: gray;
 `;
 
 export const ScheduleDetail = styled(MainContentCommon)`
