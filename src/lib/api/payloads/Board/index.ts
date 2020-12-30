@@ -9,8 +9,8 @@ export interface BoardListItem {
 }
 
 export interface BoardWriteFilter {
-  target_grade: number;
-  target_group: number;
+  target_grade?: number;
+  target_group?: number;
 }
 
 export interface BoardWriteData {
