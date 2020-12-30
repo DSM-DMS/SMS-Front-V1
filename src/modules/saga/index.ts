@@ -1,10 +1,23 @@
-import { all } from 'redux-saga/effects';
-import jsonSaga from './json';
+import { all } from "redux-saga/effects";
+
+import jsonSaga from "./json";
+import posterSaga from "./poster";
+import mainSaga from "./main";
+import noticeSaga from "./notion";
+import headerSaga from "./header";
+import outingCardSaga from "./outingCard";
+import writeSaga from "./write";
 
 function* rootSaga() {
-  // rootReducer와 같은역할
-  yield all([jsonSaga()]);
-  // all([saga1(), saga2(), saga3()...])
+  yield all([
+    jsonSaga(),
+    posterSaga(),
+    mainSaga(),
+    noticeSaga(),
+    headerSaga(),
+    outingCardSaga(),
+    writeSaga()
+  ]);
 }
 
 export default rootSaga;

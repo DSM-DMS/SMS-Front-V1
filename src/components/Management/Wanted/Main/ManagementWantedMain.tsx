@@ -9,10 +9,6 @@ const ManagementWantedMain: FC = () => {
     <S.Main>
       <S.Header>
         <S.CircleName>VCC</S.CircleName>
-        <FaceBookBtn>
-          <img src={FacebookIcon} />
-          <div>지원하기</div>
-        </FaceBookBtn>
       </S.Header>
       <ManagementWantedContent />
     </S.Main>

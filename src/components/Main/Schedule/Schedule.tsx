@@ -1,32 +1,61 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import Calendar from './Calendar/Calendar';
+import Calendar from "./Calendar/Calendar";
 
-import * as S from '../style';
-import { MainArrow } from '../../../assets';
+import * as S from "../style";
+import { MainArrow } from "../../../assets";
+import {
+  getSchedulesSaga,
+  setSchedulerDate
+} from "../../../modules/action/main";
+import { stateType } from "../../../modules/reducer";
 
 interface Props {}
 
 const Schedule: FC<Props> = (): ReactElement => {
-  const [today, setToday] = useState<Date>(new Date());
+  const dispatch = useDispatch();
+  const { schedulerDate } = useSelector((state: stateType) => state.main);
 
   const onClickNextMonth = () => {
-    setToday((prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1));
+    const next = new Date(
+      schedulerDate.getFullYear(),
+      schedulerDate.getMonth() + 1
+    );
+    dispatch(setSchedulerDate(next));
   };
 
   const onClickPrevMonth = () => {
-    setToday((prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1));
+    const prev = new Date(
+      schedulerDate.getFullYear(),
+      schedulerDate.getMonth() - 1
+    );
+    dispatch(setSchedulerDate(prev));
   };
 
-  const getLocalDate = (date: Date) =>
-    `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+  const getLocalDate = useCallback(
+    (date: Date) =>
+      `${date.getFullYear()}.${
+        date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1
+      }`,
+    []
+  );
+
+  useEffect(() => {
+    const year = schedulerDate.getFullYear();
+    const month = schedulerDate.getMonth() + 1;
+
+    dispatch(getSchedulesSaga(year, month));
+  }, [schedulerDate]);
 
   return (
     <S.Schedule>
       <S.ScheduleHeader>
         <S.MainContentTitleCommon>학사일정</S.MainContentTitleCommon>
         <S.ScheduleHeaderDateSetting>
-          <span>{getLocalDate(new Date())}</span>
+          <span>{getLocalDate(schedulerDate)}</span>
           <S.ScheduleArrow
             src={MainArrow}
             alt="prevMonth"
@@ -41,7 +70,7 @@ const Schedule: FC<Props> = (): ReactElement => {
           />
         </S.ScheduleHeaderDateSetting>
       </S.ScheduleHeader>
-      <Calendar today={today} />
+      <Calendar />
     </S.Schedule>
   );
 };

@@ -1,48 +1,73 @@
-import React, { FC, ReactElement, useState } from 'react';
+import React, { FC, ReactElement, useState } from "react";
 
-import * as S from './style';
-import ScheduleModal from './ScheduleModal';
-import DeleteScheduleModal from './DeleteScheduleModal';
+import * as S from "./style";
+import ScheduleModal from "./ScheduleModal";
+import DeleteScheduleModal from "./DeleteScheduleModal";
 
-import * as MainS from '../../../components/Main/style';
-import Schedule from '../../Main/Schedule/Schedule';
-import ScheduleDetail from '../../Main/ScheduleDetail/ScheduleDetail';
-import Timetable from '../../Main/Timetable/Timetable';
+import * as MainS from "../../../components/Main/style";
+import Schedule from "../../Main/Schedule/Schedule";
+import ScheduleDetail from "../../Main/ScheduleDetail/ScheduleDetail";
+import {
+  ADD,
+  EDIT,
+  ModalType
+} from "../../../containers/Admin/Main/AdminMainContainer";
+import {
+  ReqCreateSchedule,
+  ReqEditSchedule
+} from "../../../lib/api/payloads/Main";
 
-interface Props {}
+interface Props {
+  modal: boolean;
+  modalType: ModalType;
+  handleShowAdd: () => void;
+  handleShowEdit: () => void;
+  handleShowDelete: () => void;
+  handleCloseModal: () => void;
+  createSchedule: (createData: ReqCreateSchedule) => Promise<void>;
+  editSchedule: (
+    editData: ReqEditSchedule,
+    schedulerDate: Date
+  ) => Promise<void>;
+  removeSchedule: (scheduleUuid: string, schedulerDate: Date) => Promise<void>;
+}
 
-export type ModalType = 'add' | 'edit' | 'delete';
-
-const AdminMain: FC<Props> = (): ReactElement => {
-  const [modal, setModal] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<ModalType>('add');
-
-  const handleClickShowModal = (type: ModalType) => {
-    setModal(true);
-    setModalType(type);
-  };
-
-  const handleClickCloseModal = () => {
-    setModal(false);
-  };
-
+const AdminMain: FC<Props> = ({
+  modal,
+  modalType,
+  handleShowAdd,
+  handleShowEdit,
+  handleShowDelete,
+  handleCloseModal,
+  createSchedule,
+  editSchedule,
+  removeSchedule
+}): ReactElement => {
   return (
     <S.AdminMainWrap>
       <MainS.MainLeft>
         <Schedule />
-        <Timetable />
       </MainS.MainLeft>
       <MainS.MainRight>
-        <ScheduleDetail handleClickShowModal={handleClickShowModal} />
+        <ScheduleDetail
+          handleShowAdd={handleShowAdd}
+          handleShowEdit={handleShowEdit}
+          handleShowDelete={handleShowDelete}
+        />
       </MainS.MainRight>
       {modal &&
-        (modalType === 'add' || modalType === 'edit' ? (
+        (modalType === ADD || modalType === EDIT ? (
           <ScheduleModal
             type={modalType}
-            handleClickCloseModal={handleClickCloseModal}
+            handleCloseModal={handleCloseModal}
+            createSchedule={createSchedule}
+            editSchedule={editSchedule}
           />
         ) : (
-          <DeleteScheduleModal handleClickCloseModal={handleClickCloseModal} />
+          <DeleteScheduleModal
+            handleCloseModal={handleCloseModal}
+            removeSchedule={removeSchedule}
+          />
         ))}
     </S.AdminMainWrap>
   );

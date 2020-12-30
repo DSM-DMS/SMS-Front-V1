@@ -1,18 +1,22 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import { Hr } from '../../Board/styles';
-import { FacebookIcon } from '../../../../assets';
-import { customSelector } from '../../../../lib/api';
+import React, { FC } from "react";
+import * as S from "./styles";
+import { Hr } from "../../Board/styles";
+import { FacebookIcon } from "../../../../assets";
+import { customSelector } from "../../../../lib/utils";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../modules/reducer";
 
 const InfoHeader: FC = () => {
-  const { name, date } = customSelector((state) => state.poster.wanted.detail);
+  const { name, end_period, start_period, link } = useSelector(
+    (state: stateType) => state.poster.wanted.detail
+  );
   return (
     <>
       <S.Container>
         <S.Title>{name}</S.Title>
         <S.FlexDiv>
-          <div>{date}</div>
-          <S.FaceBookBtn>
+          <div>{start_period}</div>
+          <S.FaceBookBtn href={link}>
             <img src={FacebookIcon} />
             지원하기
           </S.FaceBookBtn>

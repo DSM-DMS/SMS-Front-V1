@@ -1,74 +1,89 @@
-import React, { FC, ReactElement, memo, useCallback } from 'react';
-import * as S from './styles';
-import { useHistory } from 'react-router';
-import { HashTag } from '../Info/Body/Sub/styles';
+import React, {
+  FC,
+  ReactElement,
+  memo,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
+import * as S from "./styles";
+import { useHistory } from "react-router";
+import { HashTag } from "../Info/Body/Sub/styles";
+import { CircleInfo, WantedInfo } from "../../../modules/type/poster";
+import { apiDefault, getStudentData } from "../../../lib/api/client";
+import { getImgUrl } from "../../../lib/utils";
+import { StudentInfo } from "../../../modules/type/user";
 
-export interface WantedCircleBoxData {
-  name: string;
-  description: string;
-  field: string;
-  job: string[];
-  where: string;
-  grade: string;
-  imgSrc: string;
-  date?: string;
-}
-
-const dateParse = (date: string): ReactElement | string => {
-  if (!date) return '\n|';
-  if (!date) return '\n상시모집';
-
-  const [date1, date2, date3] = date.split(' ');
-
+const dateParse = (
+  startDateStr: string,
+  endDateStr: string
+): ReactElement | string => {
+  if (!endDateStr) return <S.Date>상시채용</S.Date>;
+  const [endYear, endMonth, endDate] = endDateStr.split("-");
   return (
-    <>
-      <div>{date1}</div>
+    <S.Date>
+      <div>{startDateStr}</div>
       <S.Date>
-        <span>~</span> <span>{date3}</span>
+        <span>-</span>
+        <span>
+          {endMonth}-{endDate}
+        </span>
       </S.Date>
-    </>
+    </S.Date>
   );
 };
 
-const WantedCircleBox: FC<WantedCircleBoxData> = ({
-  name,
-  description,
-  job,
-  field,
-  where,
-  grade,
-  date,
-  imgSrc,
+const WantedCircleBox: FC<WantedInfo> = ({
+  club_uuid,
+  end_period,
+  recruit_concept,
+  recruitment_uuid,
+  recruit_members,
+  start_period
 }) => {
+  const [circleInfo, setCircleInfo] = useState<CircleInfo | null>(null);
+
   const history = useHistory();
   const handleClick = useCallback(() => {
-    history.push(`/circles/wanted/${name}`);
+    history.push(`/circles/wanted/${recruitment_uuid}`);
+  }, []);
+
+  useEffect(() => {
+    apiDefault()
+      .get(`/clubs/uuid/${club_uuid}`)
+      .then(res => {
+        setCircleInfo(res.data);
+      });
   }, []);
 
   return (
-    <S.Container onClick={handleClick}>
-      <div>
-        <S.Header>
-          <S.CircleName>{name}</S.CircleName>
-          <div>{where}</div>
-        </S.Header>
-        <S.CircleIntroduce>{description}</S.CircleIntroduce>
-        <S.WantedJob>
-          {job.map((str) => (
-            <div>*{str}</div>
-          ))}
-        </S.WantedJob>
-      </div>
-      <S.Footer>
+    circleInfo && (
+      <S.Container onClick={handleClick}>
         <div>
-          <div>
-            <HashTag>{field}</HashTag>
-          </div>
+          <S.Header>
+            <S.CircleName>{circleInfo.name}</S.CircleName>
+            <div>{circleInfo.location}</div>
+          </S.Header>
+          <S.CircleIntroduce>{recruit_concept}</S.CircleIntroduce>
+          <S.WantedJob>
+            {recruit_members.map(({ field, grade, number }) => (
+              <div>
+                -{grade}학년 {field}분야 {number}명
+              </div>
+            ))}
+          </S.WantedJob>
         </div>
-        <div>{dateParse(date)}</div>
-      </S.Footer>
-      <img src={imgSrc} />
-    </S.Container>
+        <S.Footer>
+          <div>
+            <div>
+              <HashTag>{circleInfo.field}</HashTag>
+            </div>
+          </div>
+          <S.DateWrap>{dateParse(start_period, end_period)}</S.DateWrap>
+        </S.Footer>
+        <img src={getImgUrl(circleInfo.logo_uri)} />
+      </S.Container>
+    )
   );
 };
 

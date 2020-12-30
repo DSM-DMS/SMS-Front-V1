@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -15,9 +15,10 @@ export const FlexDiv = styled.div`
   align-items: center;
 `;
 
-export const FaceBookBtn = styled.button`
+export const FaceBookBtn = styled.a`
   background: #517aff;
   border: none;
+  text-decoration: none;
   border-radius: 3px;
   padding: 10px 15px;
   color: white;

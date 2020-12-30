@@ -1,5 +1,6 @@
-import React, { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { FC } from "react";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+
 import {
   AdminOutingCertifiedListContainer,
   AdminOutingNowListContainer,
@@ -8,15 +9,28 @@ import {
   AdminNoticeAllListContainer,
   AdminNoticeAllDetailContainer,
   AdminNoticeMineContainer,
-  AdminNoticeMineDetailContainer,
-  AdminNoticeWritingContainer
-} from '../containers';
-import { GlobalInnerBody } from '../GlobalStyle';
+  AdminNoticeWritingContainer,
+  LoginContainer,
+  PasswordChangeContainer
+} from "../containers";
+import { GlobalInnerBody } from "../GlobalStyle";
 
 const AdminRouter: FC<{}> = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
+  const noWhiteBack: string[] = ["login", "home", "pw-change"];
+
   return (
-    <GlobalInnerBody>
+    <GlobalInnerBody
+      isBackNeed={!noWhiteBack.some(path => pathname.includes(path))}
+    >
       <Switch>
+        <Route
+          exact
+          path="/admin/pw-change"
+          component={PasswordChangeContainer}
+        />
+        <Route exact path="/admin/login" component={LoginContainer} />
         <Route exact path="/admin/home" component={AdminMainContainer} />
         <Route exact path="/admin/schedule" />
         <Route
@@ -52,13 +66,14 @@ const AdminRouter: FC<{}> = () => {
         <Route
           exact
           path="/admin/notice/mine/:id"
-          component={AdminNoticeMineDetailContainer}
+          component={AdminNoticeAllDetailContainer}
         />
         <Route
           exact
           path="/admin/notice/writing"
           component={AdminNoticeWritingContainer}
         />
+        <Redirect path="/admin" to="/admin/home" />
       </Switch>
     </GlobalInnerBody>
   );

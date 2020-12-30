@@ -1,23 +1,29 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import { DetailContent, Hr, Where, People } from '../../default';
-import { customSelector } from '../../../../../lib/api';
+import React, { FC, useCallback } from "react";
+import * as S from "./styles";
+import { DetailContent, Hr, Where, People } from "../../default";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../../modules/reducer";
+import PeoepleContainer from "../../../../../containers/default/AllBodyPeopleContainer";
 
 const AllMain = () => {
-  const {
-    introduce,
-    leader,
-    peoples: { one, two, three },
-    where,
-  } = customSelector((state) => state.poster.all.detail);
+  const allMainPeoeple = useCallback(
+    (store: stateType) => ({
+      members: store.poster.all.detail.members,
+      leader_uuid: store.poster.wanted.detail.leader_uuid
+    }),
+    []
+  );
+  const { introduction, location } = useSelector(
+    (state: stateType) => state.poster.all.detail
+  );
   return (
     <S.Container>
       <S.P>동아리 소개</S.P>
-      <DetailContent>{introduce}</DetailContent>
+      <DetailContent>{introduction}</DetailContent>
       <Hr />
-      <People leader={leader} three={three} two={two} one={one} />
+      <PeoepleContainer callback={allMainPeoeple} />
       <Hr />
-      <Where>{where}</Where>
+      <Where>{location}</Where>
     </S.Container>
   );
 };

@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+import { STUDENT, UserType } from "../../modules/action/header";
 
 export const MainWrap = styled.div`
   display: flex;
   justify-content: center;
-  background-color: #f7f6ff;
 `;
 
 export const MainLeft = styled.div`
@@ -32,6 +34,7 @@ export const MainContentTitleCommon = styled.h2`
 `;
 
 export const Schedule = styled(MainContentCommon)`
+  flex: 1;
   margin-bottom: 15px;
   margin-right: 15px;
 `;
@@ -67,7 +70,7 @@ export const Timetable = styled(MainContentCommon)`
 export const TimetableTitle = styled(MainContentTitleCommon)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 8px 4px 8px 12px;
   border-bottom: 2px solid #dddddd;
 `;
@@ -84,11 +87,11 @@ export const TimetableItem = styled.li`
   justify-content: center;
   height: 100px;
   padding: 8px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  word-break: keep-all;
+  word-break: break-all;
 `;
 
 export const TimetableItemDate = styled.span`
@@ -101,88 +104,43 @@ export const TimetableItemDate = styled.span`
 
 export const FiltersWrap = styled.div`
   display: flex;
+  align-items: center;
+  span {
+    margin: 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
-export const FilterReset = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: 0 8px;
+export const TimetableSelector = styled.button`
   border: 0;
-  border-radius: 8px;
-  background: #f6f6f6;
-  font-size: 16px;
-  font-weight: bold;
-  > img.rolling {
-    animation: roll 1s alternate;
-    @keyframes roll {
-      from {
-        transform: rotate(0);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-  }
-`;
-
-export const FiltersList = styled.ul`
-  position: relative;
-  margin: 0 8px;
-  background: #f6f6f6;
-  font-size: 16px;
-  font-weight: normal;
-  &:hover > ul {
-    display: block;
-  }
-`;
-
-export const FiltersListSelectedWrap = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 8px;
-  padding: 4px 8px;
-  cursor: pointer;
-`;
-
-export const FiltersListSelected = styled.span`
-  margin-right: 8px;
-`;
-
-export const FiltersListInner = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  display: none;
-  width: 100%;
-  text-align: center;
-  background: #f6f6f6;
-  animation: slide 300ms;
-  z-index: 10;
-  @keyframes slide {
-    from {
-      top: 0;
-      opacity: 0;
-    }
-    to {
-      top: 100%;
-      opacity: 1;
-    }
-  }
-`;
-
-export const FiltersListInnerItem = styled.li`
-  padding: 4px 0;
-  transition: 300ms;
-  cursor: pointer;
+  background-color: transparent;
   &:hover {
-    background: #e9e9e9;
+    outline: 1px solid #e2e2e2;
   }
+`;
+
+export const TimetableChangerCommon = styled.div`
+  width: 0px;
+  height: 0px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+`;
+
+export const TimetableChangerLeft = styled(TimetableChangerCommon)`
+  border-right: 8px solid transparent;
+  border-right-color: gray;
+`;
+
+export const TimetableChangerRight = styled(TimetableChangerCommon)`
+  border-left: 8px solid transparent;
+  border-left-color: gray;
 `;
 
 export const ScheduleDetail = styled(MainContentCommon)`
-  height: 75%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   margin-bottom: 15px;
 `;
 
@@ -201,33 +159,17 @@ export const DetailTitle = styled(MainContentTitleCommon)``;
 
 export const DetailAddSchedule = styled.button`
   position: relative;
-  border: 1px solid #dddddd;
   padding: 4px 6px;
+  border: 1px solid black;
   border-radius: 8px;
   background-color: white;
   font-size: 14px;
   transition: 300ms;
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 25%;
-    height: 100%;
-    border-radius: 8px;
-    background-color: rgba(35, 178, 173, 0.3);
-    transition: all ease-in 300ms;
-  }
-  &:hover::before {
-    width: 100%;
-    background-color: rgba(35, 178, 173, 0.6);
+  &:hover {
+    transform: scale(1.02);
   }
   &:active {
     transform: scale(0.98);
-  }
-  > span {
-    position: relative;
-    color: #868686;
   }
 `;
 
@@ -239,17 +181,21 @@ export const DetailHead = styled.p`
 
 export const DetailHeadData = styled.span`
   display: inline-block;
-  vertical-align: middle;
+  margin-right: 4px;
   &:first-child {
-    width: 55%;
+    width: 50%;
   }
   &:last-child {
     width: 25%;
   }
 `;
 
-export const DetailBody = styled.div`
-  height: 320px;
+interface DetailScrollColor {
+  type: UserType;
+}
+
+export const DetailBody = styled.div<DetailScrollColor>`
+  height: 470px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 2px;
@@ -258,34 +204,39 @@ export const DetailBody = styled.div`
     background: white;
   }
   ::-webkit-scrollbar-thumb {
-    background: #5323b2;
+    background: ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
     border-radius: 16px;
   }
 `;
 
 export const DetailBodyItem = styled.div`
   position: relative;
+  display: flex;
+  align-items: center;
   padding: 8px 4px 8px 12px;
   border-top: 1px solid #dddddd;
   border-bottom: 1px solid #dddddd;
   font-size: 12px;
+  &.prev {
+    color: #888888;
+    background-color: #fbfbfb;
+    opacity: 0.5;
+  }
 `;
 
 export const DetailBodyItemData = styled.span`
   display: inline-block;
+  margin-right: 4px;
   &:first-child {
-    width: 55%;
+    width: 50%;
   }
-  &:last-child {
+  &:nth-child(2) {
     width: 25%;
   }
 `;
 
 export const DetailBodyItemButtonWrap = styled.div`
-  position: absolute;
-  top: 50%;
-  right: 3%;
-  transform: translateY(-50%);
+  flex: 1;
 `;
 
 export const DetailBodyItemButton = styled.button`
@@ -295,17 +246,21 @@ export const DetailBodyItemButton = styled.button`
   background: #1a73e8;
   color: white;
   font-size: 10px;
+  transition: 0.2s;
   &:first-child {
     margin-right: 4px;
-    background-color: #1a73e8;
+    background-color: #038fff;
   }
   &:last-child {
-    background-color: #c70000;
+    background-color: #ff5555;
+  }
+  &:hover {
+    opacity: 0.7;
   }
 `;
 
 export const Outing = styled(MainContentCommon)`
-  height: 40%;
+  height: 30%;
 `;
 
 export const OutingTitle = styled(MainContentTitleCommon)`
@@ -313,7 +268,7 @@ export const OutingTitle = styled(MainContentTitleCommon)`
   border-bottom: 2px solid #dddddd;
 `;
 
-export const OutingItem = styled.div`
+export const OutingItem = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -321,10 +276,16 @@ export const OutingItem = styled.div`
   padding: 6px 12px;
   border: 1px solid #dddddd;
   border-radius: 8px;
+  color: black;
+  text-decoration: none;
   cursor: pointer;
   &:first-child {
+    border: 0;
     color: white;
     background-color: #ff5555;
+  }
+  &:hover {
+    filter: drop-shadow(3px 1px 5px #888888);
   }
 `;
 

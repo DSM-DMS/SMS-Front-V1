@@ -2,14 +2,14 @@ import React, { FC, useState, useCallback, ChangeEvent } from "react";
 import { NavIconNoticeBlue } from "../../../assets";
 import { Board, ListPageHeader } from "../../default";
 import * as S from "./styles";
-import { makeFilterFunc, customSelector } from "../../../lib/api";
-import { BoardObj } from "../../default/Board/Board";
-
-const names = ["번호", "제목", "날짜", "조회수"];
+import { makeFilterFunc } from "../../../lib/utils";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
+import { BoardListItem } from "../../../lib/api/payloads/Board";
 
 const NoticeContainer: FC = () => {
-  const data = customSelector(state => state.board.list);
-  const noticeFilterFunc = makeFilterFunc<BoardObj>(
+  const data = useSelector((state: stateType) => state.notice.list);
+  const noticeFilterFunc = makeFilterFunc<BoardListItem>(
     data,
     ({ title }, keyword) => title.includes(keyword)
   );
@@ -25,7 +25,10 @@ const NoticeContainer: FC = () => {
         title="공지사항"
         imgSrc={NavIconNoticeBlue}
       />
-      <Board names={names} data={noticeFilterFunc(keyword)} />
+      <Board
+        names={["번호", "제목", "날짜", "글쓴이", "조회수"]}
+        data={noticeFilterFunc(keyword)}
+      />
     </S.Container>
   );
 };

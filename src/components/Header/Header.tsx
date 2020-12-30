@@ -1,23 +1,64 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-import * as S from './style';
+import * as S from "./style";
 
-import { stateType } from '../../modules/reducer';
-import { setUser } from '../../modules/action/header';
+import { STUDENT } from "../../modules/action/header";
+import { stateType } from "../../modules/reducer";
+import { pageMove } from "../../modules/action/page";
 
-const Header: FC<{}> = () => {
+interface Props {
+  logout: () => void;
+  moveLogin: () => void;
+}
+
+const Header: FC<Props> = ({ logout, moveLogin }) => {
   const dispatch = useDispatch();
-  const { info } = useSelector((state: stateType) => state.header);
+  const { type, grade, group, name, student_number } = useSelector(
+    (state: stateType) => state.header
+  );
 
-  useEffect(() => {
-    dispatch(setUser('2학년 3반  1번 강신희'));
-  }, []);
+  const movePasswordChange = () => {
+    dispatch(pageMove(""));
+  };
+
+  if (!type) {
+    return (
+      <S.HeaderWrap>
+        <S.Logout onClick={moveLogin}>로그인</S.Logout>
+      </S.HeaderWrap>
+    );
+  }
 
   return (
     <S.HeaderWrap>
-      <span>{info}</span>
-      <button>로그아웃</button>
+      {type === STUDENT ? (
+        <>
+          <S.UserInfo>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</S.UserInfo>
+          <S.MovePasswordChange to="/pw-change" onClick={movePasswordChange}>
+            비밀번호 변경
+          </S.MovePasswordChange>
+        </>
+      ) : (
+        <>
+          <S.UserInfo>{`${name} 선생님`}</S.UserInfo>
+          <S.MovePasswordChange
+            to="/admin/pw-change"
+            onClick={movePasswordChange}
+          >
+            비밀번호 변경
+          </S.MovePasswordChange>
+        </>
+      )}
+
+      <S.Logout
+        onClick={() => {
+          logout();
+          moveLogin();
+        }}
+      >
+        로그아웃
+      </S.Logout>
     </S.HeaderWrap>
   );
 };

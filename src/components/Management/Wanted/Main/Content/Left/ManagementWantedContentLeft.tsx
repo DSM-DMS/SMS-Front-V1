@@ -1,6 +1,8 @@
-import React, { ChangeEvent, FC, MouseEvent } from "react";
+import React, { ChangeEvent, FC, MouseEvent, useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
+import { addBtn } from "../../../../../../assets";
+import { WantedInfo, WantedObj } from "../../../../../../modules/type/poster";
 import * as S from "../../../../../../styles/CircleWantedDetail";
 import CircleWantedInputHeader from "../../../../../default/Input/CircleWanted/Header/CircleWantedInputHeader";
 import CircleWantedInputItem from "../../../../../default/Input/CircleWanted/Item/CircleWantedItem";
@@ -12,24 +14,61 @@ interface DateType {
   to: string;
 }
 
-interface wantedInputData {
-  [key: string]: {
-    grade: string;
-    description: string;
-    number: string;
-  };
+export interface WantedManagement extends WantedObj {
+  id: number;
+  menuIsOpen: boolean;
 }
 
 const ManagementWantedContentLeft: FC = () => {
   const [wantedAlways, setWantedAlways] = useState<boolean>(false);
-  const [wantedData, setWantedData] = useState<wantedInputData>({});
+  const [wantedData, setWantedData] = useState<WantedManagement[]>([]);
   const [date, setDate] = useState<DateType>({
     from: "",
     to: ""
   });
 
-  const wantedInputChangeHandler = useCallback(({ name, data }) => {
-    setWantedData(prev => ({ ...prev, [name]: data }));
+  const idLen = useRef<number>(0);
+
+  const addList = useCallback(() => {
+    setWantedData(prev =>
+      prev.concat({
+        field: "",
+        grade: 0,
+        number: 0,
+        id: idLen.current++,
+        menuIsOpen: false
+      })
+    );
+  }, []);
+
+  const changeMenuIsOpen = useCallback((id: number) => {
+    setWantedData(prev =>
+      prev.map(data =>
+        data.id === id ? { ...data, menuIsOpen: !data.menuIsOpen } : data
+      )
+    );
+  }, []);
+
+  const changeGrade = useCallback((id: number, grade: number) => {
+    setWantedData(prev =>
+      prev.map(data => (data.id === id ? { ...data, grade } : data))
+    );
+  }, []);
+
+  const changeNumber = useCallback((id: number, number: number) => {
+    setWantedData(prev =>
+      prev.map(data => (data.id === id ? { ...data, number } : data))
+    );
+  }, []);
+
+  const changeField = useCallback((id: number, field: string) => {
+    setWantedData(prev =>
+      prev.map(data => (data.id === id ? { ...data, field } : data))
+    );
+  }, []);
+
+  const deleteData = useCallback((id: number) => {
+    setWantedData(prev => prev.filter(data => data.id !== id));
   }, []);
 
   const dateChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -88,18 +127,22 @@ const ManagementWantedContentLeft: FC = () => {
           <S.GrayTile>&gt; 모집 대상</S.GrayTile>
           <S.InputWrap>
             <CircleWantedInputHeader />
-            <CircleWantedInputItem
-              name="wanted1"
-              onChange={wantedInputChangeHandler}
-            />
-            <CircleWantedInputItem
-              name="wanted2"
-              onChange={wantedInputChangeHandler}
-            />
-            <CircleWantedInputItem
-              name="wanted3"
-              onChange={wantedInputChangeHandler}
-            />
+            {wantedData.map(data => {
+              return (
+                <CircleWantedInputItem
+                  {...data}
+                  key={data.id}
+                  changeField={changeField}
+                  changeGrade={changeGrade}
+                  changeMenuIsOpen={changeMenuIsOpen}
+                  changeNumber={changeNumber}
+                  deleteData={deleteData}
+                />
+              );
+            })}
+            <S.AddBtn onClick={addList}>
+              <img src={addBtn} />
+            </S.AddBtn>
           </S.InputWrap>
         </S.MarginHeight>
       </S.MarginHeight>

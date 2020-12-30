@@ -1,12 +1,21 @@
-import React, { FC } from "react";
+import React, { FC, useEffect, useRef } from "react";
 import * as S from "./styles";
 import { DetailPageHeader } from "../../../components/default";
 import { NavIconNoticeBlue } from "../../../assets";
 import NoticeDetailBody from "./NoticeDetailBody/NoticeDetailBody";
-import { customSelector } from "../../../lib/api";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
+import PageMove from "../../default/PageMove/PageMove";
 
 const NoticeDetail: FC = () => {
-  const { content } = customSelector(state => state.board.detail);
+  const {
+    content,
+    title,
+    next_title,
+    previous_title,
+    next_announcement_uuid,
+    previous_announcement_uuid
+  } = useSelector((state: stateType) => state.notice.detail);
 
   return (
     <S.Container>
@@ -17,8 +26,15 @@ const NoticeDetail: FC = () => {
         imgSrc={NavIconNoticeBlue}
         href="/notice"
       />
-      <S.P>대덕사이버고등학교에 다니고 새인생이 시작됐다~</S.P>
+      <S.P>{title}</S.P>
       <NoticeDetailBody content={content} />
+      <PageMove
+        baseHref="/notice"
+        nextAnnouncementUuid={next_announcement_uuid}
+        nextTitle={next_title}
+        previousAnnouncementUuid={previous_announcement_uuid}
+        previousTitle={previous_title}
+      />
     </S.Container>
   );
 };

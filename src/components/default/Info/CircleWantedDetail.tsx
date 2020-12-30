@@ -1,8 +1,7 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import WantedHeader from './Header/WantedHeader';
-import WantedBody from './Body/WantedBody';
-import { CircleWantedDetail } from '../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer';
+import React, { FC } from "react";
+import * as S from "./styles";
+import WantedHeader from "./Header/WantedHeader";
+import WantedBody from "./Body/WantedBody";
 
 const CircleWantedDetail: FC = () => {
   return (
