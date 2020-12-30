@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-interface Track {
-  height: number;
-}
-
 const BASE_BACK_COLOR = "#f1f1f1";
 
 export const ManagementInfoWrap = styled.div`
@@ -75,17 +71,6 @@ export const ClubField = styled(ClubCommonStyle)``;
 export const ClubFieldLabelWrap = styled.div`
   display: flex;
   align-items: center;
-`;
-
-export const ClubFieldLabel = styled.label`
-  margin-right: 8px;
-  cursor: pointer;
-`;
-
-export const ClubFieldLabelRadio = styled.input`
-  margin: 0;
-  margin-right: 2px;
-  cursor: pointer;
 `;
 
 export const ClubLocation = styled(ClubCommonStyle)``;
