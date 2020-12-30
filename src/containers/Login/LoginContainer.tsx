@@ -122,15 +122,8 @@ const LoginContainer: FC<Props> = () => {
         }
 
         setErrorMessage(initErrorState);
-
         dispatch(pageMove("홈"));
-        dispatch(
-          getTimetablesSaga(
-            today.getFullYear(),
-            today.getMonth() + 1,
-            today.getDate()
-          )
-        );
+
         history.push("./home");
       } catch (err) {
         const data = err?.response?.data,
