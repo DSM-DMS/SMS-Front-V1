@@ -19,6 +19,20 @@ interface ScheduleBuffer {
   6: ResSchedule[];
 }
 
+enum BackgroundColor {
+  "#1e9ce2" = 0,
+  "#f2532b" = 1,
+  "#3ab57a" = 2
+}
+
+const date = new Date();
+const fixedDate = new Date(
+  date.getFullYear(),
+  date.getMonth(),
+  date.getDate(),
+  9
+);
+
 const CalendarDate: React.FC<Props> = () => {
   const {
     main: { schedulerDate, schedules },
@@ -28,10 +42,15 @@ const CalendarDate: React.FC<Props> = () => {
   const padNum = (num: number): string => (num < 10 ? `0${num}` : num + "");
 
   const onClickDate = (e: MouseEvent<HTMLDivElement>) => {
-    e.currentTarget.parentElement.childNodes.forEach(el => {
-      (el as HTMLDivElement).classList.remove("selected");
+    const classList = e.currentTarget.classList;
+    if (classList.contains("selected")) {
+      classList.remove("selected");
+      return;
+    }
+    Array.from(e.currentTarget.parentNode.children).forEach(el => {
+      el.classList.remove("selected");
     });
-    e.currentTarget.classList.add("selected");
+    classList.add("selected");
   };
 
   const getDateJSX = (
@@ -45,7 +64,6 @@ const CalendarDate: React.FC<Props> = () => {
       onClick={styling.match("curr") ? onClickDate : () => {}}
       type={type as UserType}
     >
-      {styling.match("curr") && <S.CalendarMore>+</S.CalendarMore>}
       <S.CalendarDaySpan>{children && padNum(children)}</S.CalendarDaySpan>
     </S.CalendarDate>
   );
@@ -109,6 +127,35 @@ const CalendarDate: React.FC<Props> = () => {
     return { sWeek, eWeek, sDay, eDay };
   };
 
+  const getOverlapCondition = (
+    i: number,
+    prev: number,
+    prevOverlapCount: number,
+    overlapCount: number,
+    sameCount: number
+  ) => {
+    let overlap: number;
+    if (overlapCount === 0) overlap = overlapCount;
+    else if (sameCount > 0) overlap = i;
+    else if (prevOverlapCount === overlapCount) {
+      if (sameCount > 0) overlap = i;
+      else if (prevOverlapCount === overlapCount)
+        overlap = prevOverlapCount - overlapCount;
+      else {
+        overlap =
+          prev - overlapCount <= 0 ? prev + overlapCount : prev - overlapCount;
+      }
+    } else {
+      if (overlapCount < i) overlap = overlapCount;
+      else if (overlapCount > i) overlap = i;
+      else if (overlapCount > prevOverlapCount)
+        overlap = prevOverlapCount + overlapCount;
+      else overlap = overlapCount;
+    }
+
+    return overlap;
+  };
+
   const initializeBuffer = useCallback(
     (schedules: ResSchedule[], buffer: ScheduleBuffer) => {
       schedules.forEach(schedule => {
@@ -151,36 +198,26 @@ const CalendarDate: React.FC<Props> = () => {
               }
             );
 
-            if (overlapCount === 0) overlap = overlapCount;
-            else if (sameCount > 0) overlap = i;
-            else if (prevOverlapCount === overlapCount) {
-              if (sameCount > 0) overlap = i;
-              else if (prevOverlapCount === overlapCount)
-                overlap = prevOverlapCount - overlapCount;
-              else {
-                overlap =
-                  prev - overlapCount <= 0
-                    ? prev + overlapCount
-                    : prev - overlapCount;
-              }
-            } else {
-              if (overlapCount < i) overlap = overlapCount;
-              else if (overlapCount > i) overlap = i;
-              else if (overlapCount > prevOverlapCount)
-                overlap = prevOverlapCount + overlapCount;
-              else overlap = overlapCount;
-            }
+            overlap = getOverlapCondition(
+              i,
+              prev,
+              prevOverlapCount,
+              overlapCount,
+              sameCount
+            );
 
             if (overlap < 3) {
               result.push(
                 <S.CalendarBar
                   key={schedule_uuid}
-                  sDay={sDay}
+                  backgroundColor={BackgroundColor[overlap]}
+                  className={+fixedDate > eDate ? "prev" : ""}
                   eDay={eDay}
-                  weekOfMonth={+week}
                   overlap={overlap}
+                  sDay={sDay}
+                  weekOfMonth={+week}
                 >
-                  {detail}
+                  <S.CalendarBarDetail>{detail}</S.CalendarBarDetail>
                 </S.CalendarBar>
               );
             }
@@ -217,7 +254,6 @@ const CalendarDate: React.FC<Props> = () => {
   return (
     <>
       {memoizedCalendar}
-      {/* {setScheduleData} */}
       {scheduler}
     </>
   );
