@@ -1,12 +1,26 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import { DetailPageHeader } from "../../../../components/default";
 import { NavIconNoticeBlue } from "../../../../assets";
 import * as S from "./styles";
 import NoticeDetailBody from "../../../../components/Notice/Detail/NoticeDetailBody/NoticeDetailBody";
 import { customSelector } from "../../../../lib/utils";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../modules/reducer";
+import PagiNation from "../../../default/PagiNation/PagiNation";
+import PageMove from "../../../default/PageMove/PageMove";
 
 const CircleNoticeDetailContainer: FC = () => {
-  const { content } = customSelector(state => state.board.detail);
+  const {
+    content,
+    date,
+    next_announcement_uuid,
+    next_title,
+    previous_announcement_uuid,
+    previous_title,
+    title,
+    writer_name,
+    loading
+  } = useSelector((state: stateType) => state.notice.detail);
 
   return (
     <S.Container>
@@ -17,8 +31,14 @@ const CircleNoticeDetailContainer: FC = () => {
         imgSrc={NavIconNoticeBlue}
         href="/circles/notice"
       />
-      <p>대덕사이버고등학교에 다니고 새인생이 시작됐다~</p>
-      <NoticeDetailBody content={content} />
+      {loading || <NoticeDetailBody content={content} />}
+      <PageMove
+        baseHref="/circles/notice"
+        nextAnnouncementUuid={next_announcement_uuid}
+        nextTitle={next_title}
+        previousAnnouncementUuid={previous_announcement_uuid}
+        previousTitle={previous_title}
+      />
     </S.Container>
   );
 };

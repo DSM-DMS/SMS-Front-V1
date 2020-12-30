@@ -16,7 +16,8 @@ const AdminNoticeAllDetail: FC = () => {
     next_title,
     previous_announcement_uuid,
     previous_title,
-    writer_name
+    writer_name,
+    loading
   } = useSelector((state: stateType) => state.notice.detail);
   return (
     <S.Container>
@@ -27,7 +28,7 @@ const AdminNoticeAllDetail: FC = () => {
         href="/admin/notice/all"
         color="#23B2AD"
       />
-      <NoticeDetailBody content={content} />
+      {loading || <NoticeDetailBody content={content} />}
       <PageMove
         baseHref="/admin/notice/all"
         nextTitle={next_title}
