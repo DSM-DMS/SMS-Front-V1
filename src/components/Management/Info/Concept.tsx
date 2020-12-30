@@ -1,21 +1,16 @@
-import React, { FC, ReactElement, ChangeEvent, memo } from "react";
-import { useSelector } from "react-redux";
+import React, { FC, ReactElement, memo, ChangeEvent } from "react";
 
 import * as S from "./style";
 
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+interface Props {
+  clubConcept: string;
+  handleConcept: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-interface Props {}
-
-const ClubConcept: FC<Props> = (): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const { concept } = useSelector((state: stateType) => state.ManagementInfo);
-
-  const handleChangeConcept = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleConcept(e.target.value);
-  };
-
+const ClubConcept: FC<Props> = ({
+  clubConcept,
+  handleConcept
+}): ReactElement => {
   return (
     <S.ClubConcept>
       <label>
@@ -24,8 +19,8 @@ const ClubConcept: FC<Props> = (): ReactElement => {
           type="text"
           placeholder="동아리에 대해 간단하게 적어주세요."
           maxLength={30}
-          defaultValue={concept}
-          onChange={handleChangeConcept}
+          defaultValue={clubConcept}
+          onChange={handleConcept}
         />
       </label>
     </S.ClubConcept>

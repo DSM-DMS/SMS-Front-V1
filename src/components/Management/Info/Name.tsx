@@ -1,21 +1,13 @@
 import React, { ChangeEvent, FC, memo, ReactElement } from "react";
-import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+interface Props {
+  name: string;
+  handleName: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-interface Props {}
-
-const ClubName: FC<Props> = (): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const { name } = useSelector((state: stateType) => state.ManagementInfo);
-
-  const handleChangeName = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleName(e.target.value);
-  };
-
+const ClubName: FC<Props> = ({ name, handleName }): ReactElement => {
   return (
     <S.ClubName>
       <label>
@@ -25,7 +17,7 @@ const ClubName: FC<Props> = (): ReactElement => {
           placeholder="동아리 명을 입력해주세요."
           defaultValue={name}
           maxLength={30}
-          onChange={handleChangeName}
+          onChange={handleName}
         />
       </label>
     </S.ClubName>

@@ -25,7 +25,9 @@ const initUsers: string[] = [
 const MemberAddModal: FC<Props> = ({ handleCloseModal }) => {
   const handler = new ManagementInfoHandler();
   const scrollWrap = useRef<HTMLUListElement>(null);
-  const { members } = useSelector((state: stateType) => state.ManagementInfo);
+  const { member_uuids: members } = useSelector(
+    (state: stateType) => state.ManagementInfo
+  );
   const [searchQueue, setSearchQueue] = useState<string[]>([]);
   const [addQueue, setAddResult] = useState<string[]>([]);
 

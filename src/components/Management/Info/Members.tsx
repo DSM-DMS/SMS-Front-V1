@@ -7,22 +7,20 @@ import React, {
   useCallback,
   memo
 } from "react";
-import { useSelector } from "react-redux";
 
 import * as S from "./style";
 import MemberAddModal from "./MemberAddModal";
 
 import { plusMember, deleteMember } from "../../../assets";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
 
-interface Props {}
+interface Props {
+  leaderUuid: string;
+  memberUuids: string[];
+}
 
-const ClubMembers: FC<Props> = (): ReactElement => {
+const ClubMembers: FC<Props> = ({ leaderUuid, memberUuids }): ReactElement => {
   const handler = new ManagementInfoHandler();
-  const { leader, members } = useSelector(
-    (state: stateType) => state.ManagementInfo
-  );
   const [modal, setModal] = useState(false);
 
   const handleShowModal = useCallback(() => {
@@ -39,14 +37,14 @@ const ClubMembers: FC<Props> = (): ReactElement => {
 
   const handleRemoveMember = useCallback(
     (member: string) => {
-      handler.handleMembers(members.filter(m => m !== member));
+      handler.handleMembers(memberUuids.filter(m => m !== member));
     },
-    [members]
+    [memberUuids]
   );
 
   const getMembers = useMemo(
     () =>
-      members.map(member => (
+      memberUuids.map(member => (
         <S.ClubMemberItem key={member}>
           <span>{member}</span>
           <img
@@ -57,7 +55,7 @@ const ClubMembers: FC<Props> = (): ReactElement => {
           />
         </S.ClubMemberItem>
       )),
-    [members]
+    [memberUuids]
   );
 
   return (
@@ -68,7 +66,7 @@ const ClubMembers: FC<Props> = (): ReactElement => {
           <S.InputCommonStyle
             type="text"
             placeholder="1101 홍길동"
-            value={leader}
+            defaultValue={leaderUuid}
             onChange={handleChangeLeader}
           />
         </label>
