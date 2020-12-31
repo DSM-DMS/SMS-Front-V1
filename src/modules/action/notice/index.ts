@@ -1,4 +1,4 @@
-import { BoardListItem } from "../../../lib/api/payloads/Board";
+import { BoardEdit, BoardListItem } from "../../../lib/api/payloads/Board";
 import { NoticeDetail } from "../../type/notice";
 
 export const GET_NOTICE_LIST = "notice/GET_NOTICE_LIST" as const;
@@ -11,6 +11,23 @@ export const GET_CIRCLE_NOTICE_LIST_SAGA = "notice/GET_CIRCLE_NOTICE_LIST_SAGA" 
 export const GET_CIRCLE_NOTICE_DETAIL_SAGA = "notice/GET_CIRCLE_NOTICE_DETAIL_SAGA" as const;
 
 export const GET_WRITER_NOTICE_LIST_SAGA = "notice/GET_WRITER_NOTICE_LIST_SAGA" as const;
+
+export const EDIT_NOTICE_SAGA = "notice/EDIT_NOTICE_SAGA" as const;
+export const RESET_NOTICE_DETAIL = "notice/RESET_NOTICE_DETAIL" as const;
+export const START_NOTICE_DETAIL = "notice/START_NOTICE_DETAIL" as const;
+
+export const startNoticeDetail = () => ({
+  type: START_NOTICE_DETAIL
+});
+
+export const resetNoticeDetail = () => ({
+  type: RESET_NOTICE_DETAIL
+});
+
+export const editNoticeSaga = (payload: BoardEdit) => ({
+  type: EDIT_NOTICE_SAGA,
+  payload
+});
 
 export const getNoticeList = (payload: BoardListItem[]) => ({
   type: GET_NOTICE_LIST,
@@ -52,4 +69,6 @@ export type NoticeAction = ReturnType<
   | typeof getCircleNoticeDetailSaga
   | typeof getCircleNoticeListSaga
   | typeof getWriterNoticeListSaga
+  | typeof resetNoticeDetail
+  | typeof startNoticeDetail
 >;
