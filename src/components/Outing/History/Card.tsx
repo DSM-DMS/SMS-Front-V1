@@ -7,12 +7,14 @@ interface Props {
   outing: ResHistoryItem;
   openModal: () => void;
   handleCard: (outing: ResHistoryItem) => void;
+  selectOuting: (outing: ResHistoryItem) => void;
 }
 
 const HistoryCard: FC<Props> = ({
   openModal,
   outing,
-  handleCard
+  handleCard,
+  selectOuting
 }): ReactElement => {
   const {
     end_time,
@@ -46,6 +48,7 @@ const HistoryCard: FC<Props> = ({
       onClick={() => {
         openModal();
         handleCard(outing);
+        selectOuting(outing);
       }}
     >
       <S.CardTop>
