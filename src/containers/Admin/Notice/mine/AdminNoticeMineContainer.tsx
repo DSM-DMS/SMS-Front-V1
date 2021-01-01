@@ -11,7 +11,7 @@ const AdminNoticeMineContainer: FC = () => {
   const page = qs.parse(location.search).page || 0;
 
   useEffect(() => {
-    const teacherUuid = window.localStorage.getItem("teacher_uuid");
+    const teacherUuid = window.localStorage.getItem("uuid");
     dispatch(getWriterNoticeListSaga(teacherUuid));
   }, [page]);
 
