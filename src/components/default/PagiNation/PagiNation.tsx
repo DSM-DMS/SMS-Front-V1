@@ -31,6 +31,7 @@ const PagiNation: FC<Props> = ({ page }) => {
           if (pageN <= 0) pageN = 0;
           return (
             <S.PageButton
+              key={pageN}
               to={baseUrl + (pageN - 1)}
               className={page + 1 === pageN ? "active" : ""}
             >
