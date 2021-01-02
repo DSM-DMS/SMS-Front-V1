@@ -11,14 +11,10 @@ interface Props {
 }
 
 const DateInput: FC<Props> = ({ changeHandler, children, name }) => {
-  const dateRef = useRef<HTMLInputElement>();
-  const onClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    dateRef.current.click();
-  }, []);
   return (
-    <S.Container onClick={onClick}>
+    <S.Container>
       <div>{children}</div>
-      <input type="date" name={name} ref={dateRef} onChange={changeHandler} />
+      <input type="date" name={name} onChange={changeHandler} />
     </S.Container>
   );
 };

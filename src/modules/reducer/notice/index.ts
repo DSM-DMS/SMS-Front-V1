@@ -3,13 +3,19 @@ import { BoardListItem } from "../../../lib/api/payloads/Board";
 import {
   NoticeAction,
   GET_NOTICE_LIST,
-  GET_NOTICE_DETAIL
+  GET_NOTICE_DETAIL,
+  RESET_NOTICE_DETAIL,
+  START_NOTICE_DETAIL
 } from "../../action/notice";
 import { NoticeDetail } from "../../type/notice";
 
+interface LoadingNoticeDetail extends NoticeDetail {
+  loading?: boolean;
+}
+
 interface BoardState {
   list: BoardListItem[];
-  detail: NoticeDetail;
+  detail: LoadingNoticeDetail;
 }
 
 const initialState: BoardState = {
@@ -22,7 +28,8 @@ const initialState: BoardState = {
     previous_announcement_uuid: "",
     previous_title: "",
     title: "",
-    writer_name: ""
+    writer_name: "",
+    loading: false
   }
 };
 
@@ -40,7 +47,26 @@ const noticeReducer = (
     case GET_NOTICE_DETAIL: {
       return {
         ...state,
-        detail: action.payload
+        detail: {
+          ...action.payload,
+          loading: false
+        }
+      };
+    }
+    case START_NOTICE_DETAIL: {
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          loading: true
+        }
+      };
+    }
+
+    case RESET_NOTICE_DETAIL: {
+      return {
+        ...state,
+        detail: { ...initialState.detail }
       };
     }
     default: {

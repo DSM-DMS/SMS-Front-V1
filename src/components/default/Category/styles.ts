@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Triangle = styled.div`
   width: 0;
@@ -27,6 +27,22 @@ export const Category = styled.div`
       margin-left: 5px;
     }
   }
+`;
+
+export const FieldWrap = styled.div`
+  position: relative;
+`;
+
+export const Fields = styled.div<{ isOpen: boolean }>`
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  border-color: 1px solid #dddddd;
+  ${props =>
+    props.isOpen &&
+    css`
+      display: flex;
+    `}
 `;
 
 export const CategoryBtn = styled.span`

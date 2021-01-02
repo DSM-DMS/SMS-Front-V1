@@ -33,9 +33,7 @@ const ManagementNotice: FC = () => {
             placeHolder="검색할 공지 제목을 입력하세요."
             onChange={changeKeyword}
           />
-          <S.WriteNoticeBtn to="/management/notice/write">
-            새 공지
-          </S.WriteNoticeBtn>
+          <S.WriteNoticeBtn to="/management/write">새 공지</S.WriteNoticeBtn>
         </div>
       </S.Header>
       <S.BoardWrap>

@@ -1,10 +1,6 @@
 import React, { ChangeEvent, FC, MouseEvent, useMemo } from "react";
-import { useEffect } from "react";
 import { memo } from "react";
-import { useState } from "react";
-import { useCallback } from "react";
 import { deleteBtn } from "../../../../../assets";
-import { WantedObj } from "../../../../../modules/type/poster";
 import { WantedManagement } from "../../../../Management/Wanted/Main/Content/Left/ManagementWantedContentLeft";
 import * as S from "../styles";
 
@@ -36,12 +32,11 @@ const CircleWantedInputItem: FC<Props> = ({
         }}
       >
         <div>
-          <span>{grade || "전체"}</span>
+          <span>{grade || 1}</span>
           <S.Triangle />
         </div>
         {menuIsOpen && (
           <S.SelectMenu>
-            <div onClick={() => changeGrade(id, 0)}>전체</div>
             <div onClick={() => changeGrade(id, 1)}>1</div>
             <div onClick={() => changeGrade(id, 2)}>2</div>
             <div onClick={() => changeGrade(id, 3)}>3</div>

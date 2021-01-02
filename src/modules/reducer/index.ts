@@ -10,6 +10,7 @@ import ManagementInfo from "./management/info";
 import noticeReducer from "./notice";
 import outingReducer from "./outing";
 import mainReducer from "./main";
+import managementReducer from "./management";
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   json: jsonReducer,
   ManagementInfo,
   notice: noticeReducer,
-  main: mainReducer
+  main: mainReducer,
+  management: managementReducer
 });
 
 export type stateType = ReturnType<typeof rootReducer>;

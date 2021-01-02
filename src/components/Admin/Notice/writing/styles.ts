@@ -50,4 +50,11 @@ export const Button = styled.button<{
   color: ${props => props.color};
   background-color: ${props => props.backgroundColor};
   padding: 5px 20px;
+  transition: 300ms all;
+
+  &:hover {
+    border: 1px solid ${props => props.backgroundColor};
+    color: ${props => props.backgroundColor};
+    background-color: ${props => props.color};
+  }
 `;
