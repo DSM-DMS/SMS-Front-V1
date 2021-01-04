@@ -12,15 +12,25 @@ import ClubLocation from "./Location";
 import ManagementInfoBottom from "./Bottom";
 
 import { stateType } from "../../../modules/reducer";
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
 import { ManagementInfoMemberContainer } from "../../../containers";
 
 interface Props {
   clubUuid: string;
+  handleConcept: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleIntroduction: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  handleLink: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleLogo: (file: File) => void;
+  modifyClubInfo: () => Promise<void>;
 }
 
-const ManagementInfo: FC<Props> = ({ clubUuid }) => {
-  const handler = new ManagementInfoHandler();
+const ManagementInfo: FC<Props> = ({
+  clubUuid,
+  handleConcept,
+  handleIntroduction,
+  handleLink,
+  handleLogo,
+  modifyClubInfo
+}) => {
   const {
     name,
     field,
@@ -32,18 +42,6 @@ const ManagementInfo: FC<Props> = ({ clubUuid }) => {
     logo_uri,
     link
   } = useSelector((state: stateType) => state.ManagementInfo);
-
-  const handleConcept = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleClubConcept(e.target.value);
-  };
-
-  const handleIntroduction = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    handler.handleIntroduction(e.target.value);
-  };
-
-  const handleLink = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleLink(e.target.value);
-  };
 
   return (
     <S.ManagementInfoWrap>
@@ -68,11 +66,11 @@ const ManagementInfo: FC<Props> = ({ clubUuid }) => {
           />
         </S.CenterLeft>
         <S.CenterRight>
-          <ClubPicture logoUri={logo_uri} />
+          <ClubPicture logoUri={logo_uri} handleLogo={handleLogo} />
           <ClubFacebookLink link={link} handleLink={handleLink} />
         </S.CenterRight>
       </S.Center>
-      <ManagementInfoBottom />
+      <ManagementInfoBottom modifyClubInfo={modifyClubInfo} />
     </S.ManagementInfoWrap>
   );
 };
