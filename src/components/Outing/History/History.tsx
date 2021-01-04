@@ -1,4 +1,4 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, ReactElement, useCallback, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -6,9 +6,10 @@ import Card from "./Card";
 import Modal from "./Modal";
 
 import * as S from "../style";
-import { OutingHistory } from "../../../assets";
+import { OutingHistory, Refresh } from "../../../assets";
 import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
 import { subPageMove } from "../../../modules/action/page";
+import { resetOutingHistoryList } from "../../../modules/action/outing";
 
 interface Props {
   histories: ResHistoryItem[];
@@ -16,7 +17,8 @@ interface Props {
   modal: boolean;
   closeModal: () => void;
   openModal: () => void;
-  getHistories: () => Promise<void>;
+  getHistories: (historyStart: number) => Promise<void>;
+  refreshOutingHistories: () => void;
   dispatchSelectedOuting: (histories: ResHistoryItem) => void;
 }
 
@@ -27,15 +29,31 @@ const History: FC<Props> = ({
   openModal,
   closeModal,
   getHistories,
+  refreshOutingHistories,
   dispatchSelectedOuting
 }): ReactElement => {
   const dispatch = useDispatch();
+  const [selectedOuting, setSelectedOuting] = useState<ResHistoryItem>(null);
+
+  const selectOuting = useCallback((outing: ResHistoryItem) => {
+    setSelectedOuting(outing);
+  }, []);
 
   return (
     <S.HistoryWrap>
       <S.HistoryHead>
         <img src={OutingHistory} alt="history" title="history" />
-        <S.HistoryTitle>내 외출신청 내역</S.HistoryTitle>
+        <div>
+          <S.HistoryTitle>내 외출신청 내역</S.HistoryTitle>
+          <S.HistoryRefresh>
+            <img
+              src={Refresh}
+              alt="refresh outing history"
+              title="refresh outing history"
+              onClick={refreshOutingHistories}
+            />
+          </S.HistoryRefresh>
+        </div>
       </S.HistoryHead>
       <S.HistoryContent>
         {historyStart === 0 && (
@@ -59,15 +77,20 @@ const History: FC<Props> = ({
                 outing={outing}
                 openModal={openModal}
                 handleCard={dispatchSelectedOuting}
+                selectOuting={selectOuting}
               />
             ))}
           </S.HistoryCardWrap>
         )}
 
         {historyStart === histories.length && (
-          <S.MoreButton onClick={getHistories}>더 보기</S.MoreButton>
+          <S.MoreButton onClick={() => getHistories(historyStart)}>
+            더 보기
+          </S.MoreButton>
         )}
-        {modal && <Modal closeModal={closeModal} />}
+        {modal && (
+          <Modal closeModal={closeModal} selectedOuting={selectedOuting} />
+        )}
       </S.HistoryContent>
     </S.HistoryWrap>
   );

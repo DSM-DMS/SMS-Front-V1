@@ -1,4 +1,5 @@
 import React, { FC, ReactElement } from "react";
+import { useSelector } from "react-redux";
 
 import { WithModalProps } from "./Modal";
 import ModalCategory from "./ModalCategory";
@@ -6,12 +7,11 @@ import ModalCategory from "./ModalCategory";
 import * as S from "../style";
 import { OutingUser, OutingClose } from "../../../assets";
 import { OutingStatus } from "../../../lib/api/payloads/Outing";
-import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
 import { SERVER } from "../../../lib/api/client";
 
 const ModalOnlineCard: FC<WithModalProps> = ({
-  handleMode,
+  applyModal,
   closeModal,
   outingStatus
 }): ReactElement => {
@@ -31,11 +31,7 @@ const ModalOnlineCard: FC<WithModalProps> = ({
         <ModalCategory />
       </S.OnlineCardContentWrap>
       <S.OnlineCardInfo>
-        <S.OnlineCardMoveApply
-          onClick={() => {
-            handleMode("apply");
-          }}
-        >
+        <S.OnlineCardMoveApply onClick={applyModal}>
           신청 정보
         </S.OnlineCardMoveApply>
         {OutingStatus[outingStatus] === OutingStatus[3] && (

@@ -5,50 +5,64 @@ import { WithModalApply, WithModalOnlineCard } from "./WithModalAni";
 
 import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
-import { OutingStatus } from "../../../lib/api/payloads/Outing";
+import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
+
+export const APPLY_MODAL = "APPLY_MODAL" as const;
+export const ONLINE_MODAL = "ONLINE_MODAL" as const;
+
+export type ModalType = typeof APPLY_MODAL | typeof ONLINE_MODAL;
 
 interface Props {
   closeModal: () => void;
+  selectedOuting: ResHistoryItem;
 }
 
 export interface WithModalProps {
-  handleMode: (mode: "apply" | "card") => void;
+  applyModal: () => void;
+  onlineModal: () => void;
   closeModal: () => void;
   outingStatus: string;
+  selectedOuting: ResHistoryItem;
 }
 
-const Modal: FC<Props> = ({ closeModal }): ReactElement => {
+const Modal: FC<Props> = ({ closeModal, selectedOuting }): ReactElement => {
   const { outing_status } = useSelector(
     (state: stateType) => state.outing.selected
   );
-  const [mode, setMode] = useState<"apply" | "card">("apply");
+  const [mode, setMode] = useState<ModalType>(APPLY_MODAL);
 
-  const handleMode = (mode: "apply" | "card") => {
-    setMode(mode);
+  const applyModal = () => {
+    setMode(APPLY_MODAL);
+  };
+
+  const onlineModal = () => {
+    setMode(ONLINE_MODAL);
   };
 
   useEffect(() => {
-    return () => {
-      setMode("apply");
-    };
+    return applyModal;
   }, []);
 
   return (
     <S.HistoryModalWrap>
       <S.ModalBack onClick={closeModal} />
       <S.ModalContentWrap>
-        {mode === "apply" && (
+        {mode === APPLY_MODAL && (
           <WithModalApply
-            handleMode={handleMode}
+            applyModal={applyModal}
+            onlineModal={onlineModal}
             closeModal={closeModal}
             outingStatus={outing_status}
+            selectedOuting={selectedOuting}
           />
         )}
-        {mode === "card" && (
+        {mode === ONLINE_MODAL && (
           <WithModalOnlineCard
-            handleMode={handleMode}
+            applyModal={applyModal}
+            onlineModal={onlineModal}
             closeModal={closeModal}
             outingStatus={outing_status}
+            selectedOuting={selectedOuting}
           />
         )}
       </S.ModalContentWrap>

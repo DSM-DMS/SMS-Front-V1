@@ -1,13 +1,13 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { NavIconNoticeMint } from '../../../../assets';
-import { stateType } from '../../../../modules/reducer';
-import { DetailPageHeader } from '../../../default';
-import NoticeDetailBody from '../../../Notice/Detail/NoticeDetailBody/NoticeDetailBody';
-import * as S from './styles';
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import { NavIconNoticeMint } from "../../../../assets";
+import { stateType } from "../../../../modules/reducer";
+import { DetailPageHeader } from "../../../default";
+import NoticeDetailBody from "../../../Notice/Detail/NoticeDetailBody/NoticeDetailBody";
+import * as S from "./styles";
 
 const AdminNoticeMineDetail: FC = () => {
-  const data = useSelector((state: stateType) => state.board.detail);
+  const { content } = useSelector((state: stateType) => state.board.detail);
   return (
     <S.Container>
       <DetailPageHeader
@@ -17,7 +17,7 @@ const AdminNoticeMineDetail: FC = () => {
         href="/admin/notice/all"
         color="#23B2AD"
       />
-      <NoticeDetailBody content={data.content} />
+      <NoticeDetailBody content={content} />
     </S.Container>
   );
 };

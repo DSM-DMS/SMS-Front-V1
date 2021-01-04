@@ -258,6 +258,11 @@ export const FormPlace = styled.div`
 
 export const PlaceSearchWrap = styled.div`
   width: 35%;
+  > span {
+    color: #ff2200;
+    font-size: 12px;
+    font-weight: 400;
+  }
 `;
 
 export const FormPlaceInputWrap = styled.div`
@@ -627,11 +632,37 @@ export const HistoryHead = styled.header`
   margin-bottom: 24px;
   padding-bottom: 12px;
   border-bottom: 1px solid #f7f6ff;
+  > div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const HistoryTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
+`;
+
+export const HistoryRefresh = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 12px;
+  padding: 4px;
+  border-radius: 50%;
+  transition: 300ms;
+  box-sizing: border-box;
+  cursor: pointer;
+  &:hover {
+    background: #e2e2e2;
+  }
+  > img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const HistoryContent = styled.div``;
@@ -697,6 +728,10 @@ export const CardDate = styled.p<Emergency>`
 `;
 
 export const CardPlace = styled.p`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 12px;
 `;
 
@@ -705,14 +740,35 @@ export const CardBottom = styled.div``;
 const PENDING = "#0000fe";
 const REJECT = "#ff9f59";
 const APPROVE = "#62d462";
+const START = "#5741b7";
+const END = "#ff5555";
+const CERTIFY = "#0000fe";
 
 interface Status {
   status: number;
 }
 
 export const CardStatus = styled.span<Status>`
-  color: ${({ status }) =>
-    status < 0 ? REJECT : status < 3 ? PENDING : APPROVE};
+  color: ${({ status }) => {
+    switch (status) {
+      case -2:
+      case -1:
+        return REJECT;
+      case 0:
+        return PENDING;
+      case 1:
+      case 2:
+        return APPROVE;
+      case 3:
+        return START;
+      case 4:
+        return END;
+      case 5:
+        return CERTIFY;
+      default:
+        return PENDING;
+    }
+  }};
   font-size: 6px;
 `;
 
@@ -803,10 +859,8 @@ export const ModalClose = styled.img`
   cursor: pointer;
 `;
 
-export const ModalApplyOnlineCard = styled.button`
+export const ModalApplyButton = styled.button`
   position: absolute;
-  bottom: 5%;
-  right: 5%;
   background-color: #10012e;
   color: white;
   font-size: 16px;
@@ -815,6 +869,16 @@ export const ModalApplyOnlineCard = styled.button`
   border-radius: 4px;
   box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
     5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
+`;
+
+export const OutingButton = styled(ModalApplyButton)`
+  bottom: 5%;
+  right: 5%;
+`;
+
+export const OnlineCardButton = styled(ModalApplyButton)`
+  bottom: 5%;
+  right: 22%;
 `;
 
 export const ModalOnlineCard = styled.div`

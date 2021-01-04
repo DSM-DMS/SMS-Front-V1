@@ -3,7 +3,6 @@ import * as S from "./styles";
 import { Board, ListPageHeader } from "../../../../components/default";
 import { NavIconNoticeBlue } from "../../../../assets";
 import { makeFilterFunc } from "../../../../lib/utils";
-import { BoardObj } from "../../../default/Board/Board";
 import { useState } from "react";
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
@@ -20,8 +19,7 @@ const CircleNoticeList: FC = () => {
   }, []);
   const noticeFilerFunc = makeFilterFunc<BoardListItem>(
     data,
-    ({ date, title }, keyword) =>
-      title.includes(keyword) || date.includes(keyword)
+    ({ date, title }, keyword) => title.includes(keyword)
   );
   return (
     <S.Container>

@@ -1,5 +1,5 @@
 import { apiDefault } from "../client";
-import { BoardWriteData, BoardWriteFilter } from "../payloads/Board";
+import { BoardEdit, BoardWriteData, BoardWriteFilter } from "../payloads/Board";
 
 export const writeNotice = (
   type: "school" | "club",
@@ -9,6 +9,17 @@ export const writeNotice = (
   return apiDefault().post("/announcements", {
     ...data,
     ...filter,
+    type
+  });
+};
+
+export const editNotice = (type: "school" | "club", data: BoardEdit) => {
+  const { title, uuid, content, target_grade, target_group } = data;
+  return apiDefault().patch(`/announcements/uuid/${uuid}`, {
+    title,
+    content,
+    target_grade,
+    target_group,
     type
   });
 };

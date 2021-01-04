@@ -1,5 +1,7 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { toast } from "react-toastify";
+import { call, getContext, put, takeEvery } from "redux-saga/effects";
 import { apiDefault } from "../../../lib/api/client";
+import { editNotice } from "../../../lib/api/Write";
 import {
   getNoticeList,
   getNoticeListSaga as getNoticeListSagaCreater,
@@ -10,7 +12,12 @@ import {
   getNoticeDetail,
   GET_CIRCLE_NOTICE_LIST_SAGA,
   getWriterNoticeListSaga as getWriterNoticeListSagaCreater,
-  GET_WRITER_NOTICE_LIST_SAGA
+  GET_WRITER_NOTICE_LIST_SAGA,
+  GET_CIRCLE_NOTICE_DETAIL_SAGA,
+  editNoticeSaga as editNoticeSagaCreater,
+  EDIT_NOTICE_SAGA,
+  resetNoticeDetail,
+  startNoticeDetail
 } from "../../action/notice";
 
 function* getNoticeListSaga(
@@ -40,6 +47,7 @@ function* getNoticeDetailSaga(
   action: ReturnType<typeof getNoticeDetailtSagaCreater>
 ) {
   try {
+    yield put(startNoticeDetail());
     const res = yield call(
       apiDefault().get,
       `/announcements/uuid/${action.payload}`
@@ -52,12 +60,24 @@ function* getNoticeDetailSaga(
 function* getWriteNoticeListSaga(
   action: ReturnType<typeof getWriterNoticeListSagaCreater>
 ) {
-  const res = yield call(
-    apiDefault().get,
-    `/announcements/writer-uuid/${action.payload}`
-  );
-  yield put(getNoticeList(res.data.announcements));
-  console.log(res);
+  try {
+    const res = yield call(
+      apiDefault().get,
+      `/announcements/writer-uuid/${action.payload}`
+    );
+    yield put(getNoticeList(res.data.announcements));
+    console.log(res);
+  } catch (err) {}
+}
+
+function* editNoticeSaga(action: ReturnType<typeof editNoticeSagaCreater>) {
+  try {
+    const history = yield getContext("history");
+    const { content, title, uuid } = action.payload;
+    yield call(editNotice, "club", { content, uuid, title });
+    toast.dark("게시글을 수정하였습니다.");
+    history.push("/management/notice");
+  } catch (err) {}
 }
 
 function* noticeSaga() {
@@ -65,6 +85,7 @@ function* noticeSaga() {
   yield takeEvery(GET_NOTICE_DETAIL_SAGA, getNoticeDetailSaga);
   yield takeEvery(GET_CIRCLE_NOTICE_LIST_SAGA, getCircleNoticeListSaga);
   yield takeEvery(GET_WRITER_NOTICE_LIST_SAGA, getWriteNoticeListSaga);
+  yield takeEvery(EDIT_NOTICE_SAGA, editNoticeSaga);
 }
 
 export default noticeSaga;

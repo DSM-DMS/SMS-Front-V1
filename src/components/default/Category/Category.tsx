@@ -1,4 +1,5 @@
-import React, { FC, ChangeEvent, memo } from "react";
+import React, { FC, ChangeEvent, memo, useState, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { SearchInput } from "../../default";
 import * as S from "./styles";
 
@@ -10,13 +11,19 @@ interface Props {
 }
 
 const Category: FC<Props> = ({ children, onChange, placeHolder, count }) => {
+  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+  const changeMenuIsOpen = useCallback(() => {
+    setMenuIsOpen(prev => !prev);
+  }, []);
+
   return (
     <S.CategoryWrap>
       <S.Category>
-        <div>
+        <S.FieldWrap onClick={changeMenuIsOpen}>
           <S.Triangle />
           <span>분야</span>
-        </div>
+          <S.Fields isOpen={menuIsOpen}></S.Fields>
+        </S.FieldWrap>
         <div>
           {children}
           <S.Count>{count}</S.Count>
