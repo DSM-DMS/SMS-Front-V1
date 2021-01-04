@@ -15,8 +15,26 @@ export interface ResClubInfo {
   link: string;
   member_uuids: string[];
 }
+export interface ResStudentUuids {
+  student_uuids: string[];
+}
+export interface ResStudents {
+  grade: number;
+  group: number;
+  student_number: number;
+  name: string;
+  phone_number: string;
+  profile_uri: string;
+  student_uuid: string;
+}
 
 export interface ResClubUuidFromLeaderWithDefault
   extends ResClubUuidFromLeader,
     ResDefault {}
 export interface ResClubInfoWithDefault extends ResClubInfo, ResDefault {}
+export interface ResStudentUuidsWithDefault
+  extends ResStudentUuids,
+    ResDefault {}
+export interface ResStudentsWithDefault extends ResDefault {
+  students: ResStudents[];
+}
