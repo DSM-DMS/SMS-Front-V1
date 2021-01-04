@@ -1,81 +1,57 @@
-import React, {
-  FC,
-  ReactElement,
-  ChangeEvent,
-  useMemo,
-  useState,
-  useCallback,
-  memo
-} from "react";
+import React, { FC, memo, ReactElement } from "react";
 
 import * as S from "./style";
 import MemberAddModal from "./MemberAddModal";
 
-import { plusMember, deleteMember } from "../../../assets";
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
+import { plusMember } from "../../../assets";
+import { ResStudents } from "../../../lib/api/payloads/Management";
+import { formattingStudent } from "../../../lib/utils";
+import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 
 interface Props {
+  modal: boolean;
   leaderUuid: string;
+  clubUuid: string;
   memberUuids: string[];
+  students: ResStudents[];
+  members: ResStudents[];
+  leader: ResStudentInfo;
+  memberList: ReactElement[];
+  handleShowModal: () => void;
+  handleCloseModal: () => void;
+  searchStudents: (filter: string, value: string) => Promise<void>;
 }
 
-const ClubMembers: FC<Props> = ({ leaderUuid, memberUuids }): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const [modal, setModal] = useState(false);
-
-  const handleShowModal = useCallback(() => {
-    setModal(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setModal(false);
-  }, []);
-
-  const handleChangeLeader = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleLeader(e.target.value);
-  };
-
-  const handleRemoveMember = useCallback(
-    (member: string) => {
-      handler.handleMembers(memberUuids.filter(m => m !== member));
-    },
-    [memberUuids]
-  );
-
-  const getMembers = useMemo(
-    () =>
-      memberUuids.map(member => (
-        <S.ClubMemberItem key={member}>
-          <span>{member}</span>
-          <img
-            src={deleteMember}
-            alt="delete member"
-            title="delete member"
-            onClick={() => handleRemoveMember(member)}
-          />
-        </S.ClubMemberItem>
-      )),
-    [memberUuids]
-  );
-
+const ClubMembers: FC<Props> = ({
+  leaderUuid,
+  clubUuid,
+  memberUuids,
+  modal,
+  students,
+  members,
+  leader,
+  memberList,
+  handleShowModal,
+  handleCloseModal,
+  searchStudents
+}) => {
   return (
     <>
       <S.ClubLeader>
         <label>
           <p>동아리 부장</p>
-          <S.InputCommonStyle
-            type="text"
-            placeholder="1101 홍길동"
-            defaultValue={leaderUuid}
-            onChange={handleChangeLeader}
-          />
+          {leader && (
+            <S.InnerTextCommon>
+              {formattingStudent(leader)} {leader.name}
+            </S.InnerTextCommon>
+          )}
         </label>
       </S.ClubLeader>
       <S.ClubMember>
         <div>
           <p>동아리 인원</p>
           <S.ClubMemberList>
-            {getMembers}
+            {memberList}
             <S.ClubMemberAdd onClick={handleShowModal}>
               <img
                 src={plusMember}
@@ -87,7 +63,17 @@ const ClubMembers: FC<Props> = ({ leaderUuid, memberUuids }): ReactElement => {
           </S.ClubMemberList>
         </div>
       </S.ClubMember>
-      {modal && <MemberAddModal handleCloseModal={handleCloseModal} />}
+      {modal && (
+        <MemberAddModal
+          leaderUuid={leaderUuid}
+          clubUuid={clubUuid}
+          memberUuids={memberUuids}
+          students={students}
+          members={members}
+          handleCloseModal={handleCloseModal}
+          searchStudents={searchStudents}
+        />
+      )}
     </>
   );
 };
