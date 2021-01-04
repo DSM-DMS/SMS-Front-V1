@@ -24,10 +24,12 @@ export const PageTitle = styled.span`
   margin-left: 20px;
 `;
 
-export const MoveIcon = styled.div`
+export const MoveIcon = styled.div<{ rotate?: number }>`
   display: inline-block;
   margin-left: 3px;
   border-bottom: 7px solid #888888;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
+
+  transform: rotate(${props => props.rotate || 0}deg);
 `;
