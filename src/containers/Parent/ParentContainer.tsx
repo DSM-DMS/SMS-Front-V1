@@ -1,5 +1,5 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { Approve } from "../../components";
 import { ResOutingInfo } from "../../lib/api/payloads/Parent";
@@ -13,7 +13,6 @@ export class ParentActions {
 interface Props {}
 
 const ApproveContainer: FC<Props> = () => {
-  const history = useHistory();
   const { confirmUuid } = useParams<{ confirmUuid: string }>();
   const [outingInfo, setOutingInfo] = useState<ResOutingInfo>({
     outing_uuid: "",
@@ -35,6 +34,7 @@ const ApproveContainer: FC<Props> = () => {
       if (status === 404) {
         alert("외출증 코드에 해당하는 외출증이 없습니다.");
       }
+      location.href = "/login";
     }
   };
 
@@ -51,7 +51,7 @@ const ApproveContainer: FC<Props> = () => {
       await postOutingAction(outing_uuid, action, confirmUuid);
 
       alert(`자녀의 외출증을 ${typeText}했습니다.`);
-      history.push("/login");
+      location.href = "/login";
     } catch (err) {
       const data = err?.response?.data;
       const status = data?.status;
@@ -63,6 +63,7 @@ const ApproveContainer: FC<Props> = () => {
       } else if (status === 409) {
         alert("현재 학부모님이 접근할 수 없는 외출증입니다.");
       }
+      location.href = "/login";
     }
   };
 
@@ -84,7 +85,7 @@ const ApproveContainer: FC<Props> = () => {
         isNaN(+confirmUuid.substring(8, 20)))
     ) {
       alert("잘못된 접근입니다.");
-      history.push("/login");
+      location.href = "/login";
     }
   }, [confirmUuid]);
   useEffect(() => {

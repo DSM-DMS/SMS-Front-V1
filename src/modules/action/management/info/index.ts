@@ -1,10 +1,6 @@
-import {
-  DefaultRootState,
-  Selector,
-  useDispatch,
-  useSelector
-} from "react-redux";
+import { useDispatch } from "react-redux";
 import { Dispatch } from "redux";
+import { ResClubInfo } from "../../../../lib/api/payloads/Management";
 
 export const SOFTWARE = "SW개발" as const;
 export const EMBEDDED = "임베디드" as const;
@@ -12,106 +8,95 @@ export const SECURITY = "정보보안" as const;
 
 export type Fields = typeof SOFTWARE | typeof EMBEDDED | typeof SECURITY;
 
+export const INIT_INFO = "management/info/INIT_INFO" as const;
 export const SET_NAME = "management/info/SET_NAME" as const;
-export const SET_FIELD = "management/info/FIELD" as const;
-export const SET_LOCATION = "management/info/LOCATION" as const;
 export const SET_CONCEPT = "management/info/CONCEPT" as const;
-export const SET_INTRODUCE = "management/info/INTRODUCE" as const;
-export const SET_LEADER = "management/info/LEADER" as const;
+export const SET_INTRODUCTION = "management/info/INTRODUCTION" as const;
+export const SET_LEADER_UUID = "management/info/LEADER_UUID" as const;
 export const SET_MEMBERS = "management/info/MEMBERS" as const;
-export const SET_PICTURE_ID = "management/info/PICTURE_ID" as const;
-export const SET_FACEBOOK_LINK = "management/info/FACEBOOK_LINK" as const;
+export const SET_LOGO_URI = "management/info/LOGO_URI" as const;
+export const SET_LINK = "management/info/LINK" as const;
 
-const setClubName = (name: string) => ({
+const initInfo = (info: ResClubInfo) => ({
+  type: INIT_INFO,
+  payload: { info }
+});
+const setName = (name: string) => ({
   type: SET_NAME,
   payload: { name }
 });
-const setClubField = (field: Fields) => ({
-  type: SET_FIELD,
-  payload: { field }
-});
-const setClubLocation = (location: string) => ({
-  type: SET_LOCATION,
-  payload: { location }
-});
-const setClubConcept = (concept: string) => ({
+const setClubConcept = (clubConcept: string) => ({
   type: SET_CONCEPT,
-  payload: { concept }
+  payload: { clubConcept }
 });
-const setClubIntroduce = (introduce: string) => ({
-  type: SET_INTRODUCE,
-  payload: { introduce }
+const setIntroduce = (introduction: string) => ({
+  type: SET_INTRODUCTION,
+  payload: { introduction }
 });
-const setClubLeader = (leader: string) => ({
-  type: SET_LEADER,
-  payload: { leader }
+const setClubLeaderUuid = (leaderUuid: string) => ({
+  type: SET_LEADER_UUID,
+  payload: { leaderUuid }
 });
-const setClubMembers = (members: string[]) => ({
+const setClubMemberUuids = (clubMemberUuids: string[]) => ({
   type: SET_MEMBERS,
-  payload: { members }
+  payload: { clubMemberUuids }
 });
-const setClubPictureId = (pictureId: number) => ({
-  type: SET_PICTURE_ID,
-  payload: { pictureId }
+const setLogoUri = (logoUri: string) => ({
+  type: SET_LOGO_URI,
+  payload: { logoUri }
 });
-const setClubFacebookLink = (facebookLink: string) => ({
-  type: SET_FACEBOOK_LINK,
-  payload: { facebookLink }
+const setClubLink = (link: string) => ({
+  type: SET_LINK,
+  payload: { link }
 });
 
-export type ManagementInfoAction =
-  | ReturnType<typeof setClubName>
-  | ReturnType<typeof setClubField>
-  | ReturnType<typeof setClubLocation>
-  | ReturnType<typeof setClubConcept>
-  | ReturnType<typeof setClubIntroduce>
-  | ReturnType<typeof setClubLeader>
-  | ReturnType<typeof setClubMembers>
-  | ReturnType<typeof setClubPictureId>
-  | ReturnType<typeof setClubFacebookLink>;
+export type ManagementInfoAction = ReturnType<
+  | typeof initInfo
+  | typeof setName
+  | typeof setClubConcept
+  | typeof setIntroduce
+  | typeof setClubLeaderUuid
+  | typeof setClubMemberUuids
+  | typeof setLogoUri
+  | typeof setClubLink
+>;
 
 export class ManagementInfoHandler {
   dispatch: Dispatch;
-  // selector: DefaultRootState;
 
   constructor() {
     this.dispatch = useDispatch();
-    // this.selector = useSelector((state: ));
+  }
+
+  handleInit(info: ResClubInfo) {
+    this.dispatch(initInfo(info));
   }
 
   handleName(name: string) {
-    this.dispatch(setClubName(name));
+    this.dispatch(setName(name));
   }
 
-  handleField(field: Fields) {
-    this.dispatch(setClubField(field));
+  handleClubConcept(clubConcept: string) {
+    this.dispatch(setClubConcept(clubConcept));
   }
 
-  handleLocation(location: string) {
-    this.dispatch(setClubLocation(location));
+  handleIntroduction(introduction: string) {
+    this.dispatch(setIntroduce(introduction));
   }
 
-  handleConcept(concept: string) {
-    this.dispatch(setClubConcept(concept));
+  handleLeaderUuid(leaderUuid: string) {
+    this.dispatch(setClubLeaderUuid(leaderUuid));
   }
 
-  handleIntroduce(introduce: string) {
-    this.dispatch(setClubIntroduce(introduce));
+  handleClubMemberUuids(clubMemberUuids: string[]) {
+    this.dispatch(setClubMemberUuids(clubMemberUuids));
   }
 
-  handleLeader(leader: string) {
-    this.dispatch(setClubLeader(leader));
+  handleLogoUri(logoUri: string) {
+    this.dispatch(setLogoUri(logoUri));
   }
 
-  handleMembers(members: string[]) {
-    this.dispatch(setClubMembers(members));
-  }
-
-  handlePictureId(pictureId: number) {
-    this.dispatch(setClubPictureId(pictureId));
-  }
-
-  handleFacebookLink(facebookLink: string) {
-    this.dispatch(setClubFacebookLink(facebookLink));
+  handleLink(link: string) {
+    this.dispatch(setClubLink(link));
   }
 }
