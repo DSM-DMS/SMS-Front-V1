@@ -859,26 +859,36 @@ export const ModalClose = styled.img`
   cursor: pointer;
 `;
 
+export const ModalButtonWrap = styled.div`
+  text-align: right;
+`;
+
 export const ModalApplyButton = styled.button`
-  position: absolute;
-  background-color: #10012e;
-  color: white;
-  font-size: 16px;
+  margin: 0 12px;
   padding: 10px 20px;
   border: 0;
   border-radius: 4px;
   box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
     5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
-`;
-
-export const OutingButton = styled(ModalApplyButton)`
-  bottom: 5%;
-  right: 5%;
+  font-size: 16px;
 `;
 
 export const OnlineCardButton = styled(ModalApplyButton)`
-  bottom: 5%;
-  right: 22%;
+  border: 1px solid #10012e;
+  color: #10012e;
+  background-color: white;
+`;
+
+export const OutingStartBtn = styled(ModalApplyButton)`
+  border: 1px solid #10012e;
+  color: white;
+  background-color: #10012e;
+`;
+
+export const OutingEndBtn = styled(ModalApplyButton)`
+  border: 1px solid #ff5555;
+  color: white;
+  background-color: #ff5555;
 `;
 
 export const ModalOnlineCard = styled.div`

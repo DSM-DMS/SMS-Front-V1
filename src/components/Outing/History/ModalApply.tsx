@@ -62,19 +62,19 @@ const ModalApply: FC<WithModalProps> = ({
         title="close modal"
         onClick={closeModal}
       />
-      {OutingStatus[outingStatus] === OutingStatus[2] &&
-        selectedDate === todayDate && (
-          <S.OutingButton onClick={startOuting}>외출 시작</S.OutingButton>
-        )}
-      {OutingStatus[outingStatus] === OutingStatus[3] &&
-        selectedDate === todayDate && (
-          <>
-            <S.OutingButton onClick={endOuting}>외출 종료</S.OutingButton>
-            <S.OnlineCardButton onClick={onlineModal}>
-              온라인 학생증
-            </S.OnlineCardButton>
-          </>
-        )}
+      <S.ModalButtonWrap>
+        <S.OnlineCardButton onClick={onlineModal}>
+          온라인 학생증
+        </S.OnlineCardButton>
+        {OutingStatus[outingStatus] === OutingStatus[2] &&
+          selectedDate === todayDate && (
+            <S.OutingStartBtn onClick={startOuting}>외출 시작</S.OutingStartBtn>
+          )}
+        {OutingStatus[outingStatus] === OutingStatus[3] &&
+          selectedDate === todayDate && (
+            <S.OutingEndBtn onClick={endOuting}>외출 종료</S.OutingEndBtn>
+          )}
+      </S.ModalButtonWrap>
     </S.ModalApply>
   );
 };
