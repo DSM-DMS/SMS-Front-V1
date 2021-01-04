@@ -11,7 +11,8 @@ const NoticeContainer: FC = () => {
   const data = useSelector((state: stateType) => state.notice.list);
   const noticeFilterFunc = makeFilterFunc<BoardListItem>(
     data,
-    ({ title }, keyword) => title.includes(keyword)
+    ({ title, writer_name }, keyword) =>
+      title.includes(keyword) || writer_name.includes(keyword)
   );
   const [keyword, setKeyword] = useState("");
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {

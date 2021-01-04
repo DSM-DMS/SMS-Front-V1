@@ -21,7 +21,10 @@ const AdminNoticeAll: FC = () => {
       />
       <Board
         names={["번호", "제목", "날짜", "글쓴이", "조회수"]}
-        data={data.filter(({ title }) => title.includes(keyword))}
+        data={data.filter(
+          ({ title, writer_name }) =>
+            title.includes(keyword) || writer_name.includes(keyword)
+        )}
       />
     </S.Container>
   );
