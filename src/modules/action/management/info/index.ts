@@ -76,27 +76,27 @@ export class ManagementInfoHandler {
     this.dispatch(setName(name));
   }
 
-  handleConcept(clubConcept: string) {
+  handleClubConcept(clubConcept: string) {
     this.dispatch(setClubConcept(clubConcept));
   }
 
-  handleIntroduce(introduction: string) {
+  handleIntroduction(introduction: string) {
     this.dispatch(setIntroduce(introduction));
   }
 
-  handleLeader(leaderUuid: string) {
+  handleLeaderUuid(leaderUuid: string) {
     this.dispatch(setClubLeaderUuid(leaderUuid));
   }
 
-  handleMembers(clubMemberUuids: string[]) {
+  handleClubMemberUuids(clubMemberUuids: string[]) {
     this.dispatch(setClubMemberUuids(clubMemberUuids));
   }
 
-  handlePictureId(logoUri: string) {
+  handleLogoUri(logoUri: string) {
     this.dispatch(setLogoUri(logoUri));
   }
 
-  handleFacebookLink(link: string) {
+  handleLink(link: string) {
     this.dispatch(setClubLink(link));
   }
 }
