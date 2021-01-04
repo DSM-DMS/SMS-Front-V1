@@ -4,22 +4,15 @@ import * as S from "./style";
 
 interface Props {
   name: string;
-  handleName: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ClubName: FC<Props> = ({ name, handleName }): ReactElement => {
+const ClubName: FC<Props> = ({ name }): ReactElement => {
   return (
     <S.ClubName>
-      <label>
+      <div>
         <p>동아리명</p>
-        <S.InputCommonStyle
-          type="text"
-          placeholder="동아리 명을 입력해주세요."
-          defaultValue={name}
-          maxLength={30}
-          onChange={handleName}
-        />
-      </label>
+        <S.InnerTextCommon>{name}</S.InnerTextCommon>
+      </div>
     </S.ClubName>
   );
 };

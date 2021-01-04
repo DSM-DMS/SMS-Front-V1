@@ -84,15 +84,16 @@ const ClubPicture: FC<Props> = ({ logoUri }): ReactElement => {
       <div>
         <p>동아리 사진</p>
         <S.ClubPictureInner>
-          <S.ClubPictureInnerText>
+          <S.InnerTextCommon>
             💡 로고나 홍보 사진 등 동아리 관련 사진을 넣어주세요.
-          </S.ClubPictureInnerText>
+          </S.InnerTextCommon>
         </S.ClubPictureInner>
       </div>
       <input
         type="file"
         id="files"
         name="files"
+        accept="image/*"
         onChange={e => uploadFile(e.currentTarget.files)}
         hidden={true}
         ref={fileRef}

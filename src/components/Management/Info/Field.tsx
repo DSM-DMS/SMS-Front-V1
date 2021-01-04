@@ -11,7 +11,7 @@ const ClubField: FC<Props> = ({ field }): ReactElement => {
     <S.ClubField>
       <div>
         <p>분야</p>
-        <S.ClubFieldLabelWrap>{field}</S.ClubFieldLabelWrap>
+        <S.InnerTextCommon>{field}</S.InnerTextCommon>
       </div>
     </S.ClubField>
   );
