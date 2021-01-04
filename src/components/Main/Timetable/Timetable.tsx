@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import TimetableList from "./TimetableList";
 
 import * as S from "../style";
-import { SearchIcon } from "../../../assets";
 import { stateType } from "../../../modules/reducer";
 import { getTimetablesSaga } from "../../../modules/action/main";
 import { STUDENT } from "../../../modules/action/header";
