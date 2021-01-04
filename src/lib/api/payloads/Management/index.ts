@@ -27,6 +27,12 @@ export interface ResStudents {
   profile_uri: string;
   student_uuid: string;
 }
+export interface ReqClubInfo {
+  club_concept?: string;
+  introduction?: string;
+  link?: string;
+  logo?: File;
+}
 
 export interface ResClubUuidFromLeaderWithDefault
   extends ResClubUuidFromLeader,

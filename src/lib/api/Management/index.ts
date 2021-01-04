@@ -1,6 +1,7 @@
 import { apiDefault } from "../client";
 import { ResDefault } from "../payloads";
 import {
+  ReqClubInfo,
   ResClubInfoWithDefault,
   ResClubUuidFromLeaderWithDefault,
   ResStudentsWithDefault,
@@ -39,4 +40,12 @@ export const deleteMember = (clubUuid: string, studentUuid: string) => {
   return apiDefault().delete<ResDefault>(
     `/clubs/uuid/${clubUuid}/members/${studentUuid}`
   );
+};
+
+export const patchClubInfo = (clubUuid: string, fd: FormData) => {
+  return apiDefault().patch<ResDefault>(`/clubs/uuid/${clubUuid}`, fd, {
+    headers: {
+      "Content-Type": "multipart/form-data"
+    }
+  });
 };

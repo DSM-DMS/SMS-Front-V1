@@ -15,9 +15,10 @@ import { SERVER } from "../../../lib/api/client";
 
 interface Props {
   logoUri: string;
+  handleLogo: (file: File) => void;
 }
 
-const ClubPicture: FC<Props> = ({ logoUri }): ReactElement => {
+const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
   const fileRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLImageElement>(null);
   const [dragged, setDragged] = useState<boolean>(false);
@@ -53,6 +54,7 @@ const ClubPicture: FC<Props> = ({ logoUri }): ReactElement => {
 
   const readFile = (file: File) => {
     previewRef.current.src = URL.createObjectURL(file);
+    handleLogo(file);
   };
 
   const handleDragEnter = (e: DragEvent) => {
@@ -108,7 +110,7 @@ const ClubPicture: FC<Props> = ({ logoUri }): ReactElement => {
       >
         <S.ClubPicturePreview
           ref={previewRef}
-          src={`${SERVER.s3Url}/${logoUri}`}
+          src={`${SERVER.s3Url}/${logoUri}?timestamp=${+new Date()}`}
         />
         <S.ClubPictureWrap>
           <img
