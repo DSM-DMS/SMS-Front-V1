@@ -19,7 +19,7 @@ export const CategoryWrap = styled.div`
 export const Category = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 150px;
+  width: 170px;
   > div {
     display: flex;
     align-items: center;
@@ -31,18 +31,32 @@ export const Category = styled.div`
 
 export const FieldWrap = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 
 export const Fields = styled.div<{ isOpen: boolean }>`
   display: none;
   position: absolute;
   top: calc(100% + 5px);
-  border-color: 1px solid #dddddd;
+  border: 1px solid #dddddd;
+  background-color: white;
+  z-index: 2;
   ${props =>
     props.isOpen &&
     css`
-      display: flex;
+      display: block;
     `}
+`;
+
+export const Field = styled.div`
+  width: 60px;
+
+  text-align: center;
+  padding: 5px;
+
+  & + & {
+    border-top: 1px solid #dddddd;
+  }
 `;
 
 export const CategoryBtn = styled.span`
