@@ -318,7 +318,6 @@ export const FormPlaceSearchListWrap = styled.div`
   border-radius: 4px;
   background-color: white;
   box-shadow: 0 3px 5px #555;
-  overflow-y: scroll;
   box-sizing: border-box;
   z-index: 10;
 `;
@@ -396,7 +395,6 @@ export const PlaceSearchListBox = styled.div`
 export const PlaceSearchList = styled.ul`
   height: 400px;
   border-bottom: 1px solid #888888;
-  overflow-y: scroll;
 `;
 
 export const PlaceSearchItem = styled.li<{ time: number }>`
