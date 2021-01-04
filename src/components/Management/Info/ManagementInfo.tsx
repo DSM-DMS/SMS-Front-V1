@@ -6,7 +6,6 @@ import ClubConcept from "./Concept";
 import ClubFacebookLink from "./FacebookLink";
 import ClubField from "./Field";
 import ClubIntroduce from "./Introduce";
-import ClubMembers from "./Members";
 import ClubName from "./Name";
 import ClubPicture from "./Picture";
 import ClubLocation from "./Location";
@@ -14,10 +13,13 @@ import ManagementInfoBottom from "./Bottom";
 
 import { stateType } from "../../../modules/reducer";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
+import { ManagementInfoMemberContainer } from "../../../containers";
 
-interface Props {}
+interface Props {
+  clubUuid: string;
+}
 
-const ManagementInfo: FC<Props> = () => {
+const ManagementInfo: FC<Props> = ({ clubUuid }) => {
   const handler = new ManagementInfoHandler();
   const {
     name,
@@ -31,20 +33,16 @@ const ManagementInfo: FC<Props> = () => {
     link
   } = useSelector((state: stateType) => state.ManagementInfo);
 
-  const handleName = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleName(e.target.value);
-  };
-
   const handleConcept = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleConcept(e.target.value);
+    handler.handleClubConcept(e.target.value);
   };
 
   const handleIntroduction = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    handler.handleIntroduce(e.target.value);
+    handler.handleIntroduction(e.target.value);
   };
 
   const handleLink = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleFacebookLink(e.target.value);
+    handler.handleLink(e.target.value);
   };
 
   return (
@@ -52,7 +50,7 @@ const ManagementInfo: FC<Props> = () => {
       <S.TopLine />
       <S.Center>
         <S.CenterLeft>
-          <ClubName name={name} handleName={handleName} />
+          <ClubName name={name} />
           <ClubField field={field} />
           <ClubLocation location={location} />
           <ClubConcept
@@ -63,7 +61,11 @@ const ManagementInfo: FC<Props> = () => {
             introduction={introduction}
             handleIntroduction={handleIntroduction}
           />
-          <ClubMembers leaderUuid={leader_uuid} memberUuids={member_uuids} />
+          <ManagementInfoMemberContainer
+            leaderUuid={leader_uuid}
+            clubUuid={clubUuid}
+            memberUuids={member_uuids}
+          />
         </S.CenterLeft>
         <S.CenterRight>
           <ClubPicture logoUri={logo_uri} />

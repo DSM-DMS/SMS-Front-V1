@@ -49,7 +49,7 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
     getClubUuid();
   }, []);
 
-  return <ManagementInfo />;
+  return <ManagementInfo clubUuid={clubUuid} />;
 };
 
 export default ManagementInfoContainer;
