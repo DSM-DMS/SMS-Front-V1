@@ -1,7 +1,9 @@
+import { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { call, getContext, put, takeEvery } from "redux-saga/effects";
 import { apiDefault } from "../../../lib/api/client";
 import { editNotice } from "../../../lib/api/Write";
+import { errorHandler } from "../../../lib/utils";
 import {
   getNoticeList,
   getNoticeListSaga as getNoticeListSagaCreater,
@@ -13,10 +15,8 @@ import {
   GET_CIRCLE_NOTICE_LIST_SAGA,
   getWriterNoticeListSaga as getWriterNoticeListSagaCreater,
   GET_WRITER_NOTICE_LIST_SAGA,
-  GET_CIRCLE_NOTICE_DETAIL_SAGA,
   editNoticeSaga as editNoticeSagaCreater,
   EDIT_NOTICE_SAGA,
-  resetNoticeDetail,
   startNoticeDetail
 } from "../../action/notice";
 
@@ -29,7 +29,10 @@ function* getNoticeListSaga(
       `/announcements/types/school?start=${action.payload}`
     );
     yield put(getNoticeList(res.data.announcements));
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* getCircleNoticeListSaga(
@@ -41,7 +44,10 @@ function* getCircleNoticeListSaga(
       `/announcements/types/club?start=${action.payload}`
     );
     yield put(getNoticeList(res.data.announcements));
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 function* getNoticeDetailSaga(
   action: ReturnType<typeof getNoticeDetailtSagaCreater>
@@ -54,7 +60,10 @@ function* getNoticeDetailSaga(
     );
 
     yield put(getNoticeDetail(res.data));
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* getWriteNoticeListSaga(
@@ -67,7 +76,10 @@ function* getWriteNoticeListSaga(
     );
     yield put(getNoticeList(res.data.announcements));
     console.log(res);
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* editNoticeSaga(action: ReturnType<typeof editNoticeSagaCreater>) {
@@ -77,7 +89,10 @@ function* editNoticeSaga(action: ReturnType<typeof editNoticeSagaCreater>) {
     yield call(editNotice, "club", { content, uuid, title });
     toast.dark("게시글을 수정하였습니다.");
     history.push("/management/notice");
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* noticeSaga() {
