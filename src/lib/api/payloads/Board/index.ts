@@ -9,8 +9,8 @@ export interface BoardListItem {
 }
 
 export interface BoardWriteFilter {
-  target_grade: number;
-  target_group: number;
+  target_grade?: number;
+  target_group?: number;
 }
 
 export interface BoardWriteData {
@@ -22,4 +22,11 @@ export interface BoardWrite extends BoardWriteData, BoardWriteFilter {}
 
 export interface ReqBoardWrite extends BoardWrite, BoardWriteFilter {
   type: "club" | "school";
+}
+
+export interface BoardEdit extends BoardWrite {
+  uuid: string;
+}
+export interface ReqBoardEdit extends ReqBoardWrite {
+  uuid: string;
 }

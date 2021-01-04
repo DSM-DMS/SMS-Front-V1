@@ -2,14 +2,17 @@ import React, { FC } from "react";
 import * as S from "./styles";
 import { RightContent } from "../../default";
 import { getImgUrl } from "../../../../../lib/utils";
+import { BoardListItem } from "../../../../../lib/api/payloads/Board";
+import { Link } from "react-router-dom";
 
 interface Props {
   imgSrc: string;
-  tags: string[];
-  projects: string[];
+  tag: string;
+  baseUrl?: string;
+  notices?: BoardListItem[];
 }
 
-const InfoDetailSub: FC<Props> = ({ imgSrc, tags, projects }) => {
+const InfoDetailSub: FC<Props> = ({ imgSrc, tag, notices, baseUrl }) => {
   return (
     <S.Container>
       <div>
@@ -17,19 +20,23 @@ const InfoDetailSub: FC<Props> = ({ imgSrc, tags, projects }) => {
       </div>
       <RightContent>
         <S.H3>태그</S.H3>
-        {tags.map(tag => (
-          <S.HashTag>{tag}</S.HashTag>
-        ))}
+        <S.HashTag>{tag}</S.HashTag>
       </RightContent>
-      <RightContent>
-        <S.H3>진행 프로젝트</S.H3>
-        {projects.map(project => (
-          <div>{project}</div>
-        ))}
-      </RightContent>
-      <RightContent>
-        <S.H3>공지사항</S.H3>
-      </RightContent>
+      {notices && notices.length ? (
+        <RightContent>
+          <S.H3>공지사항</S.H3>
+          {notices.map(({ announcement_uuid, title }, i) => {
+            if (i > 4) return "";
+            return (
+              <S.Notice key={i}>
+                <Link to={`${baseUrl}/${announcement_uuid}`}>{title}</Link>
+              </S.Notice>
+            );
+          })}
+        </RightContent>
+      ) : (
+        ""
+      )}
     </S.Container>
   );
 };

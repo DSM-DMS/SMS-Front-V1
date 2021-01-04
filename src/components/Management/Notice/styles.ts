@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 export const Container = styled.div`
-  padding: 70px 150px;
+  padding: 70px 120px;
 `;
 
 export const P = styled.div`
@@ -19,10 +19,14 @@ export const Header = styled.div`
   }
 `;
 
-export const WriteNoticeBtn = styled.button`
+export const WriteNoticeBtn = styled(Link)`
   border: 1px solid #dddddd;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  color: unset;
   background: #fbfbfb;
-  box-sizing: border-box;
   margin-left: 15px;
   padding: 0px 10px;
 `;
@@ -37,7 +41,7 @@ export const ButtonWrap = styled.div`
 
 interface DefaultProps {
   color: string;
-  backgroundColor: string;
+  backgroundcolor: string;
 }
 
 const defaultCss = css`
@@ -52,12 +56,12 @@ const defaultCss = css`
 
 export const GoToEdit = styled(Link)<DefaultProps>`
   color: ${props => props.color};
-  background-color: ${props => props.backgroundColor};
+  background-color: ${props => props.backgroundcolor};
   ${defaultCss}
 `;
 
 export const Button = styled.button<DefaultProps>`
   color: ${props => props.color};
-  background-color: ${props => props.backgroundColor};
+  background-color: ${props => props.backgroundcolor};
   ${defaultCss}
 `;

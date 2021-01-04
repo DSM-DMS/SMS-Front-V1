@@ -1,25 +1,22 @@
 import React, { FC, MouseEvent } from "react";
-import { useState } from "react";
-import { useCallback } from "react";
-import { useRef } from "react";
 import * as S from "./styles";
 
 interface Props {
   color?: string;
   htmlFor: string;
+  active: boolean;
   clickHandler: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
-const LabelCheckBox: FC<Props> = ({ clickHandler, color, children }) => {
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const onClick = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    setIsActive(prev => !prev);
-    clickHandler(e);
-  }, []);
-
+const LabelCheckBox: FC<Props> = ({
+  active,
+  clickHandler,
+  color,
+  children
+}) => {
   return (
-    <S.Container color={color} onClick={onClick}>
-      <S.CheckBox isActive={isActive} />
+    <S.Container color={color} onClick={clickHandler}>
+      <S.CheckBox isActive={active} />
       <span>{children}</span>
     </S.Container>
   );

@@ -6,22 +6,19 @@ import React, {
   useCallback,
   useRef,
   useState,
-  ChangeEvent,
   memo
 } from "react";
-import { useSelector } from "react-redux";
-
 import * as S from "./style";
 
 import { ModalClose, paperclipClubPicture } from "../../../assets";
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+import { SERVER } from "../../../lib/api/client";
 
-interface Props {}
+interface Props {
+  logoUri: string;
+  handleLogo: (file: File) => void;
+}
 
-const ClubPicture: FC<Props> = (): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const { pictureId } = useSelector((state: stateType) => state.ManagementInfo);
+const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
   const fileRef = useRef<HTMLInputElement>(null);
   const previewRef = useRef<HTMLImageElement>(null);
   const [dragged, setDragged] = useState<boolean>(false);
@@ -57,6 +54,7 @@ const ClubPicture: FC<Props> = (): ReactElement => {
 
   const readFile = (file: File) => {
     previewRef.current.src = URL.createObjectURL(file);
+    handleLogo(file);
   };
 
   const handleDragEnter = (e: DragEvent) => {
@@ -83,24 +81,21 @@ const ClubPicture: FC<Props> = (): ReactElement => {
     previewRef.current.src = "";
   };
 
-  const handleChangePicture = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handlePictureId(1);
-  };
-
   return (
     <S.ClubPicture>
       <div>
         <p>동아리 사진</p>
         <S.ClubPictureInner>
-          <S.ClubPictureInnerText>
+          <S.InnerTextCommon>
             💡 로고나 홍보 사진 등 동아리 관련 사진을 넣어주세요.
-          </S.ClubPictureInnerText>
+          </S.InnerTextCommon>
         </S.ClubPictureInner>
       </div>
       <input
         type="file"
         id="files"
         name="files"
+        accept="image/*"
         onChange={e => uploadFile(e.currentTarget.files)}
         hidden={true}
         ref={fileRef}
@@ -113,7 +108,10 @@ const ClubPicture: FC<Props> = (): ReactElement => {
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
       >
-        <S.ClubPicturePreview ref={previewRef} />
+        <S.ClubPicturePreview
+          ref={previewRef}
+          src={`${SERVER.s3Url}/${logoUri}?timestamp=${+new Date()}`}
+        />
         <S.ClubPictureWrap>
           <img
             src={paperclipClubPicture}

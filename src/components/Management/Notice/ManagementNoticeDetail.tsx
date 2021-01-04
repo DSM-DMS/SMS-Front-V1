@@ -1,11 +1,21 @@
 import React from "react";
 import { FC } from "react";
+import { useSelector } from "react-redux";
 import { NavIconNoticeBlack } from "../../../assets";
+import { stateType } from "../../../modules/reducer";
 import { DetailPageHeader } from "../../default";
 import NoticeDetailBody from "../../Notice/Detail/NoticeDetailBody/NoticeDetailBody";
 import * as S from "./styles";
 
-const ManagementNoticeDetail: FC = () => {
+interface Props {
+  id: string;
+}
+
+const ManagementNoticeDetail: FC<Props> = ({ id }) => {
+  const { content, loading } = useSelector(
+    (store: stateType) => store.notice.detail
+  );
+
   return (
     <S.Container>
       <DetailPageHeader
@@ -15,17 +25,16 @@ const ManagementNoticeDetail: FC = () => {
         href="/management/notice"
         color="black"
       />
-      <S.P>몰라요 몰랑</S.P>
-      <NoticeDetailBody content={"dsadasd"} />
+      {loading || <NoticeDetailBody content={content} />}
       <S.ButtonWrap>
         <S.GoToEdit
-          to="/management/edit/1"
+          to={`/management/edit/${id}`}
           color="#242424"
-          backgroundColor="#FBFBFB"
+          backgroundcolor="#FBFBFB"
         >
           수정
         </S.GoToEdit>
-        <S.Button color="#FBFBFB" backgroundColor="#FF5555">
+        <S.Button color="#FBFBFB" backgroundcolor="#FF5555">
           삭제
         </S.Button>
       </S.ButtonWrap>

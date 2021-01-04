@@ -1,32 +1,25 @@
-import React from "react";
-import { FC } from "react";
+import React, { ChangeEvent, useCallback, useState, FC } from "react";
+import { useSelector } from "react-redux";
 import { NavIconNoticeBlack } from "../../../assets";
+import { BoardListItem } from "../../../lib/api/payloads/Board";
+import { makeFilterFunc } from "../../../lib/utils";
+import { stateType } from "../../../modules/reducer";
 import { Board, PageHeader, SearchInput } from "../../default";
-import { BoardObj } from "../../default/Board/Board";
 import * as S from "./styles";
 
-const data: BoardObj[] = [
-  {
-    id: 1,
-    date: "2020.07.08",
-    title: "제목",
-    viewCount: 1
-  },
-  {
-    id: 1,
-    date: "2020.07.08",
-    title: "제목",
-    viewCount: 1
-  },
-  {
-    id: 1,
-    date: "2020.07.08",
-    title: "제목",
-    viewCount: 1
-  }
-];
-
 const ManagementNotice: FC = () => {
+  const data = useSelector((store: stateType) => store.notice.list);
+  const [keyword, setKeyword] = useState<string>("");
+
+  const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setKeyword(e.target.value);
+  }, []);
+  const filterData = makeFilterFunc<BoardListItem>(
+    data,
+    ({ title, writer_name }, str) =>
+      title.includes(str) || writer_name.includes(str)
+  );
+
   return (
     <S.Container>
       <S.Header>
@@ -38,13 +31,16 @@ const ManagementNotice: FC = () => {
         <div>
           <SearchInput
             placeHolder="검색할 공지 제목을 입력하세요."
-            onChange={function () {}}
+            onChange={changeKeyword}
           />
-          <S.WriteNoticeBtn>새 공지</S.WriteNoticeBtn>
+          <S.WriteNoticeBtn to="/management/write">새 공지</S.WriteNoticeBtn>
         </div>
       </S.Header>
       <S.BoardWrap>
-        <Board data={data} names={["번호", "제목", "날짜", "조회수"]} />
+        <Board
+          data={filterData(keyword)}
+          names={["번호", "제목", "날짜", "동아리", "조회수"]}
+        />
       </S.BoardWrap>
     </S.Container>
   );

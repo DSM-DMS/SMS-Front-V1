@@ -1,5 +1,5 @@
-import React, { FC, memo } from 'react';
-import * as S from './styles';
+import React, { FC, memo } from "react";
+import * as S from "./styles";
 
 interface Props {
   names: string[];
@@ -8,8 +8,8 @@ interface Props {
 const BoardTableHeader: FC<Props> = ({ names }) => {
   return (
     <S.Container>
-      {names.map((name) => (
-        <div>{name}</div>
+      {names.map(name => (
+        <div key={name}>{name}</div>
       ))}
     </S.Container>
   );

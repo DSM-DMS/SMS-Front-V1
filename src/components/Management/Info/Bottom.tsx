@@ -2,11 +2,14 @@ import React, { FC } from "react";
 
 import * as S from "./style";
 
-const ManagementInfoBottom: FC = () => {
+interface Props {
+  modifyClubInfo: () => Promise<void>;
+}
+
+const ManagementInfoBottom: FC<Props> = ({ modifyClubInfo }) => {
   return (
     <S.CenterBottom>
-      <S.BottomCancelButton>취소</S.BottomCancelButton>
-      <S.BottomEditButton>적용</S.BottomEditButton>
+      <S.BottomEditButton onClick={modifyClubInfo}>적용</S.BottomEditButton>
     </S.CenterBottom>
   );
 };

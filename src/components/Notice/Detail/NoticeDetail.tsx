@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC } from "react";
 import * as S from "./styles";
 import { DetailPageHeader } from "../../../components/default";
 import { NavIconNoticeBlue } from "../../../assets";
@@ -14,7 +14,8 @@ const NoticeDetail: FC = () => {
     next_title,
     previous_title,
     next_announcement_uuid,
-    previous_announcement_uuid
+    previous_announcement_uuid,
+    loading
   } = useSelector((state: stateType) => state.notice.detail);
 
   return (
@@ -27,7 +28,7 @@ const NoticeDetail: FC = () => {
         href="/notice"
       />
       <S.P>{title}</S.P>
-      <NoticeDetailBody content={content} />
+      {loading || <NoticeDetailBody content={content} />}
       <PageMove
         baseHref="/notice"
         nextAnnouncementUuid={next_announcement_uuid}

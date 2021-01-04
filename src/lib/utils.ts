@@ -1,7 +1,11 @@
-import { PageState } from "../modules/reducer/page";
 import { useSelector } from "react-redux";
+
+import { ResStudents } from "./api/payloads/Management";
+
+import { PageState } from "../modules/reducer/page";
 import { stateType } from "../modules/reducer";
 import { SERVER } from "../lib/api/client";
+import { ResStudentInfo } from "./api/payloads/Login";
 
 type valueType = [string, string];
 
@@ -150,3 +154,11 @@ export const getWeekOfMonth = (d: Date) => {
   // if (week < 2 + index) return week;
   // return week === weeksInMonth ? index + 5 : week;
 };
+
+export const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
+
+export const formattingStudent = (student: ResStudents | ResStudentInfo) =>
+  `${student.grade}${student.group}${padNum(student.student_number)}`;
+
+export const sorting = (student1: ResStudents, student2: ResStudents) =>
+  formattingStudent(student1) > formattingStudent(student2) ? 1 : -1;
