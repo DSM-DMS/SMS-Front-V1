@@ -16,14 +16,14 @@ const PagiNation: FC<Props> = ({ maxSize, page }) => {
   const baseUrl = `${pathname}?page=`;
 
   useEffect(() => {
-    if (page <= 0) {
+    if (page <= 0 || page >= maxPage) {
       history.push(`${pathname}`);
     }
   }, [page]);
   return (
     <S.Container>
       <div>
-        <S.PageButton to={baseUrl + (page - 5)}>
+        <S.PageButton to={baseUrl + (startPage * 5 - 5)}>
           <S.MovePage rotate={270} />
         </S.PageButton>
       </div>
@@ -43,7 +43,7 @@ const PagiNation: FC<Props> = ({ maxSize, page }) => {
         })}
       </div>
       <div>
-        <S.PageButton to={baseUrl + (page + 5)}>
+        <S.PageButton to={baseUrl + (startPage + 1) * 5}>
           <S.MovePage rotate={90} />
         </S.PageButton>
       </div>
