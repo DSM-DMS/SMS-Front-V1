@@ -29,7 +29,10 @@ export const editNoticeSaga = (payload: BoardEdit) => ({
   payload
 });
 
-export const getNoticeList = (payload: BoardListItem[]) => ({
+export const getNoticeList = (payload: {
+  data: BoardListItem[];
+  size: number;
+}) => ({
   type: GET_NOTICE_LIST,
   payload
 });
