@@ -18,6 +18,7 @@ import {
 } from "../../../lib/api/Management";
 import { ResStudents } from "../../../lib/api/payloads/Management";
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
+import { getAxiosError } from "../../../lib/utils";
 
 interface Props {
   leaderUuid: string;
@@ -47,8 +48,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
         handleRemoveMember(studentUuid);
       } catch (err) {
-        const status = err?.response?.status;
-        const code = err?.code;
+        const { status, code } = getAxiosError(err);
 
         if (status === 403 && code === -1711) {
           toast.error("동아리장 또는 관리자 계정이 아닙니다.");
@@ -77,7 +77,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
       setStudents(res.data.students);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 407) {
         toast.error("동아리 원을 정보를 받아오는데 실패했습니다.");
@@ -96,7 +96,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
       await studentsInfo(res.data.student_uuids);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 409) {
         toast.error("검색 결과가 없습니다.");
@@ -110,7 +110,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
       setMembers(res.data.students);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 407) {
         toast.error("유효하지 않은 동아리원이 존재합니다.");

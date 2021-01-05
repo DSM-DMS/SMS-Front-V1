@@ -83,3 +83,5 @@ export { default as CheckGray } from "./Login/checkGray.svg";
 export { default as Eye } from "./PasswordChange/eye.svg";
 export { default as EyeOff } from "./PasswordChange/eyeOff.svg";
 export { default as addBtn } from "./management/addBtn.svg";
+
+export { default as Spinner } from "./default/Spinner.svg";

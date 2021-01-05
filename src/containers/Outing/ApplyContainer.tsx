@@ -9,7 +9,8 @@ import { toast } from "react-toastify";
 
 import { OutingApply } from "../../components";
 import { postOuting } from "../../lib/api/Outing";
-import { ReqOuting, ResOutingWithDefault } from "../../lib/api/payloads/Outing";
+import { ReqOuting } from "../../lib/api/payloads/Outing";
+import { getAxiosError } from "../../lib/utils";
 
 interface Props {}
 
@@ -143,9 +144,7 @@ const ApplyContainer: FC<Props> = () => {
         "외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요."
       );
     } catch (err) {
-      const data: ResOutingWithDefault = err?.response?.data;
-      const status = data?.status;
-      const code = data?.code;
+      const { status, code } = getAxiosError(err);
 
       if (status === 400) {
         toast.error("외출 시간을 다시 설정해주세요.");

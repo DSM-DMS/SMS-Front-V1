@@ -1,13 +1,15 @@
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { History } from "history";
 
+import { ResDefault } from "./api/payloads";
+import { ResStudentInfo } from "./api/payloads/Login";
 import { ResStudents } from "./api/payloads/Management";
 
 import { PageState } from "../modules/reducer/page";
 import { stateType } from "../modules/reducer";
-import { History } from "history";
 import { SERVER } from "../lib/api/client";
-import { toast } from "react-toastify";
-import { ResStudentInfo } from "./api/payloads/Login";
 
 type valueType = [string, string];
 
@@ -160,11 +162,13 @@ export const getWeekOfMonth = (d: Date) => {
 
 export const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
 
-export const formattingStudent = (student: ResStudents | ResStudentInfo) =>
-  `${student.grade}${student.group}${padNum(student.student_number)}`;
+export const formattingStudent = (student: ResStudents | ResStudentInfo) => {
+  return `${student.grade}${student.group}${padNum(student.student_number)}`;
+};
 
-export const sorting = (student1: ResStudents, student2: ResStudents) =>
-  formattingStudent(student1) > formattingStudent(student2) ? 1 : -1;
+export const sorting = (student1: ResStudents, student2: ResStudents) => {
+  return formattingStudent(student1) > formattingStudent(student2) ? 1 : -1;
+};
 
 export const errorHandler = (errStatus: number, history: History): void => {
   switch (errStatus) {
@@ -181,3 +185,8 @@ export const errorHandler = (errStatus: number, history: History): void => {
 };
 
 export const getFacebookLink = (id: string) => `https://www.facebook.com/${id}`;
+
+export const getAxiosError = (err: AxiosError<ResDefault>) => {
+  const { status, code } = err.response.data;
+  return { status, code };
+};

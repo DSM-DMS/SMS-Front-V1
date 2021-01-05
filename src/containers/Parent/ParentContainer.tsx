@@ -5,6 +5,7 @@ import { Approve } from "../../components";
 import { ResOutingInfo } from "../../lib/api/payloads/Parent";
 import { getOutingInfo, postOutingAction } from "../../lib/api/Parent";
 import { toast } from "react-toastify";
+import { getAxiosError } from "../../lib/utils";
 
 export class ParentActions {
   static PARENT_REJECT = "parent-reject";
@@ -30,7 +31,7 @@ const ApproveContainer: FC<Props> = () => {
 
       setOutingInfo(data);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 404) {
         toast.error("외출증 코드에 해당하는 외출증이 없습니다.");
@@ -54,8 +55,7 @@ const ApproveContainer: FC<Props> = () => {
       toast.success(`자녀의 외출증을 ${typeText}했습니다.`);
       location.href = "/login";
     } catch (err) {
-      const data = err?.response?.data;
-      const status = data?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 403) {
         toast.error("학부모님의 자녀가 신청한 외출증이 아닙니다.");

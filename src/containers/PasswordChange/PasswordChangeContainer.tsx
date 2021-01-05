@@ -7,6 +7,7 @@ import {
   putStudentPassword,
   putTeacherPassword
 } from "../../lib/api/PasswordChange";
+import { getAxiosError } from "../../lib/utils";
 import { STUDENT, TEACHER, UserType } from "../../modules/action/header";
 
 interface Props {}
@@ -27,9 +28,7 @@ const PasswordChangeContainer: FC<Props> = () => {
         toast.success("비밀번호를 변경했습니다.");
         history.push("./home");
       } catch (err) {
-        const data = err?.response?.data;
-        const status = data?.status;
-        const code = data?.code;
+        const { status, code } = getAxiosError(err);
 
         if (status === 403) {
           toast.error("학생 정보가 올바르지 않습니다. 다시 로그인해주세요.");

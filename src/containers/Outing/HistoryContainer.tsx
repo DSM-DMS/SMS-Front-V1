@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { OutingHistory } from "../../components";
 import { getHistory } from "../../lib/api/Outing";
 import { ResHistoryItem } from "../../lib/api/payloads/Outing";
+import { getAxiosError } from "../../lib/utils";
 import {
   resetOutingHistoryList,
   setOutingHistoryList,
@@ -53,7 +54,7 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
         dispatch(setOutingHistoryList(outings));
         setHistoryStart(prev => (prev += 9));
       } catch (err) {
-        const status = err?.response?.data?.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
           toast.error("학생 계정으로 외출 신청 내역을 조회할 수 있습니다.");

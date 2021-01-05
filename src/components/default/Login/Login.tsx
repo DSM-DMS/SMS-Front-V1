@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, MutableRefObject } from "react";
+import React, { ChangeEvent, FC } from "react";
 
 import * as S from "./style";
 

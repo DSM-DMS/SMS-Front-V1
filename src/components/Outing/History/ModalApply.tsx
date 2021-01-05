@@ -13,6 +13,7 @@ import {
   END_OUTING,
   StudentOutingAction
 } from "../../../lib/api/Outing";
+import { getAxiosError } from "../../../lib/utils";
 
 const ModalApply: FC<WithModalProps> = ({
   onlineModal,
@@ -35,7 +36,7 @@ const ModalApply: FC<WithModalProps> = ({
           toast.success("외출을 종료합니다.");
         }
       } catch (err) {
-        const status = err?.response?.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
           toast.error("본인이 신청한 외출증이 아닙니다.");
