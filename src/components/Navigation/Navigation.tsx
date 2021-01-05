@@ -1,10 +1,7 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, memo } from "react";
 import NavigationMain from "./Main/NavigationMain";
 import * as S from "./styles";
 import NavigationSub from "./Sub/NavigationSub";
-import { useDispatch } from "react-redux";
-import { pageMove, subPageMove } from "../../modules/action/page";
-import { getNavUrl } from "../../lib/utils";
 import { Route, Switch } from "react-router";
 import {
   adminRouter,
@@ -14,13 +11,6 @@ import {
 } from "../../lib/static";
 
 const Navigation: FC = () => {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const { mainUrl, subUrl } = getNavUrl(window.location.href);
-    dispatch(pageMove(mainUrl));
-    dispatch(subPageMove(subUrl));
-  }, []);
-
   return (
     <S.Container>
       <Switch>
@@ -47,4 +37,4 @@ const Navigation: FC = () => {
   );
 };
 
-export default Navigation;
+export default memo(Navigation);

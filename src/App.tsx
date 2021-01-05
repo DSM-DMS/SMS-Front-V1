@@ -1,5 +1,4 @@
-import React, { FC, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC } from "react";
 import { Switch, Router, Route, Redirect } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,17 +18,10 @@ import {
   AdminRouter,
   ManagementRouter
 } from "./routers";
-import { jsonActionCreater } from "./modules/action/json";
 import { history } from "./modules/store";
 import { ToastContainer } from "react-toastify";
 
 const App: FC<{}> = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(jsonActionCreater.getJsonSaga());
-  }, []);
-
   return (
     <>
       {location.pathname.includes("parent") ? (

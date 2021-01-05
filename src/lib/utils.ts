@@ -4,7 +4,9 @@ import { ResStudents } from "./api/payloads/Management";
 
 import { PageState } from "../modules/reducer/page";
 import { stateType } from "../modules/reducer";
+import { History } from "history";
 import { SERVER } from "../lib/api/client";
+import { toast } from "react-toastify";
 import { ResStudentInfo } from "./api/payloads/Login";
 
 type valueType = [string, string];
@@ -67,24 +69,25 @@ const adminUrlObj: SubUrlObj = {
   wait: "승인대기 외출증",
   all: "전체 공지",
   mine: "내가 올린 공지",
-  writing: "공지사항 작성"
+  writing: "공지사항 작성",
+  done: "종료된 외출증"
 };
 
 export const getNavUrl = (url: string): PageState => {
   const stringArr = url.split("/");
-  const filterStr = stringArr[3] as "home" | "notice" | "circles" | "outing";
+  const filterStr = stringArr[1] as "home" | "notice" | "circles" | "outing";
   const urlArr = urlObj[filterStr] ||
-    (urlObjWrap[stringArr[3]] && urlObjWrap[stringArr[3]][stringArr[4]]) || [
+    (urlObjWrap[stringArr[1]] && urlObjWrap[stringArr[1]][stringArr[2]]) || [
       "",
       ""
     ];
   return {
     mainUrl: urlArr[0],
     subUrl:
-      adminUrlObj[stringArr[5]] ||
-      subUrlObj[stringArr[4]] ||
-      (subUrlObjWrap[stringArr[3]] &&
-        subUrlObjWrap[stringArr[3]][stringArr[4]]) ||
+      adminUrlObj[stringArr[3]] ||
+      subUrlObj[stringArr[2]] ||
+      (subUrlObjWrap[stringArr[1]] &&
+        subUrlObjWrap[stringArr[1]][stringArr[2]]) ||
       urlArr[1]
   };
 };
@@ -162,3 +165,19 @@ export const formattingStudent = (student: ResStudents | ResStudentInfo) =>
 
 export const sorting = (student1: ResStudents, student2: ResStudents) =>
   formattingStudent(student1) > formattingStudent(student2) ? 1 : -1;
+
+export const errorHandler = (errStatus: number, history: History): void => {
+  switch (errStatus) {
+    case 401:
+    case 403: {
+      toast.dark("로그인을 다시 진행해주세요");
+      const href = history.location.pathname;
+      if (href.includes("admin")) {
+        history.push("/admin/login");
+      } else history.push("/login");
+      return;
+    }
+  }
+};
+
+export const getFacebookLink = (id: string) => `https://www.facebook.com/${id}`;

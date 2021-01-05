@@ -17,17 +17,18 @@ export interface BoardObj {
 
 interface Props {
   names: string[];
+  maxSize: number;
   data: BoardListItem[];
 }
 
-const Board: FC<Props> = ({ data, names }) => {
+const Board: FC<Props> = ({ data, names, maxSize }) => {
   const location = useLocation();
   const page = Number(qs.parse(location.search).page) || 0;
   return (
     <S.Container>
       <BoardTableHeader names={names} />
       <BoardTableBody data={data} />
-      <PagiNation page={page} />
+      <PagiNation page={page} maxSize={maxSize} />
     </S.Container>
   );
 };

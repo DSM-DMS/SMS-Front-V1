@@ -42,9 +42,17 @@ const OutingCardPage: FC<Props> = ({ title, isClicked, status }) => {
         <OutingCardFilter onChange={filterChangeHandler} />
       </S.Header>
       <S.CardContainer>
-        {data.map(data => (
-          <OutingCard key={data.outing_uuid} {...data} isClicked={isClicked} />
-        ))}
+        {data.length ? (
+          data.map(data => (
+            <OutingCard
+              key={data.outing_uuid}
+              {...data}
+              isClicked={isClicked}
+            />
+          ))
+        ) : (
+          <S.EmptyList>리스트가 없습니당</S.EmptyList>
+        )}
       </S.CardContainer>
       <OutingCardModal />
     </S.Container>
