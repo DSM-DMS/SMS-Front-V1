@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import * as S from "./styles";
 import NavigationHeader from "./header/NavigationHeader";
 import NavigationBody from "./body/NavigationBody";
@@ -19,6 +19,9 @@ import { useCallback } from "react";
 import { useHistory } from "react-router";
 import { NavIconTrashCanYellow, NavIconExitBlack } from "../../../assets";
 import NavigationItem from "../Item/NavigationItem";
+import { useDispatch } from "react-redux";
+import { getNavUrl } from "../../../lib/utils";
+import { pageMove, subPageMove } from "../../../modules/action/page";
 
 interface Props {
   routeData: RouteData;
@@ -26,9 +29,16 @@ interface Props {
 
 const NavigationMain: FC<Props> = ({ routeData }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const goMain = useCallback(() => {
     history.push("/main");
   }, []);
+
+  useEffect(() => {
+    const { mainUrl, subUrl } = getNavUrl(history.location.pathname);
+    dispatch(pageMove(mainUrl));
+    dispatch(subPageMove(subUrl));
+  });
   return (
     <S.Container
       colorSet={routeData.color}

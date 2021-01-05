@@ -20,6 +20,19 @@ export const GET_WANTED_INFO_LIST_SAGA = "poster/GET_WANTED_INFO_LIST_SAGA" as c
 export const GET_WANTED_INFO_DETAIL = "poster/GET_WANTED_INFO_DETAIL" as const;
 export const GET_WANTED_INFO_DETAIL_SAGA = "poster/GET_WANTED_INFO_DETAIL_SAGA" as const;
 
+export const SET_ALL_FILTER = "poster/SET_ALL_FILTER" as const;
+export const SET_WANTED_FILTER = "poster/SET_WANTED_FILTER" as const;
+
+export const setAllFilter = (field: string) => ({
+  type: SET_ALL_FILTER,
+  payload: field
+});
+
+export const setWantedFilter = (field: string) => ({
+  type: SET_WANTED_FILTER,
+  payload: field
+});
+
 export const getCircleInfoDetail = (payload: CircleDatailPage) => ({
   type: GET_CIRCLE_INFO_DETAIL,
   payload
@@ -67,7 +80,9 @@ export const posterAction = {
   GET_WANTED_INFO_LIST,
   GET_WANTED_INFO_LIST_SAGA,
   GET_WANTED_INFO_DETAIL,
-  GET_WANTED_INFO_DETAIL_SAGA
+  GET_WANTED_INFO_DETAIL_SAGA,
+  SET_ALL_FILTER,
+  SET_WANTED_FILTER
 };
 
 export const PosterActionCreater = {
@@ -78,7 +93,9 @@ export const PosterActionCreater = {
   getWantedInfoList,
   getWantedInfoListSaga,
   getWantedInfoDetail,
-  getWantedInfoDetailSaga
+  getWantedInfoDetailSaga,
+  setAllFilter,
+  setWantedFilter
 };
 
 export type PosterAction = ReturnType<
@@ -90,4 +107,6 @@ export type PosterAction = ReturnType<
   | typeof getWantedInfoListSaga
   | typeof getWantedInfoDetail
   | typeof getWantedInfoDetailSaga
+  | typeof setAllFilter
+  | typeof setWantedFilter
 >;

@@ -11,7 +11,8 @@ import {
   AdminNoticeMineContainer,
   AdminNoticeWritingContainer,
   LoginContainer,
-  PasswordChangeContainer
+  PasswordChangeContainer,
+  AdminOutingDoneContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
 
@@ -42,6 +43,11 @@ const AdminRouter: FC<{}> = () => {
           exact
           path="/admin/out/now"
           component={AdminOutingNowListContainer}
+        />
+        <Route
+          exact
+          path="/admin/out/done"
+          component={AdminOutingDoneContainer}
         />
         <Route
           exact

@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from "redux";
-import createReduxSaga from "redux-saga"; // reduxSaga인스턴스를 만드는 함수를 import
+import createReduxSaga from "redux-saga";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createBrowserHistory } from "history";
 import rootSaga from "../saga";

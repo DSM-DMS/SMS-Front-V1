@@ -6,4 +6,5 @@ export const Container = styled.div`
 
 export const P = styled.p`
   margin: 15px 0;
+  font-size: 20px;
 `;

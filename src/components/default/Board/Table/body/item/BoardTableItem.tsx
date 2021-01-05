@@ -22,7 +22,10 @@ const BoardTableItem: FC<BoardListItem> = ({
   return (
     <S.ItemContainer onClick={onClick}>
       <div>{number}</div>
-      <div>{title}</div>
+      <div>
+        {is_checked ? "" : <S.New>NEW</S.New>}
+        {title}
+      </div>
       <div>{dateStr}</div>
       <div>{writer_name}</div>
       <div>{views}</div>

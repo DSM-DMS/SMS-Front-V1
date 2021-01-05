@@ -1,7 +1,7 @@
-import React from 'react';
-import { FC } from 'react';
-import * as S from './styles';
-import { IconBlack, IconWhite } from '../../../../assets/';
+import React from "react";
+import { FC } from "react";
+import * as S from "./styles";
+import { IconBlack, IconWhite } from "../../../../assets/";
 
 interface Props {
   isManagementMode: boolean;

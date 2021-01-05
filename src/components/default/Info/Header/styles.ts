@@ -3,11 +3,30 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
+
+  > div {
+    display: flex;
+    align-items: flex-end;
+    > p {
+      transform: translateY(-5px);
+    }
+  }
 `;
 
 export const Title = styled.div`
   font-size: 30px;
   font-weight: bold;
+`;
+
+export const DateWrap = styled.div`
+  div,
+  span {
+    font-weight: bold;
+  }
+  > div:nth-child(2) {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const FlexDiv = styled.div`

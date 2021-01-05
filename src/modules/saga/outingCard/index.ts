@@ -1,12 +1,13 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { all, call, put, takeEvery } from "redux-saga/effects";
+import { all, call, getContext, put, takeEvery } from "redux-saga/effects";
 import { apiDefault } from "../../../lib/api/client";
 import {
   getOutingCardList,
   setActionOutingCard
 } from "../../../lib/api/OutingCard";
 import { ResOutingCardListItem } from "../../../lib/api/payloads/OutingCard";
+import { errorHandler } from "../../../lib/utils";
 import {
   getOutingCardListSaga as getOutingCardListSagaCreater,
   GET_OUTING_CARD_LIST_SAGA,
@@ -28,7 +29,10 @@ function* getOutingCardListSaga(
     );
 
     yield put(getOutingCardListCreater(res.data.outings));
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* approveOutingCardSaga(
@@ -42,7 +46,10 @@ function* approveOutingCardSaga(
 
     toast.dark("성공적으로 승인하였습니다.");
     yield put(CloseOutingCardModal());
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 function* rejectOutingCardSaga(
   action: ReturnType<typeof rejectOutingCardSagaCreater>
@@ -54,7 +61,10 @@ function* rejectOutingCardSaga(
     });
     toast.dark("성공적으로 거절하였습니다.");
     yield put(CloseOutingCardModal());
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* outingCardSaga() {

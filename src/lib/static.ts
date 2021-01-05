@@ -198,6 +198,12 @@ export const subNavRouter: SubNavObj = {
       acitveUrl: NavIconCircleMint
     },
     {
+      name: "종료된 외출증",
+      url: NavIconUnauthorizedBlack,
+      route: "/admin/out/done",
+      acitveUrl: NavIconUnauthorizedMint
+    },
+    {
       name: "미인증 외출증",
       url: NavIconUnauthorizedBlack,
       route: "/admin/out/certified",

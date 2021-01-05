@@ -10,9 +10,13 @@ interface Props {
 const BoardTableBody: FC<Props> = ({ data }) => {
   return (
     <S.BoardListDiv>
-      {data.map(datas => (
-        <BoardTableItem {...datas} />
-      ))}
+      {data.length ? (
+        data.map(datas => (
+          <BoardTableItem key={datas.announcement_uuid} {...datas} />
+        ))
+      ) : (
+        <S.EmptyList>공지가 없습니당</S.EmptyList>
+      )}
     </S.BoardListDiv>
   );
 };
