@@ -59,7 +59,10 @@ export const getCircleNoticeListSaga = (payload: number) => ({
   payload
 });
 
-export const getWriterNoticeListSaga = (payload: string) => ({
+export const getWriterNoticeListSaga = (payload: {
+  uuid: string;
+  page: number;
+}) => ({
   type: GET_WRITER_NOTICE_LIST_SAGA,
   payload
 });

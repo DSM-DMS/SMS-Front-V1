@@ -76,9 +76,11 @@ function* getWriteNoticeListSaga(
   try {
     const res = yield call(
       apiDefault().get,
-      `/announcements/writer-uuid/${action.payload}`
+      `/announcements/writer-uuid/${action.payload.uuid}?start=${action.payload.page}`
     );
-    yield put(getNoticeList(res.data.announcements));
+    yield put(
+      getNoticeList({ data: res.data.announcements, size: res.data.size })
+    );
     console.log(res);
   } catch (err) {
     const axiosErr = err as AxiosError;
