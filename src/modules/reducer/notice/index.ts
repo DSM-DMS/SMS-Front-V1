@@ -15,11 +15,13 @@ interface LoadingNoticeDetail extends NoticeDetail {
 
 interface BoardState {
   list: BoardListItem[];
+  size: number;
   detail: LoadingNoticeDetail;
 }
 
 const initialState: BoardState = {
   list: [],
+  size: 0,
   detail: {
     content: "",
     date: 0,
@@ -39,9 +41,11 @@ const noticeReducer = (
 ): BoardState => {
   switch (action.type) {
     case GET_NOTICE_LIST: {
+      const { data, size } = action.payload;
       return {
         ...state,
-        list: action.payload
+        list: data,
+        size
       };
     }
     case GET_NOTICE_DETAIL: {
