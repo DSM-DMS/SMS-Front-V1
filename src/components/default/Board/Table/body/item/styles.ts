@@ -1,6 +1,13 @@
 import styled from "styled-components";
 import { Container, OutingItemContainer } from "../../header/styles";
 
+export const New = styled.span`
+  color: #ff4e00;
+  font-size: 5px;
+  font-weight: bold;
+  margin-right: 15px;
+`;
+
 export const ItemContainer = styled(Container)`
   background-color: white;
   font-weight: normal;
