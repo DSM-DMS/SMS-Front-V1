@@ -15,7 +15,7 @@ export const postLoginStudent = (id: string, pw: string) => {
 
 export const getStudentInfo = (studentUuid: string) => {
   return apiDefault().get<ResStudentInfoWithDefault>(
-    `students/uuid/${studentUuid}`
+    `/students/uuid/${studentUuid}`
   );
 };
 
