@@ -7,6 +7,7 @@ import * as S from "../style";
 import { OutingPlaceSearch } from "../../../assets";
 import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 import { getNaverSearchLocal } from "../../../lib/api/Outing";
+import { getAxiosError } from "../../../lib/utils";
 
 interface Props {
   place: string;
@@ -65,11 +66,10 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
 
       setPlaceResult(data);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 423) {
         toast.error("한 번 검색한 후에는 5초 이후에 다시 검색할 수 있습니다.");
-        return;
       }
     }
   }, []);

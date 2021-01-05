@@ -15,6 +15,7 @@ import {
 } from "../../../lib/api/Management";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
 import { patchClubInfo } from "../../../lib/api/Management";
+import { getAxiosError } from "../../../lib/utils";
 
 interface Props {}
 
@@ -69,8 +70,7 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
     try {
       await patchClubInfo(clubUuid, getModifiedFd());
     } catch (err) {
-      const status = err?.response?.status;
-      const code = err?.code;
+      const { status, code } = getAxiosError(err);
 
       if (status === 403 && code === -1711) {
         toast.error("학생 또는 관리자 계정이 아닙니다.");
@@ -87,12 +87,12 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
       const res = await getClubUuidFromLeader(localStorage.getItem("uuid"));
       setClubUuid(res.data.club_uuid);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 403) {
         toast.error("학생 또는 관리자의 계정이 아닙니다.");
       } else if (status === 404 || status === 409) {
-        toast.error("동아리 장인 동아리가 없습니다.");
+        toast.error("본인이 동아리 장인 동아리가 없습니다.");
       }
 
       history.push("/login");
@@ -104,7 +104,15 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
       const { data } = await getClubInfoWithUuid(clubUuid);
 
       handler.handleInit(data);
-    } catch (err) {}
+    } catch (err) {
+      const { status } = getAxiosError(err);
+
+      if (status === 403) {
+        toast.error("학생 또는 관리자의 계정이 아닙니다.");
+      } else if (status === 404) {
+        toast.error("수정하려는 동아리가 없습니다.");
+      }
+    }
   };
 
   useEffect(() => {

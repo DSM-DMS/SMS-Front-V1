@@ -12,6 +12,7 @@ import {
   ReqCreateSchedule,
   ReqEditSchedule
 } from "../../../lib/api/payloads/Main";
+import { getAxiosError } from "../../../lib/utils";
 import { getSchedulesSaga } from "../../../modules/action/main";
 
 interface Props {}
@@ -45,7 +46,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
           )
         );
       } catch (err) {
-        const status = err.response.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
           toast.error("선생님 계정으로 이용해주세요.");
@@ -67,7 +68,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
           )
         );
       } catch (err) {
-        const status = err.response.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
           toast.error("선생님 계정으로 이용해주세요.");
@@ -89,7 +90,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
           )
         );
       } catch (err) {
-        const status = err.response.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
           toast.error("선생님 계정으로 이용해주세요.");
