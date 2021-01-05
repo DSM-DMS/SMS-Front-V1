@@ -16,7 +16,10 @@ const AdminNoticeMine: FC = () => {
   const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }, []);
-  const data = useSelector((state: stateType) => state.notice.list);
+  const { data, size } = useSelector((state: stateType) => ({
+    data: state.notice.list,
+    size: state.notice.size
+  }));
   const filterFunc = makeFilterFunc<BoardListItem>(
     data,
     ({ title, writer_name }, str) =>
@@ -31,6 +34,7 @@ const AdminNoticeMine: FC = () => {
       />
 
       <Board
+        maxSize={size}
         data={filterFunc(keyword)}
         names={["번호", "제목", "날짜", "글쓴이", "조회수"]}
       />

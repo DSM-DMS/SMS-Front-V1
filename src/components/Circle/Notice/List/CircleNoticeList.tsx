@@ -12,7 +12,10 @@ import { BoardListItem } from "../../../../lib/api/payloads/Board";
 const names = ["번호", "제목", "날짜", "동아리", "조회수"];
 
 const CircleNoticeList: FC = () => {
-  const data = useSelector((store: stateType) => store.notice.list);
+  const { data, size } = useSelector((state: stateType) => ({
+    data: state.notice.list,
+    size: state.notice.size
+  }));
   const [keyword, setKeyword] = useState<string>("");
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
@@ -28,7 +31,7 @@ const CircleNoticeList: FC = () => {
         onChange={onChange}
         title="동아리 공지사항"
       />
-      <Board names={names} data={noticeFilerFunc(keyword)} />
+      <Board maxSize={size} names={names} data={noticeFilerFunc(keyword)} />
     </S.Container>
   );
 };
