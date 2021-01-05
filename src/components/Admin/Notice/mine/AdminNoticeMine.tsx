@@ -20,6 +20,7 @@ const AdminNoticeMine: FC = () => {
     data: state.notice.list,
     size: state.notice.size
   }));
+
   const filterFunc = makeFilterFunc<BoardListItem>(
     data,
     ({ title, writer_name }, str) =>

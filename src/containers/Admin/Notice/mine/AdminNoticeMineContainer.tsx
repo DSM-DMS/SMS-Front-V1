@@ -8,11 +8,11 @@ import qs from "query-string";
 
 const AdminNoticeMineContainer: FC = () => {
   const dispatch = useDispatch();
-  const page = qs.parse(location.search).page || 0;
+  const page = Number(qs.parse(location.search).page) || 0;
 
   useEffect(() => {
     const teacherUuid = window.localStorage.getItem("uuid");
-    dispatch(getWriterNoticeListSaga(teacherUuid));
+    dispatch(getWriterNoticeListSaga({ uuid: teacherUuid, page: page }));
   }, [page]);
 
   return <AdminNoticeMine />;
