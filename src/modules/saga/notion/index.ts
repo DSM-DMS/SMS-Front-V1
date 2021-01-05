@@ -28,7 +28,9 @@ function* getNoticeListSaga(
       apiDefault().get,
       `/announcements/types/school?start=${action.payload}`
     );
-    yield put(getNoticeList(res.data.announcements));
+    yield put(
+      getNoticeList({ data: res.data.announcements, size: res.data.size })
+    );
   } catch (err) {
     const axiosErr = err as AxiosError;
     errorHandler(axiosErr.response.status, yield getContext("history"));
@@ -43,7 +45,9 @@ function* getCircleNoticeListSaga(
       apiDefault().get,
       `/announcements/types/club?start=${action.payload}`
     );
-    yield put(getNoticeList(res.data.announcements));
+    yield put(
+      getNoticeList({ data: res.data.announcements, size: res.data.size })
+    );
   } catch (err) {
     const axiosErr = err as AxiosError;
     errorHandler(axiosErr.response.status, yield getContext("history"));
