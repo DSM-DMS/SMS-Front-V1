@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useState
 } from "react";
+import { toast } from "react-toastify";
 
 import { OutingApply } from "../../components";
 import { postOuting } from "../../lib/api/Outing";
@@ -43,7 +44,7 @@ const ApplyContainer: FC<Props> = () => {
       const value = e.target.value;
 
       if (!checkOutTimeValid(value)) {
-        alert("귀교 시간보다 늦을 수 없습니다.");
+        toast.error("귀교 시간보다 늦을 수 없습니다.");
         return;
       }
 
@@ -57,7 +58,7 @@ const ApplyContainer: FC<Props> = () => {
       const value = e.target.value;
 
       if (!checkInTimeValid(value)) {
-        alert("외출 시간보다 늦을 수 없습니다.");
+        toast.error("외출 시간보다 늦을 수 없습니다.");
         return;
       }
 
@@ -120,8 +121,10 @@ const ApplyContainer: FC<Props> = () => {
   const applyOuting = useCallback(async (outing: Outing) => {
     const { date, startTime, endTime, place, reason, situation } = outing;
     if (!checkOutingValidation(outing)) {
-      return alert("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      return;
     }
+
     const getOutingTime = (time: string) =>
       Math.round(+new Date(`${date}T${time}`) / 1000);
 
@@ -136,18 +139,20 @@ const ApplyContainer: FC<Props> = () => {
     try {
       await postOuting(outingBody);
 
-      alert("외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요.");
+      toast.success(
+        "외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요."
+      );
     } catch (err) {
       const data: ResOutingWithDefault = err?.response?.data;
       const status = data?.status;
       const code = data?.code;
 
       if (status === 400) {
-        alert("외출 시간을 다시 설정해주세요.");
+        toast.error("외출 시간을 다시 설정해주세요.");
       } else if (status === 403) {
-        alert("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
+        toast.error("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
       } else if (status === 409 && code === -2401) {
-        alert("해당 날짜에 대기중인 외출 신청이 있습니다.");
+        toast.error("해당 날짜에 대기중인 외출 신청이 있습니다.");
       }
     }
   }, []);

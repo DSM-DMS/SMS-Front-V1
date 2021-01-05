@@ -6,9 +6,10 @@ import React, {
   useEffect,
   useMemo
 } from "react";
+import { toast } from "react-toastify";
 
 import Members from "../../../components/Management/Info/Members";
-
+import MemberItem from "../../../components/Management/Info/MemberItem";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
 import {
   deleteMember,
@@ -17,7 +18,6 @@ import {
 } from "../../../lib/api/Management";
 import { ResStudents } from "../../../lib/api/payloads/Management";
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
-import MemberItem from "../../../components/Management/Info/MemberItem";
 
 interface Props {
   leaderUuid: string;
@@ -50,14 +50,15 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
         const status = err?.response?.status;
         const code = err?.code;
 
-        if (status === 403 && code === -1711)
-          return alert("동아리장 또는 관리자 계정이 아닙니다.");
-        if (status === 403 && code === -1712)
-          return alert("동아리장이 아닙니다.");
-        if (status === 404 && code === -1721)
-          return alert("존재하지 않는 동아리입니다.");
-        if (status === 404 && code === -1723)
-          return alert("삭제하려는 동아리원이 존재하지 않습니다.");
+        if (status === 403 && code === -1711) {
+          toast.error("동아리장 또는 관리자 계정이 아닙니다.");
+        } else if (status === 403 && code === -1712) {
+          toast.error("동아리장이 아닙니다.");
+        } else if (status === 404 && code === -1721) {
+          toast.error("존재하지 않는 동아리입니다.");
+        } else if (status === 404 && code === -1723) {
+          toast.error("삭제하려는 동아리원이 존재하지 않습니다.");
+        }
       }
     },
     [memberUuids]
@@ -79,14 +80,15 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
       const status = err?.response?.status;
 
       if (status === 407) {
-        return alert("동아리 원을 정보를 받아오는데 실패했습니다.");
+        toast.error("동아리 원을 정보를 받아오는데 실패했습니다.");
       }
     }
   };
 
   const searchStudents = async (filter: string, value: string) => {
     if (value.trim() === "") {
-      return alert("검색어를 입력해주세요.");
+      toast.error("검색어를 입력해주세요.");
+      return;
     }
 
     try {
@@ -97,7 +99,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
       const status = err?.response?.status;
 
       if (status === 409) {
-        return alert("검색 결과가 없습니다.");
+        toast.error("검색 결과가 없습니다.");
       }
     }
   };
@@ -111,7 +113,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
       const status = err?.response?.status;
 
       if (status === 407) {
-        return alert("유효하지 않은 동아리원이 존재합니다.");
+        toast.error("유효하지 않은 동아리원이 존재합니다.");
       }
     }
   };

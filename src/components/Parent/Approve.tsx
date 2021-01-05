@@ -17,17 +17,20 @@ const Approve: FC<Props> = ({ outingInfo, approveOuting, rejectOuting }) => {
   return (
     <S.ParentWrap>
       {outingInfo.outing_uuid && <OutingInfo outingInfo={outingInfo} />}
-      {outingInfo.outing_uuid && outingInfo.outing_situation === NORMAL && (
-        <ParentAction
-          approveOuting={approveOuting}
-          rejectOuting={rejectOuting}
-        />
-      )}
-      {outingInfo.outing_uuid && outingInfo.outing_situation === EMERGENCY && (
-        <S.ParentOutingEmergencyText>
-          질병 외출로 신청한 외출은 학생의 신속한 처치를 위해 확인만 가능합니다.
-        </S.ParentOutingEmergencyText>
-      )}
+      {outingInfo.outing_uuid &&
+        outingInfo.outing_situation.toLocaleLowerCase() === NORMAL && (
+          <ParentAction
+            approveOuting={approveOuting}
+            rejectOuting={rejectOuting}
+          />
+        )}
+      {outingInfo.outing_uuid &&
+        outingInfo.outing_situation.toLocaleLowerCase() === EMERGENCY && (
+          <S.ParentOutingEmergencyText>
+            질병 외출로 신청한 외출은 학생의 신속한 처치를 위해 확인만
+            가능합니다.
+          </S.ParentOutingEmergencyText>
+        )}
     </S.ParentWrap>
   );
 };
