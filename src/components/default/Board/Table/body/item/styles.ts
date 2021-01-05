@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Container, OutingItemContainer } from '../../header/styles';
+import styled from "styled-components";
+import { Container, OutingItemContainer } from "../../header/styles";
 
 export const ItemContainer = styled(Container)`
   background-color: white;
@@ -7,6 +7,7 @@ export const ItemContainer = styled(Container)`
   font-size: 12px;
   border-top-width: 1px;
   border-top-color: #d3d3d3;
+  cursor: pointer;
 
   div:nth-child(2) {
     text-align: left;
