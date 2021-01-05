@@ -1,10 +1,10 @@
 import React, { FC, ReactElement, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import TimetableList from "./TimetableList";
 
 import * as S from "../style";
-import { SearchIcon } from "../../../assets";
 import { stateType } from "../../../modules/reducer";
 import { getTimetablesSaga } from "../../../modules/action/main";
 import { STUDENT } from "../../../modules/action/header";
@@ -28,14 +28,16 @@ const Timetable: FC<Props> = (): ReactElement => {
       0
     ).getDate();
     if (tDate === currLastDate) {
-      return alert("이번 달 안에서만 시간표 변경이 가능합니다.");
+      toast.error("이번 달 안에서만 시간표 변경이 가능합니다.");
+      return;
     }
     setTDate(prev => prev + 1);
   };
 
   const handlePrevTimetable = () => {
     if (tDate === 1) {
-      return alert("이번 달 안에서만 시간표 변경이 가능합니다.");
+      toast.error("이번 달 안에서만 시간표 변경이 가능합니다.");
+      return;
     }
     setTDate(prev => prev - 1);
   };

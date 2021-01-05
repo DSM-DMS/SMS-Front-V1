@@ -8,6 +8,8 @@ import React, {
   useState,
   memo
 } from "react";
+import { toast } from "react-toastify";
+
 import * as S from "./style";
 
 import { ModalClose, paperclipClubPicture } from "../../../assets";
@@ -30,15 +32,16 @@ const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
     return enableExts.split(",").some(ext => ext === fileExt);
   };
 
-  const uploadFile = useCallback((files: FileList) => {
-    if (files.length !== 1) return;
-    if (!isEnableExt(files.item(0).name.toLowerCase())) {
-      alert("파일 확장자는 'jpg, jpeg, png, gif, svg' 중 하나여야 합니다.");
+  const uploadFile = useCallback((file: File) => {
+    if (!isEnableExt(file.name.toLowerCase())) {
+      toast.error(
+        "파일 확장자는 'jpg, jpeg, png, gif, svg' 중 하나여야 합니다."
+      );
       return;
     }
 
     setShowCancel(true);
-    readFile(files.item(0));
+    readFile(file);
   }, []);
 
   const handleDrop = (e: DragEvent) => {
@@ -48,7 +51,13 @@ const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
     const data = e.dataTransfer.files;
 
     fileRef.current.files = data;
-    uploadFile(data);
+
+    if (data.length === 0) {
+      toast.error("파일을 추가해야 합니다.");
+      return;
+    }
+
+    uploadFile(data.item(0));
     setDragged(false);
   };
 
@@ -96,7 +105,7 @@ const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
         id="files"
         name="files"
         accept="image/*"
-        onChange={e => uploadFile(e.currentTarget.files)}
+        onChange={e => uploadFile(e.currentTarget.files.item(0))}
         hidden={true}
         ref={fileRef}
       />

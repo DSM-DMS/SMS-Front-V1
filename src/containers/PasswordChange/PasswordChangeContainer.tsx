@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { PasswordChange } from "../../components";
 import {
@@ -23,7 +24,7 @@ const PasswordChangeContainer: FC<Props> = () => {
           await putTeacherPassword(uuid, currentPw, revisionPw);
         }
 
-        alert("비밀번호를 변경했습니다.");
+        toast.success("비밀번호를 변경했습니다.");
         history.push("./home");
       } catch (err) {
         const data = err?.response?.data;
@@ -31,9 +32,9 @@ const PasswordChangeContainer: FC<Props> = () => {
         const code = data?.code;
 
         if (status === 403) {
-          return alert("학생 정보가 올바르지 않습니다. 다시 로그인해주세요.");
+          toast.error("학생 정보가 올바르지 않습니다. 다시 로그인해주세요.");
         } else if (status === 409 && code === -701) {
-          return alert("현재 비밀번호가 올바르지 않습니다.");
+          toast.error("현재 비밀번호가 올바르지 않습니다.");
         }
       }
     },

@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import { AdminMain } from "../../../components";
 import {
@@ -47,7 +48,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
         const status = err.response.status;
 
         if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
+          toast.error("선생님 계정으로 이용해주세요.");
         }
       }
     },
@@ -69,7 +70,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
         const status = err.response.status;
 
         if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
+          toast.error("선생님 계정으로 이용해주세요.");
         }
       }
     },
@@ -91,7 +92,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
         const status = err.response.status;
 
         if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
+          toast.error("선생님 계정으로 이용해주세요.");
         }
       }
     },

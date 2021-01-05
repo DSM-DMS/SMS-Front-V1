@@ -6,6 +6,7 @@ import React, {
   useState
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { OutingHistory } from "../../components";
 import { getHistory } from "../../lib/api/Outing";
@@ -40,7 +41,8 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
   const getHistories = useCallback(
     async (historyStart: number) => {
       if (historyStart > histories.length) {
-        return alert("불러올 외출신청 내역이 없습니다.");
+        toast.error("불러올 외출신청 내역이 없습니다.");
+        return;
       }
 
       try {
@@ -54,7 +56,7 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
         const status = err?.response?.data?.status;
 
         if (status === 403) {
-          return alert("학생 계정으로 외출 신청 내역을 조회할 수 있습니다.");
+          toast.error("학생 계정으로 외출 신청 내역을 조회할 수 있습니다.");
         }
       }
     },

@@ -1,5 +1,6 @@
 import React, { FC, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import * as S from "./style";
 import PasswordInput from "./PasswordInput";
@@ -42,10 +43,12 @@ const PasswordChange: FC<Props> = ({ changePassword }) => {
       pws.revisionPw.trim() === "" ||
       pws.revisionPwConfirm.trim() === ""
     ) {
-      return alert("모든 칸에 입력을 완료해주세요.");
+      toast.error("모든 칸에 입력을 완료해주세요.");
+      return;
     }
     if (pws.revisionPw !== pws.revisionPwConfirm) {
-      return alert("새 비밀번호가 일치하지 않습니다.");
+      toast.error("새 비밀번호가 일치하지 않습니다.");
+      return;
     }
 
     changePassword(type as UserType, pws.currentPw, pws.revisionPw);

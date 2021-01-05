@@ -49,17 +49,9 @@ export const ScheduleHeader = styled.header`
 export const ScheduleHeaderDateSetting = styled.div`
   display: flex;
   align-items: center;
-  font-size: 12px;
-`;
-
-export const ScheduleArrow = styled.img`
-  width: 14px;
-  margin: 0 4px;
-  cursor: pointer;
-  padding: 4px;
-  transform: rotate(-90deg);
-  &:last-child {
-    transform: rotate(90deg);
+  > span {
+    margin: 0 8px;
+    font-size: 14px;
   }
 `;
 
@@ -263,9 +255,36 @@ export const Outing = styled(MainContentCommon)`
   height: 30%;
 `;
 
-export const OutingTitle = styled(MainContentTitleCommon)`
+export const OutingTitleWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 12px;
   border-bottom: 2px solid #dddddd;
+`;
+
+export const OutingTitle = styled(MainContentTitleCommon)``;
+
+export const OutingWarning = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: white;
+  background-color: #ff5555;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #ff1212;
+  }
+  > img {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
 `;
 
 export const OutingItem = styled(Link)`
@@ -279,13 +298,8 @@ export const OutingItem = styled(Link)`
   color: black;
   text-decoration: none;
   cursor: pointer;
-  &:first-child {
-    border: 0;
-    color: white;
-    background-color: #ff5555;
-  }
   &:hover {
-    filter: drop-shadow(3px 1px 5px #888888);
+    background-color: #e1e1e1;
   }
 `;
 

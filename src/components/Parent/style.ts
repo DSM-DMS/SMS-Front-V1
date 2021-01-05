@@ -15,6 +15,12 @@ export const ParentWrap = styled.div`
   }
 `;
 
+export const ParentOutingEmergencyText = styled.p`
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+`;
+
 export const ParentOutingInfo = styled.div`
   margin-bottom: 32px;
 `;
