@@ -1,5 +1,6 @@
 import React, { FC, ReactElement, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 import { AdminMain } from "../../../components";
 import {
@@ -11,6 +12,7 @@ import {
   ReqCreateSchedule,
   ReqEditSchedule
 } from "../../../lib/api/payloads/Main";
+import { getAxiosError } from "../../../lib/utils";
 import { getSchedulesSaga } from "../../../modules/action/main";
 
 interface Props {}
@@ -44,10 +46,10 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
           )
         );
       } catch (err) {
-        const status = err.response.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
+          toast.error("선생님 계정으로 이용해주세요.");
         }
       }
     },
@@ -66,10 +68,10 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
           )
         );
       } catch (err) {
-        const status = err.response.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
+          toast.error("선생님 계정으로 이용해주세요.");
         }
       }
     },
@@ -88,10 +90,10 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
           )
         );
       } catch (err) {
-        const status = err.response.status;
+        const { status } = getAxiosError(err);
 
         if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
+          toast.error("선생님 계정으로 이용해주세요.");
         }
       }
     },

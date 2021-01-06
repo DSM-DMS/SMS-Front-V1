@@ -1,5 +1,6 @@
 import React, { ChangeEvent, FC, FormEvent, ReactElement } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import ApplyHead from "./Head";
 import ApplyDate from "./Date";
@@ -14,10 +15,11 @@ import {
   NORMAL,
   Outing
 } from "../../../containers/Outing/ApplyContainer";
-import { useDispatch } from "react-redux";
-import { pageMove, subPageMove } from "../../../modules/action/page";
+import { subPageMove } from "../../../modules/action/page";
+import { Loading } from "../../default";
 
 interface Props {
+  loading: boolean;
   formDate: string;
   formOutTime: string;
   formInTime: string;
@@ -35,6 +37,7 @@ interface Props {
 }
 
 const Apply: FC<Props> = ({
+  loading,
   formDate,
   formInTime,
   formOutTime,
@@ -104,6 +107,7 @@ const Apply: FC<Props> = ({
           <ApplyPlace handlePlace={handlePlace} place={formPlace} />
         </S.ApplyForm>
         <S.FormButtonWrap>
+          {loading && <Loading />}
           <S.FormButtonSubmit onClick={handleApplyOuting}>
             작성완료
           </S.FormButtonSubmit>

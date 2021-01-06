@@ -21,10 +21,12 @@ import {
   ReqCreateSchedule,
   ReqEditSchedule
 } from "../../../lib/api/payloads/Main";
+import { toast } from "react-toastify";
+import { padNum } from "../../../lib/utils";
 
 interface Props {
-  handleCloseModal?: () => void;
   type: ModalType;
+  handleCloseModal?: () => void;
   createSchedule: (createData: ReqCreateSchedule) => Promise<void>;
   editSchedule: (
     editData: ReqEditSchedule,
@@ -33,25 +35,31 @@ interface Props {
 }
 
 const ScheduleModal: FC<Props> = ({
-  handleCloseModal,
   type,
+  handleCloseModal,
   createSchedule,
   editSchedule
 }): ReactElement => {
-  const { schedulerDate, targetUuid } = useSelector(
+  const { schedulerDate, targetUuid, schedules } = useSelector(
     (state: stateType) => state.main
   );
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
   const [detail, setDetail] = useState<string>("");
 
-  const getLocalDate = useCallback(
-    (date: Date = new Date()) =>
-      `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-    []
-  );
+  const getLocalDate = useCallback((date: Date) => {
+    const y = date.getFullYear();
+    const m = padNum(date.getMonth() + 1);
+    const d = padNum(date.getDate());
+    return `${y}-${m}-${d}`;
+  }, []);
 
   const handleCreateSchedule = () => {
+    if (!(start || end || detail)) {
+      toast.error("입력 칸을 모두 채워주세요.");
+      return;
+    }
+
     createSchedule({ schedulerDate, start, end, detail });
     handleCloseModal();
   };
@@ -70,7 +78,10 @@ const ScheduleModal: FC<Props> = ({
 
   useEffect(() => {
     if (type === EDIT) {
-      // TODO : get edit information
+      const target = schedules.find(({ schedule_uuid: u }) => u === targetUuid);
+      setStart(getLocalDate(new Date(target.start_date)));
+      setEnd(getLocalDate(new Date(target.end_date)));
+      setDetail(target.detail);
     }
   }, [type]);
 
@@ -93,20 +104,19 @@ const ScheduleModal: FC<Props> = ({
               <S.ScheduleModalFormInput
                 type="date"
                 placeholder="시작일을 선택해 주세요."
+                defaultValue={start}
                 onChange={e => {
                   setStart(e.currentTarget.value);
                 }}
-                min={getLocalDate()}
-                max={end}
               />
               <S.ScheduleModalFormTilde>~</S.ScheduleModalFormTilde>
               <S.ScheduleModalFormInput
                 type="date"
                 placeholder="종료일을 선택해 주세요."
+                defaultValue={end}
                 onChange={e => {
                   setEnd(e.currentTarget.value);
                 }}
-                min={start}
               />
             </S.ScheduleModalFormInnerWrap>
           </S.ScheduleModalFormTimes>

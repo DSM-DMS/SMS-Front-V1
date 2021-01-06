@@ -1,8 +1,9 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, getContext, put, takeEvery } from "redux-saga/effects";
 import { apiDefault } from "../../../lib/api/client";
 import { getClubUuid } from "../../../lib/api/club";
+import { errorHandler } from "../../../lib/utils";
 import {
   managementAction,
   managementActionCreater
@@ -54,7 +55,10 @@ function* getManagementWantedInfoSaga(
         );
       }
     } catch (err) {}
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* postManagementWantedInfo(
@@ -63,9 +67,14 @@ function* postManagementWantedInfo(
   >
 ) {
   try {
+    const history = yield getContext("history");
+    history.push("/management/notice");
     yield call(apiDefault().post, "/recruitments", action.payload);
     toast.dark("성공적으로 등록했습니다");
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* deleteManagementWantedInfo(
@@ -76,7 +85,10 @@ function* deleteManagementWantedInfo(
   try {
     yield call(apiDefault().delete, `/recruitments/uuid/${action.payload}`);
     toast.dark("성공적으로 삭제했습니다");
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* editManagementWantedInfo(
@@ -91,7 +103,10 @@ function* editManagementWantedInfo(
       recruit_concept
     });
     toast.dark("성공적으로 수정했습니다");
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* managementSaga() {

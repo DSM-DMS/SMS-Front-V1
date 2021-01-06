@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import * as S from "./style";
 
 import { ResOutingInfo } from "../../lib/api/payloads/Parent";
+import { EMERGENCY } from "../../containers/Outing/ApplyContainer";
 
 interface Props {
   outingInfo: ResOutingInfo;
@@ -37,7 +38,7 @@ const OutingInfo: FC<Props> = ({ outingInfo }) => {
       <S.ParentOutingItem>
         <S.ParentOutingTitle>외출 상황</S.ParentOutingTitle>
         <S.ParentOutingPara>
-          {outing_situation.toLocaleLowerCase() === "emergency"
+          {outing_situation?.toLocaleLowerCase() === EMERGENCY
             ? "질병 외출"
             : "일반 외출"}
         </S.ParentOutingPara>

@@ -27,6 +27,11 @@ export const Header = styled.div`
   align-items: center;
   border-bottom: 1px solid #f7f6ff;
 
+  > div {
+    display: flex;
+    align-items: flex-end;
+  }
+
   > button {
     height: 40px;
   }

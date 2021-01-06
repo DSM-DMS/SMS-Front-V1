@@ -11,19 +11,28 @@ import { NavIconCircleBlue } from "../../../../assets";
 import { WantedCircleBox } from "../../../../components/default";
 import { makeFilterFunc, customSelector } from "../../../../lib/utils";
 import { Hr } from "../../../../components/default/Board/styles";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
 import { WantedInfo } from "../../../../modules/type/poster";
 import { apiDefault } from "../../../../lib/api/client";
+import { setWantedFilter } from "../../../../modules/action/poster";
 
 const CircleWanted: FC = () => {
-  const data = useSelector((state: stateType) => state.poster.wanted.list);
+  const dispatch = useDispatch();
+  const { data, field } = useSelector((state: stateType) => ({
+    data: state.poster.wanted.list,
+    field: state.poster.wanted.field
+  }));
   const [keyword, setkeyword] = useState<string>("");
   const [circleCount, setCircleCount] = useState<number>(0);
   const filterFunc = makeFilterFunc<WantedInfo>(data, ({}, keyword) => true);
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setkeyword(e.target.value);
+  }, []);
+
+  const filterHandler = useCallback((field: string) => {
+    dispatch(setWantedFilter(field));
   }, []);
 
   useEffect(() => {
@@ -43,6 +52,8 @@ const CircleWanted: FC = () => {
       />
       <Hr />
       <Category
+        field={field}
+        filterHandler={filterHandler}
         onChange={onChange}
         count={circleCount}
         placeHolder="검색할 동아리 이름을 입력하세요"
@@ -51,7 +62,12 @@ const CircleWanted: FC = () => {
       </Category>
       <S.BoxWrap>
         {filterFunc(keyword).map(data => (
-          <WantedCircleBox {...data} />
+          <WantedCircleBox
+            key={data.club_uuid}
+            filterField={field}
+            filterName={keyword}
+            {...data}
+          />
         ))}
       </S.BoxWrap>
     </S.Container>

@@ -7,14 +7,21 @@ import { deleteMember as deleteMemberSvg, ModalClose } from "../../../assets";
 import { ResStudents } from "../../../lib/api/payloads/Management";
 import { formattingStudent } from "../../../lib/utils";
 import { stateType } from "../../../modules/reducer";
+import { Loading } from "../../default";
 
 interface Props {
+  removeLoading: boolean;
   member: ResStudents;
   name: string;
   removeMemberHandler: () => void;
 }
 
-const MemberItem: FC<Props> = ({ member, name, removeMemberHandler }) => {
+const MemberItem: FC<Props> = ({
+  removeLoading,
+  member,
+  name,
+  removeMemberHandler
+}) => {
   const { name: clubName } = useSelector(
     (state: stateType) => state.ManagementInfo
   );
@@ -45,6 +52,12 @@ const MemberItem: FC<Props> = ({ member, name, removeMemberHandler }) => {
           <S.ClubMemberDeleteBackground onClick={hideModal} />
           <S.ClubMemberDeleteModal>
             <S.ClubMemberDeleteModalHead>
+              <S.ClubMemberModalClose
+                src={ModalClose}
+                alt="close"
+                title="close"
+                onClick={hideModal}
+              />
               {clubName}에서 1명을 삭제합니다.
             </S.ClubMemberDeleteModalHead>
             <S.ClubMemberDeleteModalBody>
@@ -63,6 +76,7 @@ const MemberItem: FC<Props> = ({ member, name, removeMemberHandler }) => {
               <button className="delete" onClick={removeMemberHandler}>
                 동아리원 삭제
               </button>
+              {removeLoading && <Loading />}
             </S.ClubMemberDeleteModalFoot>
           </S.ClubMemberDeleteModal>
         </>

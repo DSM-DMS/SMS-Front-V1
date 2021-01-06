@@ -1,11 +1,11 @@
-import React from 'react';
-import { FC } from 'react';
-import * as S from './styles';
-import MainNavigationItemContainer from '../../Item/MainNavigationItemContainer';
-import { useSelector } from 'react-redux';
-import { stateType } from '../../../../modules/reducer';
+import React from "react";
+import { FC } from "react";
+import * as S from "./styles";
+import MainNavigationItemContainer from "../../Item/MainNavigationItemContainer";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../modules/reducer";
 
-import MainSubNavigationItemContainer from '../../Item/MainSubNavigationItemContainer';
+import MainSubNavigationItemContainer from "../../Item/MainSubNavigationItemContainer";
 
 export interface NavItem {
   name: string;

@@ -4,15 +4,20 @@ import { useParams } from "react-router-dom";
 import { Approve } from "../../components";
 import { ResOutingInfo } from "../../lib/api/payloads/Parent";
 import { getOutingInfo, postOutingAction } from "../../lib/api/Parent";
+import { toast } from "react-toastify";
+import { getAxiosError } from "../../lib/utils";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
 export class ParentActions {
   static PARENT_REJECT = "parent-reject";
   static PARENT_APPROVE = "parent-approve";
 }
 
-interface Props {}
+interface Props extends LoadingProps {}
 
-const ApproveContainer: FC<Props> = () => {
+const ApproveContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const { confirmUuid } = useParams<{ confirmUuid: string }>();
   const [outingInfo, setOutingInfo] = useState<ResOutingInfo>({
     outing_uuid: "",
@@ -24,18 +29,21 @@ const ApproveContainer: FC<Props> = () => {
   });
 
   const fetchOutingInfo = async () => {
+    startLoading();
     try {
       const { data } = await getOutingInfo(confirmUuid);
 
       setOutingInfo(data);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 404) {
-        alert("외출증 코드에 해당하는 외출증이 없습니다.");
+        toast.error("외출증 코드에 해당하는 외출증이 없습니다.");
       }
+
       location.href = "/login";
     }
+    endLoading();
   };
 
   const controlOuting = async (
@@ -44,27 +52,28 @@ const ApproveContainer: FC<Props> = () => {
     confirmUuid: string
   ) => {
     const typeText = action === ParentActions.PARENT_APPROVE ? "승인" : "거절";
-    if (!confirm(`자녀의 외출증을 ${typeText}하시겠습니까?`)) {
-      return;
-    }
+    if (!confirm(`자녀의 외출증을 ${typeText}하시겠습니까?`)) return;
+
+    startLoading();
     try {
       await postOutingAction(outing_uuid, action, confirmUuid);
 
-      alert(`자녀의 외출증을 ${typeText}했습니다.`);
+      toast.success(`자녀의 외출증을 ${typeText}했습니다.`);
       location.href = "/login";
     } catch (err) {
-      const data = err?.response?.data;
-      const status = data?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 403) {
-        alert("학부모님의 자녀가 신청한 외출증이 아닙니다.");
+        toast.error("학부모님의 자녀가 신청한 외출증이 아닙니다.");
       } else if (status === 404) {
-        alert("존재하지 않는 외출증입니다.");
+        toast.error("존재하지 않는 외출증입니다.");
       } else if (status === 409) {
-        alert("현재 학부모님이 접근할 수 없는 외출증입니다.");
+        toast.error("현재 학부모님이 접근할 수 없는 외출증입니다.");
       }
+
       location.href = "/login";
     }
+    endLoading();
   };
 
   const approveOuting = useCallback(() => {
@@ -78,13 +87,13 @@ const ApproveContainer: FC<Props> = () => {
   }, [outingInfo, confirmUuid]);
 
   useEffect(() => {
+    if (!confirmUuid) return;
     if (
-      confirmUuid &&
-      (confirmUuid.length !== 20 ||
-        confirmUuid.substring(0, 7) !== "confirm" ||
-        isNaN(+confirmUuid.substring(8, 20)))
+      confirmUuid.length !== 20 ||
+      confirmUuid.substring(0, 7) !== "confirm" ||
+      isNaN(+confirmUuid.substring(8, 20))
     ) {
-      alert("잘못된 접근입니다.");
+      toast.error("잘못된 접근입니다.");
       location.href = "/login";
     }
   }, [confirmUuid]);
@@ -94,6 +103,7 @@ const ApproveContainer: FC<Props> = () => {
 
   return (
     <Approve
+      loading={loading}
       outingInfo={outingInfo}
       approveOuting={approveOuting}
       rejectOuting={rejectOuting}
@@ -101,4 +111,4 @@ const ApproveContainer: FC<Props> = () => {
   );
 };
 
-export default ApproveContainer;
+export default WithLoadingContainer(ApproveContainer);

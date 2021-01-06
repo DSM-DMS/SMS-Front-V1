@@ -13,6 +13,9 @@ import MemberSearch from "./MemberSearch";
 import { postMember } from "../../../lib/api/Management";
 import { ResStudents } from "../../../lib/api/payloads/Management";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
+import { getAxiosError } from "../../../lib/utils";
+import { Loading } from "../../default";
+import { toast } from "react-toastify";
 
 interface Props {
   leaderUuid: string;
@@ -62,21 +65,46 @@ const MemberAddModal: FC<Props> = ({
   const [value, setValue] = useState<string>("");
   const [uuids, setUuids] = useState<string[]>([]);
   const [addQueue, setAddQueue] = useState<ResStudents[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const startLoading = useCallback(() => {
+    setLoading(true);
+  }, []);
+
+  const endLoading = useCallback(() => {
+    setLoading(false);
+  }, []);
 
   const addMembers = () => {
     const addUuids = addQueue.map(({ student_uuid }) => student_uuid);
 
-    uuids.forEach(async uuid => {
-      if (memberUuids.findIndex(memberUuid => memberUuid === uuid) === -1) {
-        await postMember(clubUuid, uuid);
+    startLoading();
+    try {
+      uuids.forEach(async uuid => {
+        if (memberUuids.findIndex(memberUuid => memberUuid === uuid) === -1) {
+          await postMember(clubUuid, uuid);
+        }
+      });
+    } catch (err) {
+      const { status, code } = getAxiosError(err);
+
+      if (status === 403 && code === -1711) {
+        toast.error("학생 또는 관리자 계정이 아닙니다.");
+      } else if (status === 403 && code === -1712) {
+        toast.error("본인이 해당 동아리의 동아리 장이 아닙니다.");
+      } else if (status === 404 && code === -1721) {
+        toast.error("수정하려는 동아리가 없습니다.");
+      } else if (status === 404 && code === -1722) {
+        toast.error("추가하려는 학생이 존재하지 않습니다.");
+      } else if (status === 409 && code === -1701) {
+        toast.error("이미 부원인 학생이 있습니다.");
       }
-    });
+    }
+    endLoading();
 
     const UnVerboseMembers = Array.from(new Set([...addUuids, ...memberUuids]));
 
-    console.log(UnVerboseMembers, [...addUuids, ...memberUuids]);
-
-    handler.handleClubMemberUuids([...addUuids, ...memberUuids]);
+    handler.handleClubMemberUuids(UnVerboseMembers);
     handleCloseModal();
   };
 
@@ -91,13 +119,6 @@ const MemberAddModal: FC<Props> = ({
   const handleAddQueue = useCallback((student: ResStudents) => {
     setUuids(prev => [...prev, student.student_uuid]);
     setAddQueue(prev => [...prev, student]);
-  }, []);
-
-  const handleRemoveQueue = useCallback((student_uuid: string) => {
-    setUuids(prev => prev.filter(uuid => uuid !== student_uuid));
-    setAddQueue(prev =>
-      prev.filter(({ student_uuid: sUuid }) => sUuid !== student_uuid)
-    );
   }, []);
 
   const handleSearchStudents = () => {
@@ -123,14 +144,11 @@ const MemberAddModal: FC<Props> = ({
             handleFilter={handleFilter}
             handleValue={handleValue}
           />
-          <MemberAddQueue
-            leaderUuid={leaderUuid}
-            addQueue={addQueue}
-            handleClickRemoveQueue={handleRemoveQueue}
-          />
+          <MemberAddQueue leaderUuid={leaderUuid} addQueue={addQueue} />
         </S.ModalFormInner>
         <S.ModalButtonWrap>
           <S.ModalCancel onClick={handleCloseModal}>취소</S.ModalCancel>
+          {loading && <Loading />}
           <S.ModalAdd onClick={addMembers}>적용</S.ModalAdd>
         </S.ModalButtonWrap>
       </S.ModalForm>

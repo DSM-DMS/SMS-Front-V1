@@ -72,6 +72,7 @@ const MemberSearch: FC<Props> = ({
                 <S.ResultItem
                   key={student.student_uuid}
                   onClick={() => handleAddQueue(student)}
+                  className="searchResult"
                 >
                   <span>{student.grade}학년</span>
                   <span>{student.group}반</span>

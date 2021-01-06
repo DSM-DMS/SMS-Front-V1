@@ -19,6 +19,12 @@ const NoticeDetailBody: FC<Props> = ({ content }) => {
       data: JSON.parse(content)
     });
     editerRef.current = editer;
+
+    setTimeout(() => {
+      document
+        .querySelectorAll("[contenteditable='true']")
+        .forEach(element => element.setAttribute("contenteditable", "false"));
+    }, 1000);
   }, [content]);
 
   return (

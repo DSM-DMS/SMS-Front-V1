@@ -8,7 +8,10 @@ import { Board, PageHeader, SearchInput } from "../../default";
 import * as S from "./styles";
 
 const ManagementNotice: FC = () => {
-  const data = useSelector((store: stateType) => store.notice.list);
+  const { data, size } = useSelector((state: stateType) => ({
+    data: state.notice.list,
+    size: state.notice.size
+  }));
   const [keyword, setKeyword] = useState<string>("");
 
   const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -38,6 +41,7 @@ const ManagementNotice: FC = () => {
       </S.Header>
       <S.BoardWrap>
         <Board
+          maxSize={size}
           data={filterData(keyword)}
           names={["번호", "제목", "날짜", "동아리", "조회수"]}
         />

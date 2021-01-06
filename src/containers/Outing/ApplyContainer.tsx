@@ -5,12 +5,17 @@ import React, {
   useCallback,
   useState
 } from "react";
+import { toast } from "react-toastify";
 
 import { OutingApply } from "../../components";
 import { postOuting } from "../../lib/api/Outing";
-import { ReqOuting, ResOutingWithDefault } from "../../lib/api/payloads/Outing";
+import { ReqOuting } from "../../lib/api/payloads/Outing";
+import { getAxiosError } from "../../lib/utils";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
 export const NORMAL = "normal" as const;
 export const EMERGENCY = "emergency" as const;
@@ -26,7 +31,7 @@ export interface Outing {
   situation: SituationType;
 }
 
-const ApplyContainer: FC<Props> = () => {
+const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const [formDate, setFormDate] = useState<string>("");
   const [formOutTime, setFormOutTime] = useState<string>("");
   const [formInTime, setFormInTime] = useState<string>("");
@@ -43,7 +48,7 @@ const ApplyContainer: FC<Props> = () => {
       const value = e.target.value;
 
       if (!checkOutTimeValid(value)) {
-        alert("귀교 시간보다 늦을 수 없습니다.");
+        toast.error("귀교 시간보다 늦을 수 없습니다.");
         return;
       }
 
@@ -57,7 +62,7 @@ const ApplyContainer: FC<Props> = () => {
       const value = e.target.value;
 
       if (!checkInTimeValid(value)) {
-        alert("외출 시간보다 늦을 수 없습니다.");
+        toast.error("외출 시간보다 늦을 수 없습니다.");
         return;
       }
 
@@ -106,22 +111,24 @@ const ApplyContainer: FC<Props> = () => {
     const targetStartTime = +new Date(`${date}T${startTime}`);
     const targetEndTime = +new Date(`${date}T${endTime}`);
 
-    return date.trim() === "" ||
+    return !(
+      date.trim() === "" ||
       startTime.trim() === "" ||
       endTime.trim() === "" ||
       now > targetStartTime ||
       now > targetEndTime ||
       place.trim() === "" ||
       reason.trim() === ""
-      ? false
-      : true;
+    );
   }, []);
 
   const applyOuting = useCallback(async (outing: Outing) => {
     const { date, startTime, endTime, place, reason, situation } = outing;
     if (!checkOutingValidation(outing)) {
-      return alert("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      return;
     }
+
     const getOutingTime = (time: string) =>
       Math.round(+new Date(`${date}T${time}`) / 1000);
 
@@ -133,27 +140,32 @@ const ApplyContainer: FC<Props> = () => {
       situation
     };
 
+    startLoading();
     try {
       await postOuting(outingBody);
 
-      alert("외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요.");
+      toast.success(
+        "외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요."
+      );
     } catch (err) {
-      const data: ResOutingWithDefault = err?.response?.data;
-      const status = data?.status;
-      const code = data?.code;
+      const { status, code } = getAxiosError(err);
 
       if (status === 400) {
-        alert("외출 시간을 다시 설정해주세요.");
+        toast.error("외출 시간을 다시 설정해주세요.");
       } else if (status === 403) {
-        alert("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
+        toast.error("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
       } else if (status === 409 && code === -2401) {
-        alert("해당 날짜에 대기중인 외출 신청이 있습니다.");
+        toast.error("해당 날짜에 대기중인 외출 신청이 있습니다.");
+      } else {
+        toast.error("오류가 발생했습니다. 다시 시도해주세요.");
       }
     }
+    endLoading();
   }, []);
 
   return (
     <OutingApply
+      loading={loading}
       formDate={formDate}
       formOutTime={formOutTime}
       formInTime={formInTime}
@@ -172,4 +184,4 @@ const ApplyContainer: FC<Props> = () => {
   );
 };
 
-export default ApplyContainer;
+export default WithLoadingContainer(ApplyContainer);

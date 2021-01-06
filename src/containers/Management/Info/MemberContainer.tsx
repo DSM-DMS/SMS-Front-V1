@@ -6,9 +6,10 @@ import React, {
   useEffect,
   useMemo
 } from "react";
+import { toast } from "react-toastify";
 
 import Members from "../../../components/Management/Info/Members";
-
+import MemberItem from "../../../components/Management/Info/MemberItem";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
 import {
   deleteMember,
@@ -17,7 +18,7 @@ import {
 } from "../../../lib/api/Management";
 import { ResStudents } from "../../../lib/api/payloads/Management";
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
-import MemberItem from "../../../components/Management/Info/MemberItem";
+import { getAxiosError } from "../../../lib/utils";
 
 interface Props {
   leaderUuid: string;
@@ -31,6 +32,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
   const [students, setStudents] = useState<ResStudents[]>([]);
   const [leader, setLeader] = useState<ResStudentInfo>(null);
   const [members, setMembers] = useState<ResStudents[]>([]);
+  const [removeLoading, setRemoveLoading] = useState<boolean>(false);
 
   const handleShowModal = useCallback(() => {
     setModal(true);
@@ -40,25 +42,35 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
     setModal(false);
   }, []);
 
+  const startRemoveLoading = useCallback(() => {
+    setRemoveLoading(true);
+  }, []);
+
+  const endRemoveLoading = useCallback(() => {
+    setRemoveLoading(false);
+  }, []);
+
   const removeMember = useCallback(
     async (clubUuid: string, studentUuid: string) => {
+      startRemoveLoading();
       try {
         await deleteMember(clubUuid, studentUuid);
-
         handleRemoveMember(studentUuid);
+        toast.info("동아리원을 삭제했습니다.");
       } catch (err) {
-        const status = err?.response?.status;
-        const code = err?.code;
+        const { status, code } = getAxiosError(err);
 
-        if (status === 403 && code === -1711)
-          return alert("동아리장 또는 관리자 계정이 아닙니다.");
-        if (status === 403 && code === -1712)
-          return alert("동아리장이 아닙니다.");
-        if (status === 404 && code === -1721)
-          return alert("존재하지 않는 동아리입니다.");
-        if (status === 404 && code === -1723)
-          return alert("삭제하려는 동아리원이 존재하지 않습니다.");
+        if (status === 403 && code === -1711) {
+          toast.error("동아리장 또는 관리자 계정이 아닙니다.");
+        } else if (status === 403 && code === -1712) {
+          toast.error("동아리장이 아닙니다.");
+        } else if (status === 404 && code === -1721) {
+          toast.error("존재하지 않는 동아리입니다.");
+        } else if (status === 404 && code === -1723) {
+          toast.error("삭제하려는 동아리원이 존재하지 않습니다.");
+        }
       }
+      endRemoveLoading();
     },
     [memberUuids]
   );
@@ -76,17 +88,18 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
       setStudents(res.data.students);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 407) {
-        return alert("동아리 원을 정보를 받아오는데 실패했습니다.");
+        toast.error("동아리 원을 정보를 받아오는데 실패했습니다.");
       }
     }
   };
 
   const searchStudents = async (filter: string, value: string) => {
     if (value.trim() === "") {
-      return alert("검색어를 입력해주세요.");
+      toast.error("검색어를 입력해주세요.");
+      return;
     }
 
     try {
@@ -94,10 +107,10 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
       await studentsInfo(res.data.student_uuids);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 409) {
-        return alert("검색 결과가 없습니다.");
+        toast.error("검색 결과가 없습니다.");
       }
     }
   };
@@ -108,10 +121,10 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
 
       setMembers(res.data.students);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
       if (status === 407) {
-        return alert("유효하지 않은 동아리원이 존재합니다.");
+        toast.error("유효하지 않은 동아리원이 존재합니다.");
       }
     }
   };
@@ -128,6 +141,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
           return (
             <MemberItem
               key={student_uuid}
+              removeLoading={removeLoading}
               member={member}
               name={name}
               removeMemberHandler={removeMemberHandler}

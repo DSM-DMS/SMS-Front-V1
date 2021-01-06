@@ -7,7 +7,10 @@ import * as S from "./styles";
 
 const AdminNoticeAll: FC = () => {
   const [keyword, setKeyword] = useState<string>("");
-  const data = useSelector((state: stateType) => state.notice.list);
+  const { data, size } = useSelector((state: stateType) => ({
+    data: state.notice.list,
+    size: state.notice.size
+  }));
   const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKeyword(e.target.value);
   }, []);
@@ -20,8 +23,12 @@ const AdminNoticeAll: FC = () => {
         title="전체 공지사항"
       />
       <Board
+        maxSize={size}
         names={["번호", "제목", "날짜", "글쓴이", "조회수"]}
-        data={data.filter(({ title }) => title.includes(keyword))}
+        data={data.filter(
+          ({ title, writer_name }) =>
+            title.includes(keyword) || writer_name.includes(keyword)
+        )}
       />
     </S.Container>
   );
