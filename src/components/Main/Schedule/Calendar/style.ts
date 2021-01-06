@@ -9,6 +9,14 @@ export const Calendar = styled.div`
   margin: auto;
 `;
 
+export const CalendarLoadingWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 480px;
+`;
+
 export const CalendarDTemp = styled.div`
   box-sizing: border-box;
   display: flex;
