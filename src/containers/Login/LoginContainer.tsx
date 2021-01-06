@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Login } from "../../components";
 import { postLoginStudent } from "../../lib/api/Login";
 import { postLoginTeacher } from "../../lib/api/Login";
+import { getClubUuidFromLeader } from "../../lib/api/Management";
 import {
   PASSWORD_NOT_MATCHED,
   UNABLE_FORM,
@@ -62,12 +63,12 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
   const storageHandler = useCallback(
     (type: UserType, autoLogin: boolean, accessToken: string, uuid: string) => {
-      const MillisecondOfHour = 3600000;
+      const MillisecondINHour = 3600000;
 
       if (autoLogin) {
         localStorage.removeItem("expiration");
       } else {
-        localStorage.setItem("expiration", `${Date.now() + MillisecondOfHour}`);
+        localStorage.setItem("expiration", `${Date.now() + MillisecondINHour}`);
       }
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem(`uuid`, uuid);
@@ -75,6 +76,13 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     },
     []
   );
+
+  const getClubUuid = async () => {
+    try {
+      const res = await getClubUuidFromLeader(localStorage.getItem("uuid"));
+      localStorage.setItem("club_uuid", res.data.club_uuid);
+    } catch (err) {}
+  };
 
   const getStudentLoginInfo = useCallback(
     async (id: string, pw: string, autoLogin: boolean) => {
@@ -124,10 +132,9 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
         } else {
           await teacherLogin(id, pw, autoLogin);
         }
-
+        await getClubUuid();
         setErrorMessage(initErrorState);
         dispatch(pageMove("홈"));
-
         history.push("./home");
       } catch (err) {
         const { status, code } = getAxiosError(err);
@@ -139,8 +146,8 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
         } else if (status === 409 && (code === -402 || code === -412)) {
           errorMessageMacro(PASSWORD_NOT_MATCHED);
         }
+        endLoading();
       }
-      endLoading();
     },
     []
   );
