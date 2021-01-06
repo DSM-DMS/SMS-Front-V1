@@ -79,18 +79,6 @@ export const apiDefault = () => {
   return instance;
 };
 
-export const apiHeaderDefault = () => {
-  return axios.create({
-    baseURL: BASE_URL,
-    headers: {
-      "Request-Security": AES256.encrypt(
-        `${SERVER.securityBasePlain}:${(+new Date() + "").slice(0, 10)}`,
-        SERVER.securityPassPhrase
-      )
-    }
-  });
-};
-
 export const getStudentData = (
   uuid: string
 ): Promise<AxiosResponse<StudentInfo>> =>
