@@ -24,7 +24,7 @@ export const UserInfo = styled.span`
   font-size: 14px;
 `;
 
-export const MovePasswordChange = styled(Link)`
+export const MovePasswordChange = styled.span`
   display: inline-block;
   margin: 0 16px;
   color: #838383;
@@ -33,4 +33,16 @@ export const MovePasswordChange = styled(Link)`
   &:hover {
     color: black;
   }
+`;
+
+export const MoveClubManagement = styled.span`
+  display: inline-block;
+  margin: 0 16px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  color: white;
+  background-color: #10012e;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
 `;
