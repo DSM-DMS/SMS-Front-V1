@@ -6,15 +6,18 @@ import { ResOutingInfo } from "../../lib/api/payloads/Parent";
 import { getOutingInfo, postOutingAction } from "../../lib/api/Parent";
 import { toast } from "react-toastify";
 import { getAxiosError } from "../../lib/utils";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
 export class ParentActions {
   static PARENT_REJECT = "parent-reject";
   static PARENT_APPROVE = "parent-approve";
 }
 
-interface Props {}
+interface Props extends LoadingProps {}
 
-const ApproveContainer: FC<Props> = () => {
+const ApproveContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const { confirmUuid } = useParams<{ confirmUuid: string }>();
   const [outingInfo, setOutingInfo] = useState<ResOutingInfo>({
     outing_uuid: "",
@@ -26,6 +29,7 @@ const ApproveContainer: FC<Props> = () => {
   });
 
   const fetchOutingInfo = async () => {
+    startLoading();
     try {
       const { data } = await getOutingInfo(confirmUuid);
 
@@ -39,6 +43,7 @@ const ApproveContainer: FC<Props> = () => {
 
       location.href = "/login";
     }
+    endLoading();
   };
 
   const controlOuting = async (
@@ -49,6 +54,7 @@ const ApproveContainer: FC<Props> = () => {
     const typeText = action === ParentActions.PARENT_APPROVE ? "승인" : "거절";
     if (!confirm(`자녀의 외출증을 ${typeText}하시겠습니까?`)) return;
 
+    startLoading();
     try {
       await postOutingAction(outing_uuid, action, confirmUuid);
 
@@ -67,6 +73,7 @@ const ApproveContainer: FC<Props> = () => {
 
       location.href = "/login";
     }
+    endLoading();
   };
 
   const approveOuting = useCallback(() => {
@@ -96,6 +103,7 @@ const ApproveContainer: FC<Props> = () => {
 
   return (
     <Approve
+      loading={loading}
       outingInfo={outingInfo}
       approveOuting={approveOuting}
       rejectOuting={rejectOuting}
@@ -103,4 +111,4 @@ const ApproveContainer: FC<Props> = () => {
   );
 };
 
-export default ApproveContainer;
+export default WithLoadingContainer(ApproveContainer);
