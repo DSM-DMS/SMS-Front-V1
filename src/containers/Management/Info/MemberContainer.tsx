@@ -32,6 +32,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
   const [students, setStudents] = useState<ResStudents[]>([]);
   const [leader, setLeader] = useState<ResStudentInfo>(null);
   const [members, setMembers] = useState<ResStudents[]>([]);
+  const [removeLoading, setRemoveLoading] = useState<boolean>(false);
 
   const handleShowModal = useCallback(() => {
     setModal(true);
@@ -41,12 +42,21 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
     setModal(false);
   }, []);
 
+  const startRemoveLoading = useCallback(() => {
+    setRemoveLoading(true);
+  }, []);
+
+  const endRemoveLoading = useCallback(() => {
+    setRemoveLoading(false);
+  }, []);
+
   const removeMember = useCallback(
     async (clubUuid: string, studentUuid: string) => {
+      startRemoveLoading();
       try {
         await deleteMember(clubUuid, studentUuid);
-
         handleRemoveMember(studentUuid);
+        toast.info("동아리원을 삭제했습니다.");
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
@@ -60,6 +70,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
           toast.error("삭제하려는 동아리원이 존재하지 않습니다.");
         }
       }
+      endRemoveLoading();
     },
     [memberUuids]
   );
@@ -130,6 +141,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
           return (
             <MemberItem
               key={student_uuid}
+              removeLoading={removeLoading}
               member={member}
               name={name}
               removeMemberHandler={removeMemberHandler}

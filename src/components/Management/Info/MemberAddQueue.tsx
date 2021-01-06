@@ -8,14 +8,9 @@ import { formattingStudent, sorting } from "../../../lib/utils";
 interface Props {
   leaderUuid: string;
   addQueue: ResStudents[];
-  handleClickRemoveQueue: (student_uuid: string) => void;
 }
 
-const MemberAddQueue: FC<Props> = ({
-  leaderUuid,
-  addQueue,
-  handleClickRemoveQueue
-}) => {
+const MemberAddQueue: FC<Props> = ({ leaderUuid, addQueue }) => {
   return (
     <S.QueueWrap>
       <S.Queue>
@@ -23,10 +18,7 @@ const MemberAddQueue: FC<Props> = ({
           const { student_uuid, name } = member;
           if (student_uuid !== leaderUuid) {
             return (
-              <S.ResultItem
-                key={student_uuid}
-                onClick={() => handleClickRemoveQueue(student_uuid)}
-              >
+              <S.ResultItem key={student_uuid}>
                 <span>
                   {formattingStudent(member)} {name}
                 </span>

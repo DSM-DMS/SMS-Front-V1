@@ -69,6 +69,8 @@ export const TimetableTitle = styled(MainContentTitleCommon)`
 
 export const TimetableList = styled.ul`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TimetableItem = styled.li`
@@ -83,7 +85,7 @@ export const TimetableItem = styled.li`
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  word-break: break-all;
+  word-break: keep-all;
 `;
 
 export const TimetableItemDate = styled.span`
@@ -92,6 +94,10 @@ export const TimetableItemDate = styled.span`
   right: 4px;
   font-size: 10px;
   font-weight: normal;
+`;
+
+export const TimetableSubject = styled.span`
+  word-wrap: break-word;
 `;
 
 export const FiltersWrap = styled.div`
@@ -199,6 +205,14 @@ export const DetailBody = styled.div<DetailScrollColor>`
     background: ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
     border-radius: 16px;
   }
+`;
+
+export const DetailLoadingWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const DetailBodyItem = styled.div`
