@@ -9,15 +9,24 @@ import {
 } from "../../lib/api/PasswordChange";
 import { getAxiosError } from "../../lib/utils";
 import { STUDENT, TEACHER, UserType } from "../../modules/action/header";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
-const PasswordChangeContainer: FC<Props> = () => {
+const PasswordChangeContainer: FC<Props> = ({
+  loading,
+  startLoading,
+  endLoading
+}) => {
   const history = useHistory();
 
   const changePassword = useCallback(
     async (type: UserType, currentPw: string, revisionPw: string) => {
       const uuid = localStorage.getItem(`uuid`);
+
+      startLoading();
       try {
         if (type === STUDENT) {
           await putStudentPassword(uuid, currentPw, revisionPw);
@@ -36,11 +45,12 @@ const PasswordChangeContainer: FC<Props> = () => {
           toast.error("현재 비밀번호가 올바르지 않습니다.");
         }
       }
+      endLoading();
     },
     []
   );
 
-  return <PasswordChange changePassword={changePassword} />;
+  return <PasswordChange loading={loading} changePassword={changePassword} />;
 };
 
-export default PasswordChangeContainer;
+export default WithLoadingContainer(PasswordChangeContainer);

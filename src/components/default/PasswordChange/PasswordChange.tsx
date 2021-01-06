@@ -7,8 +7,10 @@ import PasswordInput from "./PasswordInput";
 
 import { stateType } from "../../../modules/reducer";
 import { UserType } from "../../../modules/action/header";
+import { Loading } from "../";
 
 interface Props {
+  loading: boolean;
   changePassword: (
     type: UserType,
     currentPw: string,
@@ -22,7 +24,7 @@ interface Passwords {
   revisionPwConfirm: string;
 }
 
-const PasswordChange: FC<Props> = ({ changePassword }) => {
+const PasswordChange: FC<Props> = ({ loading, changePassword }) => {
   const { type } = useSelector((state: stateType) => state.header);
   const [pws, setPws] = useState<Passwords>({
     currentPw: "",
@@ -79,9 +81,12 @@ const PasswordChange: FC<Props> = ({ changePassword }) => {
             changeHandler={changeHandler}
             handleChangePassword={handleChangePassword}
           />
-          <S.ChangeButton onClick={handleChangePassword}>
-            비밀번호 변경
-          </S.ChangeButton>
+          <S.ChangeButtonWrap>
+            <S.ChangeButton onClick={handleChangePassword}>
+              비밀번호 변경
+            </S.ChangeButton>
+            {loading && <Loading />}
+          </S.ChangeButtonWrap>
         </S.InputWrap>
       </div>
     </S.PasswordChangeWrap>

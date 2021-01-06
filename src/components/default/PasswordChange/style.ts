@@ -98,6 +98,11 @@ export const InputDefaultLine = styled.span`
   background-color: #00000012;
 `;
 
+export const ChangeButtonWrap = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const ChangeButton = styled.button`
   padding: 4px 8px;
   border: 0;
