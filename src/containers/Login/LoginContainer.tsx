@@ -19,8 +19,11 @@ import {
   UserType
 } from "../../modules/action/header";
 import { pageMove } from "../../modules/action/page";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
 export interface ErrorState {
   status: boolean;
@@ -32,7 +35,7 @@ const initErrorState = {
   message: ""
 };
 
-const LoginContainer: FC<Props> = () => {
+const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [id, setId] = useState<string>("");
@@ -114,6 +117,7 @@ const LoginContainer: FC<Props> = () => {
         return;
       }
 
+      startLoading();
       try {
         if (userType === STUDENT) {
           await studentLogin(id, pw, autoLogin);
@@ -128,15 +132,15 @@ const LoginContainer: FC<Props> = () => {
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (
-          status === 404 ||
-          (status === 409 && (code === -401 || code === -411))
-        ) {
+        if (status === 404) {
+          errorMessageMacro(UNAUTHORIZED);
+        } else if (status === 409 && (code === -401 || code === -411)) {
           errorMessageMacro(UNAUTHORIZED);
         } else if (status === 409 && (code === -402 || code === -412)) {
           errorMessageMacro(PASSWORD_NOT_MATCHED);
         }
       }
+      endLoading();
     },
     []
   );
@@ -155,6 +159,7 @@ const LoginContainer: FC<Props> = () => {
 
   return (
     <Login
+      loading={loading}
       id={id}
       pw={pw}
       autoLogin={autoLogin}
@@ -167,4 +172,4 @@ const LoginContainer: FC<Props> = () => {
   );
 };
 
-export default LoginContainer;
+export default WithLoadingContainer(LoginContainer);
