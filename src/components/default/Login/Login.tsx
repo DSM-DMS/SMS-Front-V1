@@ -3,8 +3,10 @@ import React, { ChangeEvent, FC } from "react";
 import * as S from "./style";
 
 import { ErrorState } from "../../../containers/Login/LoginContainer";
+import Loading from "../Loading/Loading";
 
 interface Props {
+  loading: boolean;
   id: string;
   pw: string;
   autoLogin: boolean;
@@ -16,6 +18,7 @@ interface Props {
 }
 
 const Login: FC<Props> = ({
+  loading,
   id,
   pw,
   handleId,
@@ -54,6 +57,7 @@ const Login: FC<Props> = ({
             />
           </S.LoginLabel>
           <S.ErrorMessage>{errorMessage.message}</S.ErrorMessage>
+          {loading && <Loading />}
           <S.LoginButton onClick={() => login(id, pw, autoLogin)}>
             로그인
           </S.LoginButton>

@@ -490,12 +490,17 @@ export const FormReasonSick = styled.div`
 `;
 
 export const FormReasonSickCheckboxLabel = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  cursor: pointer;
-  &:hover ~ #warning {
-    display: block;
+  > #sickWrap {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover ~ #warning {
+      display: block;
+    }
   }
 `;
 

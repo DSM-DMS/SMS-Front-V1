@@ -16,10 +16,17 @@ import {
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
 import { patchClubInfo } from "../../../lib/api/Management";
 import { getAxiosError } from "../../../lib/utils";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
-const ManagementInfoContainer: FC<Props> = (): ReactElement => {
+const ManagementInfoContainer: FC<Props> = ({
+  loading,
+  startLoading,
+  endLoading
+}): ReactElement => {
   const history = useHistory();
   const handler = new ManagementInfoHandler();
   const [clubUuid, setClubUuid] = useState<string>("");
@@ -27,10 +34,6 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
   const [introduction, setIntroduce] = useState<string>("");
   const [link, setFbLink] = useState<string>("");
   const [logo, setLogo] = useState<File>(null);
-
-  useEffect(() => {
-    console.log([club_concept, introduction, link, logo]);
-  }, [club_concept, introduction, link, logo]);
 
   const handleConcept = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -67,8 +70,16 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
   };
 
   const modifyClubInfo = async () => {
+    if (!(club_concept || introduction || link || logo)) {
+      toast.error("'컨셉, 소개, 사진, 링크' 중 하나 이상 변경해야 합니다.");
+      return;
+    }
+
+    startLoading();
     try {
       await patchClubInfo(clubUuid, getModifiedFd());
+
+      toast.success("동아리 정보를 수정했습니다.");
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
@@ -80,6 +91,7 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
         toast.error("수정하려는 동아리가 없습니다.");
       }
     }
+    endLoading();
   };
 
   const getClubUuid = async () => {
@@ -127,6 +139,7 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
 
   return (
     <ManagementInfo
+      loading={loading}
       clubUuid={clubUuid}
       handleConcept={handleConcept}
       handleIntroduction={handleIntroduction}
@@ -137,4 +150,4 @@ const ManagementInfoContainer: FC<Props> = (): ReactElement => {
   );
 };
 
-export default ManagementInfoContainer;
+export default WithLoadingContainer(ManagementInfoContainer);

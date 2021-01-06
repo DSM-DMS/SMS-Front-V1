@@ -3,16 +3,20 @@ import styled from "styled-components";
 
 import { Spinner } from "../../../assets";
 
-interface Props {}
+interface Props {
+  size?: string;
+}
 
-const SpinnerWrap = styled.img`
+const SpinnerWrap = styled.img<Props>`
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: ${({ size }) => (size ? size : "40px")};
+  height: ${({ size }) => (size ? size : "40px")};
 `;
 
-const Loading: FC<Props> = () => {
-  return <SpinnerWrap src={Spinner} alt="loading" title="loading" />;
+const Loading: FC<Props> = ({ size }) => {
+  return (
+    <SpinnerWrap src={Spinner} alt="loading" title="loading" size={size} />
+  );
 };
 
 export default Loading;

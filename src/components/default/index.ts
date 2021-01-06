@@ -11,3 +11,4 @@ export { default as Toggle } from "./Toggle/Toggle";
 export { default as PageNotFound } from "./NotFound/NotFound";
 export { default as Login } from "./Login/Login";
 export { default as PasswordChange } from "./PasswordChange/PasswordChange";
+export { default as Loading } from "./Loading/Loading";

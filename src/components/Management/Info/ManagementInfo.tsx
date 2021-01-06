@@ -15,6 +15,7 @@ import { stateType } from "../../../modules/reducer";
 import { ManagementInfoMemberContainer } from "../../../containers";
 
 interface Props {
+  loading: boolean;
   clubUuid: string;
   handleConcept: (e: ChangeEvent<HTMLInputElement>) => void;
   handleIntroduction: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 const ManagementInfo: FC<Props> = ({
+  loading,
   clubUuid,
   handleConcept,
   handleIntroduction,
@@ -70,7 +72,7 @@ const ManagementInfo: FC<Props> = ({
           <ClubFacebookLink link={link} handleLink={handleLink} />
         </S.CenterRight>
       </S.Center>
-      <ManagementInfoBottom modifyClubInfo={modifyClubInfo} />
+      <ManagementInfoBottom loading={loading} modifyClubInfo={modifyClubInfo} />
     </S.ManagementInfoWrap>
   );
 };
