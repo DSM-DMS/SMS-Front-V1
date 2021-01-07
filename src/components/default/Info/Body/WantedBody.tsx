@@ -9,7 +9,9 @@ const WantedBody: FC = () => {
   const { logo_uri, field } = useSelector(
     (state: stateType) => state.poster.wanted.detail
   );
-  const notices = useSelector((state: stateType) => state.notice.list);
+  const notices = useSelector(
+    (state: stateType) => state.noticeList.announcements
+  );
   return (
     <S.Container>
       <WantedMain />

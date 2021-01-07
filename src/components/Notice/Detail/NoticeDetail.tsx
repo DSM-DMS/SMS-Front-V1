@@ -1,42 +1,30 @@
-import React, { FC, useEffect } from "react";
-import * as S from "./styles";
-import { DetailPageHeader } from "../../../components/default";
+import React, { FC } from "react";
 import { NavIconNoticeBlue } from "../../../assets";
-import NoticeDetailBody from "./NoticeDetailBody/NoticeDetailBody";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
-import PageMove from "../../default/PageMove/PageMove";
+import NoticeDetailComponent, {
+  NoticeDetailHeaderSet
+} from "../../default/NoticeDetail/NoticeDetail";
 
 const NoticeDetail: FC = () => {
-  const {
-    content,
-    title,
-    next_title,
-    previous_title,
-    next_announcement_uuid,
-    previous_announcement_uuid,
-    loading
-  } = useSelector((state: stateType) => state.notice.detail);
+  const { boardData, loading } = useSelector((state: stateType) => ({
+    boardData: state.noticeDetail,
+    loading: state.loading["notice/GET_NOTICE_DETAIL"]
+  }));
+
+  const headerData: NoticeDetailHeaderSet = {
+    color: "#5323B2",
+    href: "/notice",
+    imgSrc: NavIconNoticeBlue,
+    title: "공지 사항"
+  };
 
   return (
-    <S.Container>
-      <DetailPageHeader
-        color="#5323B2"
-        isMine={false}
-        title="공지사항"
-        imgSrc={NavIconNoticeBlue}
-        href="/notice"
-      />
-      <S.P>{title}</S.P>
-      {loading || <NoticeDetailBody content={content} />}
-      <PageMove
-        baseHref="/notice"
-        nextAnnouncementUuid={next_announcement_uuid}
-        nextTitle={next_title}
-        previousAnnouncementUuid={previous_announcement_uuid}
-        previousTitle={previous_title}
-      />
-    </S.Container>
+    <NoticeDetailComponent
+      boardData={boardData}
+      loading={loading}
+      headerData={headerData}
+    />
   );
 };
 

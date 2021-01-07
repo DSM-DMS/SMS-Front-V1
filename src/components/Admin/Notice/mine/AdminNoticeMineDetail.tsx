@@ -2,23 +2,28 @@ import React, { FC } from "react";
 import { useSelector } from "react-redux";
 import { NavIconNoticeMint } from "../../../../assets";
 import { stateType } from "../../../../modules/reducer";
-import { DetailPageHeader } from "../../../default";
-import NoticeDetailBody from "../../../Notice/Detail/NoticeDetailBody/NoticeDetailBody";
-import * as S from "./styles";
+import { NoticeDetail } from "../../../default";
+import { NoticeDetailHeaderSet } from "../../../default/NoticeDetail/NoticeDetail";
 
 const AdminNoticeMineDetail: FC = () => {
-  const { content } = useSelector((state: stateType) => state.board.detail);
+  const { boardData, loading } = useSelector((state: stateType) => ({
+    boardData: state.noticeDetail,
+    loading: state.loading["notice/GET_NOTICE_DETAIL"]
+  }));
+  const headerData: NoticeDetailHeaderSet = {
+    isMine: true,
+    imgSrc: NavIconNoticeMint,
+    title: "내가 올린 공지사항",
+    href: "/admin/notice/mine",
+    color: "#23B2AD",
+    editHref: "/admin/notice/edit"
+  };
   return (
-    <S.Container>
-      <DetailPageHeader
-        isMine={true}
-        imgSrc={NavIconNoticeMint}
-        title="내가 올린 공지사항"
-        href="/admin/notice/all"
-        color="#23B2AD"
-      />
-      <NoticeDetailBody content={content} />
-    </S.Container>
+    <NoticeDetail
+      headerData={headerData}
+      boardData={boardData}
+      loading={loading}
+    />
   );
 };
 

@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addBtn } from "../../../../../../assets";
 import { ReqAddRecruitment } from "../../../../../../lib/api/payloads/Club";
 import { managementActionCreater } from "../../../../../../modules/action/management";
-import { getCircleNoticeListSaga } from "../../../../../../modules/action/notice";
+import { getNoticeClubList } from "../../../../../../modules/action/notice/list";
 import { stateType } from "../../../../../../modules/reducer";
 import { WantedObj } from "../../../../../../modules/type/poster";
 import * as S from "../../../../../../styles/CircleWantedDetail";
@@ -40,7 +40,7 @@ const ManagementWantedContentLeft: FC = () => {
 
   useEffect(() => {
     if (!initialData.club_uuid) return;
-    dispatch(getCircleNoticeListSaga(0));
+    dispatch(getNoticeClubList(0));
     const {
       club_uuid,
       end_period,
