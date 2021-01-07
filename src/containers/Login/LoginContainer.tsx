@@ -15,6 +15,7 @@ import { getAxiosError } from "../../lib/utils";
 import {
   getStudentInfoSaga,
   getTeacherInfoSaga,
+  setClubUuid,
   STUDENT,
   TEACHER,
   UserType
@@ -77,11 +78,18 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     []
   );
 
-  const getClubUuid = async () => {
+  const getClubUuid = async (uuid: string) => {
     try {
-      const res = await getClubUuidFromLeader(localStorage.getItem("uuid"));
+      const res = await getClubUuidFromLeader(uuid);
       localStorage.setItem("club_uuid", res.data.club_uuid);
-    } catch (err) {}
+    } catch (err) {
+      const { status } = getAxiosError(err);
+
+      if (status === 409) {
+        localStorage.removeItem("club_uuid");
+        dispatch(setClubUuid(""));
+      }
+    }
   };
 
   const getStudentLoginInfo = useCallback(
@@ -110,6 +118,7 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
   const studentLogin = async (id: string, pw: string, autoLogin: boolean) => {
     const studentUuid = await getStudentLoginInfo(id, pw, autoLogin);
+    await getClubUuid(studentUuid);
     dispatch(getStudentInfoSaga(studentUuid));
   };
 
@@ -132,7 +141,6 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
         } else {
           await teacherLogin(id, pw, autoLogin);
         }
-        await getClubUuid();
         setErrorMessage(initErrorState);
         dispatch(pageMove("홈"));
         history.push("./home");
