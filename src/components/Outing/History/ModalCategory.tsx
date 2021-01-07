@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
 import { OutingStatus } from "../../../lib/api/payloads/Outing";
+import { padNum } from "../../../lib/utils";
 
 interface Props {}
 
@@ -12,15 +13,13 @@ const ModalCategory: FC<Props> = (): ReactElement => {
     (state: stateType) => state.outing.selected
   );
 
-  const fixNum = useCallback((n: number) => (n < 10 ? `0${n}` : n), []);
-
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);
     const y = date.getFullYear();
     const m = date.getMonth() + 1;
     const d = date.getDate();
 
-    return `${y}년 ${fixNum(m)}월 ${d}일`;
+    return `${y}년 ${padNum(m)}월 ${d}일`;
   }, []);
 
   const getLocalTime = useCallback((time: number) => {
@@ -28,8 +27,8 @@ const ModalCategory: FC<Props> = (): ReactElement => {
     const h = date.getHours();
     const m = date.getMinutes();
 
-    if (h > 12) return `오후 ${fixNum(h)}:${fixNum(m)}`;
-    return `오전 ${fixNum(h)}:${fixNum(m)}`;
+    if (h > 12) return `오후 ${padNum(h)}:${padNum(m)}`;
+    return `오전 ${padNum(h)}:${padNum(m)}`;
   }, []);
 
   return (
