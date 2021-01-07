@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 
-export const Container = styled.div<{ isActive: boolean; isClose: boolean }>`
+export const Container = styled.div<{
+  isActive: boolean;
+  isClose: boolean;
+  colorSet: string;
+}>`
   box-sizing: border-box;
   white-space: nowrap;
   position: relative;
@@ -26,7 +30,12 @@ export const Container = styled.div<{ isActive: boolean; isClose: boolean }>`
       padding-top: 200px;
       padding-left: 0;
       text-align: center;
-    `}
+    `};
+
+  .active {
+    font-weight: bold;
+    color: ${(props) => props.colorSet};
+  }
 `;
 
 export const CenterImg = styled.img<{ isClose: boolean }>`

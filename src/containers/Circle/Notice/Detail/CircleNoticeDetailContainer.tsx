@@ -1,19 +1,16 @@
-import React, { FC } from 'react';
-import { CircleNoticeDetail } from '../../../../components';
-import { BoardDetail } from '../../../Notice/Detail/NoticeDetailContainer';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
-import { updateBoardDetail } from '../../../../modules/action/board';
+import React, { FC, useEffect } from "react";
+import { CircleNoticeDetail } from "../../../../components";
+import { useDispatch } from "react-redux";
+import { RouteChildrenProps } from "react-router-dom";
+import { getNoticeDetail } from "../../../../modules/action/notice/detail";
 
-const data: BoardDetail = {
-  content: '몰라요 몰랑~',
-};
-
-const CircleNoticeDetailContainer: FC = () => {
+const CircleNoticeDetailContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
+
+  const id: string = (match.params as any).id;
   useEffect(() => {
-    dispatch(updateBoardDetail(data));
-  }, []);
+    dispatch(getNoticeDetail(id));
+  }, [id]);
   return <CircleNoticeDetail />;
 };
 

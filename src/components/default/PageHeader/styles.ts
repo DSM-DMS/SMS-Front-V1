@@ -1,22 +1,22 @@
-import styled, { css } from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 
 interface Type {
   type?: string;
 }
 
-export const DETAIL = 'DETAIL';
-export const LIST = 'LIST';
+export const DETAIL = "DETAIL";
+export const LIST = "LIST";
 
 export const Img = styled.img<Type>`
-  ${(props) =>
+  ${props =>
     props.type === LIST &&
     css`
       width: 44px;
       height: 44px;
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === DETAIL &&
     css`
       width: 30px;
@@ -25,7 +25,7 @@ export const Img = styled.img<Type>`
 `;
 
 export const Title = styled.div<Type>`
-  ${(props) =>
+  ${props =>
     props.type === LIST &&
     css`
       font-size: 30px;
@@ -33,7 +33,7 @@ export const Title = styled.div<Type>`
       margin-top: 20px;
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === DETAIL &&
     css`
       margin-top: 0;
@@ -42,13 +42,23 @@ export const Title = styled.div<Type>`
     `}
 `;
 
-export const Button = styled(Link)`
-  background-color: #5323b2;
+export const Button = styled(Link)<{ color: string; newBtn?: boolean }>`
   padding: 10px 20px;
   color: white;
   font-size: 12px;
   border-radius: 5px;
   text-decoration: none;
+  background-color: ${props => props.color};
+
+  ${props =>
+    props.newBtn &&
+    css`
+      margin-right: 30px;
+    `}
+
+  & + & {
+    margin-left: 10px;
+  }
 `;
 
 export const Wrap = styled.div`
@@ -56,15 +66,20 @@ export const Wrap = styled.div`
   justify-content: space-between;
 `;
 
+export const InputWrap = styled.div`
+  display: flex;
+  align-items: flex-end;
+`;
+
 export const Container = styled.div<Type>`
   display: flex;
-  ${(props) =>
+  ${props =>
     props.type === LIST &&
     css`
       flex-direction: column;
     `}
 
-  ${(props) =>
+  ${props =>
     props.type === DETAIL &&
     css`
       flex-direction: row;

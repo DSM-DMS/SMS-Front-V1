@@ -1,14 +1,14 @@
 import styled, {
   createGlobalStyle,
   GlobalStyleComponent,
-  DefaultTheme,
-  css,
-} from 'styled-components';
+  DefaultTheme
+} from "styled-components";
 
 export const GlobalStyle: GlobalStyleComponent<
   {},
   DefaultTheme
 > = createGlobalStyle`
+
   /* http://meyerweb.com/eric/tools/css/reset/
     v2.0 | 20110126
     License: none (public domain)
@@ -61,10 +61,51 @@ export const GlobalStyle: GlobalStyleComponent<
   }
   button {
     cursor: pointer;
-    font: none;
   }
   * {
     font-family:"Noto Sans KR" !important;
+  }
+
+  .codex-editor__redactor {
+    padding-bottom:0px !important;
+  }
+
+  #editer {
+    height:495px;
+    overflow-y:auto;
+
+    h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    display: block;
+    font-weight: bold;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.17em;
+  }
+
+  h4 {
+  }
+
+  h5 {
+    font-size: 0.83em;
+  }
+
+  h6 {
+    font-size: 0.67em;
+  }
   }
 `;
 
@@ -81,9 +122,15 @@ export const GlobalBody = styled.div`
   box-sizing: border-box;
 `;
 
-export const GlobalInnerBody = styled.div`
+interface IGlobalInnerBody {
+  isBackNeed?: boolean;
+}
+
+export const GlobalInnerBody = styled.div<IGlobalInnerBody>`
   min-width: 635px;
   border-radius: 5px;
-  background: white;
-  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.25);
+  background: ${({ isBackNeed = true }) =>
+    isBackNeed ? "white" : "transparent"};
+  box-shadow: ${({ isBackNeed = true }) =>
+    isBackNeed ? "0px 0px 12px 1px rgba(0, 0, 0, 0.25)" : "none"};
 `;

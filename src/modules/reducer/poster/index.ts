@@ -1,23 +1,29 @@
-import { AllCircleBoxType } from '../../../components/default/CircleBox/AllCircleBox';
 import {
   PosterAction,
-  UPDATE_POSTER_LIST,
-  UPDATE_POSTER_DETAIL,
-  UPDATE_POSTER_LIST_WANTED,
-  UPDATE_POSTER_DETAIL_WANTED,
-} from '../../action/poster';
-import { CircleAllDetail } from '../../../containers/Circle/All/Detail/CircleAllDetailContainer';
-import { WantedCircleBoxData } from '../../../components/default/CircleBox/WantedCircleBox';
-import { CircleWantedDetail } from '../../../containers/Circle/Wanted/Detail/CircleWantedDetailContainer';
+  GET_CIRCLE_INFO_LIST,
+  GET_CIRCLE_INFO_DETAIL,
+  GET_WANTED_INFO_LIST,
+  GET_WANTED_INFO_DETAIL,
+  SET_ALL_FILTER,
+  SET_WANTED_FILTER
+} from "../../action/poster";
+import {
+  CircleDatailPage,
+  CircleInfo,
+  WantedInfo,
+  WantedInfoDetail
+} from "../../type/poster";
 
 interface PosterState {
   wanted: {
-    list: WantedCircleBoxData[];
-    detail: CircleWantedDetail;
+    list: WantedInfo[];
+    detail: WantedInfoDetail;
+    field: string;
   };
   all: {
-    list: AllCircleBoxType[];
-    detail: CircleAllDetail;
+    list: CircleInfo[];
+    detail: CircleDatailPage;
+    field: string;
   };
 }
 
@@ -25,82 +31,106 @@ const initialState: PosterState = {
   wanted: {
     list: [],
     detail: {
-      name: '',
-      introduce: '',
-      date: '',
-      leader: '',
-      field: [],
-      grade: [],
-      where: '',
-      imgSrc: '',
-      peoples: {
-        three: [],
-        two: [],
-        one: [],
-      },
-      tags: [],
-      projects: [],
-      comments: [],
+      club_concept: "",
+      club_uuid: "",
+      field: "",
+      floor: 1,
+      name: "",
+      introduction: "",
+      leader_uuid: "",
+      link: "",
+      location: "",
+      logo_uri: "",
+      member_uuids: [],
+      end_period: "",
+      recruit_concept: "",
+      recruit_members: [],
+      recruitment_uuid: "",
+      start_period: "",
+      members: []
     },
+    field: ""
   },
   all: {
     list: [],
     detail: {
-      imgSrc: '',
-      introduce: '',
-      leader: '',
-      name: '',
-      peoples: {
-        one: [],
-        two: [],
-        three: [],
-      },
-      projects: [],
-      tags: [],
-      where: '',
+      club_concept: "",
+      club_uuid: "",
+      field: "",
+      floor: 0,
+      introduction: "",
+      leader_uuid: "",
+      link: "",
+      location: "",
+      logo_uri: "",
+      member_uuids: [],
+      name: "",
+      members: []
     },
-  },
+    field: ""
+  }
 };
 
 const posterReducer = (
   state: PosterState = initialState,
-  action: PosterAction,
+  action: PosterAction
 ): PosterState => {
   switch (action.type) {
-    case UPDATE_POSTER_LIST: {
+    case SET_ALL_FILTER: {
       return {
         ...state,
         all: {
           ...state.all,
-          list: action.payload,
-        },
+          field: action.payload
+        }
       };
     }
-    case UPDATE_POSTER_DETAIL: {
+    case SET_WANTED_FILTER: {
+      return {
+        ...state,
+        wanted: {
+          ...state.wanted,
+          field: action.payload
+        }
+      };
+    }
+    case GET_CIRCLE_INFO_LIST: {
       return {
         ...state,
         all: {
           ...state.all,
-          detail: action.payload,
-        },
+          list: action.payload
+        }
       };
     }
-    case UPDATE_POSTER_LIST_WANTED: {
+    case GET_CIRCLE_INFO_DETAIL: {
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          detail: action.payload
+        }
+      };
+    }
+    case GET_WANTED_INFO_LIST: {
       return {
         ...state,
         wanted: {
           ...state.wanted,
-          list: action.payload,
-        },
+          list: action.payload
+        }
       };
     }
-    case UPDATE_POSTER_DETAIL_WANTED: {
+    case GET_WANTED_INFO_DETAIL: {
       return {
         ...state,
         wanted: {
           ...state.wanted,
-          detail: action.payload,
-        },
+          detail: {
+            ...state.wanted.detail,
+            ...action.payload
+          }
+        }
       };
     }
     default: {

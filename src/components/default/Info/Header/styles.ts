@@ -1,8 +1,16 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
+
+  > div {
+    display: flex;
+    align-items: flex-end;
+    > p {
+      transform: translateY(-5px);
+    }
+  }
 `;
 
 export const Title = styled.div`
@@ -10,14 +18,26 @@ export const Title = styled.div`
   font-weight: bold;
 `;
 
+export const DateWrap = styled.div`
+  div,
+  span {
+    font-weight: bold;
+  }
+  > div:nth-child(2) {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
 export const FlexDiv = styled.div`
   display: flex;
   align-items: center;
 `;
 
-export const FaceBookBtn = styled.button`
+export const FaceBookBtn = styled.a`
   background: #517aff;
   border: none;
+  text-decoration: none;
   border-radius: 3px;
   padding: 10px 15px;
   color: white;

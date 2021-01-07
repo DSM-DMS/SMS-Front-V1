@@ -1,25 +1,19 @@
-import React, { FC } from 'react';
-import { BoardObj } from '../../Board';
-import BoardTableItem from './item/BoardTableItem';
+import React, { FC } from "react";
+import { BoardListItem } from "../../../../../lib/api/payloads/Board";
+import BoardTableItem from "./item/BoardTableItem";
+import * as S from "../styles";
 
 interface Props {
-  data: BoardObj[];
+  data: BoardListItem[];
 }
 
 const BoardTableBody: FC<Props> = ({ data }) => {
   return (
-    <div>
-      {data.map(({ id, title, viewCount, date, circleName }) => (
-        <BoardTableItem
-          id={id}
-          title={title}
-          viewCount={viewCount}
-          circleName={circleName}
-          date={date}
-          key={id}
-        />
+    <S.BoardListDiv>
+      {data.map(datas => (
+        <BoardTableItem key={datas.announcement_uuid} {...datas} />
       ))}
-    </div>
+    </S.BoardListDiv>
   );
 };
 
