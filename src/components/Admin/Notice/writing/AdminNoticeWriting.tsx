@@ -59,11 +59,6 @@ const AdminNoticeWriting: FC = () => {
       return;
     }
 
-    if (isIncludeEmpty(filterData)) {
-      toast.dark("필터를 적용해 주세요");
-      return;
-    }
-
     const writeDataStr: string = JSON.stringify(writeData);
     dispatch(
       writeActionCreater.writeNoticeSaga({
