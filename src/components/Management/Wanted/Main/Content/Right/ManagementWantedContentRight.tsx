@@ -13,7 +13,9 @@ const ManagementWantedContentRight = () => {
     (store: stateType) => store.management
   );
   const dispatch = useDispatch();
-  const noticeList = useSelector((store: stateType) => store.notice.list);
+  const noticeList = useSelector(
+    (store: stateType) => store.noticeList.announcements
+  );
 
   const isEdit = !!recruit_concept;
 
