@@ -4,6 +4,7 @@ import AES256 from "aes-everywhere";
 import { StudentInfo } from "../../modules/type/user";
 import { getAxiosError } from "../utils";
 import { toast } from "react-toastify";
+import { STUDENT, TEACHER, UserType } from "../../modules/action/header";
 
 export const SERVER = {
   hostUrl: process.env.HOST_URL,
@@ -19,6 +20,9 @@ export const apiDefault = () => {
   const instance = axios.create({
     baseURL: BASE_URL
   });
+  const type: UserType = window.location.pathname.includes("admin")
+    ? TEACHER
+    : STUDENT;
 
   instance.interceptors.request.use(config => {
     const accessToken = localStorage.getItem("access_token");
@@ -36,7 +40,12 @@ export const apiDefault = () => {
         alert(
           "자동 로그인 세션이 만료되었습니다. 재로그인 후 다시 실행해주시기 바랍니다."
         );
-        window.location.replace("/login");
+
+        if (type === TEACHER) {
+          window.location.href = "/admin/login";
+        } else {
+          window.location.href = "/login";
+        }
       }
     }
     config.headers = {
@@ -59,17 +68,15 @@ export const apiDefault = () => {
         toast.error("유효하지 않은 요청이 발생했습니다.");
       } else if (status === 401) {
         alert("로그인 후 이용해주세요.");
-        window.location.href = "/login";
-      } else if (status === 403) {
-        toast.error("요청을 실행할 권한이 없습니다.");
+        if (type === TEACHER) {
+          window.location.href = "/admin/login";
+        } else {
+          window.location.href = "/login";
+        }
       } else if (status === 407) {
-        toast.error(
-          "서버에 요류가 발생했습니다. 관리자에게 문의해주시길 바랍니다."
-        );
+        toast.error("서버에 요류가 발생했습니다.");
       } else if (status === 429) {
-        toast.error(
-          "한 번에 너무 많은 요청이 발생했습니다. 잠시 후 다시 시도해주시길 바랍니다."
-        );
+        toast.error("한 번에 너무 많은 요청이 발생했습니다.");
       }
 
       return Promise.reject(err);
