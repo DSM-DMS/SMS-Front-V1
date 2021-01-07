@@ -1,17 +1,26 @@
-import React, { FC } from 'react';
-import * as S from './styles';
-import WantedMain from './Main/WantedMain';
-import InfoDetailSub from './Sub/InfoDetailSub';
-import { customSelector } from '../../../../lib/api';
+import React, { FC } from "react";
+import * as S from "./styles";
+import WantedMain from "./Main/WantedMain";
+import InfoDetailSub from "./Sub/InfoDetailSub";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../modules/reducer";
 
 const WantedBody: FC = () => {
-  const { imgSrc, tags, projects } = customSelector(
-    (state) => state.poster.wanted.detail,
+  const { logo_uri, field } = useSelector(
+    (state: stateType) => state.poster.wanted.detail
+  );
+  const notices = useSelector(
+    (state: stateType) => state.noticeList.announcements
   );
   return (
     <S.Container>
       <WantedMain />
-      <InfoDetailSub imgSrc={imgSrc} tags={tags} projects={projects} />
+      <InfoDetailSub
+        imgSrc={logo_uri}
+        tag={field}
+        notices={notices}
+        baseUrl="/circles/notice"
+      />
     </S.Container>
   );
 };

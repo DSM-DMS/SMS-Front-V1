@@ -1,24 +1,32 @@
-import React, { FC, ChangeEvent, memo } from 'react';
-import * as S from './styles';
-import { Hr } from '../Board/styles';
-import PageHeader from './PageHeader';
-import { SearchInput } from '../../default';
+import React, { FC, ChangeEvent, memo } from "react";
+import * as S from "./styles";
+import { Hr } from "../Board/styles";
+import PageHeader from "./PageHeader";
+import { SearchInput } from "../../default";
 
 interface Props {
   imgSrc: string;
   title: string;
+  newButton?: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ListPageHeader: FC<Props> = ({ imgSrc, title, onChange }) => {
+const ListPageHeader: FC<Props> = ({ imgSrc, title, onChange, newButton }) => {
   return (
     <>
       <S.Wrap>
         <PageHeader imgSrc={imgSrc} title={title} type={S.LIST} />
-        <SearchInput
-          placeHolder="검색할 동아리 이름을 입력하세요."
-          onChange={onChange}
-        />
+        <S.InputWrap>
+          <SearchInput
+            placeHolder="제목 또는 글쓴이를 입력하세요"
+            onChange={onChange}
+          />
+          {newButton && (
+            <S.Button to="/management/write" color="black">
+              새공지
+            </S.Button>
+          )}
+        </S.InputWrap>
       </S.Wrap>
       <Hr />
     </>

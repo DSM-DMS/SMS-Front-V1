@@ -1,28 +1,36 @@
-import React, { FC, memo, useCallback } from 'react';
-import * as S from './styles';
-import { useHistory } from 'react-router';
-import { HashTag } from '../Info/Body/Sub/styles';
+import React, { FC, memo, useCallback, useEffect, useState } from "react";
+import * as S from "./styles";
+import { useHistory } from "react-router";
+import { HashTag } from "../Info/Body/Sub/styles";
+import { CircleInfo } from "../../../modules/type/poster";
+import { StudentInfo } from "../../../modules/type/user";
+import { getStudentData } from "../../../lib/api/client";
+import { getImgUrl } from "../../../lib/utils";
 
-export interface AllCircleBoxType {
-  name: string;
-  description: string;
-  field: string;
-  where: string;
-  imgSrc: string;
-  leader: string;
-}
-
-const AllCircleBox: FC<AllCircleBoxType> = ({
+const AllCircleBox: FC<CircleInfo> = ({
+  club_concept,
   name,
-  description,
+  member_uuids,
+  logo_uri,
+  location,
+  link,
+  leader_uuid,
+  introduction,
+  club_uuid,
   field,
-  where,
-  leader,
-  imgSrc,
+  floor
 }) => {
   const history = useHistory();
   const onClick = useCallback(() => {
-    history.push(`/circles/all/${name}`);
+    history.push(`/circles/all/${club_uuid}`);
+  }, []);
+
+  const [leaderData, setLeaderData] = useState<StudentInfo>(null);
+
+  useEffect(() => {
+    getStudentData(leader_uuid).then(res => {
+      setLeaderData(res.data);
+    });
   }, []);
 
   return (
@@ -30,10 +38,10 @@ const AllCircleBox: FC<AllCircleBoxType> = ({
       <div>
         <S.Header>
           <S.CircleName>{name}</S.CircleName>
-          <div>{where}</div>
+          <div>{location}</div>
         </S.Header>
-        <S.CircleIntroduce>{description}</S.CircleIntroduce>
-        <S.WantedJob>동아리장 {leader}</S.WantedJob>
+        <S.CircleIntroduce>{club_concept}</S.CircleIntroduce>
+        <S.WantedJob>동아리장 {leaderData && leaderData.name}</S.WantedJob>
       </div>
       <S.Footer>
         <div>
@@ -43,7 +51,7 @@ const AllCircleBox: FC<AllCircleBoxType> = ({
         </div>
         <S.Field>|</S.Field>
       </S.Footer>
-      <img src={imgSrc} />
+      <img src={getImgUrl(logo_uri)} />
     </S.Container>
   );
 };

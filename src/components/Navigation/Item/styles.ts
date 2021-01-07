@@ -35,6 +35,6 @@ export const Triangle = styled.div`
   width: 0px;
   height: 0px;
   border-top: 4px solid transparent;
-  border-left: 4px solid #5323b2;
+  border-left: 4px solid transparent;
   border-bottom: 4px solid transparent;
 `;

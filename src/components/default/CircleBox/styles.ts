@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 300px;
@@ -27,7 +27,7 @@ export const Container = styled.div`
     & > img {
       opacity: 0.13;
     }
-    transform: translateY(-20px);
+    transform: translateY(-15px);
     color: white;
     background-color: #5323b2;
   }
@@ -55,9 +55,16 @@ export const WantedJob = styled.div`
   margin-top: 25px;
 `;
 
+export const DateWrap = styled.div`
+  div,
+  span {
+    font-weight: bold;
+  }
+`;
+
 export const Footer = styled.div`
-  height: 50px;
   display: flex;
+  align-items: center;
 
   > div:nth-child(1) {
     flex: 1;
@@ -73,8 +80,10 @@ export const Footer = styled.div`
 `;
 
 export const Date = styled.div`
-  display: flex;
-  justify-content: space-between;
+  & > & {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 export const Field = styled.div`

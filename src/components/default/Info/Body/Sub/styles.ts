@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   flex: 3;
@@ -15,6 +15,12 @@ export const HashTag = styled.div`
   color: #888888;
   margin: 0 2px;
   display: inline-block;
+`;
+
+export const Notice = styled.div`
+  > a {
+    text-decoration: none;
+  }
 `;
 
 export const H3 = styled.h3`

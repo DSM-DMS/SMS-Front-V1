@@ -1,6 +1,6 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, ReactElement } from "react";
 
-import { Main } from '../../components';
+import { Main } from "../../components";
 
 interface Props {}
 

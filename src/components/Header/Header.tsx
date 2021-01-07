@@ -1,23 +1,59 @@
-import React, { FC, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
 
-import * as S from './style';
+import * as S from "./style";
 
-import { stateType } from '../../modules/reducer';
-import { setUser } from '../../modules/action/header';
+import { STUDENT } from "../../modules/action/header";
+import { stateType } from "../../modules/reducer";
 
-const Header: FC<{}> = () => {
-  const dispatch = useDispatch();
-  const { info } = useSelector((state: stateType) => state.header);
+interface Props {
+  logout: () => void;
+  moveLogin: () => void;
+  movePasswordChange: () => void;
+  moveManagement: () => void;
+}
 
-  useEffect(() => {
-    dispatch(setUser('2학년 3반  1번 강신희'));
-  }, []);
+const Header: FC<Props> = ({
+  logout,
+  moveLogin,
+  movePasswordChange,
+  moveManagement
+}) => {
+  const { type, grade, group, name, student_number, clubUuid } = useSelector(
+    (state: stateType) => state.header
+  );
+
+  if (!type) {
+    return (
+      <S.HeaderWrap>
+        <S.Logout onClick={moveLogin}>로그인</S.Logout>
+      </S.HeaderWrap>
+    );
+  }
 
   return (
     <S.HeaderWrap>
-      <span>{info}</span>
-      <button>로그아웃</button>
+      {type === STUDENT ? (
+        <S.UserInfo>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</S.UserInfo>
+      ) : (
+        <S.UserInfo>{`${name} 선생님`}</S.UserInfo>
+      )}
+      <S.MovePasswordChange onClick={movePasswordChange}>
+        비밀번호 변경
+      </S.MovePasswordChange>
+      <S.Logout
+        onClick={() => {
+          logout();
+          moveLogin();
+        }}
+      >
+        로그아웃
+      </S.Logout>
+      {clubUuid && (
+        <S.MoveClubManagement onClick={moveManagement}>
+          동아리 관리 페이지
+        </S.MoveClubManagement>
+      )}
     </S.HeaderWrap>
   );
 };
