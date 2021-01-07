@@ -11,4 +11,7 @@ export { default as Toggle } from "./Toggle/Toggle";
 export { default as PageNotFound } from "./NotFound/NotFound";
 export { default as Login } from "./Login/Login";
 export { default as PasswordChange } from "./PasswordChange/PasswordChange";
+export { default as NoticeDetail } from "./NoticeDetail/NoticeDetail";
+export { default as NoticeList } from "./NoticeList/NoticeList";
+export { default as NoticeEdit } from "./NoticeEdit/NoticeEdit";
 export { default as Loading } from "./Loading/Loading";

@@ -3,19 +3,16 @@ import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { RouteChildrenProps } from "react-router-dom";
 import { ManagementNoticeDetail } from "../../../components";
-import {
-  getNoticeDetailSaga,
-  resetNoticeDetail
-} from "../../../modules/action/notice";
+import { getNoticeDetail } from "../../../modules/action/notice/detail";
 
 const ManagementNoticeDetailContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
   const id: string = (match.params as any).id;
 
   useEffect(() => {
-    dispatch(getNoticeDetailSaga(id));
+    dispatch(getNoticeDetail(id));
   }, [id]);
-  return <ManagementNoticeDetail id={id} />;
+  return <ManagementNoticeDetail />;
 };
 
 export default ManagementNoticeDetailContainer;

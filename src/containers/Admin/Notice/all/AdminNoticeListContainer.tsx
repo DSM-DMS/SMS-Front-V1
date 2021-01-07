@@ -4,14 +4,14 @@ import { FC } from "react";
 import { useDispatch } from "react-redux";
 import { RouteChildrenProps } from "react-router-dom";
 import { AdminNoticeAll } from "../../../../components";
-import { getNoticeListSaga } from "../../../../modules/action/notice";
 import qs from "query-string";
+import { getNoticeSchoolList } from "../../../../modules/action/notice/list";
 
 const AdminNoticeAllListContainer: FC<RouteChildrenProps> = ({ location }) => {
   const dispatch = useDispatch();
   const page = qs.parse(location.search).page || 0;
   useEffect(() => {
-    dispatch(getNoticeListSaga(Number(page)));
+    dispatch(getNoticeSchoolList(Number(page)));
   }, [page]);
   return <AdminNoticeAll />;
 };
