@@ -30,6 +30,7 @@ export const MovePasswordChange = styled.span`
   color: #838383;
   font-size: 14px;
   text-decoration: none;
+  cursor: pointer;
   &:hover {
     color: black;
   }

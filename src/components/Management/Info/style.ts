@@ -89,13 +89,53 @@ export const ClubMemberItem = styled.li`
   justify-content: space-between;
   transition: 0.3s ease-in-out;
   font-size: 14px;
-  &:hover {
-    color: #ffffff;
-    background-color: #888888;
-    > .deleteImg {
-      display: inline-block !important;
+`;
+
+export const ClubMemberItemSetting = styled.div`
+  position: relative;
+  cursor: pointer;
+  &:hover > img {
+    background-color: #d8d8d8;
+  }
+  > div {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    width: 100px;
+    margin-top: 2px;
+    padding: 4px 0;
+    background-color: white;
+    border: 1px solid #919191;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #bbbbbb;
+    text-align: center;
+    z-index: 10;
+    &::before {
+      content: "";
+      position: absolute;
+      top: -16px;
+      right: 4px;
+      display: inline-block;
+      border: 8px solid transparent;
+      border-bottom: 8px solid white;
+    }
+    > p {
+      padding: 2px 8px;
+      &:hover {
+        color: white;
+        background-color: #a1a1a1;
+      }
     }
   }
+`;
+
+export const ClubMemberItemSettingImg = styled.img`
+  width: 14px;
+  padding: 4px;
+  border: 1px solid #a1a1a1;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px #e1e1e1;
+  transition: 300ms;
 `;
 
 export const ClubMemberDeleteImg = styled.img`
