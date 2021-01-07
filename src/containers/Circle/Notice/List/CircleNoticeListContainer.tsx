@@ -1,15 +1,15 @@
 import React, { FC, useEffect } from "react";
 import { CircleNoticeList } from "../../../../components";
 import { useDispatch } from "react-redux";
-import { getCircleNoticeListSaga } from "../../../../modules/action/notice";
 import { RouteChildrenProps } from "react-router-dom";
+import { getNoticeClubList } from "../../../../modules/action/notice/list";
 
 const CircleNoticeListContainer: FC<RouteChildrenProps> = ({ match }) => {
   const disaptch = useDispatch();
+  const page: number = Number((match.params as any).page) || 0;
   useEffect(() => {
-    const id: string = (match.params as any).id || 0;
-    disaptch(getCircleNoticeListSaga(Number(id)));
-  }, []);
+    disaptch(getNoticeClubList(page));
+  }, [page]);
   return <CircleNoticeList />;
 };
 
