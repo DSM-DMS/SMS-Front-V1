@@ -9,6 +9,7 @@ import {
   setSchedulerDate
 } from "../../../modules/action/main";
 import { stateType } from "../../../modules/reducer";
+import { padNum } from "../../../lib/utils";
 
 interface Props {}
 
@@ -32,15 +33,9 @@ const Schedule: FC<Props> = (): ReactElement => {
     dispatch(setSchedulerDate(prev));
   };
 
-  const getLocalDate = useCallback(
-    (date: Date) =>
-      `${date.getFullYear()}.${
-        date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
-          : date.getMonth() + 1
-      }`,
-    []
-  );
+  const getLocalDate = useCallback((date: Date) => {
+    return `${date.getFullYear()}.${padNum(date.getMonth() + 1)}`;
+  }, []);
 
   useEffect(() => {
     const year = schedulerDate.getFullYear();

@@ -6,7 +6,8 @@ import React, {
   useCallback,
   useRef,
   useState,
-  memo
+  memo,
+  useEffect
 } from "react";
 import { toast } from "react-toastify";
 
@@ -22,9 +23,9 @@ interface Props {
 
 const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
   const fileRef = useRef<HTMLInputElement>(null);
-  const previewRef = useRef<HTMLImageElement>(null);
   const [dragged, setDragged] = useState<boolean>(false);
   const [showCancel, setShowCancel] = useState<boolean>(false);
+  const [uri, setUri] = useState<string>("");
 
   const isEnableExt = (fileName: string) => {
     const enableExts = "jpg,jpeg,png,gif,svg";
@@ -62,7 +63,7 @@ const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
   };
 
   const readFile = (file: File) => {
-    previewRef.current.src = URL.createObjectURL(file);
+    setUri(URL.createObjectURL(file));
     handleLogo(file);
   };
 
@@ -86,9 +87,14 @@ const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
     e.preventDefault();
 
     setShowCancel(false);
+
+    setUri("");
     fileRef.current.value = "";
-    previewRef.current.src = "";
   };
+
+  useEffect(() => {
+    setUri(`${SERVER.s3Url}/${logoUri}?timestamp=${+new Date()}`);
+  }, [logoUri]);
 
   return (
     <S.ClubPicture>
@@ -117,10 +123,7 @@ const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
       >
-        <S.ClubPicturePreview
-          ref={previewRef}
-          src={`${SERVER.s3Url}/${logoUri}?timestamp=${+new Date()}`}
-        />
+        <S.ClubPicturePreview src={uri} />
         <S.ClubPictureWrap>
           <img
             src={paperclipClubPicture}

@@ -1,4 +1,4 @@
-import { apiDefault, apiHeaderDefault } from "../client";
+import { apiDefault } from "../client";
 import {
   ResStudentLoginWithDefault,
   ResStudentInfoWithDefault,
@@ -7,7 +7,7 @@ import {
 } from "../payloads/Login";
 
 export const postLoginStudent = (id: string, pw: string) => {
-  return apiHeaderDefault().post<ResStudentLoginWithDefault>("/login/student", {
+  return apiDefault().post<ResStudentLoginWithDefault>("/login/student", {
     student_id: id,
     student_pw: pw
   });
@@ -20,7 +20,7 @@ export const getStudentInfo = (studentUuid: string) => {
 };
 
 export const postLoginTeacher = (id: string, pw: string) => {
-  return apiHeaderDefault().post<ResTeacherLoginWithDefault>("/login/teacher", {
+  return apiDefault().post<ResTeacherLoginWithDefault>("/login/teacher", {
     teacher_id: id,
     teacher_pw: pw
   });

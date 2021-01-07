@@ -123,6 +123,7 @@ export const TimetableChangerCommon = styled.div`
   height: 0px;
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
+  cursor: pointer;
 `;
 
 export const TimetableChangerLeft = styled(TimetableChangerCommon)`

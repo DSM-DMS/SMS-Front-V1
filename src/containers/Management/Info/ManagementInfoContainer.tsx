@@ -96,8 +96,12 @@ const ManagementInfoContainer: FC<Props> = ({
 
   const getClubUuid = async () => {
     try {
-      const res = await getClubUuidFromLeader(localStorage.getItem("uuid"));
-      setClubUuid(res.data.club_uuid);
+      const {
+        data: { club_uuid }
+      } = await getClubUuidFromLeader(localStorage.getItem("uuid"));
+
+      setClubUuid(club_uuid);
+      await getClubInfo(club_uuid);
     } catch (err) {
       const { status } = getAxiosError(err);
 
@@ -126,12 +130,6 @@ const ManagementInfoContainer: FC<Props> = ({
       }
     }
   };
-
-  useEffect(() => {
-    if (clubUuid !== "") {
-      getClubInfo(clubUuid);
-    }
-  }, [clubUuid]);
 
   useEffect(() => {
     getClubUuid();
