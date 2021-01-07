@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { NoticeDetail } from "../../../components";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getNoticeDetailSaga } from "../../../modules/action/notice";
+import { getNoticeDetail } from "../../../modules/action/notice/detail";
 import { RouteChildrenProps } from "react-router-dom";
 
 export interface BoardDetail {
@@ -14,7 +14,7 @@ const NoticePageContainer: FC<RouteChildrenProps> = ({ match }) => {
   const id: string = (match.params as any).id;
 
   useEffect(() => {
-    dispatch(getNoticeDetailSaga(id));
+    dispatch(getNoticeDetail(id));
   }, [id]);
   return <NoticeDetail />;
 };
