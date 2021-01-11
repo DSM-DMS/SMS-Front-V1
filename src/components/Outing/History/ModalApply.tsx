@@ -48,9 +48,7 @@ const ModalApply: FC<Props> = ({
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (status === 403) {
-          toast.error("본인이 신청한 외출증이 아닙니다.");
-        } else if (status === 404) {
+        if (status === 404) {
           toast.error("존재하지 않는 외출증입니다.");
         } else if (status === 409) {
           switch (code) {

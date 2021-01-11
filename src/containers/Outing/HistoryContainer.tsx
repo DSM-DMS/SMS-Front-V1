@@ -53,13 +53,7 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
 
         dispatch(setOutingHistoryList(outings));
         setHistoryStart(prev => (prev += 9));
-      } catch (err) {
-        const { status } = getAxiosError(err);
-
-        if (status === 403) {
-          toast.error("학생 계정으로 외출 신청 내역을 조회할 수 있습니다.");
-        }
-      }
+      } catch {}
     },
     [histories]
   );

@@ -150,11 +150,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
-      if (status === 400) {
-        toast.error("외출 시간을 다시 설정해주세요.");
-      } else if (status === 403) {
-        toast.error("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
-      } else if (status === 409 && code === -2401) {
+      if (status === 409 && code === -2401) {
         toast.error("해당 날짜에 대기중인 외출 신청이 있습니다.");
       } else {
         toast.error("오류가 발생했습니다. 다시 시도해주세요.");

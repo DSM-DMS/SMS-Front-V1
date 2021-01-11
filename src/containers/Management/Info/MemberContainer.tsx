@@ -63,11 +63,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (status === 403 && code === -1711) {
-          toast.error("동아리장 또는 관리자 계정이 아닙니다.");
-        } else if (status === 403 && code === -1712) {
-          toast.error("동아리장이 아닙니다.");
-        } else if (status === 404 && code === -1721) {
+        if (status === 404 && code === -1721) {
           toast.error("존재하지 않는 동아리입니다.");
         } else if (status === 404 && code === -1723) {
           toast.error("삭제하려는 동아리원이 존재하지 않습니다.");
@@ -140,9 +136,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
     } catch (err) {
       const { status } = getAxiosError(err);
 
-      if (status === 403) {
-        toast.error("학생 또는 관리자의 계정이 아닙니다.");
-      } else if (status === 404) {
+      if (status === 404) {
         toast.error("수정하려는 동아리가 없습니다.");
       }
     }
@@ -159,11 +153,7 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
-      if (status === 403 && code === -1711) {
-        toast.error("학생 또는 관리자 계정이 아닙니다.");
-      } else if (status === 403 && code === -1712) {
-        toast.error("본인이 해당 동아리의 동아리장이 아닙니다.");
-      } else if (status === 404 && code === -1721) {
+      if (status === 404 && code === -1721) {
         toast.error("동아리가 존재하지 않습니다.");
       } else if (status === 404 && code === -1723) {
         toast.error("동아리장으로 변경하려는 동아리원을 찾지 못했습니다.");

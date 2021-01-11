@@ -83,11 +83,7 @@ const ManagementInfoContainer: FC<Props> = ({
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
-      if (status === 403 && code === -1711) {
-        toast.error("학생 또는 관리자 계정이 아닙니다.");
-      } else if (status === 403 && code === -1712) {
-        toast.error("본인이 해당 동아리의 동아리 장이 아닙니다.");
-      } else if (status === 404 && code === -1721) {
+      if (status === 404 && code === -1721) {
         toast.error("수정하려는 동아리가 없습니다.");
       }
     }
@@ -105,9 +101,7 @@ const ManagementInfoContainer: FC<Props> = ({
     } catch (err) {
       const { status } = getAxiosError(err);
 
-      if (status === 403) {
-        toast.error("학생 또는 관리자의 계정이 아닙니다.");
-      } else if (status === 404 || status === 409) {
+      if (status === 404 || status === 409) {
         toast.error("본인이 동아리 장인 동아리가 없습니다.");
       }
 
@@ -123,9 +117,7 @@ const ManagementInfoContainer: FC<Props> = ({
     } catch (err) {
       const { status } = getAxiosError(err);
 
-      if (status === 403) {
-        toast.error("학생 또는 관리자의 계정이 아닙니다.");
-      } else if (status === 404) {
+      if (status === 404) {
         toast.error("수정하려는 동아리가 없습니다.");
       }
     }

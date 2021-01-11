@@ -88,11 +88,7 @@ const MemberAddModal: FC<Props> = ({
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
-      if (status === 403 && code === -1711) {
-        toast.error("학생 또는 관리자 계정이 아닙니다.");
-      } else if (status === 403 && code === -1712) {
-        toast.error("본인이 해당 동아리의 동아리 장이 아닙니다.");
-      } else if (status === 404 && code === -1721) {
+      if (status === 404 && code === -1721) {
         toast.error("수정하려는 동아리가 없습니다.");
       } else if (status === 404 && code === -1722) {
         toast.error("추가하려는 학생이 존재하지 않습니다.");

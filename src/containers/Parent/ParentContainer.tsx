@@ -66,9 +66,7 @@ const ApproveContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     } catch (err) {
       const { status } = getAxiosError(err);
 
-      if (status === 403) {
-        toast.error("학부모님의 자녀가 신청한 외출증이 아닙니다.");
-      } else if (status === 404) {
+      if (status === 404) {
         toast.error("존재하지 않는 외출증입니다.");
       } else if (status === 409) {
         toast.error("현재 학부모님이 접근할 수 없는 외출증입니다.");
