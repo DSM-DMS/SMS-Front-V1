@@ -23,6 +23,7 @@ export const apiDefault = () => {
   const type: UserType = window.location.pathname.includes("admin")
     ? TEACHER
     : STUDENT;
+  const refreshUrl = type === TEACHER ? "/admin/login" : "/login";
 
   instance.interceptors.request.use(config => {
     const accessToken = localStorage.getItem("access_token");
@@ -41,11 +42,7 @@ export const apiDefault = () => {
           "자동 로그인 세션이 만료되었습니다. 재로그인 후 다시 실행해주시기 바랍니다."
         );
 
-        if (type === TEACHER) {
-          window.location.href = "/admin/login";
-        } else {
-          window.location.href = "/login";
-        }
+        window.location.href = refreshUrl;
       }
     }
     config.headers = {
@@ -68,11 +65,10 @@ export const apiDefault = () => {
         toast.error("유효하지 않은 요청이 발생했습니다.");
       } else if (status === 401) {
         alert("로그인 후 이용해주세요.");
-        if (type === TEACHER) {
-          window.location.href = "/admin/login";
-        } else {
-          window.location.href = "/login";
-        }
+        window.location.href = refreshUrl;
+      } else if (status === 403) {
+        alert("잘못된 접근 입니다.");
+        window.location.href = refreshUrl;
       } else if (status === 407) {
         toast.error("서버에 요류가 발생했습니다.");
       } else if (status === 429) {

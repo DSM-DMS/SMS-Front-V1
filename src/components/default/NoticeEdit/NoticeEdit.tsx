@@ -4,7 +4,8 @@ import React, {
   useState,
   useEffect,
   useRef,
-  useCallback
+  useCallback,
+  memo
 } from "react";
 import { PageHeader } from "../../default";
 import * as S from "../../Admin/Notice/writing/styles";

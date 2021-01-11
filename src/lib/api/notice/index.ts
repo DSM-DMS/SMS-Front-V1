@@ -1,6 +1,11 @@
 import { AxiosResponse } from "axios";
 import { apiDefault } from "../client";
-import { ReqBoardEdit, ResBoardDetail, ResBoardList } from "../payloads/Board";
+import {
+  ReqBoardEdit,
+  ReqBoardWrite,
+  ResBoardDetail,
+  ResBoardList
+} from "../payloads/Board";
 
 export const getNoticeList = (
   type: "school" | "club",
@@ -33,4 +38,8 @@ export const editNotice = (
 
 export const deleteNotice = (uuid: string): Promise<AxiosResponse<{}>> => {
   return apiDefault().delete<{ id: string }>(`/announcements/uuid/${uuid}`);
+};
+
+export const writeNotice = (payload: ReqBoardWrite) => {
+  return apiDefault().post("/announcements", payload);
 };
