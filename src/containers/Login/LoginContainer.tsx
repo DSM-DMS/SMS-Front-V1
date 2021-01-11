@@ -124,6 +124,7 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
   const teacherLogin = async (id: string, pw: string, autoLogin: boolean) => {
     const teacherUuid = await getTeacherLoginInfo(id, pw, autoLogin);
+    localStorage.removeItem("club_uuid");
     dispatch(getTeacherInfoSaga(teacherUuid));
   };
 

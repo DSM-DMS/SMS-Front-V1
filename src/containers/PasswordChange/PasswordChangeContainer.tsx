@@ -39,9 +39,7 @@ const PasswordChangeContainer: FC<Props> = ({
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (status === 403) {
-          toast.error("학생 정보가 올바르지 않습니다. 다시 로그인해주세요.");
-        } else if (status === 409 && code === -701) {
+        if (status === 409 && code === -701) {
           toast.error("현재 비밀번호가 올바르지 않습니다.");
         }
       }
