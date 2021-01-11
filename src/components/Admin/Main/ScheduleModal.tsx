@@ -55,8 +55,12 @@ const ScheduleModal: FC<Props> = ({
   }, []);
 
   const handleCreateSchedule = () => {
-    if (!(start || end || detail)) {
+    if (start === "" || end === "" || detail.trim() === "") {
       toast.error("입력 칸을 모두 채워주세요.");
+      return;
+    }
+    if (start > end) {
+      toast.error("시작 날이 종료 날보다 작아야 합니다.");
       return;
     }
 

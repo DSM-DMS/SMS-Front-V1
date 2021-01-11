@@ -160,7 +160,7 @@ export const getWeekOfMonth = (d: Date) => {
   // return week === weeksInMonth ? index + 5 : week;
 };
 
-export const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
+export const padNum = (n: number) => n + "".padStart(2, "0");
 
 export const formattingStudent = (student: ResStudents | ResStudentInfo) => {
   return `${student.grade}${student.group}${padNum(student.student_number)}`;

@@ -1,11 +1,12 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { Approve } from "../../components";
 import { ResOutingInfo } from "../../lib/api/payloads/Parent";
 import { getOutingInfo, postOutingAction } from "../../lib/api/Parent";
-import { toast } from "react-toastify";
 import { getAxiosError } from "../../lib/utils";
+import Confirm from "../../lib/confirm/confirm";
 import WithLoadingContainer, {
   LoadingProps
 } from "../Loading/WithLoadingContainer";
@@ -40,8 +41,6 @@ const ApproveContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       if (status === 404) {
         toast.error("외출증 코드에 해당하는 외출증이 없습니다.");
       }
-
-      location.href = "/login";
     }
     endLoading();
   };
@@ -52,14 +51,18 @@ const ApproveContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     confirmUuid: string
   ) => {
     const typeText = action === ParentActions.PARENT_APPROVE ? "승인" : "거절";
-    if (!confirm(`자녀의 외출증을 ${typeText}하시겠습니까?`)) return;
+    const confirm = await Confirm.confirm([
+      `자녀의 외출증을 ${typeText}하시겠습니까?`,
+      "취소",
+      typeText
+    ]);
+    if (!confirm) return;
 
     startLoading();
     try {
       await postOutingAction(outing_uuid, action, confirmUuid);
 
       toast.success(`자녀의 외출증을 ${typeText}했습니다.`);
-      location.href = "/login";
     } catch (err) {
       const { status } = getAxiosError(err);
 
@@ -70,8 +73,6 @@ const ApproveContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       } else if (status === 409) {
         toast.error("현재 학부모님이 접근할 수 없는 외출증입니다.");
       }
-
-      location.href = "/login";
     }
     endLoading();
   };
