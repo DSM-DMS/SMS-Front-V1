@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Redirect, Route, Switch, useLocation } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 
 import {
   AdminOutingCertifiedListContainer,
@@ -14,14 +14,13 @@ import {
   PasswordChangeContainer,
   AdminOutingDoneContainer,
   AdminNoticeMineDetailContainer,
-  ManagementNoticeEditContainer,
   AdminNoticeEditContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
 
-const AdminRouter: FC<{}> = () => {
-  const location = useLocation();
-  const pathname = location.pathname;
+const AdminRouter: FC = () => {
+  const history = useHistory();
+  const pathname = history.location.pathname;
   const noWhiteBack: string[] = ["login", "home", "pw-change"];
 
   return (
