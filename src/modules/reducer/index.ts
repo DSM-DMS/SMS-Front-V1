@@ -6,10 +6,12 @@ import boardReducer from "./board";
 import posterReducer from "./poster";
 import outingCardReducer from "./outingCard";
 import ManagementInfo from "./management/info";
-import noticeReducer from "./notice";
 import outingReducer from "./outing";
 import mainReducer from "./main";
+import noticeListReducer from "./notice/list";
 import managementReducer from "./management";
+import loadingReducer from "./loading";
+import noticeDetailReducer from "./notice/detail";
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -20,9 +22,11 @@ const rootReducer = combineReducers({
   outingCard: outingCardReducer,
   outing: outingReducer,
   ManagementInfo,
-  notice: noticeReducer,
   main: mainReducer,
-  management: managementReducer
+  management: managementReducer,
+  noticeList: noticeListReducer,
+  noticeDetail: noticeDetailReducer,
+  loading: loadingReducer
 });
 
 export type stateType = ReturnType<typeof rootReducer>;

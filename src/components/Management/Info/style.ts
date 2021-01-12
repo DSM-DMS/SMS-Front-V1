@@ -89,13 +89,53 @@ export const ClubMemberItem = styled.li`
   justify-content: space-between;
   transition: 0.3s ease-in-out;
   font-size: 14px;
-  &:hover {
-    color: #ffffff;
-    background-color: #888888;
-    > .deleteImg {
-      display: inline-block !important;
+`;
+
+export const ClubMemberItemSetting = styled.div`
+  position: relative;
+  cursor: pointer;
+  &:hover > img {
+    background-color: #d8d8d8;
+  }
+  > div {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    width: 100px;
+    margin-top: 2px;
+    padding: 4px 0;
+    background-color: white;
+    border: 1px solid #919191;
+    border-radius: 4px;
+    box-shadow: 0 0 10px #bbbbbb;
+    text-align: center;
+    z-index: 10;
+    &::before {
+      content: "";
+      position: absolute;
+      top: -16px;
+      right: 4px;
+      display: inline-block;
+      border: 8px solid transparent;
+      border-bottom: 8px solid white;
+    }
+    > p {
+      padding: 2px 8px;
+      &:hover {
+        color: white;
+        background-color: #a1a1a1;
+      }
     }
   }
+`;
+
+export const ClubMemberItemSettingImg = styled.img`
+  width: 14px;
+  padding: 4px;
+  border: 1px solid #a1a1a1;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px #e1e1e1;
+  transition: 300ms;
 `;
 
 export const ClubMemberDeleteImg = styled.img`
@@ -135,12 +175,22 @@ export const ClubMemberDeleteModal = styled.div`
 `;
 
 export const ClubMemberDeleteModalHead = styled.div`
+  position: relative;
   padding: 20px;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   background: #f5f8fa;
   color: #576069;
   font-weight: 600;
+`;
+
+export const ClubMemberModalClose = styled.img`
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
 `;
 
 export const ClubMemberDeleteModalBody = styled.div`
@@ -164,8 +214,10 @@ export const ModalBodyList = styled.ul`
 `;
 
 export const ClubMemberDeleteModalFoot = styled.div`
-  color: red;
+  display: flex;
+  align-items: center;
   padding: 20px;
+  color: red;
   > .delete {
     padding: 4px 8px;
     border: 1px solid #e2e2e2;
@@ -203,6 +255,7 @@ export const ClubPictureInner = styled.div`
 
 export const InnerTextCommon = styled.span`
   display: inline-block;
+  height: 20px;
   margin: 4px 0;
   color: #888888;
   font-size: 14px;
@@ -439,8 +492,9 @@ export const Result = styled.ul`
     border: 4px solid transparent;
     box-shadow: inset 0 0 0 10px;
   }
-  &:hover {
-    color: rgba(0, 0, 0, 0.3);
+  > .searchResult:hover {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
   }
 `;
 
@@ -451,10 +505,6 @@ export const ResultItem = styled.li`
   padding: 8px;
   color: #1d1d1d;
   font-weight: 300;
-  cursor: pointer;
-  &:hover {
-    background: rgba(0, 0, 0, 0.05);
-  }
   > span {
     flex: 1;
   }
@@ -487,13 +537,6 @@ export const Queue = styled.ul`
   > p {
     font-size: 14px;
     color: #838383;
-  }
-  > li {
-    transition: 0.3s ease;
-    cursor: pointer;
-    &:hover {
-      color: #ff6961;
-    }
   }
 `;
 

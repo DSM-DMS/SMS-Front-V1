@@ -1,11 +1,11 @@
-import { apiDefault, apiHeaderDefault } from "../client";
+import { apiDefault } from "../client";
 import { ParentActions } from "../../../containers/Parent/ParentContainer";
 import { ResHistoryWithDefault } from "../payloads/Outing";
 import { ResOutingInfoWithDefault } from "../payloads/Parent";
 import { ResDefault } from "../payloads";
 
 export const getOutingInfo = (confirmUuid: string) => {
-  return apiHeaderDefault().get<ResOutingInfoWithDefault>(
+  return apiDefault().get<ResOutingInfoWithDefault>(
     `/outings/code/${confirmUuid}`
   );
 };

@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Login } from "../../components";
 import { postLoginStudent } from "../../lib/api/Login";
 import { postLoginTeacher } from "../../lib/api/Login";
+import { getClubUuidFromLeader } from "../../lib/api/Management";
 import {
   PASSWORD_NOT_MATCHED,
   UNABLE_FORM,
@@ -14,13 +15,17 @@ import { getAxiosError } from "../../lib/utils";
 import {
   getStudentInfoSaga,
   getTeacherInfoSaga,
+  setClubUuid,
   STUDENT,
   TEACHER,
   UserType
 } from "../../modules/action/header";
 import { pageMove } from "../../modules/action/page";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
 export interface ErrorState {
   status: boolean;
@@ -32,7 +37,7 @@ const initErrorState = {
   message: ""
 };
 
-const LoginContainer: FC<Props> = () => {
+const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [id, setId] = useState<string>("");
@@ -59,12 +64,12 @@ const LoginContainer: FC<Props> = () => {
 
   const storageHandler = useCallback(
     (type: UserType, autoLogin: boolean, accessToken: string, uuid: string) => {
-      const MillisecondOfHour = 3600000;
+      const MillisecondINHour = 3600000;
 
       if (autoLogin) {
         localStorage.removeItem("expiration");
       } else {
-        localStorage.setItem("expiration", `${Date.now() + MillisecondOfHour}`);
+        localStorage.setItem("expiration", `${Date.now() + MillisecondINHour}`);
       }
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem(`uuid`, uuid);
@@ -72,6 +77,20 @@ const LoginContainer: FC<Props> = () => {
     },
     []
   );
+
+  const getClubUuid = async (uuid: string) => {
+    try {
+      const res = await getClubUuidFromLeader(uuid);
+      localStorage.setItem("club_uuid", res.data.club_uuid);
+    } catch (err) {
+      const { status } = getAxiosError(err);
+
+      if (status === 409) {
+        localStorage.removeItem("club_uuid");
+        dispatch(setClubUuid(""));
+      }
+    }
+  };
 
   const getStudentLoginInfo = useCallback(
     async (id: string, pw: string, autoLogin: boolean) => {
@@ -99,11 +118,13 @@ const LoginContainer: FC<Props> = () => {
 
   const studentLogin = async (id: string, pw: string, autoLogin: boolean) => {
     const studentUuid = await getStudentLoginInfo(id, pw, autoLogin);
+    await getClubUuid(studentUuid);
     dispatch(getStudentInfoSaga(studentUuid));
   };
 
   const teacherLogin = async (id: string, pw: string, autoLogin: boolean) => {
     const teacherUuid = await getTeacherLoginInfo(id, pw, autoLogin);
+    localStorage.removeItem("club_uuid");
     dispatch(getTeacherInfoSaga(teacherUuid));
   };
 
@@ -114,28 +135,27 @@ const LoginContainer: FC<Props> = () => {
         return;
       }
 
+      startLoading();
       try {
         if (userType === STUDENT) {
           await studentLogin(id, pw, autoLogin);
         } else {
           await teacherLogin(id, pw, autoLogin);
         }
-
         setErrorMessage(initErrorState);
         dispatch(pageMove("홈"));
-
         history.push("./home");
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (
-          status === 404 ||
-          (status === 409 && (code === -401 || code === -411))
-        ) {
+        if (status === 404) {
+          errorMessageMacro(UNAUTHORIZED);
+        } else if (status === 409 && (code === -401 || code === -411)) {
           errorMessageMacro(UNAUTHORIZED);
         } else if (status === 409 && (code === -402 || code === -412)) {
           errorMessageMacro(PASSWORD_NOT_MATCHED);
         }
+        endLoading();
       }
     },
     []
@@ -155,6 +175,7 @@ const LoginContainer: FC<Props> = () => {
 
   return (
     <Login
+      loading={loading}
       id={id}
       pw={pw}
       autoLogin={autoLogin}
@@ -167,4 +188,4 @@ const LoginContainer: FC<Props> = () => {
   );
 };
 
-export default LoginContainer;
+export default WithLoadingContainer(LoginContainer);

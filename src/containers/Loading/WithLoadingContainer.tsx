@@ -1,9 +1,9 @@
 import React, { FC, useCallback, useState } from "react";
 
 export interface LoadingProps {
-  loading?: boolean;
-  startLoading?: () => void;
-  endLoading?: () => void;
+  loading: boolean;
+  startLoading: () => void;
+  endLoading: () => void;
 }
 
 interface Props {}

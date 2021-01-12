@@ -45,13 +45,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
             schedulerDate.getMonth() + 1
           )
         );
-      } catch (err) {
-        const { status } = getAxiosError(err);
-
-        if (status === 403) {
-          toast.error("선생님 계정으로 이용해주세요.");
-        }
-      }
+      } catch {}
     },
     []
   );
@@ -67,13 +61,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
             schedulerDate.getMonth() + 1
           )
         );
-      } catch (err) {
-        const { status } = getAxiosError(err);
-
-        if (status === 403) {
-          toast.error("선생님 계정으로 이용해주세요.");
-        }
-      }
+      } catch {}
     },
     []
   );
@@ -89,13 +77,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
             schedulerDate.getMonth() + 1
           )
         );
-      } catch (err) {
-        const { status } = getAxiosError(err);
-
-        if (status === 403) {
-          toast.error("선생님 계정으로 이용해주세요.");
-        }
-      }
+      } catch {}
     },
     []
   );

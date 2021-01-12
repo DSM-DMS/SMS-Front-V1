@@ -1,26 +1,22 @@
-import React, {
-  ChangeEvent,
-  FC,
-  useState,
-  useEffect,
-  useCallback
-} from "react";
+import React, { FC, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { stateType } from "../../../modules/reducer";
+
+import * as S from "./styles";
+
+import OutingCard from "../OutingCard/OutingCard";
 import OutingCardFilter from "../Filter/OutingCardFilter";
 import OutingCardModal from "../Modal/OutingCardModal/OutingCardModal";
+import { stateType } from "../../../modules/reducer";
 import {
   OutingCardFilter as OutingCardFilterType,
   ReqOutingCardFilter
 } from "../../../lib/api/payloads/OutingCard";
-import OutingCard from "../OutingCard/OutingCard";
-import * as S from "./styles";
 import { getOutingCardListSaga } from "../../../modules/action/outingCard";
 
 interface Props {
   title: string;
   status: number;
-  isClicked: boolean;
+  isClicked: (...arg: any) => void;
 }
 
 const OutingCardPage: FC<Props> = ({ title, isClicked, status }) => {

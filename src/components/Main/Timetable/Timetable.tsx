@@ -16,7 +16,7 @@ const date = new Date();
 const Timetable: FC<Props> = (): ReactElement => {
   const dispatch = useDispatch();
   const {
-    main: { timetable },
+    main: { timetable, timetableLoading },
     header: { type }
   } = useSelector((state: stateType) => state);
   const [tDate, setTDate] = useState<number>(date.getDate());
@@ -28,7 +28,7 @@ const Timetable: FC<Props> = (): ReactElement => {
       0
     ).getDate();
     if (tDate === currLastDate) {
-      toast.error("이번 달 안에서만 시간표 변경이 가능합니다.");
+      toast.info("이번 달 안에서만 시간표 변경이 가능합니다.");
       return;
     }
     setTDate(prev => prev + 1);
@@ -36,7 +36,7 @@ const Timetable: FC<Props> = (): ReactElement => {
 
   const handlePrevTimetable = () => {
     if (tDate === 1) {
-      toast.error("이번 달 안에서만 시간표 변경이 가능합니다.");
+      toast.info("이번 달 안에서만 시간표 변경이 가능합니다.");
       return;
     }
     setTDate(prev => prev - 1);
@@ -65,7 +65,7 @@ const Timetable: FC<Props> = (): ReactElement => {
           </S.TimetableSelector>
         </S.FiltersWrap>
       </S.TimetableTitle>
-      <TimetableList timetable={timetable} />
+      <TimetableList loading={timetableLoading} timetable={timetable} />
     </S.Timetable>
   );
 };

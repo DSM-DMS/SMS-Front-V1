@@ -1,17 +1,15 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { CircleNoticeDetail } from "../../../../components";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import qs from "query-string";
-import { getNoticeDetailSaga } from "../../../../modules/action/notice";
 import { RouteChildrenProps } from "react-router-dom";
+import { getNoticeDetail } from "../../../../modules/action/notice/detail";
 
 const CircleNoticeDetailContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
 
   const id: string = (match.params as any).id;
   useEffect(() => {
-    dispatch(getNoticeDetailSaga(id));
+    dispatch(getNoticeDetail(id));
   }, [id]);
   return <CircleNoticeDetail />;
 };

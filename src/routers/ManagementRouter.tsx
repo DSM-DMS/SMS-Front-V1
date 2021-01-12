@@ -16,8 +16,8 @@ const ManagementRouter: FC = () => {
       <Switch>
         <Route
           exact
-          path="/management/notice"
-          component={ManagementNoticeContainer}
+          path="/management/notice/edit/:id"
+          component={ManagementNoticeEditContainer}
         />
 
         <Route
@@ -28,8 +28,8 @@ const ManagementRouter: FC = () => {
 
         <Route
           exact
-          path="/management/edit/:id"
-          component={ManagementNoticeEditContainer}
+          path="/management/notice"
+          component={ManagementNoticeContainer}
         />
 
         <Route

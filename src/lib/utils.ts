@@ -10,6 +10,7 @@ import { ResStudents } from "./api/payloads/Management";
 import { PageState } from "../modules/reducer/page";
 import { stateType } from "../modules/reducer";
 import { SERVER } from "../lib/api/client";
+import { BoardType } from "./api/payloads/Board";
 
 type valueType = [string, string];
 
@@ -160,7 +161,7 @@ export const getWeekOfMonth = (d: Date) => {
   // return week === weeksInMonth ? index + 5 : week;
 };
 
-export const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
+export const padNum = (n: number) => (n + "").padStart(2, "0");
 
 export const formattingStudent = (student: ResStudents | ResStudentInfo) => {
   return `${student.grade}${student.group}${padNum(student.student_number)}`;
@@ -174,7 +175,7 @@ export const errorHandler = (errStatus: number, history: History): void => {
   switch (errStatus) {
     case 401:
     case 403: {
-      toast.dark("로그인을 다시 진행해주세요");
+      toast.error("로그인을 다시 진행해주세요");
       const href = history.location.pathname;
       if (href.includes("admin")) {
         history.push("/admin/login");
@@ -190,3 +191,6 @@ export const getAxiosError = (err: AxiosError<ResDefault>) => {
   const { status, code } = err.response.data;
   return { status, code };
 };
+
+export const getSuccessHistory = (type: BoardType) =>
+  type === "school" ? "/admin/notice/mine" : "/management/notice";

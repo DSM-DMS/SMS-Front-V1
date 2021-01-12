@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { call, getContext, put, takeEvery } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 
-import { apiDefault, BASE_URL } from "../../../lib/api/client";
+import { apiDefault } from "../../../lib/api/client";
 import {
   ResScheduleWithDefault,
   ResTimetableWithDefault
@@ -14,13 +14,18 @@ import {
   setTimetables,
   GET_SCHEDULES_SAGA,
   GET_TIMETABLES_SAGA,
-  getTimetablesSaga
+  getTimetablesSaga,
+  startTimetableLoading,
+  endTimetableLoading,
+  startScheduleLoading,
+  endScheduleLoading
 } from "../../action/main";
 
 function* fetchTimetables(action: ReturnType<typeof getTimetablesSaga>) {
   const { year, month, day } = action.payload;
   const timetableUrl = `/time-tables/years/${year}/months/${month}/days/${day}`;
 
+  yield put(startTimetableLoading());
   try {
     const { data }: AxiosResponse<ResTimetableWithDefault> = yield call(
       apiDefault().get,
@@ -29,22 +34,20 @@ function* fetchTimetables(action: ReturnType<typeof getTimetablesSaga>) {
 
     yield put(setTimetables(data));
   } catch (err) {
-    const history = yield getContext("history");
     const { status } = getAxiosError(err);
 
-    if (status === 403) {
-      toast.error("학생 계정이 아닙니다.");
-      history.push("/login");
-    } else if (status === 404) {
+    if (status === 404) {
       toast.error("시간표를 불러올 수 없습니다.");
     }
   }
+  yield put(endTimetableLoading());
 }
 
 function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {
   const { year, month } = action.payload;
   const scheduleUrl = `schedules/years/${year}/months/${month}`;
 
+  yield put(startScheduleLoading());
   try {
     const {
       data: { schedules }
@@ -59,16 +62,13 @@ function* fetchSchedules(action: ReturnType<typeof getSchedulesSaga>) {
 
     yield put(setSchedules(schedules));
   } catch (err) {
-    const history = yield getContext("history");
     const { status } = getAxiosError(err);
 
-    if (status === 403) {
-      toast.error("학생 계정이 아닙니다.");
-      history.push("/login");
-    } else if (status === 404) {
+    if (status === 404) {
       toast.error("일정을 불러올 수 없습니다.");
     }
   }
+  yield put(endScheduleLoading());
 }
 
 function* mainSaga() {

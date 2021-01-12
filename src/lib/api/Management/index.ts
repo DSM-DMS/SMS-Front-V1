@@ -49,3 +49,9 @@ export const patchClubInfo = (clubUuid: string, fd: FormData) => {
     }
   });
 };
+
+export const putClubLeader = (clubUuid: string, newLeaderUuid: string) => {
+  return apiDefault().put<ResDefault>(`/clubs/uuid/${clubUuid}/leader`, {
+    new_leader_uuid: newLeaderUuid
+  });
+};

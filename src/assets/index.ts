@@ -74,6 +74,7 @@ export { default as deleteMember } from "./management/delete.svg";
 export { default as deleteBtn } from "./management/deleteBtn.svg";
 export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
+export { default as SettingGear } from "./management/settings.svg";
 
 export { default as PageNotFound } from "./default/page_not_found.svg";
 

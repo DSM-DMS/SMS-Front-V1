@@ -9,7 +9,7 @@ import * as S from "../style";
 import { OutingHistory, Refresh } from "../../../assets";
 import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
 import { subPageMove } from "../../../modules/action/page";
-import { resetOutingHistoryList } from "../../../modules/action/outing";
+import { Loading } from "../../default";
 
 interface Props {
   histories: ResHistoryItem[];
@@ -56,9 +56,7 @@ const History: FC<Props> = ({
         </div>
       </S.HistoryHead>
       <S.HistoryContent>
-        {historyStart === 0 && (
-          <div>외출증을 불러오는 중입니다. 잠시만 기다려주세요.</div>
-        )}
+        {historyStart === 0 && <Loading />}
         {historyStart !== 0 && histories.length === 0 ? (
           <S.HistoryNoContent>
             외출신청 내역이 없습니다.

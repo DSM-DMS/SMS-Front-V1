@@ -1,11 +1,17 @@
-import React, { ReactElement, useMemo, MouseEvent, useCallback } from "react";
+import React, {
+  ReactElement,
+  useMemo,
+  MouseEvent,
+  useCallback,
+  memo
+} from "react";
 import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
 import { stateType } from "../../../../modules/reducer";
 import { UserType } from "../../../../modules/action/header";
-import { getWeekOfMonth } from "../../../../lib/utils";
+import { getWeekOfMonth, padNum } from "../../../../lib/utils";
 import { ResSchedule } from "../../../../lib/api/payloads/Main";
 
 interface Props {}
@@ -39,8 +45,6 @@ const CalendarDate: React.FC<Props> = () => {
     header: { type }
   } = useSelector((state: stateType) => state);
 
-  const padNum = (num: number): string => (num < 10 ? `0${num}` : num + "");
-
   const onClickDate = (e: MouseEvent<HTMLDivElement>) => {
     const classList = e.currentTarget.classList;
     if (classList.contains("selected")) {
@@ -68,44 +72,46 @@ const CalendarDate: React.FC<Props> = () => {
     </S.CalendarDate>
   );
 
-  const printCalendar = (
-    yearCopy: number,
-    monthCopy: number
-  ): ReactElement[] => {
-    const fixedMonth = padNum(monthCopy),
-      lastDay = new Date(yearCopy, monthCopy, 0).getDate(),
-      prevLastDate = new Date(yearCopy, monthCopy - 1, 0).getDate(),
-      firstDay = new Date(yearCopy, monthCopy - 1, 1).getDay(),
-      jsx: ReactElement[] = [];
-    let startDayCount: number = 1;
-    let nextDayCount: number = 1;
+  const printCalendar = useCallback(
+    (yearCopy: number, monthCopy: number): ReactElement[] => {
+      const fixedMonth = padNum(monthCopy),
+        lastDay = new Date(yearCopy, monthCopy, 0).getDate(),
+        prevLastDate = new Date(yearCopy, monthCopy - 1, 0).getDate(),
+        firstDay = new Date(yearCopy, monthCopy - 1, 1).getDay(),
+        jsx: ReactElement[] = [];
+      let startDayCount: number = 1;
+      let nextDayCount: number = 1;
 
-    for (let i = 0; i < 6; i += 1) {
-      for (let j = 0; j < 7; j += 1) {
-        if (i === 0 && j < firstDay) {
-          jsx.push(getDateJSX(prevLastDate - firstDay + j + 1, `${j}`, "prev"));
-        } else if (i >= 0 && startDayCount <= lastDay) {
-          const date = `${yearCopy}-${fixedMonth}-${padNum(startDayCount)}`,
-            t = new Date(),
-            y = t.getFullYear(),
-            m = t.getMonth() + 1,
-            d = t.getDate();
-          date === `${y}-${padNum(m)}-${padNum(d)}`
-            ? jsx.push(getDateJSX(startDayCount, date, "curr today"))
-            : jsx.push(getDateJSX(startDayCount, date, "curr"));
-          startDayCount += 1;
-        } else {
-          const date: string =
-            +fixedMonth + 1 > 12
-              ? `${+yearCopy + 1}-${1}-${padNum(nextDayCount)}`
-              : `${yearCopy}-${+fixedMonth + 1}-${padNum(nextDayCount)}`;
-          jsx.push(getDateJSX(nextDayCount, date));
-          nextDayCount += 1;
+      for (let i = 0; i < 6; i += 1) {
+        for (let j = 0; j < 7; j += 1) {
+          if (i === 0 && j < firstDay) {
+            jsx.push(
+              getDateJSX(prevLastDate - firstDay + j + 1, `${j}`, "prev")
+            );
+          } else if (i >= 0 && startDayCount <= lastDay) {
+            const date = `${yearCopy}-${fixedMonth}-${padNum(startDayCount)}`,
+              t = new Date(),
+              y = t.getFullYear(),
+              m = t.getMonth() + 1,
+              d = t.getDate();
+            date === `${y}-${padNum(m)}-${padNum(d)}`
+              ? jsx.push(getDateJSX(startDayCount, date, "curr today"))
+              : jsx.push(getDateJSX(startDayCount, date, "curr"));
+            startDayCount += 1;
+          } else {
+            const date: string =
+              +fixedMonth + 1 > 12
+                ? `${+yearCopy + 1}-${1}-${padNum(nextDayCount)}`
+                : `${yearCopy}-${+fixedMonth + 1}-${padNum(nextDayCount)}`;
+            jsx.push(getDateJSX(nextDayCount, date));
+            nextDayCount += 1;
+          }
         }
       }
-    }
-    return jsx;
-  };
+      return jsx;
+    },
+    [schedulerDate, type]
+  );
 
   const memoizedCalendar = useMemo<ReactElement[]>(
     () =>
@@ -259,4 +265,4 @@ const CalendarDate: React.FC<Props> = () => {
   );
 };
 
-export default CalendarDate;
+export default memo(CalendarDate);

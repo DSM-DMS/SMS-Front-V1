@@ -1,31 +1,53 @@
-import React, { FC, memo, useState } from "react";
+import React, { FC, memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
 
 import * as S from "./style";
+import MemberDeleteModal from "./MemberDeleteModal";
 
-import { deleteMember as deleteMemberSvg, ModalClose } from "../../../assets";
+import { SettingGear } from "../../../assets";
 import { ResStudents } from "../../../lib/api/payloads/Management";
 import { formattingStudent } from "../../../lib/utils";
 import { stateType } from "../../../modules/reducer";
 
 interface Props {
-  member: ResStudents;
+  removeLoading: boolean;
   name: string;
+  member: ResStudents;
   removeMemberHandler: () => void;
+  changeLeaderHandler: (newLeaderUuid: string) => Promise<void>;
 }
 
-const MemberItem: FC<Props> = ({ member, name, removeMemberHandler }) => {
+const MemberItem: FC<Props> = ({
+  removeLoading,
+  name,
+  member,
+  removeMemberHandler,
+  changeLeaderHandler
+}) => {
   const { name: clubName } = useSelector(
     (state: stateType) => state.ManagementInfo
   );
   const [modal, setModal] = useState<boolean>(false);
+  const [delModal, setDelModal] = useState<boolean>(false);
 
-  const showModal = () => {
+  const showDelModal = useCallback(() => {
+    setDelModal(true);
+  }, []);
+
+  const hideDelModal = useCallback(() => {
+    setDelModal(false);
+  }, []);
+
+  const showModal = useCallback(() => {
     setModal(true);
-  };
+  }, []);
 
-  const hideModal = () => {
+  const hideModal = useCallback(() => {
     setModal(false);
+  }, []);
+
+  const handleNewLeader = async () => {
+    await changeLeaderHandler(member.student_uuid);
   };
 
   return (
@@ -33,39 +55,30 @@ const MemberItem: FC<Props> = ({ member, name, removeMemberHandler }) => {
       <span>
         {formattingStudent(member)} {name}
       </span>
-      <S.ClubMemberDeleteImg
-        src={deleteMemberSvg}
-        alt="delete member"
-        title="delete member"
-        onClick={showModal}
-        className="deleteImg"
-      />
-      {modal && (
-        <>
-          <S.ClubMemberDeleteBackground onClick={hideModal} />
-          <S.ClubMemberDeleteModal>
-            <S.ClubMemberDeleteModalHead>
-              {clubName}에서 1명을 삭제합니다.
-            </S.ClubMemberDeleteModalHead>
-            <S.ClubMemberDeleteModalBody>
-              <p className="followingDeleteMember">
-                삭제될 동아리원은 아래와 같습니다:
-              </p>
-              <ul>
-                <li className="member">
-                  <span>
-                    {formattingStudent(member)} {name}
-                  </span>
-                </li>
-              </ul>
-            </S.ClubMemberDeleteModalBody>
-            <S.ClubMemberDeleteModalFoot>
-              <button className="delete" onClick={removeMemberHandler}>
-                동아리원 삭제
-              </button>
-            </S.ClubMemberDeleteModalFoot>
-          </S.ClubMemberDeleteModal>
-        </>
+
+      <S.ClubMemberItemSetting>
+        <S.ClubMemberItemSettingImg
+          src={SettingGear}
+          alt="setting"
+          title="setting"
+          onClick={modal ? hideModal : showModal}
+        />
+        {modal && (
+          <div>
+            <p onClick={showDelModal}>동아리원 삭제</p>
+            <p onClick={handleNewLeader}>동아리장 임명</p>
+          </div>
+        )}
+      </S.ClubMemberItemSetting>
+      {delModal && (
+        <MemberDeleteModal
+          removeLoading={removeLoading}
+          clubName={clubName}
+          name={name}
+          member={member}
+          hideModal={hideDelModal}
+          removeMemberHandler={removeMemberHandler}
+        />
       )}
     </S.ClubMemberItem>
   );

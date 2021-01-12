@@ -21,7 +21,9 @@ export { default as AdminOutingDone } from "./Admin/Outing/Done/AdminOutingDone"
 export { default as AdminNoticeAll } from "./Admin/Notice/all/AdminNoticeAll";
 export { default as AdminNoticeAllDetail } from "./Admin/Notice/all/AdminNoticeAllDetail";
 export { default as AdminNoticeMine } from "./Admin/Notice/mine/AdminNoticeMine";
+export { default as AdminNoticeMineDetail } from "./Admin/Notice/mine/AdminNoticeMineDetail";
 export { default as AdminNoticeWriting } from "./Admin/Notice/writing/AdminNoticeWriting";
+export { default as AdminNoticeEdit } from "./Admin/Notice/edit/AdminNoticeEdit";
 export { default as ManagementNotice } from "./Management/Notice/ManagementNotice";
 export { default as ManagementNoticeDetail } from "./Management/Notice/ManagementNoticeDetail";
 export { default as ManagementNoticeEdit } from "./Management/Notice/ManagememtNoticeEdit";
