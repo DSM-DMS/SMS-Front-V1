@@ -1,9 +1,17 @@
-import React, { FC, ReactElement, useEffect, useState } from "react";
+import React, {
+  FC,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { OutingHistory } from "../../components";
 import { getHistory } from "../../lib/api/Outing";
 import { ResHistoryItem } from "../../lib/api/payloads/Outing";
+import { getAxiosError } from "../../lib/utils";
 import {
   resetOutingHistoryList,
   setOutingHistoryList,
@@ -19,42 +27,48 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
   const [historyStart, setHistoryStart] = useState<number>(0);
   const [modal, setModal] = useState<boolean>(false);
 
-  const dispatchSelectedOuting = (outing: ResHistoryItem) => {
+  const dispatchSelectedOuting = useCallback((outing: ResHistoryItem) => {
     dispatch(setSelectedHistory(outing));
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setModal(false);
-  };
+  }, []);
 
-  const openModal = () => {
+  const openModal = useCallback(() => {
     setModal(true);
-  };
+  }, []);
 
-  const getHistories = async () => {
-    if (historyStart > histories.length) {
-      return alert("불러올 외출신청 내역이 없습니다.");
-    }
-
-    try {
-      const {
-        data: { outings }
-      } = await getHistory(localStorage.getItem("student_uuid"), historyStart);
-
-      dispatch(setOutingHistoryList(outings));
-      setHistoryStart(prev => (prev += 10));
-    } catch (err) {
-      const status = err?.response?.data?.status;
-
-      if (status === 403) {
-        return alert("학생 계정으로 외출 신청 내역을 조회할 수 있습니다.");
+  const getHistories = useCallback(
+    async (historyStart: number) => {
+      if (historyStart > histories.length) {
+        toast.error("불러올 외출신청 내역이 없습니다.");
+        return;
       }
-    }
+
+      try {
+        const {
+          data: { outings }
+        } = await getHistory(localStorage.getItem("uuid"), historyStart);
+
+        dispatch(setOutingHistoryList(outings));
+        setHistoryStart(prev => (prev += 9));
+      } catch {}
+    },
+    [histories]
+  );
+
+  const refreshOutingHistories = () => {
+    dispatch(resetOutingHistoryList());
+    setHistoryStart(0);
+    setTimeout(() => {
+      getHistories(0);
+    }, 1000);
   };
 
   useEffect(() => {
     dispatch(resetOutingHistoryList());
-    getHistories();
+    getHistories(historyStart);
   }, []);
 
   return (
@@ -65,6 +79,7 @@ const HistoryContainer: FC<Props> = (): ReactElement => {
       closeModal={closeModal}
       openModal={openModal}
       getHistories={getHistories}
+      refreshOutingHistories={refreshOutingHistories}
       dispatchSelectedOuting={dispatchSelectedOuting}
     />
   );

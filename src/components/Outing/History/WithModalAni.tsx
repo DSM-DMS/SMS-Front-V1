@@ -7,16 +7,20 @@ import ModalOnlineCard from "./ModalOnlineCard";
 import * as S from "../style";
 
 const WithModalAni = (MyComponent: FC<WithModalProps>) => ({
-  handleMode,
   closeModal,
-  outingStatus
+  applyModal,
+  onlineModal,
+  outingStatus,
+  selectedOuting
 }: WithModalProps) => {
   return (
     <S.WithModalAniWrap>
       <MyComponent
         closeModal={closeModal}
-        handleMode={handleMode}
+        applyModal={applyModal}
+        onlineModal={onlineModal}
         outingStatus={outingStatus}
+        selectedOuting={selectedOuting}
       />
     </S.WithModalAniWrap>
   );

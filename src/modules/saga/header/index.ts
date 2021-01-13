@@ -45,9 +45,10 @@ function* setStudentInfoOnStorageSaga(
     phone_number,
     profile_uri
   };
+  const clubUuid = localStorage.getItem("club_uuid");
 
   setLocalStorage(STUDENT, studentForm);
-  yield put(setInit(STUDENT, studentForm));
+  yield put(setInit(STUDENT, studentForm, clubUuid));
 }
 
 function* setTeacherInfoOnStorageSaga(
@@ -66,9 +67,10 @@ function* setTeacherInfoOnStorageSaga(
     name,
     phone_number
   };
+  const clubUuid = localStorage.getItem("club_uuid");
 
   setLocalStorage(TEACHER, teacherForm);
-  yield put(setInit(TEACHER, teacherForm));
+  yield put(setInit(TEACHER, teacherForm, clubUuid));
 }
 
 function* headerSaga() {

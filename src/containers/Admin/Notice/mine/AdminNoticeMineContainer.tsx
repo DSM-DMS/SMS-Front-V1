@@ -1,24 +1,20 @@
-import React from 'react';
-import { useEffect } from 'react';
-import { FC } from 'react';
-import { useDispatch } from 'react-redux';
-import { AdminNoticeMine } from '../../../../components';
-import { updateBoardList } from '../../../../modules/action/board';
+import React from "react";
+import { useEffect } from "react";
+import { FC } from "react";
+import { useDispatch } from "react-redux";
+import { AdminNoticeMine } from "../../../../components";
+import qs from "query-string";
+import { getNoticeWriterList } from "../../../../modules/action/notice/list";
 
 const AdminNoticeMineContainer: FC = () => {
   const dispatch = useDispatch();
+  const page = Number(qs.parse(location.search).page) || 0;
+
   useEffect(() => {
-    dispatch(
-      updateBoardList(
-        new Array(10).fill({}).map((_, index) => ({
-          id: index,
-          title: index + '',
-          viewCount: index,
-          date: index + '',
-        })),
-      ),
-    );
-  }, []);
+    const teacherUuid = window.localStorage.getItem("uuid");
+    dispatch(getNoticeWriterList({ uuid: teacherUuid, page: page }));
+  }, [page]);
+
   return <AdminNoticeMine />;
 };
 

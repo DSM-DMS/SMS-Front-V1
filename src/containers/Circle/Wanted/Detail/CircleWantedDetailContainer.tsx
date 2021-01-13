@@ -1,16 +1,18 @@
 import React, { FC } from "react";
 import { CircleWantedDetail } from "../../../../components";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { PosterActionCreater } from "../../../../modules/action/poster";
 import { RouteChildrenProps } from "react-router-dom";
+import { getNoticeClubList } from "../../../../modules/action/notice/list";
 
 const CircleWantedDetailContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
 
+  const recruitmentUuid = (match.params as any).id;
   useEffect(() => {
-    const recruitmentUuid = (match.params as any).id;
     dispatch(PosterActionCreater.getWantedInfoDetailSaga(recruitmentUuid));
+    dispatch(getNoticeClubList(0));
   }, []);
 
   return <CircleWantedDetail />;

@@ -5,6 +5,7 @@ import { HashTag } from "../Info/Body/Sub/styles";
 import { CircleInfo } from "../../../modules/type/poster";
 import { StudentInfo } from "../../../modules/type/user";
 import { getStudentData } from "../../../lib/api/client";
+import { getImgUrl } from "../../../lib/utils";
 
 const AllCircleBox: FC<CircleInfo> = ({
   club_concept,
@@ -50,7 +51,7 @@ const AllCircleBox: FC<CircleInfo> = ({
         </div>
         <S.Field>|</S.Field>
       </S.Footer>
-      <img src={logo_uri} />
+      <img src={getImgUrl(logo_uri)} />
     </S.Container>
   );
 };

@@ -1,6 +1,6 @@
 import { ResDefault } from "../";
 
-export const UNABLE_FORM = "아이디및 비밀번호는 4자 이상 16자 이하여야 합니다." as const;
+export const UNABLE_FORM = "아이디 및 비밀번호는 4자 이상 16자 이하여야 합니다." as const;
 export const UNAUTHORIZED = "존재하지 않는 계정의 아이디입니다." as const;
 export const PASSWORD_NOT_MATCHED = "아이디와 올바르지 않은 계정의 비밀번호입니다." as const;
 
@@ -30,11 +30,6 @@ export interface ResTeacherInfo {
   phone_number: string;
 }
 
-export interface ResParentInfo {
-  name: string;
-  phone_number: string;
-}
-
 export interface ResStudentLoginWithDefault
   extends ResStudentLogin,
     ResDefault {}
@@ -43,4 +38,3 @@ export interface ResTeacherLoginWithDefault
     ResDefault {}
 export interface ResStudentInfoWithDefault extends ResStudentInfo, ResDefault {}
 export interface ResTeacherInfoWithDefault extends ResTeacherInfo, ResDefault {}
-export interface ResParentInfoWithDefault extends ResParentInfo, ResDefault {}

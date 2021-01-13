@@ -1,20 +1,30 @@
-import React, { FC } from "react";
-import { Toggle } from "../..";
-import { Props as ToggleProps } from "../../Toggle/Toggle";
+import React, { FC, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { managementActionCreater } from "../../../../modules/action/management";
+import { stateType } from "../../../../modules/reducer";
+import { Button } from "../../../Admin/Notice/writing/styles";
 import * as S from "./styles";
 
-interface Props {
-  toggleSet: ToggleProps;
-}
+interface Props {}
 
-const WantedTopHeader: FC<Props> = ({ toggleSet }) => {
+const WantedTopHeader: FC<Props> = ({}) => {
+  const dispatch = useDispatch();
+  const uuid = useSelector(
+    (store: stateType) => store.management.recruitment_uuid
+  );
+  const deletePost = useCallback(() => {
+    dispatch(managementActionCreater.deleteManagementWantedInfoSaga(uuid));
+  }, []);
   return (
     <S.TopHeader>
-      <div>
-        <span>동아리 모집</span>
-        <Toggle {...toggleSet} />
-      </div>
-      <S.PreviewButton>미리보기 화면</S.PreviewButton>
+      <Button
+        onClick={deletePost}
+        backgroundColor="#FF5555"
+        borderColor="transparent"
+        color="white"
+      >
+        모집 삭제
+      </Button>
     </S.TopHeader>
   );
 };

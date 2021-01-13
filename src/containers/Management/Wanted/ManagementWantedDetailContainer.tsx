@@ -1,9 +1,14 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { ManagementWantedDetail } from "../../../components";
+import { managementActionCreater } from "../../../modules/action/management";
 
-interface Props {}
-
-const ManagementWantedDetailContainer: FC<Props> = () => {
+const ManagementWantedDetailContainer: FC = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const uuid = window.localStorage.getItem("uuid");
+    dispatch(managementActionCreater.getManagementWantedInfoSaga(uuid));
+  }, []);
   return <ManagementWantedDetail />;
 };
 

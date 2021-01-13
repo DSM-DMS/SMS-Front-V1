@@ -2,18 +2,25 @@ import React, { FC } from "react";
 import * as S from "./styles";
 import InfoDetailSub from "./Sub/InfoDetailSub";
 import AllMain from "./Main/AllMain";
-import { customSelector } from "../../../../lib/utils";
 import { useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
 
 const AllBody: FC = () => {
-  const { logo_uri } = useSelector(
+  const { logo_uri, field } = useSelector(
     (state: stateType) => state.poster.all.detail
+  );
+  const notices = useSelector(
+    (state: stateType) => state.noticeList.announcements
   );
   return (
     <S.Container>
       <AllMain />
-      <InfoDetailSub imgSrc={logo_uri} tags={[]} projects={[]} />
+      <InfoDetailSub
+        imgSrc={logo_uri}
+        tag={field}
+        notices={notices}
+        baseUrl="/circles/notice"
+      />
     </S.Container>
   );
 };

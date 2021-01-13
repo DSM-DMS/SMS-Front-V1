@@ -1,21 +1,32 @@
 import React, { FC, useCallback } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { PasswordChange } from "../../components";
 import {
   putStudentPassword,
   putTeacherPassword
 } from "../../lib/api/PasswordChange";
+import { getAxiosError } from "../../lib/utils";
 import { STUDENT, TEACHER, UserType } from "../../modules/action/header";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
-const PasswordChangeContainer: FC<Props> = () => {
+const PasswordChangeContainer: FC<Props> = ({
+  loading,
+  startLoading,
+  endLoading
+}) => {
   const history = useHistory();
 
   const changePassword = useCallback(
     async (type: UserType, currentPw: string, revisionPw: string) => {
-      const uuid = localStorage.getItem(`${type}_uuid`);
+      const uuid = localStorage.getItem(`uuid`);
+
+      startLoading();
       try {
         if (type === STUDENT) {
           await putStudentPassword(uuid, currentPw, revisionPw);
@@ -23,24 +34,21 @@ const PasswordChangeContainer: FC<Props> = () => {
           await putTeacherPassword(uuid, currentPw, revisionPw);
         }
 
-        alert("비밀번호를 변경했습니다.");
+        toast.success("비밀번호를 변경했습니다.");
         history.push("./home");
       } catch (err) {
-        const data = err?.response?.data;
-        const status = data?.status;
-        const code = data?.code;
+        const { status, code } = getAxiosError(err);
 
-        if (status === 403) {
-          return alert("학생 정보가 올바르지 않습니다. 다시 로그인해주세요.");
-        } else if (status === 409 && code === -701) {
-          return alert("현재 비밀번호가 올바르지 않습니다.");
+        if (status === 409 && code === -701) {
+          toast.error("현재 비밀번호가 올바르지 않습니다.");
         }
       }
+      endLoading();
     },
     []
   );
 
-  return <PasswordChange changePassword={changePassword} />;
+  return <PasswordChange loading={loading} changePassword={changePassword} />;
 };
 
-export default PasswordChangeContainer;
+export default WithLoadingContainer(PasswordChangeContainer);

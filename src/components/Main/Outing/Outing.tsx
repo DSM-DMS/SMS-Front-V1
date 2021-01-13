@@ -28,12 +28,14 @@ const Outing: FC<Props> = (): ReactElement => {
 
   return (
     <S.Outing>
-      <S.OutingTitle>외출신청</S.OutingTitle>
-      <div>
-        <S.OutingItem to="/outing/warning" onClick={moveOutingWarning}>
+      <S.OutingTitleWrap>
+        <S.OutingTitle>외출신청</S.OutingTitle>
+        <S.OutingWarning to="/outing/warning" onClick={moveOutingWarning}>
           <img src={MainWarning} alt="warning" title="warning" />
           <S.OutingItemDesc>유의사항</S.OutingItemDesc>
-        </S.OutingItem>
+        </S.OutingWarning>
+      </S.OutingTitleWrap>
+      <div>
         <S.OutingItem to="/outing/apply" onClick={moveOutingApply}>
           <img src={MainBike} alt="apply" title="apply" />
           <S.OutingItemDesc>외출신청</S.OutingItemDesc>

@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Calendar from "./Calendar/Calendar";
 
 import * as S from "../style";
-import { MainArrow } from "../../../assets";
 import {
   getSchedulesSaga,
   setSchedulerDate
 } from "../../../modules/action/main";
 import { stateType } from "../../../modules/reducer";
+import { padNum } from "../../../lib/utils";
 
 interface Props {}
 
@@ -33,10 +33,9 @@ const Schedule: FC<Props> = (): ReactElement => {
     dispatch(setSchedulerDate(prev));
   };
 
-  const getLocalDate = useCallback(
-    (date: Date) => `${date.getFullYear()}.${date.getMonth() + 1}`,
-    []
-  );
+  const getLocalDate = useCallback((date: Date) => {
+    return `${date.getFullYear()}.${padNum(date.getMonth() + 1)}`;
+  }, []);
 
   useEffect(() => {
     const year = schedulerDate.getFullYear();
@@ -50,19 +49,9 @@ const Schedule: FC<Props> = (): ReactElement => {
       <S.ScheduleHeader>
         <S.MainContentTitleCommon>학사일정</S.MainContentTitleCommon>
         <S.ScheduleHeaderDateSetting>
+          <S.TimetableChangerLeft onClick={onClickPrevMonth} />
           <span>{getLocalDate(schedulerDate)}</span>
-          <S.ScheduleArrow
-            src={MainArrow}
-            alt="prevMonth"
-            title="prevMonth"
-            onClick={onClickPrevMonth}
-          />
-          <S.ScheduleArrow
-            src={MainArrow}
-            alt="nextMonth"
-            title="nextMonth"
-            onClick={onClickNextMonth}
-          />
+          <S.TimetableChangerRight onClick={onClickNextMonth} />
         </S.ScheduleHeaderDateSetting>
       </S.ScheduleHeader>
       <Calendar />

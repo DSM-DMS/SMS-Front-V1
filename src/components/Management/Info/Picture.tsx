@@ -6,26 +6,26 @@ import React, {
   useCallback,
   useRef,
   useState,
-  ChangeEvent,
-  memo
+  memo,
+  useEffect
 } from "react";
-import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import * as S from "./style";
 
 import { ModalClose, paperclipClubPicture } from "../../../assets";
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+import { SERVER } from "../../../lib/api/client";
 
-interface Props {}
+interface Props {
+  logoUri: string;
+  handleLogo: (file: File) => void;
+}
 
-const ClubPicture: FC<Props> = (): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const { pictureId } = useSelector((state: stateType) => state.ManagementInfo);
+const ClubPicture: FC<Props> = ({ logoUri, handleLogo }): ReactElement => {
   const fileRef = useRef<HTMLInputElement>(null);
-  const previewRef = useRef<HTMLImageElement>(null);
   const [dragged, setDragged] = useState<boolean>(false);
   const [showCancel, setShowCancel] = useState<boolean>(false);
+  const [uri, setUri] = useState<string>("");
 
   const isEnableExt = (fileName: string) => {
     const enableExts = "jpg,jpeg,png,gif,svg";
@@ -33,15 +33,16 @@ const ClubPicture: FC<Props> = (): ReactElement => {
     return enableExts.split(",").some(ext => ext === fileExt);
   };
 
-  const uploadFile = useCallback((files: FileList) => {
-    if (files.length !== 1) return;
-    if (!isEnableExt(files.item(0).name.toLowerCase())) {
-      alert("파일 확장자는 'jpg, jpeg, png, gif, svg' 중 하나여야 합니다.");
+  const uploadFile = useCallback((file: File) => {
+    if (!isEnableExt(file.name.toLowerCase())) {
+      toast.error(
+        "파일 확장자는 'jpg, jpeg, png, gif, svg' 중 하나여야 합니다."
+      );
       return;
     }
 
     setShowCancel(true);
-    readFile(files.item(0));
+    readFile(file);
   }, []);
 
   const handleDrop = (e: DragEvent) => {
@@ -51,12 +52,19 @@ const ClubPicture: FC<Props> = (): ReactElement => {
     const data = e.dataTransfer.files;
 
     fileRef.current.files = data;
-    uploadFile(data);
+
+    if (data.length === 0) {
+      toast.error("파일을 추가해야 합니다.");
+      return;
+    }
+
+    uploadFile(data.item(0));
     setDragged(false);
   };
 
   const readFile = (file: File) => {
-    previewRef.current.src = URL.createObjectURL(file);
+    setUri(URL.createObjectURL(file));
+    handleLogo(file);
   };
 
   const handleDragEnter = (e: DragEvent) => {
@@ -79,29 +87,31 @@ const ClubPicture: FC<Props> = (): ReactElement => {
     e.preventDefault();
 
     setShowCancel(false);
+
+    setUri("");
     fileRef.current.value = "";
-    previewRef.current.src = "";
   };
 
-  const handleChangePicture = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handlePictureId(1);
-  };
+  useEffect(() => {
+    setUri(`${SERVER.s3Url}/${logoUri}?timestamp=${+new Date()}`);
+  }, [logoUri]);
 
   return (
     <S.ClubPicture>
       <div>
         <p>동아리 사진</p>
         <S.ClubPictureInner>
-          <S.ClubPictureInnerText>
+          <S.InnerTextCommon>
             💡 로고나 홍보 사진 등 동아리 관련 사진을 넣어주세요.
-          </S.ClubPictureInnerText>
+          </S.InnerTextCommon>
         </S.ClubPictureInner>
       </div>
       <input
         type="file"
         id="files"
         name="files"
-        onChange={e => uploadFile(e.currentTarget.files)}
+        accept="image/*"
+        onChange={e => uploadFile(e.currentTarget.files.item(0))}
         hidden={true}
         ref={fileRef}
       />
@@ -113,7 +123,7 @@ const ClubPicture: FC<Props> = (): ReactElement => {
         onDragLeave={handleDragLeave}
         onDragOver={handleDragOver}
       >
-        <S.ClubPicturePreview ref={previewRef} />
+        <S.ClubPicturePreview src={uri} />
         <S.ClubPictureWrap>
           <img
             src={paperclipClubPicture}

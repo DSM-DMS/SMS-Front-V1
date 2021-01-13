@@ -1,6 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { CircleAll } from "../../../components";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getCircleInfoListSaga } from "../../../modules/action/poster";
 

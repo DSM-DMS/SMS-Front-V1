@@ -22,7 +22,10 @@ import {
   NavIconCircleMint,
   NavIconUnauthorizedBlack,
   NavIconUnauthorizedMint,
-  NavIconHomeBlack
+  NavIconHomeBlack,
+  NavIconAllMint,
+  NavIconWriteBlack,
+  NavIconWriteMint
 } from "../assets";
 import {
   MainSubItem,
@@ -195,6 +198,12 @@ export const subNavRouter: SubNavObj = {
       acitveUrl: NavIconCircleMint
     },
     {
+      name: "종료된 외출증",
+      url: NavIconUnauthorizedBlack,
+      route: "/admin/out/done",
+      acitveUrl: NavIconUnauthorizedMint
+    },
+    {
       name: "미인증 외출증",
       url: NavIconUnauthorizedBlack,
       route: "/admin/out/certified",
@@ -205,19 +214,19 @@ export const subNavRouter: SubNavObj = {
     {
       name: "전체 공지",
       url: NavIconAllBlack,
-      acitveUrl: "",
+      acitveUrl: NavIconAllMint,
       route: "/admin/notice/all"
     },
     {
       name: "내가 올린 공지",
-      url: NavIconWaringBlack,
-      acitveUrl: "",
+      url: NavIconNoticeBlack,
+      acitveUrl: NavIconNoticeMint,
       route: "/admin/notice/mine"
     },
     {
       name: "공지사항 작성",
-      url: "",
-      acitveUrl: "",
+      url: NavIconWriteBlack,
+      acitveUrl: NavIconWriteMint,
       route: "/admin/notice/writing"
     }
   ]

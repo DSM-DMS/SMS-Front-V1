@@ -5,11 +5,13 @@ import headerReducer from "./header";
 import boardReducer from "./board";
 import posterReducer from "./poster";
 import outingCardReducer from "./outingCard";
-import jsonReducer from "./json";
 import ManagementInfo from "./management/info";
-import noticeReducer from "./notice";
 import outingReducer from "./outing";
 import mainReducer from "./main";
+import noticeListReducer from "./notice/list";
+import managementReducer from "./management";
+import loadingReducer from "./loading";
+import noticeDetailReducer from "./notice/detail";
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -19,10 +21,12 @@ const rootReducer = combineReducers({
   poster: posterReducer,
   outingCard: outingCardReducer,
   outing: outingReducer,
-  json: jsonReducer,
   ManagementInfo,
-  notice: noticeReducer,
-  main: mainReducer
+  main: mainReducer,
+  management: managementReducer,
+  noticeList: noticeListReducer,
+  noticeDetail: noticeDetailReducer,
+  loading: loadingReducer
 });
 
 export type stateType = ReturnType<typeof rootReducer>;

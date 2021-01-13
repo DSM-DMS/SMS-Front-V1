@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, ReactElement } from "react";
+import React, { FC, memo, MouseEvent, ReactElement } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,12 +6,22 @@ import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
 import { UserType } from "../../../modules/action/header";
 import { setTargetUuid } from "../../../modules/action/main";
+import { Loading } from "../../default";
+import { padNum } from "../../../lib/utils";
 
 interface Props {
   handleShowAdd?: () => void;
   handleShowEdit?: () => void;
   handleShowDelete?: () => void;
 }
+
+const date = new Date();
+const fixedDate = new Date(
+  date.getFullYear(),
+  date.getMonth(),
+  date.getDate(),
+  9
+);
 
 const ScheduleDetail: FC<Props> = ({
   handleShowAdd,
@@ -21,13 +31,12 @@ const ScheduleDetail: FC<Props> = ({
   const location = useLocation();
   const dispatch = useDispatch();
   const {
-    main: { schedules },
+    main: { schedules, scheduleLoading },
     header: { type }
   } = useSelector((state: stateType) => state);
 
   const getLocalDate = (dateNum: number) => {
     const date = new Date(dateNum);
-    const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
 
     return `${padNum(date.getMonth() + 1)}.${padNum(date.getDate())}`;
   };
@@ -61,12 +70,15 @@ const ScheduleDetail: FC<Props> = ({
         </S.DetailHead>
       </S.DetailHeader>
       <S.DetailBody type={type as UserType}>
-        {schedules
-          .sort((a, b) => (a.start_date > b.start_date ? -1 : 1))
-          .map(({ detail, start_date, end_date, schedule_uuid }) => (
+        {scheduleLoading ? (
+          <S.DetailLoadingWrap>
+            <Loading size="100px" />
+          </S.DetailLoadingWrap>
+        ) : (
+          schedules.map(({ detail, start_date, end_date, schedule_uuid }) => (
             <S.DetailBodyItem
               key={schedule_uuid}
-              className={+new Date() > end_date ? "prev" : ""}
+              className={+fixedDate > end_date ? "prev" : ""}
             >
               <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
               <S.DetailBodyItemData>
@@ -91,10 +103,11 @@ const ScheduleDetail: FC<Props> = ({
                 </S.DetailBodyItemButtonWrap>
               )}
             </S.DetailBodyItem>
-          ))}
+          ))
+        )}
       </S.DetailBody>
     </S.ScheduleDetail>
   );
 };
 
-export default ScheduleDetail;
+export default memo(ScheduleDetail);

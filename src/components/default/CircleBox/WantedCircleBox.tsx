@@ -33,13 +33,20 @@ const dateParse = (
   );
 };
 
-const WantedCircleBox: FC<WantedInfo> = ({
+interface Props extends WantedInfo {
+  filterField: string;
+  filterName: string;
+}
+
+const WantedCircleBox: FC<Props> = ({
   club_uuid,
   end_period,
   recruit_concept,
   recruitment_uuid,
   recruit_members,
-  start_period
+  start_period,
+  filterName,
+  filterField
 }) => {
   const [circleInfo, setCircleInfo] = useState<CircleInfo | null>(null);
 
@@ -56,8 +63,15 @@ const WantedCircleBox: FC<WantedInfo> = ({
       });
   }, []);
 
-  return (
-    circleInfo && (
+  const render = useCallback((): ReactElement => {
+    if (
+      !circleInfo ||
+      !circleInfo.name.includes(filterName) ||
+      (filterField && circleInfo.field !== filterField)
+    )
+      return <></>;
+
+    return (
       <S.Container onClick={handleClick}>
         <div>
           <S.Header>
@@ -83,8 +97,10 @@ const WantedCircleBox: FC<WantedInfo> = ({
         </S.Footer>
         <img src={getImgUrl(circleInfo.logo_uri)} />
       </S.Container>
-    )
-  );
+    );
+  }, [circleInfo, filterName, filterField]);
+
+  return render();
 };
 
 export default memo(WantedCircleBox);

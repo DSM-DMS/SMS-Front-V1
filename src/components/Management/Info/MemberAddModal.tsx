@@ -1,109 +1,151 @@
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 
 import * as S from "./style";
+import MemberAddQueue from "./MemberAddQueue";
+import MemberSearch from "./MemberSearch";
 
-import { Search } from "../../../assets";
+import { postMember } from "../../../lib/api/Management";
+import { ResStudents } from "../../../lib/api/payloads/Management";
 import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+import { getAxiosError } from "../../../lib/utils";
+import { Loading } from "../../default";
+import { toast } from "react-toastify";
 
 interface Props {
+  leaderUuid: string;
+  clubUuid: string;
+  memberUuids: string[];
+  students: ResStudents[];
+  members: ResStudents[];
   handleCloseModal: () => void;
+  searchStudents: (filter: string, value: string) => Promise<void>;
 }
 
-const initUsers: string[] = [
-  "1101 홍길동1",
-  "1102 홍길동2",
-  "1103 홍길동3",
-  "1104 홍길동4",
-  "1105 홍길동5",
-  "1106 홍길동6",
-  "1107 홍길동7",
-  "1108 홍길동8"
+export const filters = [
+  {
+    id: "name",
+    text: "이름"
+  },
+  {
+    id: "grade",
+    text: "학년"
+  },
+  {
+    id: "group",
+    text: "반"
+  },
+  {
+    id: "student_number",
+    text: "번호"
+  },
+
+  {
+    id: "phone_number",
+    text: "전화번호"
+  }
 ];
 
-const MemberAddModal: FC<Props> = ({ handleCloseModal }) => {
+const MemberAddModal: FC<Props> = ({
+  leaderUuid,
+  clubUuid,
+  memberUuids,
+  students,
+  members,
+  handleCloseModal,
+  searchStudents
+}) => {
   const handler = new ManagementInfoHandler();
-  const scrollWrap = useRef<HTMLUListElement>(null);
-  const { members } = useSelector((state: stateType) => state.ManagementInfo);
-  const [searchQueue, setSearchQueue] = useState<string[]>([]);
-  const [addQueue, setAddResult] = useState<string[]>([]);
+  const [filter, setFilter] = useState<string>(filters[0].id);
+  const [value, setValue] = useState<string>("");
+  const [uuids, setUuids] = useState<string[]>([]);
+  const [addQueue, setAddQueue] = useState<ResStudents[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const startLoading = useCallback(() => {
+    setLoading(true);
+  }, []);
+
+  const endLoading = useCallback(() => {
+    setLoading(false);
+  }, []);
 
   const addMembers = () => {
-    // const url = "http://www.naver.com";
-    // const data = {};
-    // const config = {};
-    // await axios.post(url, data, config);
-    handler.handleMembers([...addQueue, ...members]);
+    const addUuids = addQueue.map(({ student_uuid }) => student_uuid);
+
+    startLoading();
+    try {
+      uuids.forEach(async uuid => {
+        if (memberUuids.findIndex(memberUuid => memberUuid === uuid) === -1) {
+          await postMember(clubUuid, uuid);
+        }
+      });
+    } catch (err) {
+      const { status, code } = getAxiosError(err);
+
+      if (status === 404 && code === -1721) {
+        toast.error("수정하려는 동아리가 없습니다.");
+      } else if (status === 404 && code === -1722) {
+        toast.error("추가하려는 학생이 존재하지 않습니다.");
+      } else if (status === 409 && code === -1701) {
+        toast.error("이미 부원인 학생이 있습니다.");
+      }
+    }
+    endLoading();
+
+    const UnVerboseMembers = Array.from(new Set([...addUuids, ...memberUuids]));
+
+    handler.handleClubMemberUuids(UnVerboseMembers);
     handleCloseModal();
   };
 
-  const handleChangeFindUser = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+  const handleFilter = useCallback((id: string) => {
+    setFilter(id);
+  }, []);
 
-    if (value === "") {
-      setSearchQueue([]);
-      return;
-    }
+  const handleValue = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  }, []);
 
-    setSearchQueue(initUsers.filter(user => user.match(value)));
+  const handleAddQueue = useCallback((student: ResStudents) => {
+    setUuids(prev => [...prev, student.student_uuid]);
+    setAddQueue(prev => [...prev, student]);
+  }, []);
+
+  const handleSearchStudents = () => {
+    searchStudents(filter, value);
   };
 
-  const handleClickAddQueue = useCallback((user: string) => {
-    setSearchQueue(prev => prev.filter(u => u !== user));
-    setAddResult(prev => [...prev, user]);
-  }, []);
-
-  const handleClickRemoveQueue = useCallback((user: string) => {
-    setAddResult(prev => prev.filter(u => u !== user));
-    setSearchQueue(prev => [...prev, user]);
-  }, []);
+  useEffect(() => {
+    setAddQueue(members);
+  }, [members]);
 
   return (
     <S.Modal>
       <S.ModalBack onClick={handleCloseModal} />
       <S.ModalForm>
         <S.ModalFormInner>
-          <div>
-            <S.SearchingWrap>
-              <p>학생 검색</p>
-              <S.SearchLabel>
-                <img src={Search} alt="search" title="search" />
-                <S.SearchText
-                  onChange={handleChangeFindUser}
-                  type="text"
-                  placeholder="학번 또는 이름으로 검색하세요."
-                />
-              </S.SearchLabel>
-              <S.Result ref={scrollWrap}>
-                {searchQueue
-                  .sort((a, b) => (a > b ? 1 : -1))
-                  .map((r, i) => (
-                    <S.ResultItem
-                      key={`${i}_${r}`}
-                      onClick={() => handleClickAddQueue(r)}
-                    >
-                      <span>{i + 1}</span>
-                      <span>{r}</span>
-                    </S.ResultItem>
-                  ))}
-              </S.Result>
-            </S.SearchingWrap>
-          </div>
-          <S.Queue>
-            <p>추가 됨</p>
-            {addQueue
-              .sort((a, b) => (a > b ? 1 : -1))
-              .map((q, i) => (
-                <li key={i} onClick={() => handleClickRemoveQueue(q)}>
-                  {q}
-                </li>
-              ))}
-          </S.Queue>
+          <MemberSearch
+            addQueue={addQueue}
+            students={students}
+            filter={filter}
+            leaderUuid={leaderUuid}
+            handleSearchStudents={handleSearchStudents}
+            handleAddQueue={handleAddQueue}
+            handleFilter={handleFilter}
+            handleValue={handleValue}
+          />
+          <MemberAddQueue leaderUuid={leaderUuid} addQueue={addQueue} />
         </S.ModalFormInner>
         <S.ModalButtonWrap>
           <S.ModalCancel onClick={handleCloseModal}>취소</S.ModalCancel>
-          <S.ModalAdd onClick={addMembers}>추가</S.ModalAdd>
+          {loading && <Loading />}
+          <S.ModalAdd onClick={addMembers}>적용</S.ModalAdd>
         </S.ModalButtonWrap>
       </S.ModalForm>
     </S.Modal>

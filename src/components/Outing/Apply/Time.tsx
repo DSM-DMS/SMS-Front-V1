@@ -16,7 +16,7 @@ const ApplyTime: FC<Props> = ({
   handleOutTime
 }): ReactElement => {
   const getTimeText = useCallback((type: string, time: string) => {
-    if (!time) return `${type} 시간을 선택하세요.`;
+    if (!time) return `${type} 시간을 선택하세요`;
     if (time >= "12:00")
       return `오후 ${parseInt(time.split(":")[0]) - 12}:${time.split(":")[1]}`;
     return `오전 ${time}`;
@@ -34,7 +34,6 @@ const ApplyTime: FC<Props> = ({
             type="time"
             name="date-time"
             id="outTime"
-            max="15:00"
             onChange={handleOutTime}
           />
         </S.ApplyFormInputWrap>
@@ -49,7 +48,6 @@ const ApplyTime: FC<Props> = ({
             type="time"
             name="date-time"
             id="inTime"
-            min="13:00"
             onChange={handleInTime}
           />
         </S.ApplyFormInputWrap>

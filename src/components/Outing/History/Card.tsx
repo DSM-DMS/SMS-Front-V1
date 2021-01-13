@@ -2,17 +2,20 @@ import React, { FC, ReactElement, useCallback } from "react";
 
 import * as S from "../style";
 import { OutingStatus, ResHistoryItem } from "../../../lib/api/payloads/Outing";
+import { padNum } from "../../../lib/utils";
 
 interface Props {
   outing: ResHistoryItem;
   openModal: () => void;
   handleCard: (outing: ResHistoryItem) => void;
+  selectOuting: (outing: ResHistoryItem) => void;
 }
 
 const HistoryCard: FC<Props> = ({
   openModal,
   outing,
-  handleCard
+  handleCard,
+  selectOuting
 }): ReactElement => {
   const {
     end_time,
@@ -22,15 +25,13 @@ const HistoryCard: FC<Props> = ({
     outing_status
   } = outing;
 
-  const fixNum = useCallback((n: number) => (n < 10 ? `0${n}` : n), []);
-
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);
     const y = date.getFullYear();
     const m = date.getMonth() + 1;
     const d = date.getDate();
 
-    return `${y}년 ${fixNum(m)}월 ${d}일`;
+    return `${y}년 ${padNum(m)}월 ${d}일`;
   }, []);
 
   const getLocalTime = useCallback((time: number) => {
@@ -38,7 +39,7 @@ const HistoryCard: FC<Props> = ({
     const h = date.getHours();
     const m = date.getMinutes();
 
-    return `${fixNum(h)}:${fixNum(m)}`;
+    return `${padNum(h)}:${padNum(m)}`;
   }, []);
 
   return (
@@ -46,6 +47,7 @@ const HistoryCard: FC<Props> = ({
       onClick={() => {
         openModal();
         handleCard(outing);
+        selectOuting(outing);
       }}
     >
       <S.CardTop>

@@ -3,7 +3,9 @@ import {
   GET_CIRCLE_INFO_LIST,
   GET_CIRCLE_INFO_DETAIL,
   GET_WANTED_INFO_LIST,
-  GET_WANTED_INFO_DETAIL
+  GET_WANTED_INFO_DETAIL,
+  SET_ALL_FILTER,
+  SET_WANTED_FILTER
 } from "../../action/poster";
 import {
   CircleDatailPage,
@@ -16,10 +18,12 @@ interface PosterState {
   wanted: {
     list: WantedInfo[];
     detail: WantedInfoDetail;
+    field: string;
   };
   all: {
     list: CircleInfo[];
     detail: CircleDatailPage;
+    field: string;
   };
 }
 
@@ -44,7 +48,8 @@ const initialState: PosterState = {
       recruitment_uuid: "",
       start_period: "",
       members: []
-    }
+    },
+    field: ""
   },
   all: {
     list: [],
@@ -61,7 +66,8 @@ const initialState: PosterState = {
       member_uuids: [],
       name: "",
       members: []
-    }
+    },
+    field: ""
   }
 };
 
@@ -70,6 +76,24 @@ const posterReducer = (
   action: PosterAction
 ): PosterState => {
   switch (action.type) {
+    case SET_ALL_FILTER: {
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          field: action.payload
+        }
+      };
+    }
+    case SET_WANTED_FILTER: {
+      return {
+        ...state,
+        wanted: {
+          ...state.wanted,
+          field: action.payload
+        }
+      };
+    }
     case GET_CIRCLE_INFO_LIST: {
       return {
         ...state,

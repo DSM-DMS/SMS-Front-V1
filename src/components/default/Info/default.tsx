@@ -5,7 +5,6 @@ import { Color } from "./Body/styles";
 export const DetailContent: FC = ({ children }) => {
   return (
     <div>
-      <br />
       <Color>{children}</Color>
       <br />
     </div>
@@ -32,9 +31,9 @@ export const Hr: FC = ({ children }) => {
 export const Standard: FC<{ title: string }> = ({ title, children }) => {
   return (
     <DetailContent>
-      <p>
+      <div>
         <b>&gt; {title}</b>
-      </p>
+      </div>
       {children}
     </DetailContent>
   );
@@ -63,8 +62,8 @@ export const Where: FC<{}> = ({ children }) => {
 export const Who: FC<{ data: WantedObj[] }> = ({ data }) => {
   return (
     <Standard title="모집대상">
-      {data.map(({ field, grade, number }) => (
-        <div>
+      {data.map(({ field, grade, number }, i) => (
+        <div key={i}>
           {grade}학년 {field}분야 {number}명
         </div>
       ))}

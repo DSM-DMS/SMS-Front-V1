@@ -1,21 +1,25 @@
 import React, { ChangeEvent, FC, FormEvent, ReactElement } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import ApplyHead from "./Head";
 import ApplyDate from "./Date";
 import ApplyTime from "./Time";
 import ApplyPlace from "./Place";
 import ApplyReason from "./Reason";
+import SicOut from "./SickOut";
 
 import * as S from "../style";
-import ApplyWaring from "./ApplyWarning";
 import {
   EMERGENCY,
   NORMAL,
   Outing
 } from "../../../containers/Outing/ApplyContainer";
+import { subPageMove } from "../../../modules/action/page";
+import { Loading } from "../../default";
 
 interface Props {
+  loading: boolean;
   formDate: string;
   formOutTime: string;
   formInTime: string;
@@ -25,7 +29,7 @@ interface Props {
   onInputDate: (e: FormEvent<HTMLInputElement>) => void;
   handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
-  handlePlace: (e: ChangeEvent<HTMLInputElement>) => void;
+  handlePlace: (value: string) => void;
   cancelSickOuting: () => void;
   applySickOuting: () => void;
   handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -33,6 +37,7 @@ interface Props {
 }
 
 const Apply: FC<Props> = ({
+  loading,
   formDate,
   formInTime,
   formOutTime,
@@ -48,6 +53,7 @@ const Apply: FC<Props> = ({
   handleReason,
   applyOuting
 }): ReactElement => {
+  const dispatch = useDispatch();
   const handleApplyOuting = () => {
     const outing: Outing = {
       date: formDate,
@@ -61,13 +67,29 @@ const Apply: FC<Props> = ({
     applyOuting(outing);
   };
 
+  const handleSickOut = () => {
+    if (formReasonSick) {
+      cancelSickOuting();
+      return;
+    }
+
+    applySickOuting();
+  };
+
   return (
     <S.ApplyWrap>
       <ApplyHead />
       <div>
         <S.ApplyDescWarning>
-          외출 신청 시 <Link to="/outing/waring">유의사항</Link>을 꼭 한번
-          읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의 책임입니다.
+          외출 신청 시{" "}
+          <Link
+            to="/outing/warning"
+            onClick={() => dispatch(subPageMove("유의사항"))}
+          >
+            유의사항
+          </Link>
+          을 꼭 한번 읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의
+          책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
           <ApplyDate formDate={formDate} onInputDate={onInputDate} />
@@ -77,16 +99,15 @@ const Apply: FC<Props> = ({
             handleInTime={handleInTime}
             handleOutTime={handleOutTime}
           />
-          <ApplyPlace handlePlace={handlePlace} place={formPlace} />
-          <ApplyReason
+          <SicOut
             formReasonSick={formReasonSick}
-            handleReason={handleReason}
-            cancelSickOuting={cancelSickOuting}
-            applySickOuting={applySickOuting}
+            handleSickOut={handleSickOut}
           />
-          <ApplyWaring />
+          <ApplyReason handleReason={handleReason} />
+          <ApplyPlace handlePlace={handlePlace} place={formPlace} />
         </S.ApplyForm>
         <S.FormButtonWrap>
+          {loading && <Loading />}
           <S.FormButtonSubmit onClick={handleApplyOuting}>
             작성완료
           </S.FormButtonSubmit>

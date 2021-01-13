@@ -1,47 +1,17 @@
-import React, { ChangeEvent, FC, memo, ReactElement } from "react";
-import { useSelector } from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
 
 import * as S from "./style";
 
-import {
-  Fields,
-  EMBEDDED,
-  SECURITY,
-  SOFTWARE,
-  ManagementInfoHandler
-} from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+interface Props {
+  field: string;
+}
 
-interface Props {}
-
-const ClubField: FC<Props> = (): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const { field } = useSelector((state: stateType) => state.ManagementInfo);
-
-  const handleChangeField = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleField(e.target.value as Fields);
-  };
-
+const ClubField: FC<Props> = ({ field }): ReactElement => {
   return (
     <S.ClubField>
       <div>
         <p>분야</p>
-        <S.ClubFieldLabelWrap>
-          {[SOFTWARE, EMBEDDED, SECURITY].map(f => (
-            <S.ClubFieldLabel key={f}>
-              <S.ClubFieldLabelRadio
-                type="radio"
-                value={f}
-                name="fields"
-                id={f}
-                defaultChecked={f === field}
-                maxLength={30}
-                onChange={handleChangeField}
-              />
-              <span>{f}</span>
-            </S.ClubFieldLabel>
-          ))}
-        </S.ClubFieldLabelWrap>
+        <S.InnerTextCommon>{field}</S.InnerTextCommon>
       </div>
     </S.ClubField>
   );

@@ -49,17 +49,9 @@ export const ScheduleHeader = styled.header`
 export const ScheduleHeaderDateSetting = styled.div`
   display: flex;
   align-items: center;
-  font-size: 12px;
-`;
-
-export const ScheduleArrow = styled.img`
-  width: 14px;
-  margin: 0 4px;
-  cursor: pointer;
-  padding: 4px;
-  transform: rotate(-90deg);
-  &:last-child {
-    transform: rotate(90deg);
+  > span {
+    margin: 0 8px;
+    font-size: 14px;
   }
 `;
 
@@ -70,13 +62,15 @@ export const Timetable = styled(MainContentCommon)`
 export const TimetableTitle = styled(MainContentTitleCommon)`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 8px 4px 8px 12px;
   border-bottom: 2px solid #dddddd;
 `;
 
 export const TimetableList = styled.ul`
   display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TimetableItem = styled.li`
@@ -87,11 +81,11 @@ export const TimetableItem = styled.li`
   justify-content: center;
   height: 100px;
   padding: 8px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  word-break: break-all;
+  word-break: keep-all;
 `;
 
 export const TimetableItemDate = styled.span`
@@ -102,16 +96,44 @@ export const TimetableItemDate = styled.span`
   font-weight: normal;
 `;
 
+export const TimetableSubject = styled.span`
+  word-wrap: break-word;
+`;
+
 export const FiltersWrap = styled.div`
   display: flex;
   align-items: center;
+  span {
+    margin: 0 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
-export const TimetableSelector = styled.select`
-  padding: 8px;
+export const TimetableSelector = styled.button`
   border: 0;
-  background-color: white;
-  font-size: 16px;
+  background-color: transparent;
+  &:hover {
+    outline: 1px solid #e2e2e2;
+  }
+`;
+
+export const TimetableChangerCommon = styled.div`
+  width: 0px;
+  height: 0px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  cursor: pointer;
+`;
+
+export const TimetableChangerLeft = styled(TimetableChangerCommon)`
+  border-right: 8px solid transparent;
+  border-right-color: gray;
+`;
+
+export const TimetableChangerRight = styled(TimetableChangerCommon)`
+  border-left: 8px solid transparent;
+  border-left-color: gray;
 `;
 
 export const ScheduleDetail = styled(MainContentCommon)`
@@ -172,8 +194,7 @@ interface DetailScrollColor {
 }
 
 export const DetailBody = styled.div<DetailScrollColor>`
-  flex: 1;
-  height: 320px;
+  height: 470px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 2px;
@@ -185,6 +206,14 @@ export const DetailBody = styled.div<DetailScrollColor>`
     background: ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
     border-radius: 16px;
   }
+`;
+
+export const DetailLoadingWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
 `;
 
 export const DetailBodyItem = styled.div`
@@ -241,9 +270,36 @@ export const Outing = styled(MainContentCommon)`
   height: 30%;
 `;
 
-export const OutingTitle = styled(MainContentTitleCommon)`
+export const OutingTitleWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 8px 12px;
   border-bottom: 2px solid #dddddd;
+`;
+
+export const OutingTitle = styled(MainContentTitleCommon)``;
+
+export const OutingWarning = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: white;
+  background-color: #ff5555;
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    background-color: #ff1212;
+  }
+  > img {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+  }
 `;
 
 export const OutingItem = styled(Link)`
@@ -257,13 +313,8 @@ export const OutingItem = styled(Link)`
   color: black;
   text-decoration: none;
   cursor: pointer;
-  &:first-child {
-    border: 0;
-    color: white;
-    background-color: #ff5555;
-  }
   &:hover {
-    filter: drop-shadow(3px 1px 5px #888888);
+    background-color: #e1e1e1;
   }
 `;
 

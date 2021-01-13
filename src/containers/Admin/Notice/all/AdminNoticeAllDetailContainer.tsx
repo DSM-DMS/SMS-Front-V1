@@ -1,14 +1,16 @@
-import React, { FC } from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AdminNoticeAllDetail } from '../../../../components';
-import { updateBoardDetail } from '../../../../modules/action/board';
+import React, { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { RouteChildrenProps } from "react-router-dom";
+import { AdminNoticeAllDetail } from "../../../../components";
+import { getNoticeDetail } from "../../../../modules/action/notice/detail";
 
-const AdminNoticeAllDetailContainer: FC = () => {
+const AdminNoticeAllDetailContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
+  const id: string = (match.params as any).id;
+
   useEffect(() => {
-    dispatch(updateBoardDetail({ content: '몰라 씨@@@@발' }));
-  }, []);
+    dispatch(getNoticeDetail(id));
+  }, [id]);
   return <AdminNoticeAllDetail />;
 };
 

@@ -1,24 +1,28 @@
-import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
-import { NavIconNoticeMint } from '../../../../assets';
-import { stateType } from '../../../../modules/reducer';
-import { DetailPageHeader } from '../../../default';
-import NoticeDetailBody from '../../../Notice/Detail/NoticeDetailBody/NoticeDetailBody';
-import * as S from './styles';
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import { NavIconNoticeMint } from "../../../../assets";
+import { stateType } from "../../../../modules/reducer";
+import { NoticeDetail } from "../../../default";
+import { NoticeDetailHeaderSet } from "../../../default/NoticeDetail/NoticeDetail";
 
 const AdminNoticeAllDetail: FC = () => {
-  const data = useSelector((state: stateType) => state.board.detail);
+  const { boardData, loading } = useSelector((state: stateType) => ({
+    boardData: state.noticeDetail,
+    loading: state.loading["notice/GET_NOTICE_DETAIL"]
+  }));
+
+  const headerData: NoticeDetailHeaderSet = {
+    imgSrc: NavIconNoticeMint,
+    title: "전체 공지사항",
+    href: "/admin/notice/all",
+    color: "#23B2AD"
+  };
   return (
-    <S.Container>
-      <DetailPageHeader
-        isMine={true}
-        imgSrc={NavIconNoticeMint}
-        title="전체 공지사항"
-        href="/admin/notice/all"
-        color="#23B2AD"
-      />
-      <NoticeDetailBody content={data.content} />
-    </S.Container>
+    <NoticeDetail
+      headerData={headerData}
+      boardData={boardData}
+      loading={loading}
+    />
   );
 };
 
