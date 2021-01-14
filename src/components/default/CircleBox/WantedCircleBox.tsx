@@ -13,6 +13,7 @@ import { CircleInfo, WantedInfo } from "../../../modules/type/poster";
 import { apiDefault, getStudentData } from "../../../lib/api/client";
 import { getImgUrl } from "../../../lib/utils";
 import { StudentInfo } from "../../../modules/type/user";
+import { RecruitmentListItem } from "../../../lib/api/payloads/Recruitment";
 
 const dateParse = (
   startDateStr: string,
@@ -33,7 +34,7 @@ const dateParse = (
   );
 };
 
-interface Props extends WantedInfo {
+interface Props extends RecruitmentListItem {
   filterField: string;
   filterName: string;
 }
