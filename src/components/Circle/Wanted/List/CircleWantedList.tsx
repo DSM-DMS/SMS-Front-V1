@@ -13,7 +13,6 @@ import { makeFilterFunc, customSelector } from "../../../../lib/utils";
 import { Hr } from "../../../../components/default/Board/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
-import { WantedInfo } from "../../../../modules/type/poster";
 import { apiDefault } from "../../../../lib/api/client";
 import { setWantedFilter } from "../../../../modules/action/poster";
 import { RecruitmentListItem } from "../../../../lib/api/payloads/Recruitment";
