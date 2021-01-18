@@ -82,7 +82,7 @@ const WantedCircleBox: FC<Props> = ({
           <S.CircleIntroduce>{recruit_concept}</S.CircleIntroduce>
           <S.WantedJob>
             {recruit_members.map(({ field, grade, number }) => (
-              <div>
+              <div key={`${field}-${number}`}>
                 -{grade}학년 {field}분야 {number}명
               </div>
             ))}
