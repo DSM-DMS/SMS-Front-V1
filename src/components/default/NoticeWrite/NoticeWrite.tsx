@@ -4,7 +4,8 @@ import React, {
   useEffect,
   useRef,
   useCallback,
-  ChangeEvent
+  ChangeEvent,
+  MouseEvent
 } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -45,7 +46,16 @@ const AdminNoticeWriting: FC<Props> = ({ setting }) => {
         list: List
       }
     });
-    editerRef.current = editer;
+  }, []);
+
+  const helpMosueMove = useCallback((e: MouseEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return;
+    const contentLines = document.querySelectorAll(
+      ".codex-editor__redactor > .ce-block > div > div"
+    );
+    const length: number = contentLines.length;
+
+    length && (contentLines[length - 1] as HTMLElement).focus();
   }, []);
 
   const changeHeaderText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -99,7 +109,7 @@ const AdminNoticeWriting: FC<Props> = ({ setting }) => {
         <WriteCategory onChange={writeFilterHandler} />
       )}
       <S.EditerBackground>
-        <S.Editer id="editer"></S.Editer>
+        <S.Editer id="editer" onClick={helpMosueMove}></S.Editer>
       </S.EditerBackground>
       <S.Footer>
         <S.Button color="black" borderColor="#FBFBFB" backgroundColor="#FBFBFB">
