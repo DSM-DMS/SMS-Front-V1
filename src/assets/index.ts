@@ -75,14 +75,15 @@ export { default as deleteBtn } from "./management/deleteBtn.svg";
 export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
 export { default as SettingGear } from "./management/settings.svg";
+export { default as addBtn } from "./management/addBtn.svg";
 
 export { default as PageNotFound } from "./default/page_not_found.svg";
 
 export { default as Check } from "./Login/check.svg";
 export { default as CheckGray } from "./Login/checkGray.svg";
+export { default as CapsLock } from "./Login/caps_lock.svg";
 
 export { default as Eye } from "./PasswordChange/eye.svg";
 export { default as EyeOff } from "./PasswordChange/eyeOff.svg";
-export { default as addBtn } from "./management/addBtn.svg";
 
 export { default as Spinner } from "./default/Spinner.svg";
