@@ -16,16 +16,20 @@ import { stateType } from "../../../../modules/reducer";
 import { WantedInfo } from "../../../../modules/type/poster";
 import { apiDefault } from "../../../../lib/api/client";
 import { setWantedFilter } from "../../../../modules/action/poster";
+import { RecruitmentListItem } from "../../../../lib/api/payloads/Recruitment";
 
 const CircleWanted: FC = () => {
   const dispatch = useDispatch();
   const { data, field } = useSelector((state: stateType) => ({
-    data: state.poster.wanted.list,
+    data: state.recruitmentList.recruitments,
     field: state.poster.wanted.field
   }));
   const [keyword, setkeyword] = useState<string>("");
   const [circleCount, setCircleCount] = useState<number>(0);
-  const filterFunc = makeFilterFunc<WantedInfo>(data, ({}, keyword) => true);
+  const filterFunc = makeFilterFunc<RecruitmentListItem>(
+    data,
+    ({}, keyword) => true
+  );
 
   const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setkeyword(e.target.value);
