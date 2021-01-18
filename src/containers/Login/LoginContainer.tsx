@@ -155,6 +155,8 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
         } else if (status === 409 && (code === -402 || code === -412)) {
           errorMessageMacro(PASSWORD_NOT_MATCHED);
         }
+
+        setPw("");
         endLoading();
       }
     },
