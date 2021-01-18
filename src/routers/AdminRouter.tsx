@@ -1,5 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import {
   AdminOutingCertifiedListContainer,
@@ -17,11 +19,21 @@ import {
   AdminNoticeEditContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
+import { TEACHER } from "../modules/action/header";
+import { stateType } from "../modules/reducer";
 
 const AdminRouter: FC = () => {
   const history = useHistory();
   const pathname = history.location.pathname;
   const noWhiteBack: string[] = ["login", "home", "pw-change"];
+  const { type } = useSelector((state: stateType) => state.header);
+
+  useEffect(() => {
+    if (!(type === TEACHER || localStorage.getItem("sms-type") === TEACHER)) {
+      toast.info("로그인 후 이용해주세요.");
+      history.push("/admin/login");
+    }
+  }, []);
 
   return (
     <GlobalInnerBody
