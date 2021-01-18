@@ -12,7 +12,8 @@ const ManagementNoticeEdit: FC = () => {
     color: "black",
     imgSrc: NavIconNoticeBlack,
     title: "동아리 공지사항 수정",
-    type: "club"
+    type: "club",
+    cancelHref: "/management/notice"
   };
 
   return <NoticeEdit editData={editData} setting={setting} />;
