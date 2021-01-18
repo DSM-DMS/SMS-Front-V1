@@ -19,12 +19,12 @@ const PageMove: FC<Props> = ({
   return (
     <S.MovePageWrap>
       <S.MovePage to={`${baseHref}/${nextAnnouncementUuid}`}>
-        <span>다음글</span>
+        <span>이전글</span>
         <S.MoveIcon rotate={0} />
         <S.PageTitle>{nextTitle}</S.PageTitle>
       </S.MovePage>
       <S.MovePage to={`${baseHref}/${previousAnnouncementUuid}`}>
-        <span>이전글</span>
+        <span>다음글</span>
         <S.MoveIcon rotate={180} />
         <S.PageTitle>{previousTitle}</S.PageTitle>
       </S.MovePage>
