@@ -60,7 +60,7 @@ const HistoryCard: FC<Props> = ({
       </S.CardTop>
       <S.CardBottom>
         <S.CardStatus status={+outing_status}>
-          외출 상태 : {OutingStatus[outing_status]}
+          {OutingStatus[outing_status]}
         </S.CardStatus>
         <S.CardTime>
           외출 시간 : {getLocalTime(start_time)} ~ {getLocalTime(end_time)}

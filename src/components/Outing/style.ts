@@ -44,6 +44,7 @@ export const WarningOuterItem = styled.li`
 export const WarningInnerItem = styled.li`
   margin: 8px 0;
   padding-left: 12px;
+  font-size: 12px;
   > a {
     color: #5323b2;
     text-decoration: none;
@@ -772,7 +773,7 @@ export const CardStatus = styled.span<Status>`
         return PENDING;
     }
   }};
-  font-size: 6px;
+  font-size: 14px;
 `;
 
 export const CardTime = styled.div`
