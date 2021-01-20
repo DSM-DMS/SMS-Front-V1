@@ -46,6 +46,12 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const handleOutTime = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
+      const OUT_TIME = "16:20";
+
+      if (value < OUT_TIME) {
+        toast.error("외출은 16시 20분 이후에 가능합니다.");
+        return;
+      }
 
       if (!checkOutTimeValid(value)) {
         toast.error("귀교 시간보다 늦을 수 없습니다.");
@@ -60,6 +66,12 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const handleInTime = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
+      const IN_TIME = "20:30";
+
+      if (value > IN_TIME) {
+        toast.error("외출은 20시 30시 이후엔 불가능합니다.");
+        return;
+      }
 
       if (!checkInTimeValid(value)) {
         toast.error("외출 시간보다 늦을 수 없습니다.");
