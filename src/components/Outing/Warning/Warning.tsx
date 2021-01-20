@@ -1,7 +1,6 @@
 import React, { FC, ReactElement } from "react";
 
 import * as S from "../style";
-
 import { OutingWarningRedBase } from "../../../assets";
 
 interface Props {}
@@ -35,7 +34,7 @@ const warningTexts: WarningText[] = [
   },
   {
     text:
-      "5. 외출 사이트를 통해서 이루어진 외출신청만 정식 외출로 인정되며, 이외의 다른 이유로 신청한 외출은 무단외출로 간주합니다.",
+      "5. 외출 사이트를 통해서 이루어진 외출신청만 정식 외출로 인정되며, 이외의 다른 이유로 신청한 외출은 무단외출로 간주합니다. (외출 사이트 비정상적으로 작동 시, 수기 외출 신청도 가능)",
     subText: []
   },
   {

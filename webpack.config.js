@@ -4,18 +4,21 @@ const Dotenv = require("dotenv-webpack");
 
 module.exports = {
   mode: "none",
-  entry: {
-    app: path.join(__dirname, "src", "index.tsx")
-  },
   target: "web",
+  entry: "./src/index.tsx",
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
+  },
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.min.js",
+    publicPath: "/"
   },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: "ts-loader",
+        test: /\.(tsx|ts)?$/,
+        loader: "ts-loader",
         exclude: "/node_modules/"
       },
       {
@@ -25,23 +28,35 @@ module.exports = {
       {
         test: /\.css?$/,
         loader: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(js)$/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"]
+          }
+        }
       }
     ]
   },
-  output: {
-    filename: "bundle.min.js",
-    publicPath: "/",
-    path: path.resolve(__dirname, "s3-build")
-  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "public", "index.html")
+      template: "./public/index.html",
+      filename: "./index.html",
+      meta: {
+        viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
+      }
     }),
     new Dotenv({
       path: path.join(__dirname, "src/.env")
     })
   ],
   devServer: {
+    contentBase: path.join(__dirname, "public"),
+    inline: true,
+    hot: true,
     historyApiFallback: true,
     host: "0.0.0.0"
   }

@@ -9,9 +9,13 @@ import ManagementInfo from "./management/info";
 import outingReducer from "./outing";
 import mainReducer from "./main";
 import noticeListReducer from "./notice/list";
+import noticeDetailReducer from "./notice/detail";
+import recruitmentListReducer from "./recruitment/list";
+import recruitmentDetailReducer from "./recruitment/detail";
+import clubListReducer from "./club/list";
+import clubDetailReducer from "./club/detail";
 import managementReducer from "./management";
 import loadingReducer from "./loading";
-import noticeDetailReducer from "./notice/detail";
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -26,7 +30,11 @@ const rootReducer = combineReducers({
   management: managementReducer,
   noticeList: noticeListReducer,
   noticeDetail: noticeDetailReducer,
-  loading: loadingReducer
+  loading: loadingReducer,
+  recruitmentList: recruitmentListReducer,
+  recruitmentDetail: recruitmentDetailReducer,
+  clubList: clubListReducer,
+  clubDetail: clubDetailReducer
 });
 
 export type stateType = ReturnType<typeof rootReducer>;

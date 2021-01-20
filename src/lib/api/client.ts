@@ -16,6 +16,15 @@ export const SERVER = {
 
 export const BASE_URL = `${SERVER.hostUrl}${SERVER.version}`;
 
+const removeAllStorage = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("club_uuid");
+  localStorage.removeItem("expiration");
+  localStorage.removeItem("sms-type");
+  localStorage.removeItem("sms-user");
+  localStorage.removeItem("uuid");
+};
+
 export const apiDefault = () => {
   const instance = axios.create({
     baseURL: BASE_URL
@@ -65,6 +74,7 @@ export const apiDefault = () => {
         toast.error("유효하지 않은 요청이 발생했습니다.");
       } else if (status === 401) {
         alert("로그인 후 이용해주세요.");
+        removeAllStorage();
         window.location.href = refreshUrl;
       } else if (status === 403) {
         alert("잘못된 접근 입니다.");

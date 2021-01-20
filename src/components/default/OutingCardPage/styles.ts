@@ -29,7 +29,6 @@ export const EmptyList = styled.div`
 
 export const CardContainer = styled.div`
   height: 700px;
-  position: relative;
   overflow-y: auto;
   margin-top: 20px;
   &::-webkit-scrollbar {

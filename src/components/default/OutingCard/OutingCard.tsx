@@ -12,7 +12,7 @@ import {
 } from "../../../modules/action/outingCard";
 
 interface Props extends ResOutingCardListItem {
-  isClicked: () => void;
+  isClicked: (uuid: string) => void;
 }
 
 const OutingCard: FC<Props> = ({
@@ -32,7 +32,7 @@ const OutingCard: FC<Props> = ({
   );
 
   return (
-    <S.Container onClick={isClicked}>
+    <S.Container onClick={() => isClicked(outing_uuid)}>
       <S.Header>
         <div>
           {grade}
