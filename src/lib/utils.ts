@@ -107,7 +107,8 @@ export const makeFilterFunc = <T>(
   return (keyword: string) => data.filter(item => callback(item, keyword));
 };
 
-export const getImgUrl = url => `${SERVER.s3Url}/${url}`;
+export const getImgUrl = url =>
+  `${SERVER.s3Url}/${url}?timestamps=${Date.now()}`;
 
 export const makeQuery = (object: any) => {
   return Object.keys(object).reduce(
