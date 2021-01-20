@@ -78,7 +78,6 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
     <S.FormPlace>
       <S.ApplyFormItemTitle htmlFor="place">장소</S.ApplyFormItemTitle>
       <S.PlaceSearchWrap>
-        <span>검색 결과에 도로명 주소가 포함되어야 합니다.</span>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
             {searchWord === "" ? "외출 장소를 검색하세요" : searchWord}
@@ -90,6 +89,7 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
             onClick={handleShowModal}
           />
         </S.FormPlaceInputWrap>
+        <span>검색 결과에 도로명 주소가 포함되어야 합니다.</span>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
             {selectedRoadAddress === "" ? "도로명 주소" : selectedRoadAddress}
