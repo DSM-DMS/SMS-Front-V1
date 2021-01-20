@@ -46,6 +46,7 @@ const AdminNoticeWriting: FC<Props> = ({ setting }) => {
         list: List
       }
     });
+    editerRef.current = editer;
   }, []);
 
   const helpMosueMove = useCallback((e: MouseEvent<HTMLDivElement>) => {
