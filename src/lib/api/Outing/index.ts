@@ -1,25 +1,19 @@
 import axios from "axios";
+import AES256 from "aes-everywhere";
 
-import { apiDefault } from "../client";
+import { apiDefault, SERVER } from "../client";
 import {
-  ResLocationWithDefault,
   ReqOuting,
   ResOutingWithDefault,
-  ResHistoryWithDefault
+  ResHistoryWithDefault,
+  ResNaverLocalWithDefault
 } from "../payloads/Outing";
+import { ResDefault } from "../payloads";
 
-export const getNaverLocation = (query: string) => {
-  const encodingUrl = window.encodeURI(query);
-  return axios.get<ResLocationWithDefault[]>(
-    `/search/local.json?start=1&sort=random&display=5&query=${encodingUrl}`,
-    {
-      headers: {
-        "X-Naver-Client-Id": process.env.NAVER_CLIENT_ID,
-        "X-Naver-Client-Secret": process.env.NAVER_CLIENT_SECRET
-      }
-    }
-  );
-};
+export const START_OUTING = "start" as const;
+export const END_OUTING = "end" as const;
+
+export type StudentOutingAction = typeof START_OUTING | typeof END_OUTING;
 
 export const postOuting = (body: ReqOuting) => {
   const { end_time, place, reason, situation, start_time } = body;
@@ -32,8 +26,32 @@ export const postOuting = (body: ReqOuting) => {
   });
 };
 
+export const postStudentOutingAction = (
+  uuid: string,
+  action: StudentOutingAction
+) => {
+  return apiDefault().post<ResDefault>(
+    `/outings/uuid/${uuid}/actions/${action}`
+  );
+};
+
 export const getHistory = (studentUuid: string, start: number) => {
   return apiDefault().get<ResHistoryWithDefault>(
-    `/students/uuid/${studentUuid}/outings?start=${start}&count=10`
+    `/students/uuid/${studentUuid}/outings?start=${start}&count=9`
+  );
+};
+
+export const getNaverSearchLocal = (keyword: string) => {
+  return axios.get<ResNaverLocalWithDefault>(
+    `${SERVER.hostUrl}naver-open-api/search/local?keyword=${keyword}`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        "Request-Security": AES256.encrypt(
+          `${SERVER.securityBasePlain}:${(+new Date() + "").slice(0, 10)}`,
+          SERVER.securityPassPhrase
+        )
+      }
+    }
   );
 };

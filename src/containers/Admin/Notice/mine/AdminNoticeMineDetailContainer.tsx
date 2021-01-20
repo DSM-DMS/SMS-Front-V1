@@ -1,15 +1,20 @@
-import React, { FC } from 'react';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AdminNoticeAllDetail } from '../../../../components';
-import { updateBoardDetail } from '../../../../modules/action/board';
+import React, { FC, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { RouteChildrenProps } from "react-router-dom";
+import { AdminNoticeMineDetail } from "../../../../components";
+import { getNoticeDetail } from "../../../../modules/action/notice/detail";
 
-const AdminNoticeMineDetailContainer: FC = () => {
+const AdminNoticeMineDetailContainer: FC<
+  RouteChildrenProps<{ id: string }>
+> = ({ match }) => {
   const dispatch = useDispatch();
+  const uuid: string = match.params.id;
+
   useEffect(() => {
-    dispatch(updateBoardDetail({ content: '몰라 씨@@@@발' }));
-  }, []);
-  return <AdminNoticeAllDetail />;
+    dispatch(getNoticeDetail(uuid));
+  }, [uuid]);
+
+  return <AdminNoticeMineDetail />;
 };
 
 export default AdminNoticeMineDetailContainer;

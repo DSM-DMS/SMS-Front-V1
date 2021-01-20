@@ -1,75 +1,69 @@
-import React, { FC, MouseEvent } from "react";
-import { useEffect } from "react";
+import React, { ChangeEvent, FC, MouseEvent, useMemo } from "react";
 import { memo } from "react";
-import { useState } from "react";
-import { useCallback } from "react";
+import { deleteBtn } from "../../../../../assets";
+import { WantedManagement } from "../../../../Management/Wanted/Main/Content/Left/ManagementWantedContentLeft";
 import * as S from "../styles";
 
-interface Props {
-  name: string;
-  onChange: (data: any) => void;
-}
-interface WantedInputState {
-  grade: string | null;
-  description: string | null;
-  number: string | null;
+interface Props extends WantedManagement {
+  changeMenuIsOpen: (id: number) => void;
+  changeGrade: (id: number, grade: number) => void;
+  changeNumber: (id: number, grade: number) => void;
+  changeField: (id: number, field: string) => void;
+  deleteData: (id: number) => void;
 }
 
-const CircleWantedInputItem: FC<Props> = ({ name, onChange }) => {
-  const [data, setData] = useState<WantedInputState>({
-    grade: null,
-    description: null,
-    number: null
-  });
-  const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
-  const changeMenuIsOpen = useCallback(e => {
-    setMenuIsOpen(prev => !prev);
-  }, []);
-
-  const changeHandler = useCallback(e => {
-    const { name, value } = e.target;
-    setData(prev => ({ ...prev, [name]: value }));
-  }, []);
-
-  const clickMenu = useCallback((e: MouseEvent<HTMLDivElement>) => {
-    const { value } = (e.target as HTMLElement).dataset;
-    setData(prev => ({
-      ...prev,
-      grade: value
-    }));
-  }, []);
-
-  useEffect(() => {
-    onChange({ name, data });
-  }, [data]);
+const CircleWantedInputItem: FC<Props> = ({
+  id,
+  field,
+  number,
+  menuIsOpen,
+  grade,
+  changeField,
+  changeGrade,
+  changeMenuIsOpen,
+  changeNumber,
+  deleteData
+}) => {
   return (
     <S.ItemContainer>
-      <S.SelectWrap onClick={changeMenuIsOpen}>
+      <S.SelectWrap
+        onClick={() => {
+          changeMenuIsOpen(id);
+        }}
+      >
         <div>
-          <span>{data.grade || "0"}</span>
+          <span>{grade || 1}</span>
           <S.Triangle />
         </div>
         {menuIsOpen && (
           <S.SelectMenu>
-            <div>전체</div>
-            <div data-value="1" onClick={clickMenu}>
-              1
-            </div>
-            <div data-value="2" onClick={clickMenu}>
-              2
-            </div>
-            <div data-value="3" onClick={clickMenu}>
-              3
-            </div>
+            <div onClick={() => changeGrade(id, 1)}>1</div>
+            <div onClick={() => changeGrade(id, 2)}>2</div>
+            <div onClick={() => changeGrade(id, 3)}>3</div>
           </S.SelectMenu>
         )}
       </S.SelectWrap>
       <div>
-        <input onChange={changeHandler} type="text" name="description" />
+        <input
+          onChange={e => changeField(id, e.target.value)}
+          name="field"
+          type="text"
+          value={field}
+        />
       </div>
       <div>
-        <input onChange={changeHandler} type="number" name="number" />
+        <input
+          onChange={e => changeNumber(id, Number(e.target.value))}
+          name="number"
+          type="number"
+          value={number}
+        />
       </div>
+      <S.DeleteBtnWrap>
+        <button onClick={() => deleteData(id)}>
+          <img src={deleteBtn} />
+        </button>
+      </S.DeleteBtnWrap>
     </S.ItemContainer>
   );
 };

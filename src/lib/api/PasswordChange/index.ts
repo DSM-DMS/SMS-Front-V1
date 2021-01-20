@@ -1,8 +1,4 @@
-import axios from "axios";
-
-import { apiDefault, SERVER } from "../client";
-
-const BASE_URL = SERVER.hostUrl + SERVER.version;
+import { apiDefault } from "../client";
 
 export const putStudentPassword = (
   studentUuid: string,

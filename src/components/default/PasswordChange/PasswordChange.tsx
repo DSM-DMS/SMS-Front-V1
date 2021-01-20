@@ -1,13 +1,16 @@
 import React, { FC, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import * as S from "./style";
 import PasswordInput from "./PasswordInput";
 
 import { stateType } from "../../../modules/reducer";
 import { UserType } from "../../../modules/action/header";
+import { Loading } from "../";
 
 interface Props {
+  loading: boolean;
   changePassword: (
     type: UserType,
     currentPw: string,
@@ -21,7 +24,7 @@ interface Passwords {
   revisionPwConfirm: string;
 }
 
-const PasswordChange: FC<Props> = ({ changePassword }) => {
+const PasswordChange: FC<Props> = ({ loading, changePassword }) => {
   const { type } = useSelector((state: stateType) => state.header);
   const [pws, setPws] = useState<Passwords>({
     currentPw: "",
@@ -42,10 +45,12 @@ const PasswordChange: FC<Props> = ({ changePassword }) => {
       pws.revisionPw.trim() === "" ||
       pws.revisionPwConfirm.trim() === ""
     ) {
-      return alert("모든 칸에 입력을 완료해주세요.");
+      toast.error("모든 칸에 입력을 완료해주세요.");
+      return;
     }
     if (pws.revisionPw !== pws.revisionPwConfirm) {
-      return alert("새 비밀번호가 일치하지 않습니다.");
+      toast.error("새 비밀번호가 일치하지 않습니다.");
+      return;
     }
 
     changePassword(type as UserType, pws.currentPw, pws.revisionPw);
@@ -76,9 +81,12 @@ const PasswordChange: FC<Props> = ({ changePassword }) => {
             changeHandler={changeHandler}
             handleChangePassword={handleChangePassword}
           />
-          <S.ChangeButton onClick={handleChangePassword}>
-            비밀번호 변경
-          </S.ChangeButton>
+          <S.ChangeButtonWrap>
+            <S.ChangeButton onClick={handleChangePassword}>
+              비밀번호 변경
+            </S.ChangeButton>
+            {loading && <Loading />}
+          </S.ChangeButtonWrap>
         </S.InputWrap>
       </div>
     </S.PasswordChangeWrap>

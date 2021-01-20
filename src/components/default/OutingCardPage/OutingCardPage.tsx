@@ -1,44 +1,54 @@
-import React, { FC, useMemo, useState } from 'react';
-import { useEffect } from 'react';
-import { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { stateType } from '../../../modules/reducer';
-import OutingCardModal from '../Modal/OutingCardModal/OutingCardModal';
-import OutingCard from '../OutingCard/OutingCard';
-import * as S from './styles';
+import React, { FC, useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const names = ['번호', '학번', '이름', '외출시간', '사유'];
+import * as S from "./styles";
+
+import OutingCard from "../OutingCard/OutingCard";
+import OutingCardFilter from "../Filter/OutingCardFilter";
+import OutingCardModal from "../Modal/OutingCardModal/OutingCardModal";
+import { stateType } from "../../../modules/reducer";
+import {
+  OutingCardFilter as OutingCardFilterType,
+  ReqOutingCardFilter
+} from "../../../lib/api/payloads/OutingCard";
+import { getOutingCardListSaga } from "../../../modules/action/outingCard";
 
 interface Props {
   title: string;
-  isClicked: boolean;
+  status: number;
+  isClicked: (...arg: any) => void;
 }
 
-const OutingCardPage: FC<Props> = ({ title, isClicked }) => {
+const OutingCardPage: FC<Props> = ({ title, isClicked, status }) => {
   const data = useSelector((state: stateType) => state.outingCard.list);
+  const dispatch = useDispatch();
+
+  const filterChangeHandler = useCallback((data: OutingCardFilterType) => {
+    const filterData: ReqOutingCardFilter = {
+      ...data,
+      status
+    };
+    dispatch(getOutingCardListSaga(filterData));
+  }, []);
 
   return (
     <S.Container>
       <S.Header>
         <S.HeaderText>{title}</S.HeaderText>
-        <div>
-          <div>필터링</div>
-          <button>초기화</button>
-        </div>
+        <OutingCardFilter onChange={filterChangeHandler} />
       </S.Header>
       <S.CardContainer>
-        {data.map(({ id, number, name, date, time, where, reason }) => (
-          <OutingCard
-            isClicked={isClicked}
-            id={id}
-            number={number}
-            name={name}
-            date={date}
-            time={time}
-            where={where}
-            reason={reason}
-          />
-        ))}
+        {data.length ? (
+          data.map(data => (
+            <OutingCard
+              key={data.outing_uuid}
+              {...data}
+              isClicked={isClicked}
+            />
+          ))
+        ) : (
+          <S.EmptyList>리스트가 없습니당</S.EmptyList>
+        )}
       </S.CardContainer>
       <OutingCardModal />
     </S.Container>

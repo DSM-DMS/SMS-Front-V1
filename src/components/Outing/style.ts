@@ -256,15 +256,39 @@ export const FormPlace = styled.div`
   align-items: center;
 `;
 
-export const FormPlaceInput = styled.input`
+export const PlaceSearchWrap = styled.div`
+  width: 35%;
+  > span {
+    color: #ff2200;
+    font-size: 12px;
+    font-weight: 400;
+  }
+`;
+
+export const FormPlaceInputWrap = styled.div`
+  position: relative;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  min-width: 100%;
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #f6f6f6;
+  box-sizing: border-box;
+  &:last-child {
+    min-width: calc(100% + 100px);
+  }
+`;
+
+export const FormPlaceInput = styled.p`
   width: 100%;
   height: 100%;
   padding: 0;
   border: 0;
   font-size: 14px;
-  &::placeholder {
-    color: #dddddd;
-  }
+  color: #888888;
+  background-color: transparent;
 `;
 
 export const FormPlaceInputSearch = styled.img`
@@ -272,12 +296,160 @@ export const FormPlaceInputSearch = styled.img`
   cursor: pointer;
 `;
 
-export const FormPlaceSearchListWrap = styled.div`
-  position: absolute;
-  top: calc(100% + 1px);
+export const FormPlaceSearchBack = styled.div`
+  position: fixed;
+  top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+`;
+
+export const FormPlaceSearchListWrap = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 600px;
+  border-radius: 4px;
   background-color: white;
-  z-index: 1;
+  box-shadow: 0 3px 5px #555;
+  box-sizing: border-box;
+  z-index: 10;
+`;
+
+export const ProgressBar = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: red;
+  animation: progress 1s;
+
+  @keyframes progress {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+`;
+
+export const PlaceSearchHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-radius: 4px 4px 0 0;
+  color: white;
+  background-color: #242424;
+  #title {
+    font-size: 16px;
+  }
+  #close {
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+  }
+`;
+
+export const PlaceSearchInputWrap = styled.div`
+  padding: 10px 30px;
+`;
+
+export const PlaceSearchInputBox = styled.label`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border: 1px solid #888888;
+  cursor: text;
+  #searchInput {
+    width: 100%;
+    border: 0;
+  }
+  #search {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+`;
+
+export const PlaceSearchInfoMessage = styled.p`
+  color: #888888;
+  font-size: 12px;
+`;
+
+export const PlaceSearchListBox = styled.div`
+  flex: 1;
+  padding: 30px 10px 20px;
+  background-color: #f7f6ff;
+`;
+
+export const PlaceSearchList = styled.ul`
+  height: 400px;
+  border-bottom: 1px solid #888888;
+`;
+
+export const PlaceSearchItem = styled.li<{ time: number }>`
+  width: 100%;
+  padding: 8px;
+  border-bottom: 1px solid #dddddd;
+  background-color: transparent;
+  box-sizing: border-box;
+  cursor: pointer;
+  animation: slideIn ${({ time }) => 1000 + time}ms;
+  &:hover {
+    background-color: #deceff;
+  }
+  #title {
+    color: black;
+  }
+  #roadAddress {
+    color: #242424;
+  }
+  #address {
+    color: #444;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+`;
+
+export const PlaceSearchResultText = styled.p`
+  display: flex;
+  & > span:first-child {
+    width: 20%;
+    color: #5323b2;
+    font-size: 11px;
+  }
+  & > span:last-child {
+    width: 80%;
+    font-size: 12px;
+  }
+  &#title b {
+    font-weight: 500;
+  }
+  &#address {
+    color: #444;
+  }
+  &#roadAddress {
+    color: #666;
+  }
 `;
 
 export const FormReason = styled.div``;
@@ -309,30 +481,83 @@ export const FormReasonTextarea = styled(TextareaAutosize)`
 `;
 
 export const FormReasonSick = styled.div`
-  display: flex;
+  position: relative;
   margin: 8px 0;
-  span {
-    color: #5323b2;
+  width: calc(35% + 100px);
+  color: #242424;
+  text-align: right;
+  font-size: 12px;
+`;
+
+export const FormReasonSickCheckboxLabel = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  > #sickWrap {
+    display: flex;
+    align-items: center;
     cursor: pointer;
+    &:hover ~ #warning {
+      display: block;
+    }
+  }
+`;
+
+export const FormReasonSickCheckbox = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  height: 16px;
+  width: 16px;
+  margin-right: 4px;
+  border: 0;
+  outline: 1px solid #888888;
+  &.checked {
+    outline: 0;
+    background-color: #5323b2;
+  }
+  #check {
+    width: 12px;
+    height: 12px;
   }
 `;
 
 export const FormReasonSickDesc = styled.div`
-  position: relative;
-  width: 100%;
+  position: absolute;
+  top: calc(100% + 1px);
+  right: 0;
+  display: none;
+  width: calc(100% - 100px);
   line-height: 1.5;
-  font-size: 12px;
   padding: 8px 0;
+  border-radius: 4px;
+  color: #242424;
+  font-size: 12px;
   box-sizing: border-box;
+  z-index: 7;
+  background-color: white;
+  box-shadow: 0 3px 6px #00000030;
+  padding: 8px 12px;
   &::after {
     content: "";
     position: absolute;
     top: 8px;
-    right: 8px;
-    width: 24px;
-    height: 24px;
+    left: 12px;
+    width: 12px;
+    height: 12px;
     background: url(${OutingWarningRedBase}) no-repeat;
     background-size: contain;
+  }
+  > p {
+    text-align: right;
+  }
+  > div {
+    position: relative;
+    text-align: left;
   }
 `;
 
@@ -410,11 +635,37 @@ export const HistoryHead = styled.header`
   margin-bottom: 24px;
   padding-bottom: 12px;
   border-bottom: 1px solid #f7f6ff;
+  > div {
+    display: flex;
+    align-items: center;
+  }
 `;
 
 export const HistoryTitle = styled.h2`
   font-size: 24px;
   font-weight: bold;
+`;
+
+export const HistoryRefresh = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-left: 12px;
+  padding: 4px;
+  border-radius: 50%;
+  transition: 300ms;
+  box-sizing: border-box;
+  cursor: pointer;
+  &:hover {
+    background: #e2e2e2;
+  }
+  > img {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const HistoryContent = styled.div``;
@@ -480,6 +731,10 @@ export const CardDate = styled.p<Emergency>`
 `;
 
 export const CardPlace = styled.p`
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: 12px;
 `;
 
@@ -488,14 +743,35 @@ export const CardBottom = styled.div``;
 const PENDING = "#0000fe";
 const REJECT = "#ff9f59";
 const APPROVE = "#62d462";
+const START = "#5741b7";
+const END = "#ff5555";
+const CERTIFY = "#0000fe";
 
 interface Status {
   status: number;
 }
 
 export const CardStatus = styled.span<Status>`
-  color: ${({ status }) =>
-    status < 0 ? REJECT : status < 3 ? PENDING : APPROVE};
+  color: ${({ status }) => {
+    switch (status) {
+      case -2:
+      case -1:
+        return REJECT;
+      case 0:
+        return PENDING;
+      case 1:
+      case 2:
+        return APPROVE;
+      case 3:
+        return START;
+      case 4:
+        return END;
+      case 5:
+        return CERTIFY;
+      default:
+        return PENDING;
+    }
+  }};
   font-size: 6px;
 `;
 
@@ -586,18 +862,36 @@ export const ModalClose = styled.img`
   cursor: pointer;
 `;
 
-export const ModalApplyOnlineCard = styled.button`
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  background-color: #10012e;
-  color: white;
-  font-size: 16px;
+export const ModalButtonWrap = styled.div`
+  text-align: right;
+`;
+
+export const ModalApplyButton = styled.button`
+  margin: 0 12px;
   padding: 10px 20px;
   border: 0;
   border-radius: 4px;
   box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
     5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+`;
+
+export const OnlineCardButton = styled(ModalApplyButton)`
+  border: 1px solid #10012e;
+  color: #10012e;
+  background-color: white;
+`;
+
+export const OutingStartBtn = styled(ModalApplyButton)`
+  border: 1px solid #10012e;
+  color: white;
+  background-color: #10012e;
+`;
+
+export const OutingEndBtn = styled(ModalApplyButton)`
+  border: 1px solid #ff5555;
+  color: white;
+  background-color: #ff5555;
 `;
 
 export const ModalOnlineCard = styled.div`

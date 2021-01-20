@@ -13,6 +13,7 @@ import { CircleInfo, WantedInfo } from "../../../modules/type/poster";
 import { apiDefault, getStudentData } from "../../../lib/api/client";
 import { getImgUrl } from "../../../lib/utils";
 import { StudentInfo } from "../../../modules/type/user";
+import { RecruitmentListItem } from "../../../lib/api/payloads/Recruitment";
 
 const dateParse = (
   startDateStr: string,
@@ -33,13 +34,20 @@ const dateParse = (
   );
 };
 
-const WantedCircleBox: FC<WantedInfo> = ({
+interface Props extends RecruitmentListItem {
+  filterField: string;
+  filterName: string;
+}
+
+const WantedCircleBox: FC<Props> = ({
   club_uuid,
   end_period,
   recruit_concept,
   recruitment_uuid,
   recruit_members,
-  start_period
+  start_period,
+  filterName,
+  filterField
 }) => {
   const [circleInfo, setCircleInfo] = useState<CircleInfo | null>(null);
 
@@ -56,8 +64,15 @@ const WantedCircleBox: FC<WantedInfo> = ({
       });
   }, []);
 
-  return (
-    circleInfo && (
+  const render = useCallback((): ReactElement => {
+    if (
+      !circleInfo ||
+      !circleInfo.name.includes(filterName) ||
+      (filterField && circleInfo.field !== filterField)
+    )
+      return <></>;
+
+    return (
       <S.Container onClick={handleClick}>
         <div>
           <S.Header>
@@ -67,7 +82,7 @@ const WantedCircleBox: FC<WantedInfo> = ({
           <S.CircleIntroduce>{recruit_concept}</S.CircleIntroduce>
           <S.WantedJob>
             {recruit_members.map(({ field, grade, number }) => (
-              <div>
+              <div key={`${field}-${number}`}>
                 -{grade}학년 {field}분야 {number}명
               </div>
             ))}
@@ -83,8 +98,10 @@ const WantedCircleBox: FC<WantedInfo> = ({
         </S.Footer>
         <img src={getImgUrl(circleInfo.logo_uri)} />
       </S.Container>
-    )
-  );
+    );
+  }, [circleInfo, filterName, filterField]);
+
+  return render();
 };
 
 export default memo(WantedCircleBox);

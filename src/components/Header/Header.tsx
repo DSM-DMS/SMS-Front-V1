@@ -9,10 +9,17 @@ import { stateType } from "../../modules/reducer";
 interface Props {
   logout: () => void;
   moveLogin: () => void;
+  movePasswordChange: () => void;
+  moveManagement: () => void;
 }
 
-const Header: FC<Props> = ({ logout, moveLogin }) => {
-  const { type, grade, group, name, student_number } = useSelector(
+const Header: FC<Props> = ({
+  logout,
+  moveLogin,
+  movePasswordChange,
+  moveManagement
+}) => {
+  const { type, grade, group, name, student_number, clubUuid } = useSelector(
     (state: stateType) => state.header
   );
 
@@ -31,7 +38,9 @@ const Header: FC<Props> = ({ logout, moveLogin }) => {
       ) : (
         <S.UserInfo>{`${name} 선생님`}</S.UserInfo>
       )}
-      <S.MovePasswordChange to="pw-change">비밀번호 변경</S.MovePasswordChange>
+      <S.MovePasswordChange onClick={movePasswordChange}>
+        비밀번호 변경
+      </S.MovePasswordChange>
       <S.Logout
         onClick={() => {
           logout();
@@ -40,6 +49,11 @@ const Header: FC<Props> = ({ logout, moveLogin }) => {
       >
         로그아웃
       </S.Logout>
+      {clubUuid && (
+        <S.MoveClubManagement onClick={moveManagement}>
+          동아리 관리 페이지
+        </S.MoveClubManagement>
+      )}
     </S.HeaderWrap>
   );
 };

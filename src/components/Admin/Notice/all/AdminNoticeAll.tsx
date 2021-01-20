@@ -1,31 +1,30 @@
-import React, { ChangeEvent, FC, useState, useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import { NavIconNoticeMint } from '../../../../assets';
-import { stateType } from '../../../../modules/reducer';
-import { Board, ListPageHeader } from '../../../default';
-import * as S from './styles';
-
-const names = ['번호', '제목', '날짜', '조회수'];
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
+import { NavIconNoticeMint } from "../../../../assets";
+import { stateType } from "../../../../modules/reducer";
+import NoticeList, {
+  NoticeListSet
+} from "../../../default/NoticeList/NoticeList";
 
 const AdminNoticeAll: FC = () => {
-  const [keyword, setKeyword] = useState<string>('');
-  const data = useSelector((state: stateType) => state.board.list);
-  const changeKeyword = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
-  }, []);
+  const { announcements, size, loading } = useSelector((state: stateType) => ({
+    ...state.noticeList,
+    loading: state.loading["notice/GET_NOTICE_LIST"]
+  }));
+
+  const noticeListSet: NoticeListSet = {
+    title: "학교 공지사항",
+    size,
+    imgSrc: NavIconNoticeMint,
+    names: ["번호", "제목", "날짜", "글쓴이", "조회수"]
+  };
 
   return (
-    <S.Container>
-      <ListPageHeader
-        imgSrc={NavIconNoticeMint}
-        onChange={changeKeyword}
-        title="전체 공지사항"
-      />
-      <Board
-        names={names}
-        data={data.filter(({ title }) => title.includes(keyword))}
-      />
-    </S.Container>
+    <NoticeList
+      loading={loading}
+      notices={announcements}
+      setting={noticeListSet}
+    />
   );
 };
 

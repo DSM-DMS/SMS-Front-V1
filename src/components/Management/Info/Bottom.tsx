@@ -1,12 +1,18 @@
 import React, { FC } from "react";
+import { Loading } from "../../default";
 
 import * as S from "./style";
 
-const ManagementInfoBottom: FC = () => {
+interface Props {
+  loading: boolean;
+  modifyClubInfo: () => Promise<void>;
+}
+
+const ManagementInfoBottom: FC<Props> = ({ loading, modifyClubInfo }) => {
   return (
     <S.CenterBottom>
-      <S.BottomCancelButton>취소</S.BottomCancelButton>
-      <S.BottomEditButton>적용</S.BottomEditButton>
+      {loading && <Loading />}
+      <S.BottomEditButton onClick={modifyClubInfo}>적용</S.BottomEditButton>
     </S.CenterBottom>
   );
 };

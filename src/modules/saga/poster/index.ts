@@ -1,5 +1,7 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { AxiosError } from "axios";
+import { call, getContext, put, takeEvery } from "redux-saga/effects";
 import { apiDefault, getStudentDatas } from "../../../lib/api/client";
+import { errorHandler } from "../../../lib/utils";
 import { posterAction, PosterActionCreater } from "../../action/poster";
 
 function* getWantedInfoListSaga() {
@@ -10,7 +12,10 @@ function* getWantedInfoListSaga() {
     );
 
     yield put(PosterActionCreater.getWantedInfoList(res.data.recruitments));
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* getWantedInfoDetailSaga(
@@ -33,14 +38,20 @@ function* getWantedInfoDetailSaga(
         members: members.map(memberData => memberData.data)
       })
     );
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* getCircleInfoListSaga() {
   try {
     const res = yield call(apiDefault().get, "/clubs/sorted-by/update-time");
     yield put(PosterActionCreater.getCircleInfoList(res.data.clubs));
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* getCircleInfoDetailSaga(
@@ -56,7 +67,10 @@ function* getCircleInfoDetailSaga(
         members: members.map(memberData => memberData.data)
       })
     );
-  } catch (err) {}
+  } catch (err) {
+    const axiosErr = err as AxiosError;
+    errorHandler(axiosErr.response.status, yield getContext("history"));
+  }
 }
 
 function* posterSaga() {

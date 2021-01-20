@@ -11,6 +11,7 @@ export const SET_NUMBER = "header/SET_NUMBER" as const;
 export const SET_NAME = "header/SET_NAME" as const;
 export const SET_PHONE = "header/SET_PHONE" as const;
 export const SET_PROFILE_URI = "header/SET_PROFILE_URI" as const;
+export const SET_CLUB_UUID = "header/SET_CLUB_UUID" as const;
 
 export const GET_STUDENT_INFO_SAGA = "header/GET_STUDENT_INFO_SAGA" as const;
 export const GET_TEACHER_INFO_SAGA = "header/GET_TEACHER_INFO_SAGA" as const;
@@ -20,10 +21,11 @@ export const TEACHER = "teacher" as const;
 
 export const setInit = (
   type: UserType | "",
-  user: ResStudentInfo | ResTeacherInfo
+  user: ResStudentInfo | ResTeacherInfo,
+  clubUuid: string
 ) => ({
   type: SET_INIT,
-  payload: { type, user }
+  payload: { type, user, clubUuid }
 });
 export const setType = (type: UserType) => ({
   type: SET_TYPE,
@@ -61,6 +63,10 @@ export const getTeacherInfoSaga = (teacherUuid: string) => ({
   type: GET_TEACHER_INFO_SAGA,
   payload: { teacherUuid }
 });
+export const setClubUuid = (clubUuid: string) => ({
+  type: SET_CLUB_UUID,
+  payload: { clubUuid }
+});
 
 export type UserType = typeof STUDENT | typeof TEACHER;
 
@@ -75,4 +81,5 @@ export type HeaderAction = ReturnType<
   | typeof setInit
   | typeof getStudentInfoSaga
   | typeof getTeacherInfoSaga
+  | typeof setClubUuid
 >;

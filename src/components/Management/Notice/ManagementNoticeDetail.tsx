@@ -1,35 +1,30 @@
-import React from "react";
-import { FC } from "react";
+import React, { FC } from "react";
+import { useSelector } from "react-redux";
 import { NavIconNoticeBlack } from "../../../assets";
-import { DetailPageHeader } from "../../default";
-import NoticeDetailBody from "../../Notice/Detail/NoticeDetailBody/NoticeDetailBody";
-import * as S from "./styles";
+import { stateType } from "../../../modules/reducer";
+import { NoticeDetail } from "../../default";
+import { NoticeDetailHeaderSet } from "../../default/NoticeDetail/NoticeDetail";
 
 const ManagementNoticeDetail: FC = () => {
+  const { boardData, loading } = useSelector((state: stateType) => ({
+    boardData: state.noticeDetail,
+    loading: state.loading["notice/GET_NOTICE_DETAIL"]
+  }));
+
+  const noticeDetailSet: NoticeDetailHeaderSet = {
+    color: "black",
+    href: "/management/notice",
+    imgSrc: NavIconNoticeBlack,
+    title: "동아리 공지사항",
+    isMine: true
+  };
+
   return (
-    <S.Container>
-      <DetailPageHeader
-        isMine={true}
-        imgSrc={NavIconNoticeBlack}
-        title="동아리 공지사항"
-        href="/management/notice"
-        color="black"
-      />
-      <S.P>몰라요 몰랑</S.P>
-      <NoticeDetailBody content={"dsadasd"} />
-      <S.ButtonWrap>
-        <S.GoToEdit
-          to="/management/edit/1"
-          color="#242424"
-          backgroundColor="#FBFBFB"
-        >
-          수정
-        </S.GoToEdit>
-        <S.Button color="#FBFBFB" backgroundColor="#FF5555">
-          삭제
-        </S.Button>
-      </S.ButtonWrap>
-    </S.Container>
+    <NoticeDetail
+      boardData={boardData}
+      headerData={noticeDetailSet}
+      loading={loading}
+    />
   );
 };
 

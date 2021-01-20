@@ -1,19 +1,13 @@
 import React, { FC } from "react";
 import * as S from "./styles";
-import InfoDetailSub from "./Sub/InfoDetailSub";
 import AllMain from "./Main/AllMain";
-import { customSelector } from "../../../../lib/utils";
-import { useSelector } from "react-redux";
-import { stateType } from "../../../../modules/reducer";
+import AllSub from "./Sub/AllSub";
 
 const AllBody: FC = () => {
-  const { logo_uri } = useSelector(
-    (state: stateType) => state.poster.all.detail
-  );
   return (
     <S.Container>
       <AllMain />
-      <InfoDetailSub imgSrc={logo_uri} tags={[]} projects={[]} />
+      <AllSub />
     </S.Container>
   );
 };
