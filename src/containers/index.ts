@@ -27,6 +27,7 @@ export { default as AdminMainContainer } from "./Admin/Main/AdminMainContainer";
 export { default as AdminOutingNowListContainer } from "./Admin/Outing/now/List/AdminOutingNowListContainer";
 export { default as AdminOutingCertifiedListContainer } from "./Admin/Outing/certified/List/AdminOutingCertifiedListContainer";
 export { default as AdminOutingDoneContainer } from "./Admin/Outing/Done/AdminOutingDoneConatiner";
+export { default as AdminOutingOkContainer } from "./Admin/Outing/Ok/AdminOutingOk";
 export { default as AdminNoticeAllListContainer } from "./Admin/Notice/all/AdminNoticeListContainer";
 export { default as AdminNoticeMineContainer } from "./Admin/Notice/mine/AdminNoticeMineContainer";
 export { default as AdminNoticeMineDetailContainer } from "./Admin/Notice/mine/AdminNoticeMineDetailContainer";
