@@ -19,7 +19,6 @@ class Confirm {
   public static confirm = function (
     message: [string, string, string]
   ): Promise<boolean> {
-    console.log(1);
     return new Promise((resolve, reject) => {
       if (Confirm.isOpen) {
         reject(new Error("Confirm is Open"));
@@ -29,6 +28,13 @@ class Confirm {
       const confirmWrap: HTMLElement = document.createElement("div");
       confirmWrap.id = "confirm-wrap";
       confirmWrap.innerHTML = html;
+
+      confirmWrap.onclick = (e: MouseEvent) => {
+        if (e.currentTarget === e.target) {
+          confirmWrap.remove();
+          resolve(false);
+        }
+      };
 
       const buttons = confirmWrap.querySelectorAll(
         "button"
