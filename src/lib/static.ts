@@ -192,6 +192,12 @@ export const subNavRouter: SubNavObj = {
       route: "/admin/out/wait"
     },
     {
+      name: "거절된 외출증",
+      url: NavIconUnauthorizedBlack,
+      route: "/admin/out/certified",
+      acitveUrl: NavIconUnauthorizedMint
+    },
+    {
       name: "현재 외출 학생",
       url: NavIconCircleBlack,
       route: "/admin/out/now",
@@ -204,10 +210,10 @@ export const subNavRouter: SubNavObj = {
       acitveUrl: NavIconUnauthorizedMint
     },
     {
-      name: "미인증 외출증",
+      name: "최종 승인 외출증",
       url: NavIconUnauthorizedBlack,
-      route: "/admin/out/certified",
-      acitveUrl: NavIconUnauthorizedMint
+      route: "/admin/out/ok",
+      acitveUrl: NavIconUnauthorizedBlack
     }
   ],
   공지사항: [

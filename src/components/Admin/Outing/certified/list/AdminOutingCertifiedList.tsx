@@ -7,8 +7,7 @@ const AdminOutingCertifiedList: FC = () => {
   return (
     <OutingCardPage
       status={OutingStatus["선생님 거절"]}
-      title="미인증 외출증"
-      isClicked={() => {}}
+      title="거절된 외출증"
     />
   );
 };
