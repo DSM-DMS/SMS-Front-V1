@@ -1,4 +1,10 @@
-import React, { ChangeEvent, FC, useCallback, useState } from "react";
+import React, {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useState
+} from "react";
 import { OutingCardFilter } from "../../../lib/api/payloads/OutingCard";
 import * as S from "./styles";
 
@@ -11,11 +17,14 @@ const OutingCardFilter: FC<Props> = ({ onChange }) => {
   const [typeIsFloor, setTypeIsFloor] = useState<boolean>(false);
   const [filterData, setFilterData] = useState<OutingCardFilter>({});
 
+  useEffect(() => {
+    onChange(filterData);
+  }, [filterData]);
+
   const changeHandler = useCallback((e: ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFilterData(prev => {
       const newState = { ...prev, [name]: Number(value) };
-      onChange(newState);
       return newState;
     });
   }, []);
@@ -25,11 +34,20 @@ const OutingCardFilter: FC<Props> = ({ onChange }) => {
   }, []);
 
   const changeTypeisFloor = useCallback(() => {
-    setTypeIsFloor(prev => !prev);
-  }, []);
+    if (typeIsFloor) {
+      const newObj: OutingCardFilter = { grade: 1, group: 1 };
+      delete newObj.floor;
+      setFilterData(newObj);
+    } else {
+      const newObj: OutingCardFilter = { floor: 1 };
+      delete newObj.grade;
+      delete newObj.group;
+      setFilterData(newObj);
+    }
+    setTypeIsFloor(!typeIsFloor);
+  }, [typeIsFloor]);
 
   const resetFilter = useCallback(() => {
-    onChange({});
     setFilterData({});
   }, []);
 
