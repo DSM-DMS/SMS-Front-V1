@@ -30,10 +30,7 @@ const App: FC<{}> = () => {
           <ToastContainer autoClose={2000} />
           <GlobalStyle />
           <Switch>
-            <Route
-              path="/parent/outing/:confirmUuid"
-              component={ParentContainer}
-            />
+            <Route path="/parent/:confirmUuid" component={ParentContainer} />
           </Switch>
         </Router>
       ) : (
