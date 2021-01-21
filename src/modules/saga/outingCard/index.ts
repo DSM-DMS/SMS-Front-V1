@@ -14,9 +14,11 @@ import {
   getOutingCardList as getOutingCardListCreater,
   approveOutingCardSaga as approveOutingCardSagaCreater,
   rejectOutingCardSaga as rejectOutingCardSagaCreater,
+  endOutingCardSaga as endOutingCardSagaCreator,
   APPROVE_OUTING_CARD_SAGA,
   REJECT_OUTING_CARD_SAGA,
-  CloseOutingCardModal
+  CloseOutingCardModal,
+  END_OUTING_CARD_SAGA
 } from "../../action/outingCard";
 
 function* getOutingCardListSaga(
@@ -44,7 +46,7 @@ function* approveOutingCardSaga(
       outing_uuid: action.payload
     });
 
-    toast.dark("성공적으로 승인하였습니다.");
+    toast.success("성공적으로 승인하였습니다.");
     yield put(CloseOutingCardModal());
   } catch (err) {
     const axiosErr = err as AxiosError;
@@ -59,7 +61,7 @@ function* rejectOutingCardSaga(
       action: "teacher-reject",
       outing_uuid: action.payload
     });
-    toast.dark("성공적으로 거절하였습니다.");
+    toast.success("성공적으로 거절하였습니다.");
     yield put(CloseOutingCardModal());
   } catch (err) {
     const axiosErr = err as AxiosError;
@@ -67,10 +69,22 @@ function* rejectOutingCardSaga(
   }
 }
 
+function* endOutingCardSaga(
+  action: ReturnType<typeof endOutingCardSagaCreator>
+) {
+  try {
+    yield call(setActionOutingCard, {
+      action: "end",
+      outing_uuid: action.payload
+    });
+    toast.success("성공적으로 승인하였습니다.");
+  } catch (err) {}
+}
 function* outingCardSaga() {
   yield takeEvery(GET_OUTING_CARD_LIST_SAGA, getOutingCardListSaga);
   yield takeEvery(APPROVE_OUTING_CARD_SAGA, approveOutingCardSaga);
   yield takeEvery(REJECT_OUTING_CARD_SAGA, rejectOutingCardSaga);
+  yield takeEvery(END_OUTING_CARD_SAGA, endOutingCardSaga);
 }
 
 export default outingCardSaga;

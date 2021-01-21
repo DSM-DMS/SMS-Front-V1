@@ -26,6 +26,13 @@ export const GET_OUTING_CARD_LIST_SAGA = "outingCard/GET_OUTING_CARD_LIST_SAGA" 
 export const REJECT_OUTING_CARD_SAGA = "outingCard/REJECT_OUTING_CARD_SAGA" as const;
 export const APPROVE_OUTING_CARD_SAGA = "outingCard/APPROVE_OUTING_CARD_SAGA" as const;
 
+export const END_OUTING_CARD_SAGA = "outingCard/END_OUTING_CARD_SAGA" as const;
+
+export const endOutingCardSaga = (payload: string) => ({
+  type: END_OUTING_CARD_SAGA,
+  payload
+});
+
 export const rejectOutingCardSaga = (payload: string) => ({
   type: REJECT_OUTING_CARD_SAGA,
   payload
