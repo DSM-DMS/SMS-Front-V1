@@ -16,7 +16,8 @@ import {
   PasswordChangeContainer,
   AdminOutingDoneContainer,
   AdminNoticeMineDetailContainer,
-  AdminNoticeEditContainer
+  AdminNoticeEditContainer,
+  AdminOutingOkContainer
 } from "../containers";
 import { GlobalInnerBody } from "../GlobalStyle";
 import { TEACHER } from "../modules/action/header";
@@ -68,6 +69,7 @@ const AdminRouter: FC = () => {
           path="/admin/out/certified"
           component={AdminOutingCertifiedListContainer}
         />
+        <Route exact path="/admin/out/ok" component={AdminOutingOkContainer} />
         <Route
           exact
           path="/admin/notice/all"
