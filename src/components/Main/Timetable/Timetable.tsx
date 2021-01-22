@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import TimetableList from "./TimetableList";
+import TimeTableList from "./TimeTableList";
 
 import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
@@ -13,7 +13,7 @@ interface Props {}
 
 const date = new Date();
 
-const Timetable: FC<Props> = (): ReactElement => {
+const TimeTable: FC<Props> = (): ReactElement => {
   const dispatch = useDispatch();
   const {
     main: { timetable, timetableLoading },
@@ -65,9 +65,9 @@ const Timetable: FC<Props> = (): ReactElement => {
           </S.TimetableSelector>
         </S.FiltersWrap>
       </S.TimetableTitle>
-      <TimetableList loading={timetableLoading} timetable={timetable} />
+      <TimeTableList loading={timetableLoading} timetable={timetable} />
     </S.Timetable>
   );
 };
 
-export default Timetable;
+export default TimeTable;
