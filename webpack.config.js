@@ -44,10 +44,7 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
-      filename: "./index.html",
-      meta: {
-        viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
-      }
+      filename: "index.html"
     }),
     new Dotenv({
       path: path.join(__dirname, "src/.env")
