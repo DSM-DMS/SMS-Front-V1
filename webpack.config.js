@@ -8,7 +8,7 @@ module.exports = {
     extensions: [".ts", ".tsx", ".js"]
   },
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "/dist"),
     filename: "bundle.min.js",
     publicPath: "/"
   },
@@ -41,8 +41,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      filename: "index.html"
+      template: "./public/index.html"
     }),
     new Dotenv({
       path: path.join(__dirname, "src/.env")
