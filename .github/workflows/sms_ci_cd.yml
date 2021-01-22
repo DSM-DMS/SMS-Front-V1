@@ -2,7 +2,7 @@ name: SMS Build & Deploy to S3
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   build:
