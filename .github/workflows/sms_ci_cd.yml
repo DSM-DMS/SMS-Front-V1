@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Checkout develop
-        uses: actions/checkout@develop
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Cache node modules
         uses: actions/cache@v1
