@@ -1,0 +1,55 @@
+name: SMS Build & Deploy to S3
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@develop
+
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+        env:
+          S3_URL: ${{ secrets.S3_URL }}
+          VERSION: ${{ secrets.VERSION }}
+          HOST_URL: ${{ secrets.HOST_URL }}
+          NAVER_CLIENT_ID: ${{ NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ NAVER_CLIENT_SECRET }}
+          SECURITY_BASE_PLAIN: ${{ SECURITY_BASE_PLAIN }}
+          SECURITY_PASS_PHRASE: ${{ SECURITY_PASS_PHRASE }}
+
+      - name: Deploy to S3
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws s3 cp \
+            --recursive \
+            --region ${{ secrets.S3_REGION }} \
+            build s3://${{ secrets.S3_BUCKET_NAME }}
+
+      - name: Create invalidation in CloudFront
+        uses: chetan/invalidate-cloudfront-action@master
+        env:
+          DISTRIBUTION: ${{ secrets.CLOUD_FRONT_DISTRIBUTIONP_ID }}
+          PATHS: "/*"
+          AWS_REGION: ${{ secrets.S3_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
