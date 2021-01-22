@@ -30,10 +30,10 @@ jobs:
           S3_URL: ${{ secrets.S3_URL }}
           VERSION: ${{ secrets.VERSION }}
           HOST_URL: ${{ secrets.HOST_URL }}
-          NAVER_CLIENT_ID: ${{ NAVER_CLIENT_ID }}
-          NAVER_CLIENT_SECRET: ${{ NAVER_CLIENT_SECRET }}
-          SECURITY_BASE_PLAIN: ${{ SECURITY_BASE_PLAIN }}
-          SECURITY_PASS_PHRASE: ${{ SECURITY_PASS_PHRASE }}
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          SECURITY_BASE_PLAIN: ${{ secrets.SECURITY_BASE_PLAIN }}
+          SECURITY_PASS_PHRASE: ${{ secrets.SECURITY_PASS_PHRASE }}
 
       - name: Deploy to S3
         env:
