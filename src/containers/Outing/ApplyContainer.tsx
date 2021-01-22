@@ -5,6 +5,7 @@ import React, {
   useCallback,
   useState
 } from "react";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { OutingApply } from "../../components";
@@ -32,6 +33,7 @@ export interface Outing {
 }
 
 const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
+  const history = useHistory();
   const [formDate, setFormDate] = useState<string>("");
   const [formOutTime, setFormOutTime] = useState<string>("");
   const [formInTime, setFormInTime] = useState<string>("");
@@ -159,6 +161,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       toast.success(
         "외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요."
       );
+      history.push("/outing/history");
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
