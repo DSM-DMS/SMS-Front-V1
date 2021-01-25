@@ -50,7 +50,7 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ${{ secrets.S3_REGION }} \
-            build s3://${{ secrets.S3_BUCKET_NAME }}
+            s3://${{ secrets.S3_BUCKET_NAME }}
 
       - name: Create invalidation in CloudFront
         uses: chetan/invalidate-cloudfront-action@master
