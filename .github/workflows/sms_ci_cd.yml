@@ -20,6 +20,7 @@ jobs:
           restore-keys: |
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
+
       - name: Install dependencies
         run: npm install
 
@@ -41,8 +42,8 @@ jobs:
         run: |
           aws s3 cp \
             --recursive \
-            --region ${{ secrets.S3_REGION }} \
-            dist s3://${{ secrets.S3_BUCKET_NAME }}
+            --region ap-northeast-2 \
+            dist s3://dsm-sms.com
 
       - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@master
