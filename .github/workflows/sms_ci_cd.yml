@@ -12,20 +12,6 @@ jobs:
       - name: Checkout master
         uses: actions/checkout@master
 
-      - name: Make .env file
-        uses: SpicyPizza/create-envfile@v1
-        with:
-          envkey_DEBUG: false
-          S3_URL: ${{ secrets.S3_URL }}
-          VERSION: ${{ secrets.VERSION }}
-          HOST_URL: ${{ secrets.HOST_URL }}
-          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
-          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
-          SECURITY_BASE_PLAIN: ${{ secrets.SECURITY_BASE_PLAIN }}
-          SECURITY_PASS_PHRASE: ${{ secrets.SECURITY_PASS_PHRASE }}
-          directory: ./src
-          file_name: .env
-
       - name: Cache node modules
         uses: actions/cache@v2
         with:
