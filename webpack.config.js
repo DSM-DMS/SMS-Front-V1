@@ -45,7 +45,8 @@ module.exports = {
     }),
     new Dotenv({
       path: path.join(__dirname, "src/.env")
-    })
+    }),
+    new webpack.EnvironmentPlugin(["HOST_URL"])
   ],
   devServer: {
     contentBase: path.join(__dirname, "public"),
