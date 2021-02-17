@@ -22,6 +22,20 @@ import {
 import { history } from "./modules/store";
 import { ToastContainer } from "react-toastify";
 
+const SERVER = {
+  hostUrl: process.env.HOST_URL,
+  version: process.env.VERSION,
+  s3Url: process.env.S3_URL,
+  securityBasePlain: process.env.SECURITY_BASE_PLAIN,
+  securityPassPhrase: process.env.SECURITY_PASS_PHRASE
+};
+
+console.log(SERVER.hostUrl);
+console.log(SERVER.s3Url);
+console.log(SERVER.securityBasePlain);
+console.log(SERVER.securityPassPhrase);
+console.log(SERVER.version);
+
 const App: FC<{}> = () => {
   return (
     <>
