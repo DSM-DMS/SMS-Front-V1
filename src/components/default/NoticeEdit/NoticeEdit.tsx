@@ -93,6 +93,11 @@ const NoticeEdit: FC<Props> = ({ editData, setting }) => {
       return;
     }
 
+    if (newTitle.length >= 50) {
+      toast.error("제목은 50자 이상으로 불가합니다.");
+      return;
+    }
+
     const writeDataStr = JSON.stringify(writeData);
 
     dispatch(
