@@ -38,13 +38,12 @@ export { default as NavIconUnauthorizedMint } from "./navigation/NavIcon-unAutho
 export { default as NavIconExitBlack } from "./navigation/NavIcon-exit-black.svg";
 export { default as NavIconTrashCanYellow } from "./navigation/NavIcon-trashCan-yellow.svg";
 export { default as IconWhite } from "./navigation/Icon-white.svg";
-export { default as IconBlack } from "./navigation/Icon-black.svg";
+export { default as IconBlack } from "./navigation/Icon-Black.svg";
 export { default as CloseMenu } from "./navigation/CloseMenu.svg";
 
-export { default as MainArrow } from "./Main/arrow.svg";
-export { default as MainBike } from "./Main/bike.svg";
-export { default as MainHistory } from "./Main/outingHistory.svg";
-export { default as MainWarning } from "./Main/warning.svg";
+export { default as MainBike } from "./main/bike.svg";
+export { default as MainHistory } from "./main/outingHistory.svg";
+export { default as MainWarning } from "./main/warning.svg";
 
 export { default as SearchIcon } from "./Board/SearchIcon.svg";
 
@@ -52,8 +51,6 @@ export { default as MainSelector } from "./Admin/selector.svg";
 export { default as MainChangeTable } from "./Admin/change.svg";
 
 export { default as OutingWarningRedBase } from "./Outing/warningRedBase.svg";
-export { default as OutingDown } from "./Outing/dropDownButton.svg";
-export { default as OutingTriangle } from "./Outing/triangle.svg";
 export { default as OutingBalloons } from "./Outing/balloons.svg";
 export { default as OutingWarning } from "./Outing/warning.svg";
 export { default as OutingHistory } from "./Outing/history.svg";

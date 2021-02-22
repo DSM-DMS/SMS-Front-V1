@@ -6,14 +6,12 @@ import ModalCategory from "./ModalCategory";
 
 import * as S from "../style";
 import { OutingUser, OutingClose } from "../../../assets";
-import { OutingStatus } from "../../../lib/api/payloads/Outing";
 import { stateType } from "../../../modules/reducer";
 import { SERVER } from "../../../lib/api/client";
 
 const ModalOnlineCard: FC<WithModalProps> = ({
   applyModal,
-  closeModal,
-  outingStatus
+  closeModal
 }): ReactElement => {
   const { profile_uri } = useSelector((state: stateType) => state.header);
 
@@ -34,9 +32,6 @@ const ModalOnlineCard: FC<WithModalProps> = ({
         <S.OnlineCardMoveApply onClick={applyModal}>
           신청 정보
         </S.OnlineCardMoveApply>
-        {OutingStatus[outingStatus] === OutingStatus[3] && (
-          <S.OnlineCardMoveApply>외출 완료</S.OnlineCardMoveApply>
-        )}
         <S.ModalClose
           src={OutingClose}
           alt="close"

@@ -741,12 +741,12 @@ export const CardPlace = styled.p`
 
 export const CardBottom = styled.div``;
 
-const PENDING = "#0000fe";
-const REJECT = "#ff9f59";
-const APPROVE = "#62d462";
-const START = "#5741b7";
+const REJECT = "#ff6409";
+const PENDING = "#ffeb00";
+const APPROVE = "#7aff00";
+const START = "#1000ff";
 const END = "#ff5555";
-const CERTIFY = "#0000fe";
+const CERTIFY = "#242424";
 
 interface Status {
   status: number;
@@ -759,8 +759,8 @@ export const CardStatus = styled.span<Status>`
       case -1:
         return REJECT;
       case 0:
-        return PENDING;
       case 1:
+        return PENDING;
       case 2:
         return APPROVE;
       case 3:
@@ -770,7 +770,7 @@ export const CardStatus = styled.span<Status>`
       case 5:
         return CERTIFY;
       default:
-        return PENDING;
+        return CERTIFY;
     }
   }};
   font-size: 14px;
@@ -832,6 +832,7 @@ export const ModalApply = styled.div`
   position: relative;
   width: 600px;
   padding: 40px 80px;
+  border-radius: 4px;
   background-color: white;
 `;
 

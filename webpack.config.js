@@ -1,16 +1,15 @@
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
 
 module.exports = {
-  mode: "none",
-  target: "web",
   entry: "./src/index.tsx",
   resolve: {
     extensions: [".ts", ".tsx", ".js"]
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.join(__dirname, "dist"),
     filename: "bundle.min.js",
     publicPath: "/"
   },
@@ -43,15 +42,21 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
-      filename: "./index.html",
-      meta: {
-        viewport: "width=device-width, initial-scale=1, shrink-to-fit=no"
-      }
+      template: "./public/index.html"
     }),
     new Dotenv({
       path: path.join(__dirname, "src/.env")
-    })
+    }),
+    new webpack.EnvironmentPlugin([
+      "HOST_URL",
+      "S3_URL",
+      "VERSION",
+      "HOST_URL",
+      "NAVER_CLIENT_ID",
+      "NAVER_CLIENT_SECRET",
+      "SECURITY_BASE_PLAIN",
+      "SECURITY_PASS_PHRASE"
+    ])
   ],
   devServer: {
     contentBase: path.join(__dirname, "public"),

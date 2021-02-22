@@ -17,7 +17,7 @@ import {
 import { RouteData } from "../../../lib/static";
 import { useCallback } from "react";
 import { useHistory } from "react-router";
-import { NavIconTrashCanYellow, NavIconExitBlack } from "../../../assets";
+import { NavIconExitBlack } from "../../../assets";
 import NavigationItem from "../Item/NavigationItem";
 import { useDispatch } from "react-redux";
 import { getNavUrl } from "../../../lib/utils";
@@ -31,7 +31,7 @@ const NavigationMain: FC<Props> = ({ routeData }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const goMain = useCallback(() => {
-    history.push("/main");
+    history.push("/home");
   }, []);
 
   useEffect(() => {
@@ -74,12 +74,6 @@ const NavigationMain: FC<Props> = ({ routeData }) => {
             isActive={false}
             src={NavIconExitBlack}
             name="동아리 관리 페이지 나가기"
-          />
-          <NavigationItem
-            onClick={() => {}}
-            isActive={false}
-            src={NavIconTrashCanYellow}
-            name="동아리 삭제"
           />
         </S.ManagementMenu>
       )}

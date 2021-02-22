@@ -16,7 +16,6 @@ import {
   NoticeRouter,
   OutingRouter,
   MainRouter,
-  AdminRouter,
   ManagementRouter
 } from "./routers";
 import { history } from "./modules/store";
@@ -48,7 +47,6 @@ const App: FC<{}> = () => {
                 <Route path="/notice" component={NoticeRouter} />
                 <Route path="/circles" component={CirclesRouter} />
                 <Route path="/outing" component={OutingRouter} />
-                <Route path="/admin" component={AdminRouter} />
                 <Route path="/management" component={ManagementRouter} />
                 <Redirect path="/" to="/home" />
                 <Route path="*" component={PageNotFound} />
