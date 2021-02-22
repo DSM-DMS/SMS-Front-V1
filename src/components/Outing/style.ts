@@ -832,6 +832,7 @@ export const ModalApply = styled.div`
   position: relative;
   width: 600px;
   padding: 40px 80px;
+  border-radius: 4px;
   background-color: white;
 `;
 
