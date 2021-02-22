@@ -851,6 +851,12 @@ export const ModalItem = styled.li`
   font-size: 14px;
 `;
 
+export const ModalStatus = styled.p`
+  margin-top: 24px;
+  color: #16191f;
+  font-weight: 300;
+`;
+
 export const ModalCategory = styled.span`
   width: 100px;
   margin-right: 8px;
