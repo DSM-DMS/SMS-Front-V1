@@ -2,24 +2,23 @@ name: SMS Build & Deploy to S3
 on:
   push:
     branches:
-      - develop
+      - master
 
 jobs:
   build:
     runs-on: ubuntu-18.04
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Checkout master
+        uses: actions/checkout@master
 
       - name: Cache node modules
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: node_modules
-          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.OS }}-build-
-            ${{ runner.OS }}-
+            ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
         run: npm install
@@ -42,13 +41,13 @@ jobs:
         run: |
           aws s3 cp \
             --recursive \
-            --region ${{ secrets.S3_REGION }} \
-            build s3://${{ secrets.S3_BUCKET_NAME }}
+            --region ap-northeast-2 \
+            dist s3://dsm-sms.com
 
-      - name: Create invalidation in CloudFront
+      - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@master
         env:
-          DISTRIBUTION: ${{ secrets.CLOUD_FRONT_DISTRIBUTIONP_ID }}
+          DISTRIBUTION: ${{ secrets.CLOUD_FRONT_DISTRIBUTION_ID }}
           PATHS: "/*"
           AWS_REGION: ${{ secrets.S3_REGION }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

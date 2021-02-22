@@ -4,7 +4,7 @@ import subNavReducer from "./subNav/subNav";
 import headerReducer from "./header";
 import boardReducer from "./board";
 import posterReducer from "./poster";
-import outingCardReducer from "./outingCard";
+import outingCardReducer from "./OutingCard";
 import ManagementInfo from "./management/info";
 import outingReducer from "./outing";
 import mainReducer from "./main";

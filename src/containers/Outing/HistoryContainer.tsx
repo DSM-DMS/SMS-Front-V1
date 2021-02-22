@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 import { OutingHistory } from "../../components";
 import { getHistory } from "../../lib/api/Outing";
 import { ResHistoryItem } from "../../lib/api/payloads/Outing";
-import { getAxiosError } from "../../lib/utils";
 import {
   resetOutingHistoryList,
   setOutingHistoryList,
