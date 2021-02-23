@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import ApplyHead from "./Head";
-import ApplyDate from "./Date";
 import ApplyTime from "./Time";
 import ApplyPlace from "./Place";
 import ApplyReason from "./Reason";
@@ -20,13 +19,11 @@ import { Loading } from "../../default";
 
 interface Props {
   loading: boolean;
-  formDate: string;
   formOutTime: string;
   formInTime: string;
   formPlace: string;
   formReason: string;
   formReasonSick: boolean;
-  onInputDate: (e: FormEvent<HTMLInputElement>) => void;
   handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePlace: (value: string) => void;
@@ -38,13 +35,11 @@ interface Props {
 
 const Apply: FC<Props> = ({
   loading,
-  formDate,
   formInTime,
   formOutTime,
   formPlace,
   formReason,
   formReasonSick,
-  onInputDate,
   handleInTime,
   handleOutTime,
   handlePlace,
@@ -56,7 +51,6 @@ const Apply: FC<Props> = ({
   const dispatch = useDispatch();
   const handleApplyOuting = () => {
     const outing: Outing = {
-      date: formDate,
       startTime: formOutTime,
       endTime: formInTime,
       place: formPlace,
@@ -92,7 +86,6 @@ const Apply: FC<Props> = ({
           책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
-          <ApplyDate formDate={formDate} onInputDate={onInputDate} />
           <ApplyTime
             formOutTime={formOutTime}
             formInTime={formInTime}

@@ -1,10 +1,4 @@
-import React, {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useCallback,
-  useState
-} from "react";
+import React, { ChangeEvent, FC, useCallback, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -24,7 +18,6 @@ export const EMERGENCY = "emergency" as const;
 export type SituationType = typeof NORMAL | typeof EMERGENCY;
 
 export interface Outing {
-  date: string;
   startTime: string;
   endTime: string;
   place: string;
@@ -32,18 +25,17 @@ export interface Outing {
   situation: SituationType;
 }
 
+const getTodayOutForm = (time: string) => {
+  return +new Date(`${new Date().toLocaleDateString()}-${time}`);
+};
+
 const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const history = useHistory();
-  const [formDate, setFormDate] = useState<string>("");
   const [formOutTime, setFormOutTime] = useState<string>("");
   const [formInTime, setFormInTime] = useState<string>("");
   const [formPlace, setFormPlace] = useState<string>("");
   const [formReason, setFormReason] = useState<string>("");
   const [formReasonSick, setFormReasonSick] = useState<boolean>(false);
-
-  const onInputDate = useCallback((e: FormEvent<HTMLInputElement>) => {
-    setFormDate(e.currentTarget.value);
-  }, []);
 
   const handleOutTime = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -120,13 +112,12 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   }, []);
 
   const checkOutingValidation = useCallback((outing: Outing) => {
-    const { date, startTime, endTime, place, reason } = outing;
+    const { startTime, endTime, place, reason } = outing;
     const now = +new Date();
-    const targetStartTime = +new Date(`${date}T${startTime}`);
-    const targetEndTime = +new Date(`${date}T${endTime}`);
+    const targetStartTime = getTodayOutForm(startTime);
+    const targetEndTime = getTodayOutForm(endTime);
 
     return !(
-      date.trim() === "" ||
       startTime.trim() === "" ||
       endTime.trim() === "" ||
       now > targetStartTime ||
@@ -137,14 +128,14 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   }, []);
 
   const applyOuting = useCallback(async (outing: Outing) => {
-    const { date, startTime, endTime, place, reason, situation } = outing;
+    const { startTime, endTime, place, reason, situation } = outing;
     if (!checkOutingValidation(outing)) {
       toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
       return;
     }
 
     const getOutingTime = (time: string) =>
-      Math.round(+new Date(`${date}T${time}`) / 1000);
+      Math.round(getTodayOutForm(time) / 1000);
 
     const outingBody: ReqOuting = {
       start_time: getOutingTime(startTime),
@@ -166,7 +157,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       const { status, code } = getAxiosError(err);
 
       if (status === 409 && code === -2401) {
-        toast.error("해당 날짜에 대기중인 외출 신청이 있습니다.");
+        toast.error("오늘 대기중인 외출 신청이 있습니다.");
       } else {
         toast.error("오류가 발생했습니다. 다시 시도해주세요.");
       }
@@ -177,13 +168,11 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   return (
     <OutingApply
       loading={loading}
-      formDate={formDate}
       formOutTime={formOutTime}
       formInTime={formInTime}
       formPlace={formPlace}
       formReason={formReason}
       formReasonSick={formReasonSick}
-      onInputDate={onInputDate}
       handleOutTime={handleOutTime}
       handleInTime={handleInTime}
       handlePlace={handlePlace}
