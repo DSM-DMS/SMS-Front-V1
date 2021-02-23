@@ -62,6 +62,9 @@ const SearchList: FC<Props> = ({
               id="searchInput"
               placeholder="ex) 장동, 23-9"
               onChange={e => handlePlace(e.currentTarget.value)}
+              onKeyPress={e => {
+                if (e.key === "Enter") searchStart();
+              }}
             />
             <img
               src={OutingPlaceSearch}

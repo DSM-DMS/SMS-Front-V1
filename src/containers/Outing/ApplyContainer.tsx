@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { OutingApply } from "../../components";
 import { postOuting } from "../../lib/api/Outing";
 import { ReqOuting } from "../../lib/api/payloads/Outing";
-import { getAxiosError } from "../../lib/utils";
+import { getAxiosError, padNum } from "../../lib/utils";
 import WithLoadingContainer, {
   LoadingProps
 } from "../Loading/WithLoadingContainer";
@@ -40,15 +40,20 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const handleOutTime = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      const OUT_TIME = "16:20";
+      const ENABLE_OUT_TIME = "16:20";
+      const now = new Date();
+      const format = `${padNum(now.getHours())}:${padNum(now.getMinutes())}`;
 
-      if (value < OUT_TIME) {
+      if (value < format) {
+        toast.error("'이미 지난 시각입니다.'");
+        return;
+      }
+      if (value < ENABLE_OUT_TIME) {
         toast.error("외출은 16시 20분 이후에 가능합니다.");
         return;
       }
-
       if (!checkOutTimeValid(value)) {
-        toast.error("귀교 시간보다 늦을 수 없습니다.");
+        toast.error("귀교 시간보다 빠를 수 없습니다.");
         return;
       }
 
@@ -61,12 +66,17 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     (e: ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
       const IN_TIME = "20:30";
+      const now = new Date();
+      const format = `${padNum(now.getHours())}:${padNum(now.getMinutes())}`;
 
-      if (value > IN_TIME) {
-        toast.error("외출은 20시 30시 이후엔 불가능합니다.");
+      if (value < format) {
+        toast.error("'이미 지난 시각입니다.'");
         return;
       }
-
+      if (value > IN_TIME) {
+        toast.error("외출은 20시 30분 이후엔 불가능합니다.");
+        return;
+      }
       if (!checkInTimeValid(value)) {
         toast.error("외출 시간보다 늦을 수 없습니다.");
         return;
