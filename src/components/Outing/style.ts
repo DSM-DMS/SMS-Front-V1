@@ -971,3 +971,54 @@ export const WithModalAniWrap = styled.div`
     }
   }
 `;
+
+export const GuideModalWrap = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 500px;
+  line-height: 1.5;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  p {
+    margin-bottom: 12px;
+  }
+  ul li {
+    margin: 6px 0;
+  }
+`;
+
+export const GuideModalBack = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+`;
+
+export const GuideModalButtons = styled.button`
+  float: right;
+  margin: 0 8px;
+  padding: 4px 16px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  &:first-of-type {
+    color: white;
+    background-color: #5323b2;
+  }
+  &:last-of-type {
+    color: #242424;
+    background-color: white;
+  }
+`;
