@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, ReactElement, useState } from "react";
+import React, { ChangeEvent, FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -25,9 +25,12 @@ interface Props {
   formPlace: string;
   formReason: string;
   formReasonSick: boolean;
+  guideModal: boolean;
   handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePlace: (value: string) => void;
+  openGuideModal: () => void;
+  closeGuideModal: () => void;
   cancelSickOuting: () => void;
   applySickOuting: () => void;
   handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -41,24 +44,18 @@ const Apply: FC<Props> = ({
   formPlace,
   formReason,
   formReasonSick,
+  guideModal,
   handleInTime,
   handleOutTime,
   handlePlace,
+  openGuideModal,
+  closeGuideModal,
   cancelSickOuting,
   applySickOuting,
   handleReason,
   applyOuting
 }): ReactElement => {
   const dispatch = useDispatch();
-  const [guideModal, setGuideModal] = useState<boolean>(false);
-
-  const openGuideModal = () => {
-    setGuideModal(true);
-  };
-
-  const closeGuideModal = () => {
-    setGuideModal(false);
-  };
 
   const handleApplyOuting = () => {
     const outing: Outing = {

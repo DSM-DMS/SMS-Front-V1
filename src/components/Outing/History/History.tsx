@@ -59,7 +59,7 @@ const History: FC<Props> = ({
         {historyStart === 0 && <Loading />}
         {historyStart !== 0 && histories.length === 0 ? (
           <S.HistoryNoContent>
-            외출신청 내역이 없습니다.
+            외출신청 내역이 없습니다.{" "}
             <Link
               to="/outing/apply"
               onClick={() => dispatch(subPageMove("외출신청"))}
