@@ -36,6 +36,15 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const [formPlace, setFormPlace] = useState<string>("");
   const [formReason, setFormReason] = useState<string>("");
   const [formReasonSick, setFormReasonSick] = useState<boolean>(false);
+  const [guideModal, setGuideModal] = useState<boolean>(false);
+
+  const openGuideModal = useCallback(() => {
+    setGuideModal(true);
+  }, []);
+
+  const closeGuideModal = useCallback(() => {
+    setGuideModal(false);
+  }, []);
 
   const handleOutTime = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -141,6 +150,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     const { startTime, endTime, place, reason, situation } = outing;
     if (!checkOutingValidation(outing)) {
       toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      closeGuideModal();
       return;
     }
 
@@ -157,11 +167,26 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
     startLoading();
     try {
-      await postOuting(outingBody);
+      const {
+        data: { status, code }
+      } = await postOuting(outingBody);
 
-      toast.success(
-        "외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요."
-      );
+      if (status === 201) {
+        if (code === 0) {
+          alert(
+            "외출증 신청이 완료되었습니다. 승인을 받은 후 모바일을 통해 외출을 시작해주세요."
+          );
+        } else if (code === -1) {
+          alert(
+            "연결된 학부모 계정이 존재하지 않아 학부모 승인 단게를 건너뛰었습니다."
+          );
+        } else if (code === -2) {
+          alert(
+            "학부모가 문자 사용을 동의하지 않아 학부모 승인 단계를 건너뛰었습니다."
+          );
+        }
+      }
+
       history.push("/outing/history");
     } catch (err) {
       const { status, code } = getAxiosError(err);
@@ -172,6 +197,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
         toast.error("오류가 발생했습니다. 다시 시도해주세요.");
       }
     }
+    closeGuideModal();
     endLoading();
   }, []);
 
@@ -183,9 +209,12 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       formPlace={formPlace}
       formReason={formReason}
       formReasonSick={formReasonSick}
+      guideModal={guideModal}
       handleOutTime={handleOutTime}
       handleInTime={handleInTime}
       handlePlace={handlePlace}
+      openGuideModal={openGuideModal}
+      closeGuideModal={closeGuideModal}
       cancelSickOuting={cancelSickOuting}
       applySickOuting={applySickOuting}
       handleReason={handleReason}
