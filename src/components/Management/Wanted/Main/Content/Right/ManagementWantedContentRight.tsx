@@ -31,7 +31,15 @@ const ManagementWantedContentRight = () => {
       toast.dark("모집 소개를 입력해주세요");
       return;
     }
+    if (recruit_concept.length > 40) {
+      toast.dark("모집 소개를 40자 이하로 해주세요");
+      return;
+    }
 
+    if (members.length <= 0) {
+      toast.dark("모집 대상을 등록해주세요");
+      return;
+    }
     if (isEdit) {
       dispatch(
         managementActionCreater.editManagementWantedInfoSaga({
