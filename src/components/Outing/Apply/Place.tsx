@@ -8,6 +8,7 @@ import { OutingPlaceSearch } from "../../../assets";
 import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 import { getNaverSearchLocal } from "../../../lib/api/Outing";
 import { getAxiosError } from "../../../lib/utils";
+import { useHistory } from "react-router-dom";
 
 interface Props {
   place: string;
@@ -20,6 +21,7 @@ interface ModalInputs {
 }
 
 const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
+  const history = useHistory();
   const [modal, setModal] = useState<boolean>(false);
   const [placeResult, setPlaceResult] = useState<ResNaverLocalWithDefault>(
     null
@@ -68,7 +70,10 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
     } catch (err) {
       const { status } = getAxiosError(err);
 
-      if (status === 423) {
+      if (status === 401) {
+        toast.error("세션이 만료되었습니다. 다시 로그인해 주세요.");
+        history.push("/login");
+      } else if (status === 423) {
         toast.error("한 번 검색한 후에는 5초 이후에 다시 검색할 수 있습니다.");
       }
     }

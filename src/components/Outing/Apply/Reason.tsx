@@ -18,7 +18,7 @@ const ApplyReason: FC<Props> = ({ handleReason }): ReactElement => {
             placeholder="외출사유를 입력하세요"
             rows={2}
             onChange={handleReason}
-            maxLength={100}
+            maxLength={150}
           />
         </S.ApplyFormInputWrap>
       </S.FormInnerReason>

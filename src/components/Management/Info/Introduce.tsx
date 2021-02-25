@@ -20,6 +20,7 @@ const ClubIntroduce: FC<Props> = ({
           rows={5}
           defaultValue={introduction}
           onChange={handleIntroduction}
+          maxLength={150}
         />
       </label>
     </S.ClubIntro>

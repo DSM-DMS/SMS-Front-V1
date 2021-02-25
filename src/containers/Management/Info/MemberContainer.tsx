@@ -7,6 +7,7 @@ import React, {
   useMemo
 } from "react";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import Members from "../../../components/Management/Info/Members";
 import MemberItem from "../../../components/Management/Info/MemberItem";
@@ -22,6 +23,8 @@ import { ResStudents } from "../../../lib/api/payloads/Management";
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 import { getAxiosError } from "../../../lib/utils";
 import Confirm from "../../../lib/confirm/confirm";
+import { useDispatch } from "react-redux";
+import { setClubUuid } from "../../../modules/action/header";
 
 interface Props {
   leaderUuid: string;
@@ -30,6 +33,8 @@ interface Props {
 }
 
 const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const handler = new ManagementInfoHandler();
   const [modal, setModal] = useState(false);
   const [students, setStudents] = useState<ResStudents[]>([]);
@@ -148,8 +153,10 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
       await getClubInfo(clubUuid);
 
       toast.success("동아리 장을 변경했습니다.");
+      dispatch(setClubUuid(""));
+      localStorage.removeItem("club_uuid");
 
-      location.href = "/home";
+      history.push("/home");
     } catch (err) {
       const { status, code } = getAxiosError(err);
 

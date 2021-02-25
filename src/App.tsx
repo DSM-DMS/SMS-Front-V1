@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { Switch, Router, Route, Redirect } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import "./lib/confirm/confirm.css";
 
+import "./lib/confirm/confirm.css";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
 import { PageNotFound, Navigation } from "./components";
 import {

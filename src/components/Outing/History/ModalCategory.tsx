@@ -8,6 +8,21 @@ import { padNum } from "../../../lib/utils";
 
 interface Props {}
 
+const outParagraph = {
+  [OutingStatus["선생님 거절"]]: "외출증 승인이 거절되었습니다.",
+  [OutingStatus["학부모 거절"]]: "외출증 승인이 거절되었습니다.",
+  [OutingStatus["학부모 승인"]]:
+    "승인 대기중입니다. 승인 완료 시 모바일을 통해 외출을 시작해주세요.",
+  [OutingStatus["선생님 승인"]]:
+    "외출증이 승인되었습니다. 모바일을 통해 외출을 시작해주세요.",
+  [OutingStatus["외출 시작"]]:
+    "현재 외출중입니다. 학교 귀사 시 모바일을 통해 외출을 종료해주세요.",
+  [OutingStatus["외출 종료"]]:
+    "외출이 종료되었습니다. 선생님께 방문에 최종 확인을 받아주세요.",
+  [OutingStatus["외출 인증 승인"]]:
+    "외출이 최종적으로 확인 완료 및 사용이 만료되었습니다."
+};
+
 const ModalCategory: FC<Props> = (): ReactElement => {
   const { end_time, start_time, reason, place, outing_status } = useSelector(
     (state: stateType) => state.outing.selected
@@ -55,6 +70,7 @@ const ModalCategory: FC<Props> = (): ReactElement => {
         <S.ModalCategory>상태</S.ModalCategory>
         <span>{OutingStatus[outing_status]}</span>
       </S.ModalItem>
+      <S.ModalStatus>{outParagraph[outing_status]}</S.ModalStatus>
     </S.ModalList>
   );
 };
