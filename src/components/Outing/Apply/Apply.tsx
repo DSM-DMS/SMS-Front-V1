@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, FormEvent, ReactElement } from "react";
+import React, { ChangeEvent, FC, ReactElement, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -7,6 +7,7 @@ import ApplyTime from "./Time";
 import ApplyPlace from "./Place";
 import ApplyReason from "./Reason";
 import SicOut from "./SickOut";
+import GuideModal from "./GuideModal";
 
 import * as S from "../style";
 import {
@@ -49,6 +50,16 @@ const Apply: FC<Props> = ({
   applyOuting
 }): ReactElement => {
   const dispatch = useDispatch();
+  const [guideModal, setGuideModal] = useState<boolean>(true);
+
+  const openGuideModal = () => {
+    setGuideModal(true);
+  };
+
+  const closeGuideModal = () => {
+    setGuideModal(false);
+  };
+
   const handleApplyOuting = () => {
     const outing: Outing = {
       startTime: formOutTime,
@@ -99,9 +110,15 @@ const Apply: FC<Props> = ({
           <ApplyReason handleReason={handleReason} />
           <ApplyPlace handlePlace={handlePlace} place={formPlace} />
         </S.ApplyForm>
+        {guideModal && (
+          <GuideModal
+            closeGuideModal={closeGuideModal}
+            handleApplyOuting={handleApplyOuting}
+          />
+        )}
         <S.FormButtonWrap>
           {loading && <Loading />}
-          <S.FormButtonSubmit onClick={handleApplyOuting}>
+          <S.FormButtonSubmit onClick={openGuideModal}>
             작성완료
           </S.FormButtonSubmit>
         </S.FormButtonWrap>

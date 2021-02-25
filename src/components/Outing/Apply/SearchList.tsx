@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
-import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 
 import * as S from "../style";
 import { OutingCloseWhite, OutingPlaceSearch } from "../../../assets";
+import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 
 interface Props {
   place: string;
