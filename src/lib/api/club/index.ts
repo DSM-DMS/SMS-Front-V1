@@ -29,3 +29,9 @@ export const getCircleMembers = (
     student_uuids: uuids
   });
 };
+
+export const getClubFilter = (): Promise<
+  AxiosResponse<{ fields: string[] }>
+> => {
+  return apiDefault().get<{ fields: string[] }>("/clubs/property/fields");
+};
