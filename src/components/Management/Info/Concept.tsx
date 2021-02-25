@@ -18,7 +18,7 @@ const ClubConcept: FC<Props> = ({
         <S.InputCommonStyle
           type="text"
           placeholder="동아리에 대해 간단하게 적어주세요."
-          maxLength={30}
+          maxLength={40}
           defaultValue={clubConcept}
           onChange={handleConcept}
         />

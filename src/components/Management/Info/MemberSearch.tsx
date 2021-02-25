@@ -55,6 +55,7 @@ const MemberSearch: FC<Props> = ({
             onChange={handleValue}
             type="text"
             placeholder="검색어"
+            onKeyPress={e => e.key === "Enter" && handleSearchStudents()}
           />
         </S.SearchLabel>
         <S.Result>

@@ -1,13 +1,13 @@
-import React, { ChangeEvent, FC, FormEvent, ReactElement } from "react";
+import React, { ChangeEvent, FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import ApplyHead from "./Head";
-import ApplyDate from "./Date";
 import ApplyTime from "./Time";
 import ApplyPlace from "./Place";
 import ApplyReason from "./Reason";
 import SicOut from "./SickOut";
+import GuideModal from "./GuideModal";
 
 import * as S from "../style";
 import {
@@ -20,16 +20,17 @@ import { Loading } from "../../default";
 
 interface Props {
   loading: boolean;
-  formDate: string;
   formOutTime: string;
   formInTime: string;
   formPlace: string;
   formReason: string;
   formReasonSick: boolean;
-  onInputDate: (e: FormEvent<HTMLInputElement>) => void;
+  guideModal: boolean;
   handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePlace: (value: string) => void;
+  openGuideModal: () => void;
+  closeGuideModal: () => void;
   cancelSickOuting: () => void;
   applySickOuting: () => void;
   handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
@@ -38,25 +39,26 @@ interface Props {
 
 const Apply: FC<Props> = ({
   loading,
-  formDate,
   formInTime,
   formOutTime,
   formPlace,
   formReason,
   formReasonSick,
-  onInputDate,
+  guideModal,
   handleInTime,
   handleOutTime,
   handlePlace,
+  openGuideModal,
+  closeGuideModal,
   cancelSickOuting,
   applySickOuting,
   handleReason,
   applyOuting
 }): ReactElement => {
   const dispatch = useDispatch();
+
   const handleApplyOuting = () => {
     const outing: Outing = {
-      date: formDate,
       startTime: formOutTime,
       endTime: formInTime,
       place: formPlace,
@@ -92,7 +94,6 @@ const Apply: FC<Props> = ({
           책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
-          <ApplyDate formDate={formDate} onInputDate={onInputDate} />
           <ApplyTime
             formOutTime={formOutTime}
             formInTime={formInTime}
@@ -106,9 +107,15 @@ const Apply: FC<Props> = ({
           <ApplyReason handleReason={handleReason} />
           <ApplyPlace handlePlace={handlePlace} place={formPlace} />
         </S.ApplyForm>
+        {guideModal && (
+          <GuideModal
+            closeGuideModal={closeGuideModal}
+            handleApplyOuting={handleApplyOuting}
+          />
+        )}
         <S.FormButtonWrap>
           {loading && <Loading />}
-          <S.FormButtonSubmit onClick={handleApplyOuting}>
+          <S.FormButtonSubmit onClick={openGuideModal}>
             작성완료
           </S.FormButtonSubmit>
         </S.FormButtonWrap>

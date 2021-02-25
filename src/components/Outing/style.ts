@@ -741,12 +741,12 @@ export const CardPlace = styled.p`
 
 export const CardBottom = styled.div``;
 
-const PENDING = "#0000fe";
-const REJECT = "#ff9f59";
-const APPROVE = "#62d462";
-const START = "#5741b7";
+const REJECT = "#ff6409";
+const PENDING = "#ffeb00";
+const APPROVE = "#7aff00";
+const START = "#1000ff";
 const END = "#ff5555";
-const CERTIFY = "#0000fe";
+const CERTIFY = "#242424";
 
 interface Status {
   status: number;
@@ -759,8 +759,8 @@ export const CardStatus = styled.span<Status>`
       case -1:
         return REJECT;
       case 0:
-        return PENDING;
       case 1:
+        return PENDING;
       case 2:
         return APPROVE;
       case 3:
@@ -770,7 +770,7 @@ export const CardStatus = styled.span<Status>`
       case 5:
         return CERTIFY;
       default:
-        return PENDING;
+        return CERTIFY;
     }
   }};
   font-size: 14px;
@@ -832,6 +832,7 @@ export const ModalApply = styled.div`
   position: relative;
   width: 600px;
   padding: 40px 80px;
+  border-radius: 4px;
   background-color: white;
 `;
 
@@ -848,6 +849,12 @@ export const ModalList = styled.ul``;
 export const ModalItem = styled.li`
   margin: 10px 0;
   font-size: 14px;
+`;
+
+export const ModalStatus = styled.p`
+  margin-top: 24px;
+  color: #16191f;
+  font-weight: 300;
 `;
 
 export const ModalCategory = styled.span`
@@ -962,5 +969,56 @@ export const WithModalAniWrap = styled.div`
       transform: translateY(0);
       opacity: 1;
     }
+  }
+`;
+
+export const GuideModalWrap = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 500px;
+  line-height: 1.5;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  p {
+    margin-bottom: 12px;
+  }
+  ul li {
+    margin: 6px 0;
+  }
+`;
+
+export const GuideModalBack = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+`;
+
+export const GuideModalButtons = styled.button`
+  float: right;
+  margin: 0 8px;
+  padding: 4px 16px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  &:first-of-type {
+    color: white;
+    background-color: #5323b2;
+  }
+  &:last-of-type {
+    color: #242424;
+    background-color: white;
   }
 `;
