@@ -50,7 +50,7 @@ const Apply: FC<Props> = ({
   applyOuting
 }): ReactElement => {
   const dispatch = useDispatch();
-  const [guideModal, setGuideModal] = useState<boolean>(true);
+  const [guideModal, setGuideModal] = useState<boolean>(false);
 
   const openGuideModal = () => {
     setGuideModal(true);
