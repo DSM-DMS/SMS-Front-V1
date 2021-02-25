@@ -80,6 +80,10 @@ const ManagementInfoContainer: FC<Props> = ({
       await patchClubInfo(clubUuid, getModifiedFd());
 
       toast.success("동아리 정보를 수정했습니다.");
+      setConcept("");
+      setIntroduce("");
+      setFbLink("");
+      setLogo(null);
     } catch (err) {
       const { status, code } = getAxiosError(err);
 
