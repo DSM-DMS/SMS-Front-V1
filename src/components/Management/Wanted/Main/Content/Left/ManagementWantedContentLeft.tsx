@@ -89,7 +89,7 @@ const ManagementWantedContentLeft: FC = () => {
   const addList = useCallback(() => {
     setWantedData(prev =>
       prev.concat({
-        field: "",
+        field: "분야",
         grade: 1,
         number: 1,
         id: idLen.current++,
@@ -113,12 +113,18 @@ const ManagementWantedContentLeft: FC = () => {
   }, []);
 
   const changeNumber = useCallback((id: number, number: number) => {
+    if (number < 1 || number > 10) {
+      return;
+    }
     setWantedData(prev =>
       prev.map(data => (data.id === id ? { ...data, number } : data))
     );
   }, []);
 
   const changeField = useCallback((id: number, field: string) => {
+    if (field.length > 20) {
+      return;
+    }
     setWantedData(prev =>
       prev.map(data => (data.id === id ? { ...data, field } : data))
     );

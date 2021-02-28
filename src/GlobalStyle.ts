@@ -66,17 +66,22 @@ export const GlobalStyle: GlobalStyleComponent<
     font-family:"Noto Sans KR" !important;
   }
 
-  .codex-editor__redactor {
-    padding-bottom:0px !important;
-  }
+  
 
   #editer {
     height:495px;
     overflow-y:auto;
 
+    .codex-editor__redactor {
+    padding-bottom:0px !important;
+  }
+  .ce-toolbar__content {
+    max-width:unset;
+    position:static;
+  }
+  
     .ce-block__content {
-      max-width:650px;
-      margin:0 auto;
+      max-width:unset;
     }
 
     h1,

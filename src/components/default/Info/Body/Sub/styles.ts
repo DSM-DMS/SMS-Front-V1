@@ -21,6 +21,11 @@ export const Notice = styled.div`
   > a {
     text-decoration: none;
     color: #242424;
+    display: block;
+    max-width: 280px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
       color: #5323b2;

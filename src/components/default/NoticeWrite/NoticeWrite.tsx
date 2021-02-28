@@ -82,6 +82,10 @@ const AdminNoticeWriting: FC<Props> = ({ setting }) => {
       toast.error("내용을 입력해주세요");
       return;
     }
+    if (title.length >= 50) {
+      toast.error("제목은 50자 이상으로 불가합니다.");
+      return;
+    }
 
     const writeDataStr: string = JSON.stringify(writeData);
 

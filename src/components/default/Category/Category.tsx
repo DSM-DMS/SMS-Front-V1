@@ -1,4 +1,12 @@
-import React, { FC, ChangeEvent, memo, useState, useCallback } from "react";
+import React, {
+  FC,
+  ChangeEvent,
+  memo,
+  useState,
+  useCallback,
+  useEffect
+} from "react";
+import { getClubFilter } from "../../../lib/api/club";
 import { SearchInput } from "../../default";
 import * as S from "./styles";
 
@@ -20,6 +28,12 @@ const Category: FC<Props> = ({
   field
 }) => {
   const [menuIsOpen, setMenuIsOpen] = useState<boolean>(false);
+  const [fields, setFields] = useState<string[]>([]);
+  useEffect(() => {
+    getClubFilter().then(res => {
+      setFields(res.data.fields);
+    });
+  }, []);
   const changeMenuIsOpen = useCallback(() => {
     setMenuIsOpen(prev => !prev);
   }, []);
@@ -32,13 +46,11 @@ const Category: FC<Props> = ({
           <span>{field || "전체"}</span>
           <S.Fields isOpen={menuIsOpen}>
             <S.Field onClick={() => filterHandler("")}>전체</S.Field>
-            <S.Field onClick={() => filterHandler("SW개발")}>SW개발</S.Field>
-            <S.Field onClick={() => filterHandler("임베디드")}>
-              임베디드
-            </S.Field>
-            <S.Field onClick={() => filterHandler("정보보안")}>
-              정보보안
-            </S.Field>
+            {fields.map((field: string) => (
+              <S.Field key={field} onClick={() => filterHandler(field)}>
+                {field}
+              </S.Field>
+            ))}
           </S.Fields>
         </S.FieldWrap>
         <div>
