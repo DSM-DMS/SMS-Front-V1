@@ -31,7 +31,8 @@ const initialState: HeaderState = {
   student_number: 0,
   phone_number: "",
   profile_uri: "",
-  clubUuid: ""
+  clubUuid: "",
+  parent_status: ""
 };
 
 const headerReducer = (

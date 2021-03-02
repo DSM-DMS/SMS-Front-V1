@@ -132,24 +132,32 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
   const checkOutingValidation = useCallback((outing: Outing) => {
     const { startTime, endTime, place, reason } = outing;
-    const now = +new Date();
-    const targetStartTime = getTodayOutForm(startTime);
-    const targetEndTime = getTodayOutForm(endTime);
 
-    return !(
+    return (
       startTime.trim() === "" ||
       endTime.trim() === "" ||
-      now > targetStartTime ||
-      now > targetEndTime ||
       place.trim() === "" ||
       reason.trim() === ""
     );
   }, []);
 
+  const checkOutTimeValidation = useCallback((outing: Outing) => {
+    const now = +new Date();
+    const { startTime, endTime } = outing;
+    const targetStartTime = getTodayOutForm(startTime);
+    const targetEndTime = getTodayOutForm(endTime);
+
+    return now > targetStartTime || now > targetEndTime;
+  }, []);
+
   const applyOuting = useCallback(async (outing: Outing) => {
     const { startTime, endTime, place, reason, situation } = outing;
-    if (!checkOutingValidation(outing)) {
+    if (checkOutingValidation(outing)) {
       toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      closeGuideModal();
+      return;
+    } else if (checkOutTimeValidation(outing)) {
+      toast.error("현재 시간보다 이후 시간에 신청해야 합니다.");
       closeGuideModal();
       return;
     }
