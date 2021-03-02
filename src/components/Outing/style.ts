@@ -323,6 +323,28 @@ export const FormPlaceSearchListWrap = styled.div`
   z-index: 10;
 `;
 
+export const PlaceDetailWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #888888;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+export const PlaceDetailInput = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  &::placeholder {
+    color: #dddddd;
+  }
+`;
+
 export const ProgressBar = styled.div`
   position: fixed;
   top: 0;
