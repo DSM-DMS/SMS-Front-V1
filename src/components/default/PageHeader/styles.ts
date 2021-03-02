@@ -56,6 +56,7 @@ export const Button = styled(Link)<{ color: string; newBtn?: boolean }>`
       margin-right: 30px;
     `}
 
+  margin-left:10px;
   & + & {
     margin-left: 10px;
   }

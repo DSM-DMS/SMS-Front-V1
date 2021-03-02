@@ -1,9 +1,13 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { NavIconNoticeBlue } from "../../../assets";
 import { NoticeList as NoticeListComponent } from "../../default";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
 import { NoticeListSet } from "../../default/NoticeList/NoticeList";
+import {
+  getNoticeSchoolList,
+  searchNoticeSchoolList
+} from "../../../modules/action/notice/list";
 
 const NoticeContainer: FC = () => {
   const { announcements, size, loading } = useSelector((state: stateType) => ({

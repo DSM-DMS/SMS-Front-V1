@@ -67,14 +67,10 @@ function* postManagementWantedInfo(
   >
 ) {
   try {
-    const history = yield getContext("history");
-    history.push("/management/notice");
     yield call(apiDefault().post, "/recruitments", action.payload);
     toast.dark("성공적으로 등록했습니다");
-  } catch (err) {
-    const axiosErr = err as AxiosError;
-    errorHandler(axiosErr.response.status, yield getContext("history"));
-  }
+    window.location.reload();
+  } catch (err) {}
 }
 
 function* deleteManagementWantedInfo(
@@ -85,6 +81,7 @@ function* deleteManagementWantedInfo(
   try {
     yield call(apiDefault().delete, `/recruitments/uuid/${action.payload}`);
     toast.dark("성공적으로 삭제했습니다");
+    window.location.reload();
   } catch (err) {
     const axiosErr = err as AxiosError;
     errorHandler(axiosErr.response.status, yield getContext("history"));
