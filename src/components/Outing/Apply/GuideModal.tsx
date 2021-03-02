@@ -10,14 +10,19 @@ interface Props {
 const GuideModal: FC<Props> = ({ closeGuideModal, handleApplyOuting }) => {
   return (
     <>
-      <S.GuideModalBack />
+      <S.GuideModalBack onClick={closeGuideModal} />
       <S.GuideModalWrap>
         <p>
-          신청이 완료되면 학부모에게 승인 요청 문자가 전송된 후, 학부모 승인 시
-          담임선생님에게도 전송됩니다. 또한 선생님 승인까지 완료된 경우,
-          최종적으로 본인에게도 문자가 전송됩니다. 외출 시작 및 종료는 Android
-          혹은 iOS 어플리케이션을 통해서 진행해주세요. 또한, 외출 전 정문 지킴이
-          선생님에게 '모바일 {`>`} 오늘의 외출증'을 보여 드려야합니다!
+          확인 버튼을 누르면 학부모에게 승인 요청 문자가 전송된 후, 학부모 승인
+          시 담임선생님에게도 전송됩니다.
+        </p>
+        <p>
+          선생님 승인까지 완료된 경우, 최종적으로 본인에게도 문자가 전송됩니다.
+        </p>
+        <p>외출 시작 및 종료는 모바일 어플리케이션을 통해서 진행해주세요.</p>
+        <p>
+          외출 전 정문 지킴이 선생님에게 '모바일 {`>`} 오늘의 외출증'을 보여
+          드려야합니다!
         </p>
         <ul>
           <li>
