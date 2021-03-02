@@ -1,9 +1,7 @@
 import { apiDefault } from "../client";
 import {
   ResStudentLoginWithDefault,
-  ResStudentInfoWithDefault,
-  ResTeacherLoginWithDefault,
-  ResTeacherInfoWithDefault
+  ResStudentInfoWithDefault
 } from "../payloads/Login";
 
 export const postLoginStudent = (id: string, pw: string) => {
@@ -16,18 +14,5 @@ export const postLoginStudent = (id: string, pw: string) => {
 export const getStudentInfo = (studentUuid: string) => {
   return apiDefault().get<ResStudentInfoWithDefault>(
     `/students/uuid/${studentUuid}`
-  );
-};
-
-export const postLoginTeacher = (id: string, pw: string) => {
-  return apiDefault().post<ResTeacherLoginWithDefault>("/login/teacher", {
-    teacher_id: id,
-    teacher_pw: pw
-  });
-};
-
-export const getTeacherInfo = (teacherUuid: string) => {
-  return apiDefault().get<ResTeacherInfoWithDefault>(
-    `/teachers/uuid/${teacherUuid}`
   );
 };

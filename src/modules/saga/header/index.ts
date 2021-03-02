@@ -4,25 +4,18 @@ import { call, put, takeEvery } from "redux-saga/effects";
 import { apiDefault } from "../../../lib/api/client";
 import {
   ResStudentInfo,
-  ResStudentInfoWithDefault,
-  ResTeacherInfo,
-  ResTeacherInfoWithDefault
+  ResStudentInfoWithDefault
 } from "../../../lib/api/payloads/Login";
 import {
   getStudentInfoSaga,
-  getTeacherInfoSaga,
   GET_STUDENT_INFO_SAGA,
-  GET_TEACHER_INFO_SAGA,
   setInit,
   STUDENT,
-  TEACHER,
   UserType
 } from "../../action/header";
 
-const setLocalStorage = (
-  type: UserType,
-  form: ResStudentInfo | ResTeacherInfo
-) => {
+const setLocalStorage = (type: UserType, form: ResStudentInfo) => {
+  console.log(form);
   localStorage.setItem("sms-type", type);
   localStorage.setItem("sms-user", JSON.stringify(form));
 };
@@ -31,7 +24,15 @@ function* setStudentInfoOnStorageSaga(
   action: ReturnType<typeof getStudentInfoSaga>
 ) {
   const {
-    data: { grade, group, name, phone_number, student_number, profile_uri }
+    data: {
+      grade,
+      group,
+      name,
+      phone_number,
+      student_number,
+      profile_uri,
+      parent_status
+    }
   }: AxiosResponse<ResStudentInfoWithDefault> = yield call(
     apiDefault().get,
     `students/uuid/${action.payload.studentUuid}`
@@ -43,7 +44,8 @@ function* setStudentInfoOnStorageSaga(
     student_number,
     name,
     phone_number,
-    profile_uri
+    profile_uri,
+    parent_status
   };
   const clubUuid = localStorage.getItem("club_uuid");
 
@@ -51,32 +53,8 @@ function* setStudentInfoOnStorageSaga(
   yield put(setInit(STUDENT, studentForm, clubUuid));
 }
 
-function* setTeacherInfoOnStorageSaga(
-  action: ReturnType<typeof getTeacherInfoSaga>
-) {
-  const {
-    data: { grade, group, name, phone_number }
-  }: AxiosResponse<ResTeacherInfoWithDefault> = yield call(
-    apiDefault().get,
-    `/teachers/uuid/${action.payload.teacherUuid}`
-  );
-
-  const teacherForm: ResTeacherInfo = {
-    grade,
-    group,
-    name,
-    phone_number
-  };
-  const clubUuid = localStorage.getItem("club_uuid");
-
-  setLocalStorage(TEACHER, teacherForm);
-  yield put(setInit(TEACHER, teacherForm, clubUuid));
-}
-
 function* headerSaga() {
   yield takeEvery(GET_STUDENT_INFO_SAGA, setStudentInfoOnStorageSaga);
-
-  yield takeEvery(GET_TEACHER_INFO_SAGA, setTeacherInfoOnStorageSaga);
 }
 
 export default headerSaga;

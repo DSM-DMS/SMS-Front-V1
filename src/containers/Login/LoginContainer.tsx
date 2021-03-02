@@ -4,7 +4,6 @@ import { useHistory } from "react-router-dom";
 
 import { Login } from "../../components";
 import { postLoginStudent } from "../../lib/api/Login";
-import { postLoginTeacher } from "../../lib/api/Login";
 import { getClubUuidFromLeader } from "../../lib/api/Management";
 import {
   PASSWORD_NOT_MATCHED,
@@ -12,14 +11,7 @@ import {
   UNAUTHORIZED
 } from "../../lib/api/payloads/Login";
 import { getAxiosError } from "../../lib/utils";
-import {
-  getStudentInfoSaga,
-  getTeacherInfoSaga,
-  setClubUuid,
-  STUDENT,
-  TEACHER,
-  UserType
-} from "../../modules/action/header";
+import { getStudentInfoSaga, setClubUuid } from "../../modules/action/header";
 import { pageMove } from "../../modules/action/page";
 import WithLoadingContainer, {
   LoadingProps
@@ -44,9 +36,6 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const [pw, setPw] = useState<string>("");
   const [autoLogin, setAutoLogin] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<ErrorState>(initErrorState);
-  const userType: UserType = history.location.pathname.includes("admin")
-    ? TEACHER
-    : STUDENT;
 
   const loginFilter = (str: string) => str.length >= 4 && str.length <= 16;
 
@@ -63,7 +52,7 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   };
 
   const storageHandler = useCallback(
-    (type: UserType, autoLogin: boolean, accessToken: string, uuid: string) => {
+    (autoLogin: boolean, accessToken: string, uuid: string) => {
       const MillisecondINHour = 3600000;
 
       if (autoLogin) {
@@ -73,7 +62,6 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       }
       localStorage.setItem("access_token", accessToken);
       localStorage.setItem(`uuid`, uuid);
-      localStorage.removeItem(`${type === STUDENT ? TEACHER : STUDENT}_uuid`);
     },
     []
   );
@@ -97,21 +85,9 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       const { data } = await postLoginStudent(id, pw);
       const { access_token, student_uuid } = data;
 
-      storageHandler(STUDENT, autoLogin, access_token, student_uuid);
+      storageHandler(autoLogin, access_token, student_uuid);
 
       return student_uuid;
-    },
-    []
-  );
-
-  const getTeacherLoginInfo = useCallback(
-    async (id: string, pw: string, autoLogin: boolean) => {
-      const { data } = await postLoginTeacher(id, pw);
-      const { access_token, teacher_uuid } = data;
-
-      storageHandler(TEACHER, autoLogin, access_token, teacher_uuid);
-
-      return teacher_uuid;
     },
     []
   );
@@ -120,12 +96,6 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     const studentUuid = await getStudentLoginInfo(id, pw, autoLogin);
     await getClubUuid(studentUuid);
     dispatch(getStudentInfoSaga(studentUuid));
-  };
-
-  const teacherLogin = async (id: string, pw: string, autoLogin: boolean) => {
-    const teacherUuid = await getTeacherLoginInfo(id, pw, autoLogin);
-    localStorage.removeItem("club_uuid");
-    dispatch(getTeacherInfoSaga(teacherUuid));
   };
 
   const login = useCallback(
@@ -137,11 +107,7 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
       startLoading();
       try {
-        if (userType === STUDENT) {
-          await studentLogin(id, pw, autoLogin);
-        } else {
-          await teacherLogin(id, pw, autoLogin);
-        }
+        await studentLogin(id, pw, autoLogin);
         setErrorMessage(initErrorState);
         dispatch(pageMove("홈"));
         history.push("./home");
