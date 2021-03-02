@@ -26,6 +26,7 @@ export interface ResStudents {
   phone_number: string;
   profile_uri: string;
   student_uuid: string;
+  parent_status: string;
 }
 export interface ReqClubInfo {
   club_concept?: string;
