@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import { call, put, takeEvery } from "redux-saga/effects";
 
 import { apiDefault } from "../../../lib/api/client";
@@ -47,6 +48,12 @@ function* setStudentInfoOnStorageSaga(
     parent_status
   };
   const clubUuid = localStorage.getItem("club_uuid");
+
+  if (parent_status.toLowerCase() === "CONNECTED") {
+    toast.info("학부모 계정과 연결되었습니다");
+  } else if (parent_status.toLowerCase() === "UN_CONNECTED") {
+    toast.info("학부모 계정과 연결되었습니다");
+  }
 
   setLocalStorage(STUDENT, studentForm);
   yield put(setInit(STUDENT, studentForm, clubUuid));
