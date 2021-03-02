@@ -189,7 +189,6 @@ export const errorHandler = (errStatus: number, history: History): void => {
 export const getFacebookLink = (id: string) => `https://www.facebook.com/${id}`;
 
 export const getAxiosError = (err: AxiosError<ResDefault>) => {
-  console.log(err);
   const { status, code } = err.response.data;
   return { status, code };
 };

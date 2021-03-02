@@ -15,7 +15,6 @@ import {
 } from "../../action/header";
 
 const setLocalStorage = (type: UserType, form: ResStudentInfo) => {
-  console.log(form);
   localStorage.setItem("sms-type", type);
   localStorage.setItem("sms-user", JSON.stringify(form));
 };
