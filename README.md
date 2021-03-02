@@ -1,8 +1,3 @@
-DMS-FOR-SMS
-
-SMS-Front-V1
-
----
 # DMS for DSM - SMS-Front-V1
 
 ## Technical Stack
