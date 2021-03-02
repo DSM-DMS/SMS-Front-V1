@@ -34,6 +34,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const [formOutTime, setFormOutTime] = useState<string>("");
   const [formInTime, setFormInTime] = useState<string>("");
   const [formPlace, setFormPlace] = useState<string>("");
+  const [formPlaceDetail, setFormPlaceDetail] = useState<string>("");
   const [formReason, setFormReason] = useState<string>("");
   const [formReasonSick, setFormReasonSick] = useState<boolean>(false);
   const [guideModal, setGuideModal] = useState<boolean>(false);
@@ -118,6 +119,10 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     setFormPlace(value);
   }, []);
 
+  const handlePlaceDetail = useCallback((value: string) => {
+    setFormPlaceDetail(value);
+  }, []);
+
   const cancelSickOuting = useCallback(() => {
     setFormReasonSick(false);
   }, []);
@@ -130,16 +135,19 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     setFormReason(e.currentTarget.value);
   }, []);
 
-  const checkOutingValidation = useCallback((outing: Outing) => {
-    const { startTime, endTime, place, reason } = outing;
-
-    return (
-      startTime.trim() === "" ||
-      endTime.trim() === "" ||
-      place.trim() === "" ||
-      reason.trim() === ""
-    );
-  }, []);
+  const checkOutingValidation = useCallback(
+    (outing: Outing) => {
+      const { startTime, endTime, place, reason } = outing;
+      return (
+        startTime.trim() === "" ||
+        endTime.trim() === "" ||
+        place.trim() === "" ||
+        reason.trim() === "" ||
+        formPlaceDetail.trim() === ""
+      );
+    },
+    [formPlaceDetail]
+  );
 
   const checkOutTimeValidation = useCallback((outing: Outing) => {
     const now = +new Date();
@@ -150,64 +158,67 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     return now > targetStartTime || now > targetEndTime;
   }, []);
 
-  const applyOuting = useCallback(async (outing: Outing) => {
-    const { startTime, endTime, place, reason, situation } = outing;
-    if (checkOutingValidation(outing)) {
-      toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
-      closeGuideModal();
-      return;
-    } else if (checkOutTimeValidation(outing)) {
-      toast.error("현재 시간보다 이후 시간에 신청해야 합니다.");
-      closeGuideModal();
-      return;
-    }
+  const applyOuting = useCallback(
+    async (outing: Outing) => {
+      const { startTime, endTime, place, reason, situation } = outing;
+      if (checkOutingValidation(outing)) {
+        toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+        closeGuideModal();
+        return;
+      } else if (checkOutTimeValidation(outing)) {
+        toast.error("현재 시간보다 이후 시간에 신청해야 합니다.");
+        closeGuideModal();
+        return;
+      }
 
-    const getOutingTime = (time: string) =>
-      Math.round(getTodayOutForm(time) / 1000);
+      const getOutingTime = (time: string) =>
+        Math.round(getTodayOutForm(time) / 1000);
 
-    const outingBody: ReqOuting = {
-      start_time: getOutingTime(startTime),
-      end_time: getOutingTime(endTime),
-      place,
-      reason,
-      situation
-    };
+      const outingBody: ReqOuting = {
+        start_time: getOutingTime(startTime),
+        end_time: getOutingTime(endTime),
+        place: `${place} / ${formPlaceDetail}`,
+        reason,
+        situation
+      };
 
-    startLoading();
-    try {
-      const {
-        data: { status, code }
-      } = await postOuting(outingBody);
+      startLoading();
+      try {
+        const {
+          data: { status, code }
+        } = await postOuting(outingBody);
 
-      if (status === 201) {
-        if (code === 0) {
-          alert(
-            "외출증 신청이 완료되었습니다. 승인을 받은 후 모바일을 통해 외출을 시작해주세요."
-          );
-        } else if (code === -1) {
-          alert(
-            "연결된 학부모 계정이 존재하지 않아 학부모 승인 단게를 건너뛰었습니다."
-          );
-        } else if (code === -2) {
-          alert(
-            "학부모가 문자 사용을 동의하지 않아 학부모 승인 단계를 건너뛰었습니다."
-          );
+        if (status === 201) {
+          if (code === 0) {
+            alert(
+              "외출증 신청이 완료되었습니다. 승인을 받은 후 모바일을 통해 외출을 시작해주세요."
+            );
+          } else if (code === -1) {
+            alert(
+              "연결된 학부모 계정이 존재하지 않아 학부모 승인 단게를 건너뛰었습니다."
+            );
+          } else if (code === -2) {
+            alert(
+              "학부모가 문자 사용을 동의하지 않아 학부모 승인 단계를 건너뛰었습니다."
+            );
+          }
+        }
+
+        history.push("/outing/history");
+      } catch (err) {
+        const { status, code } = getAxiosError(err);
+
+        if (status === 409 && code === -2401) {
+          toast.error("오늘 대기중인 외출 신청이 있습니다.");
+        } else {
+          toast.error("오류가 발생했습니다. 다시 시도해주세요.");
         }
       }
-
-      history.push("/outing/history");
-    } catch (err) {
-      const { status, code } = getAxiosError(err);
-
-      if (status === 409 && code === -2401) {
-        toast.error("오늘 대기중인 외출 신청이 있습니다.");
-      } else {
-        toast.error("오류가 발생했습니다. 다시 시도해주세요.");
-      }
-    }
-    closeGuideModal();
-    endLoading();
-  }, []);
+      closeGuideModal();
+      endLoading();
+    },
+    [formPlaceDetail]
+  );
 
   return (
     <OutingApply
@@ -215,12 +226,14 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       formOutTime={formOutTime}
       formInTime={formInTime}
       formPlace={formPlace}
+      formPlaceDetail={formPlaceDetail}
       formReason={formReason}
       formReasonSick={formReasonSick}
       guideModal={guideModal}
       handleOutTime={handleOutTime}
       handleInTime={handleInTime}
       handlePlace={handlePlace}
+      handlePlaceDetail={handlePlaceDetail}
       openGuideModal={openGuideModal}
       closeGuideModal={closeGuideModal}
       cancelSickOuting={cancelSickOuting}

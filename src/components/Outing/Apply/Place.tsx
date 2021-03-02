@@ -1,4 +1,10 @@
-import React, { FC, ReactElement, useState, useCallback } from "react";
+import React, {
+  FC,
+  ReactElement,
+  useState,
+  useCallback,
+  ChangeEvent
+} from "react";
 import { toast } from "react-toastify";
 
 import SearchList from "./SearchList";
@@ -12,6 +18,8 @@ import { useHistory } from "react-router-dom";
 
 interface Props {
   place: string;
+  placeDetail: string;
+  handlePlaceDetail: (value: string) => void;
   handlePlace: (value: string) => void;
 }
 
@@ -20,7 +28,12 @@ interface ModalInputs {
   selectedRoadAddress: string;
 }
 
-const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
+const ApplyPlace: FC<Props> = ({
+  place,
+  placeDetail,
+  handlePlaceDetail,
+  handlePlace
+}): ReactElement => {
   const history = useHistory();
   const [modal, setModal] = useState<boolean>(false);
   const [placeResult, setPlaceResult] = useState<ResNaverLocalWithDefault>(
@@ -52,6 +65,13 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
   const handleHideModal = useCallback(() => {
     setModal(false);
   }, []);
+
+  const handleChangePlaceDetail = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      handlePlaceDetail(e.target.value);
+    },
+    []
+  );
 
   const handleSearchLocation = () => {
     if (place.trim() === "") {
@@ -94,12 +114,19 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
             onClick={handleShowModal}
           />
         </S.FormPlaceInputWrap>
-        <span>검색 결과에 도로명 주소가 포함되어야 합니다.</span>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
-            {selectedRoadAddress === "" ? "도로명 주소" : selectedRoadAddress}
+            {selectedRoadAddress === "" ? "지번" : selectedRoadAddress}
           </S.FormPlaceInput>
         </S.FormPlaceInputWrap>
+        <S.PlaceDetailWrap>
+          <S.PlaceDetailInput
+            type="text"
+            placeholder="(필수) 상세 주소"
+            onChange={handleChangePlaceDetail}
+            value={placeDetail}
+          />
+        </S.PlaceDetailWrap>
       </S.PlaceSearchWrap>
       {modal && (
         <SearchList
