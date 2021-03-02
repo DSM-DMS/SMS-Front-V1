@@ -23,12 +23,14 @@ interface Props {
   formOutTime: string;
   formInTime: string;
   formPlace: string;
+  formPlaceDetail: string;
   formReason: string;
   formReasonSick: boolean;
   guideModal: boolean;
   handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
   handlePlace: (value: string) => void;
+  handlePlaceDetail: (value: string) => void;
   openGuideModal: () => void;
   closeGuideModal: () => void;
   cancelSickOuting: () => void;
@@ -42,12 +44,14 @@ const Apply: FC<Props> = ({
   formInTime,
   formOutTime,
   formPlace,
+  formPlaceDetail,
   formReason,
   formReasonSick,
   guideModal,
   handleInTime,
   handleOutTime,
   handlePlace,
+  handlePlaceDetail,
   openGuideModal,
   closeGuideModal,
   cancelSickOuting,
@@ -105,7 +109,12 @@ const Apply: FC<Props> = ({
             handleSickOut={handleSickOut}
           />
           <ApplyReason handleReason={handleReason} />
-          <ApplyPlace handlePlace={handlePlace} place={formPlace} />
+          <ApplyPlace
+            handlePlace={handlePlace}
+            place={formPlace}
+            placeDetail={formPlaceDetail}
+            handlePlaceDetail={handlePlaceDetail}
+          />
         </S.ApplyForm>
         {guideModal && (
           <GuideModal
