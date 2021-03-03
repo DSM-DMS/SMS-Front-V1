@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { Switch, Router, Route, Redirect } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,8 +19,13 @@ import {
 } from "./routers";
 import { history } from "./modules/store";
 import { ToastContainer } from "react-toastify";
+import Channel from "./lib/channel.js";
 
 const App: FC<{}> = () => {
+  useEffect(() => {
+    Channel(process.env.CHANNEL_PLUGIN_KEY);
+  }, []);
+
   return (
     <GlobalContainer>
       <GlobalStyle />
