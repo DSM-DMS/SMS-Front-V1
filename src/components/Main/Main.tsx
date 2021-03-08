@@ -4,7 +4,7 @@ import * as S from "./style";
 import Schedule from "./Schedule/Schedule";
 import ScheduleDetail from "./ScheduleDetail/ScheduleDetail";
 import Outing from "./Outing/Outing";
-import TimeTable from "./TimeTable/TimeTable";
+import TimeTable from "./Timetable/Timetable";
 
 interface Props {}
 

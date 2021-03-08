@@ -33,13 +33,7 @@ function* fetchTimetables(action: ReturnType<typeof getTimetablesSaga>) {
     );
 
     yield put(setTimetables(data));
-  } catch (err) {
-    const { status } = getAxiosError(err);
-
-    if (status === 404) {
-      toast.error("시간표를 불러올 수 없습니다.");
-    }
-  }
+  } catch (err) {}
   yield put(endTimetableLoading());
 }
 

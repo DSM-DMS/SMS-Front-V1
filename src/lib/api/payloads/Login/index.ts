@@ -9,11 +9,6 @@ export interface ResStudentLogin {
   student_uuid: string;
 }
 
-export interface ResTeacherLogin {
-  teacher_uuid: string;
-  access_token: string;
-}
-
 export interface ResStudentInfo {
   grade: number;
   group: number;
@@ -21,20 +16,10 @@ export interface ResStudentInfo {
   name: string;
   phone_number: string;
   profile_uri: string;
-}
-
-export interface ResTeacherInfo {
-  grade: number;
-  group: number;
-  name: string;
-  phone_number: string;
+  parent_status: string;
 }
 
 export interface ResStudentLoginWithDefault
   extends ResStudentLogin,
     ResDefault {}
-export interface ResTeacherLoginWithDefault
-  extends ResTeacherLogin,
-    ResDefault {}
 export interface ResStudentInfoWithDefault extends ResStudentInfo, ResDefault {}
-export interface ResTeacherInfoWithDefault extends ResTeacherInfo, ResDefault {}

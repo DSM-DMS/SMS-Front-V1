@@ -19,21 +19,13 @@ const HeaderContainer: FC<Props> = () => {
   const moveLogin = useCallback(() => {
     dispatch(pageMove("로그인"));
 
-    if (type === TEACHER) {
-      history.push("/admin/login");
-    } else {
-      history.push("/login");
-    }
+    history.push("/login");
   }, [type]);
 
   const movePasswordChange = useCallback(() => {
     dispatch(pageMove(""));
 
-    if (type === TEACHER) {
-      history.push("/admin/pw-change");
-    } else {
-      history.push("/pw-change");
-    }
+    history.push("/pw-change");
   }, [type]);
 
   const moveManagement = useCallback(() => {
@@ -52,7 +44,8 @@ const HeaderContainer: FC<Props> = () => {
           name: "",
           phone_number: "",
           student_number: 0,
-          profile_uri: ""
+          profile_uri: "",
+          parent_status: ""
         },
         ""
       )
