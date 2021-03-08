@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { Header } from "../../components";
 import { ResStudentInfo } from "../../lib/api/payloads/Login";
+import { getCheckNotice } from "../../modules/action/checkNotice";
 import { setInit, TEACHER, UserType } from "../../modules/action/header";
 import { pageMove } from "../../modules/action/page";
 import { stateType } from "../../modules/reducer";
@@ -71,6 +72,11 @@ const HeaderContainer: FC<Props> = () => {
       localStorage.getItem("sms-user")
     ) as ResStudentInfo;
     dispatch(setInit(type, smsUser, clubUuid));
+
+    const uuid: string = localStorage.getItem("uuid");
+    if (uuid && type === "student") {
+      dispatch(getCheckNotice(uuid));
+    }
   }, []);
 
   return (
