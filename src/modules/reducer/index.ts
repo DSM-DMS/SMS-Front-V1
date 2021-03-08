@@ -16,6 +16,7 @@ import clubListReducer from "./club/list";
 import clubDetailReducer from "./club/detail";
 import managementReducer from "./management";
 import loadingReducer from "./loading";
+import checkNoticeReducer from "./checkNotice";
 
 const rootReducer = combineReducers({
   page: pageReducer,
@@ -34,7 +35,8 @@ const rootReducer = combineReducers({
   recruitmentList: recruitmentListReducer,
   recruitmentDetail: recruitmentDetailReducer,
   clubList: clubListReducer,
-  clubDetail: clubDetailReducer
+  clubDetail: clubDetailReducer,
+  checkNotice: checkNoticeReducer
 });
 
 export type stateType = ReturnType<typeof rootReducer>;
