@@ -1006,10 +1006,6 @@ export const GuideModalWrap = styled.div`
   border-radius: 8px;
   background-color: white;
   font-size: 14px;
-  a {
-    text-decoration: none;
-    color: black;
-  }
   p {
     margin-bottom: 12px;
   }
