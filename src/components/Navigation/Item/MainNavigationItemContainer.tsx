@@ -19,7 +19,13 @@ const MainNavigationItemContainer: FC<Props> = ({
   src,
   route
 }) => {
-  const data = useSelector((store: stateType) => store.header);
+  const {
+    data,
+    notices: { school }
+  } = useSelector((store: stateType) => ({
+    data: store.header,
+    notices: store.checkNotice
+  }));
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -40,6 +46,7 @@ const MainNavigationItemContainer: FC<Props> = ({
       isActive={isActive}
       name={name}
       src={src}
+      notRead={name === "공지" && !!school}
     />
   );
 };
