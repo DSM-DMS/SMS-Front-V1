@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from "styled-components";
 
 export const Container = styled.div<{ isActive: boolean }>`
   display: flex;
@@ -26,9 +26,25 @@ export const Img = styled.img`
   width: 15px;
 `;
 
-export const ItemName = styled.div`
+export const ItemName = styled.div<{ notRead: boolean }>`
   font-size: 14px;
   margin-left: 30px;
+  font-weight: bold;
+
+  ${props =>
+    props.notRead &&
+    css`
+      position: relative;
+      &::after {
+        content: "";
+        width: 6px;
+        height: 6px;
+        background-color: #ff4e00;
+        position: absolute;
+        border-radius: 50%;
+        right: -9px;
+      }
+    `}
 `;
 
 export const Triangle = styled.div`
