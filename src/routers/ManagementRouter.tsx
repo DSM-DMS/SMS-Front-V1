@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import {
   ManagementNoticeContainer,
   ManagementNoticeDetailContainer,
@@ -14,7 +14,7 @@ const ManagementRouter: FC = () => {
   return (
     <GlobalInnerBody>
       <Switch>
-        <Route
+        {/* <Route
           exact
           path="/management/notice/edit/:id"
           component={ManagementNoticeEditContainer}
@@ -48,7 +48,8 @@ const ManagementRouter: FC = () => {
           exact
           path="/management/write"
           component={ManagementNoticeWriteContainer}
-        />
+        /> */}
+        <Redirect to="/home" />
       </Switch>
     </GlobalInnerBody>
   );

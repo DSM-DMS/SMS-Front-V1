@@ -7,13 +7,14 @@ import {
   CircleWantedListContainer,
   CircleAllContainer,
   CircleAllDetailContainer,
-  CircleWantedDetailContainer
+  CircleWantedDetailContainer,
+  ForbiddenContainer
 } from "../containers";
 
 const CirclesRouter: FC<{}> = () => {
   return (
     <GlobalInnerBody>
-      <Switch>
+      {/* <Switch>
         <Route
           exact
           path="/circles/notice/:id"
@@ -41,7 +42,8 @@ const CirclesRouter: FC<{}> = () => {
         />
         <Route exact path="/circles/all" component={CircleAllContainer} />
         <Redirect to="/circles/notice" />
-      </Switch>
+      </Switch> */}
+      <ForbiddenContainer />
     </GlobalInnerBody>
   );
 };

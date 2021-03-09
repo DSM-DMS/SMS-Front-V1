@@ -12,6 +12,7 @@ import recruitmentListSaga from "./recruitment/list";
 import recruitmentDetailSaga from "./recruitment/detail";
 import clubListSaga from "./club/list";
 import clubDetailSaga from "./club/detail";
+import checkNoticeSaga from "./checkNotice";
 
 function* rootSaga() {
   yield all([
@@ -26,7 +27,8 @@ function* rootSaga() {
     recruitmentListSaga(),
     recruitmentDetailSaga(),
     clubListSaga(),
-    clubDetailSaga()
+    clubDetailSaga(),
+    checkNoticeSaga()
   ]);
 }
 
