@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Header } from "../../components";
 import { ResStudentInfo } from "../../lib/api/payloads/Login";
 import { getCheckNotice } from "../../modules/action/checkNotice";
-import { setInit, TEACHER, UserType } from "../../modules/action/header";
+import { setInit, UserType } from "../../modules/action/header";
 import { pageMove } from "../../modules/action/page";
 import { stateType } from "../../modules/reducer";
 
