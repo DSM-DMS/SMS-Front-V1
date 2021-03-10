@@ -8,7 +8,8 @@ import { PageNotFound, Navigation } from "./components";
 import {
   LoginContainer,
   HeaderContainer,
-  PasswordChangeContainer
+  PasswordChangeContainer,
+  RegisterContainer
 } from "./containers";
 import {
   CirclesRouter,
@@ -37,6 +38,7 @@ const App: FC<{}> = () => {
           <Switch>
             <Route path="/pw-change" component={PasswordChangeContainer} />
             <Route path="/login" component={LoginContainer} />
+            <Route path="/register" component={RegisterContainer} />
             <Route path="/home" component={MainRouter} />
             <Route path="/notice" component={NoticeRouter} />
             <Route path="/circles" component={CirclesRouter} />

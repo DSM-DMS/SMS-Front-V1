@@ -5,6 +5,7 @@ import * as S from "./style";
 import { ErrorState } from "../../../containers/Login/LoginContainer";
 import Loading from "../Loading/Loading";
 import { CapsLock as CapsLockIcon, Eye, EyeOff } from "../../../assets";
+import { Link } from "react-router-dom";
 
 interface Props {
   loading: boolean;
@@ -130,8 +131,11 @@ const Login: FC<Props> = ({
                 }}
               />
               <S.AutoLoginCheckbox id="auto-login-checkbox" />
-              <span>자동로그인</span>
             </S.AutoLoginLabel>
+            <S.HelperWrap>
+              <span>자동로그인</span>
+              <Link to="/register">아직 계정이 없으신가요?</Link>
+            </S.HelperWrap>
           </S.AutoLogin>
         </S.LoginInputsWrap>
       </S.LoginForm>

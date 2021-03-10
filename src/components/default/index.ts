@@ -16,3 +16,4 @@ export { default as NoticeList } from "./NoticeList/NoticeList";
 export { default as NoticeEdit } from "./NoticeEdit/NoticeEdit";
 export { default as NoticeWrite } from "./NoticeWrite/NoticeWrite";
 export { default as Loading } from "./Loading/Loading";
+export { default as RegisterInput } from "./RegisterInput/RegisterInput";

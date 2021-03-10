@@ -79,9 +79,6 @@ export const apiDefault = () => {
         toast.error("서버에 요류가 발생했습니다.");
       } else if (status === 429) {
         toast.error("한 번에 너무 많은 요청이 발생했습니다.");
-      } else if (status === 404) {
-        alert("페이지가 존재하지 않습니다.");
-        history.back();
       }
 
       return Promise.reject(err);
