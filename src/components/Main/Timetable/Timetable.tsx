@@ -7,7 +7,6 @@ import TimeTableList from "./TimeTableList";
 import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
 import { getTimetablesSaga } from "../../../modules/action/main";
-import { STUDENT } from "../../../modules/action/header";
 
 interface Props {}
 
@@ -43,11 +42,7 @@ const TimeTable: FC<Props> = (): ReactElement => {
   };
 
   useEffect(() => {
-    if (type === STUDENT) {
-      dispatch(
-        getTimetablesSaga(date.getFullYear(), date.getMonth() + 1, tDate)
-      );
-    }
+    dispatch(getTimetablesSaga(date.getFullYear(), date.getMonth() + 1, tDate));
   }, [tDate, type]);
 
   return (

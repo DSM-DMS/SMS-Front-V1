@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import * as S from "./style";
 
 import { stateType } from "../../../../modules/reducer";
-import { UserType } from "../../../../modules/action/header";
 import { getWeekOfMonth, padNum } from "../../../../lib/utils";
 
 interface Props {}
@@ -48,7 +47,6 @@ const CalendarDate: React.FC<Props> = () => {
       key={id}
       className={styling}
       onClick={styling.match("curr") ? onClickDate : () => {}}
-      type={type as UserType}
     >
       <S.CalendarDaySpan>{children && padNum(children)}</S.CalendarDaySpan>
     </S.CalendarDate>
