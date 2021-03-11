@@ -1,6 +1,5 @@
 import React, { FC, ReactElement, useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 
 import { AdminMain } from "../../../components";
 import {
@@ -12,7 +11,6 @@ import {
   ReqCreateSchedule,
   ReqEditSchedule
 } from "../../../lib/api/payloads/Main";
-import { getAxiosError } from "../../../lib/utils";
 import { getSchedulesSaga } from "../../../modules/action/main";
 
 interface Props {}
@@ -82,21 +80,6 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
     []
   );
 
-  const handleShowAdd = useCallback(() => {
-    setModal(true);
-    setModalType(ADD);
-  }, []);
-
-  const handleShowEdit = useCallback(() => {
-    setModal(true);
-    setModalType(EDIT);
-  }, []);
-
-  const handleShowDelete = useCallback(() => {
-    setModal(true);
-    setModalType(DELETE);
-  }, []);
-
   const handleCloseModal = useCallback(() => {
     setModal(false);
     setModalType(null);
@@ -106,9 +89,6 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
     <AdminMain
       modal={modal}
       modalType={modalType}
-      handleShowAdd={handleShowAdd}
-      handleShowEdit={handleShowEdit}
-      handleShowDelete={handleShowDelete}
       handleCloseModal={handleCloseModal}
       createSchedule={createSchedule}
       editSchedule={editSchedule}

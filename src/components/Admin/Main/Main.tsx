@@ -20,9 +20,6 @@ import {
 interface Props {
   modal: boolean;
   modalType: ModalType;
-  handleShowAdd: () => void;
-  handleShowEdit: () => void;
-  handleShowDelete: () => void;
   handleCloseModal: () => void;
   createSchedule: (createData: ReqCreateSchedule) => Promise<void>;
   editSchedule: (
@@ -35,9 +32,6 @@ interface Props {
 const AdminMain: FC<Props> = ({
   modal,
   modalType,
-  handleShowAdd,
-  handleShowEdit,
-  handleShowDelete,
   handleCloseModal,
   createSchedule,
   editSchedule,
@@ -49,11 +43,7 @@ const AdminMain: FC<Props> = ({
         <Schedule />
       </MainS.MainLeft>
       <MainS.MainRight>
-        <ScheduleDetail
-          handleShowAdd={handleShowAdd}
-          handleShowEdit={handleShowEdit}
-          handleShowDelete={handleShowDelete}
-        />
+        <ScheduleDetail />
       </MainS.MainRight>
       {modal &&
         (modalType === ADD || modalType === EDIT ? (
