@@ -182,7 +182,6 @@ const CalendarDate: React.FC<Props> = () => {
   return (
     <>
       {memoizedCalendar}
-      {console.log("ㅡㅡㅡㅡㅡ")}
       {scheduling()}
     </>
   );
