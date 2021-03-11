@@ -132,7 +132,7 @@ const Login: FC<Props> = ({
               />
               <S.AutoLoginCheckbox id="auto-login-checkbox" />
             </S.AutoLoginLabel>
-            <S.HelperWrap>
+            <S.Helper Wrap>
               <span>자동로그인</span>
               <Link to="/register">아직 계정이 없으신가요?</Link>
             </S.HelperWrap>
