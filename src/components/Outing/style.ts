@@ -796,6 +796,7 @@ export const CardStatus = styled.span<Status>`
     }
   }};
   font-size: 14px;
+  font-weight: bold;
 `;
 
 export const CardTime = styled.div`
