@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import { STUDENT, UserType } from "../../modules/action/header";
+import { UserType } from "../../modules/action/header";
 
 export const MainWrap = styled.div`
   display: flex;
@@ -203,7 +203,7 @@ export const DetailBody = styled.div<DetailScrollColor>`
     background: white;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
+    background: "#5323b2";
     border-radius: 16px;
   }
 `;
