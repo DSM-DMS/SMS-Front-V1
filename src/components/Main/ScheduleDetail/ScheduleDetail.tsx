@@ -1,11 +1,9 @@
 import React, { FC, memo, ReactElement } from "react";
-import { useSelector } from "react-redux";
 
 import * as S from "../style";
-import { stateType } from "../../../modules/reducer";
-import { UserType } from "../../../modules/action/header";
 import { Loading } from "../../default";
 import { padNum } from "../../../lib/utils";
+import useCustomSelector from "../../../lib/hooks/useCustomSelector";
 
 interface Props {}
 
@@ -17,17 +15,16 @@ const fixedDate = new Date(
   9
 );
 
+const getLocalDate = (dateNum: number) => {
+  const date = new Date(dateNum);
+
+  return `${padNum(date.getMonth() + 1)}.${padNum(date.getDate())}`;
+};
+
 const ScheduleDetail: FC<Props> = (): ReactElement => {
   const {
-    main: { schedules, scheduleLoading },
-    header: { type }
-  } = useSelector((state: stateType) => state);
-
-  const getLocalDate = (dateNum: number) => {
-    const date = new Date(dateNum);
-
-    return `${padNum(date.getMonth() + 1)}.${padNum(date.getDate())}`;
-  };
+    main: { schedules, scheduleLoading, selectedDate }
+  } = useCustomSelector();
 
   return (
     <S.ScheduleDetail>
@@ -40,27 +37,49 @@ const ScheduleDetail: FC<Props> = (): ReactElement => {
           <S.DetailHeadData>날짜</S.DetailHeadData>
         </S.DetailHead>
       </S.DetailHeader>
-      <S.DetailBody type={type as UserType}>
+      <S.DetailBody>
         {scheduleLoading ? (
           <S.DetailLoadingWrap>
             <Loading size="100px" />
           </S.DetailLoadingWrap>
         ) : (
-          schedules.map(({ detail, start_date, end_date, schedule_uuid }) => {
-            return (
-              <S.DetailBodyItem
-                key={schedule_uuid}
-                className={+fixedDate > end_date ? "prev" : ""}
-              >
-                <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
-                <S.DetailBodyItemData>
-                  {start_date === end_date
-                    ? getLocalDate(start_date)
-                    : `${getLocalDate(start_date)} - ${getLocalDate(end_date)}`}
-                </S.DetailBodyItemData>
-              </S.DetailBodyItem>
-            );
-          })
+          schedules.map(
+            ({ detail, start_date: s, end_date: e, schedule_uuid: uuid }) => {
+              const selectedTime = new Date(selectedDate).getTime();
+              const isPrev = +fixedDate > e;
+
+              if (selectedDate) {
+                if (s <= selectedTime && selectedTime <= e) {
+                  return (
+                    <S.DetailBodyItem
+                      key={uuid}
+                      className={isPrev ? "prev" : ""}
+                    >
+                      <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
+                      <S.DetailBodyItemData>
+                        {s === e
+                          ? getLocalDate(s)
+                          : `${getLocalDate(s)} - ${getLocalDate(e)}`}
+                      </S.DetailBodyItemData>
+                    </S.DetailBodyItem>
+                  );
+                }
+
+                return null;
+              }
+
+              return (
+                <S.DetailBodyItem key={uuid} className={isPrev ? "prev" : ""}>
+                  <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
+                  <S.DetailBodyItemData>
+                    {s === e
+                      ? getLocalDate(s)
+                      : `${getLocalDate(s)} - ${getLocalDate(e)}`}
+                  </S.DetailBodyItemData>
+                </S.DetailBodyItem>
+              );
+            }
+          )
         )}
       </S.DetailBody>
     </S.ScheduleDetail>
