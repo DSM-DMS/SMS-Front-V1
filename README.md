@@ -3,11 +3,14 @@
 ## Technical Stack
 
 ### Software Stack
+
 - Webpack
 - Typescript
 - React
 - Redux
 - Redux-Saga
 - styled-components
+
 ### Continuous Delivery
+
 - Github Action
