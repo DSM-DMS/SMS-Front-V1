@@ -189,11 +189,7 @@ export const DetailHeadData = styled.span`
   }
 `;
 
-interface DetailScrollColor {
-  type: UserType;
-}
-
-export const DetailBody = styled.div<DetailScrollColor>`
+export const DetailBody = styled.div`
   height: 470px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
