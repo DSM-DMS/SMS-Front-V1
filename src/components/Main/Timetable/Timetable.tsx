@@ -49,13 +49,13 @@ const TimeTable: FC<Props> = (): ReactElement => {
     <S.Timetable>
       <S.TimetableTitle>
         <S.FiltersWrap>
-          <S.TimetableSelector onClick={handlePrevTimetable}>
+          <S.TimetableSelector aria-label="left" onClick={handlePrevTimetable}>
             <S.TimetableChangerLeft />
           </S.TimetableSelector>
           <span>
             {date.getMonth() + 1}/{tDate}
           </span>
-          <S.TimetableSelector onClick={handleNextTimetable}>
+          <S.TimetableSelector aria-label="right" onClick={handleNextTimetable}>
             <S.TimetableChangerRight />
           </S.TimetableSelector>
         </S.FiltersWrap>
