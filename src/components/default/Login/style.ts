@@ -116,6 +116,16 @@ export const AutoLoginLabel = styled.label`
     }
   }
 `;
+export const HelperWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  > a {
+    color: #5323b2;
+    text-decoration: none;
+  }
+`;
 
 export const LoginButton = styled.button`
   position: relative;

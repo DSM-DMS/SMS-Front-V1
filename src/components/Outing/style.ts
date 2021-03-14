@@ -323,6 +323,28 @@ export const FormPlaceSearchListWrap = styled.div`
   z-index: 10;
 `;
 
+export const PlaceDetailWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #888888;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+export const PlaceDetailInput = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  &::placeholder {
+    color: #dddddd;
+  }
+`;
+
 export const ProgressBar = styled.div`
   position: fixed;
   top: 0;
@@ -774,6 +796,7 @@ export const CardStatus = styled.span<Status>`
     }
   }};
   font-size: 14px;
+  font-weight: bold;
 `;
 
 export const CardTime = styled.div`
@@ -984,10 +1007,6 @@ export const GuideModalWrap = styled.div`
   border-radius: 8px;
   background-color: white;
   font-size: 14px;
-  a {
-    text-decoration: none;
-    color: black;
-  }
   p {
     margin-bottom: 12px;
   }

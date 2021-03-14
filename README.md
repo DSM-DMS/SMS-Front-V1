@@ -1,6 +1,16 @@
-DMS-FOR-SMS
+# DMS for DSM - SMS-Front-V1
 
-SMS-Front-V1
+## Technical Stack
 
+### Software Stack
 
+- Webpack
+- Typescript
+- React
+- Redux
+- Redux-Saga
+- styled-components
 
+### Continuous Delivery
+
+- Github Action

@@ -195,3 +195,16 @@ export const getAxiosError = (err: AxiosError<ResDefault>) => {
 
 export const getSuccessHistory = (type: BoardType) =>
   type === "school" ? "/admin/notice/mine" : "/management/notice";
+
+export const makePhoneNum = (phoneNum: string) => {
+  let result = "";
+  for (let i = 0; i < phoneNum.length; i++) {
+    if (i === 3 || i === 7) {
+      result += `-${phoneNum[i]}`;
+      continue;
+    }
+    result += phoneNum[i];
+  }
+
+  return result;
+};

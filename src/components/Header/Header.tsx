@@ -44,11 +44,6 @@ const Header: FC<Props> = ({
       >
         로그아웃
       </S.Logout>
-      {clubUuid && (
-        <S.MoveClubManagement onClick={moveManagement}>
-          동아리 관리 페이지
-        </S.MoveClubManagement>
-      )}
     </S.HeaderWrap>
   );
 };
