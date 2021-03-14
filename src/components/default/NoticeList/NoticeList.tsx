@@ -53,7 +53,7 @@ const NoticeList: FC<Props> = ({ notices, setting, loading }) => {
       />
       {loading ? (
         <S.LoadingWrap>
-          <img src={Spinner} />
+          <img alt="로딩 아이콘" src={Spinner} />
         </S.LoadingWrap>
       ) : (
         <Board maxSize={setting.size} names={setting.names} data={notices} />

@@ -12,7 +12,7 @@ const SearchInput: FC<Props> = ({ onKeyDown, placeHolder, onChange }) => {
   return (
     <S.InputWrap>
       <S.InputBackground>
-        <img src={SearchIcon} />
+        <img alt="검색 아이콘" src={SearchIcon} />
         <S.Input
           onKeyDown={onKeyDown}
           onChange={onChange}
