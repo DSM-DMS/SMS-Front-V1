@@ -1,5 +1,7 @@
 import React, { FC, memo, ReactElement } from "react";
 
+import ScheduleDetailItem from "./ScheduleDetailItem";
+
 import * as S from "../style";
 import { Loading } from "../../default";
 import { padNum } from "../../../lib/utils";
@@ -51,17 +53,13 @@ const ScheduleDetail: FC<Props> = (): ReactElement => {
               if (selectedDate) {
                 if (s <= selectedTime && selectedTime <= e) {
                   return (
-                    <S.DetailBodyItem
+                    <ScheduleDetailItem
                       key={uuid}
-                      className={isPrev ? "prev" : ""}
-                    >
-                      <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
-                      <S.DetailBodyItemData>
-                        {s === e
-                          ? getLocalDate(s)
-                          : `${getLocalDate(s)} - ${getLocalDate(e)}`}
-                      </S.DetailBodyItemData>
-                    </S.DetailBodyItem>
+                      isPrev={isPrev}
+                      detail={detail}
+                      start={s}
+                      end={e}
+                    />
                   );
                 }
 
@@ -69,14 +67,13 @@ const ScheduleDetail: FC<Props> = (): ReactElement => {
               }
 
               return (
-                <S.DetailBodyItem key={uuid} className={isPrev ? "prev" : ""}>
-                  <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
-                  <S.DetailBodyItemData>
-                    {s === e
-                      ? getLocalDate(s)
-                      : `${getLocalDate(s)} - ${getLocalDate(e)}`}
-                  </S.DetailBodyItemData>
-                </S.DetailBodyItem>
+                <ScheduleDetailItem
+                  key={uuid}
+                  isPrev={isPrev}
+                  detail={detail}
+                  start={s}
+                  end={e}
+                />
               );
             }
           )
