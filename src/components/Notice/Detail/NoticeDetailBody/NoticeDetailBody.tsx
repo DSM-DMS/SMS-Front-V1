@@ -8,6 +8,7 @@ interface EditerJSParserObj {
     text?: string;
     items?: string[];
     level?: number;
+    style?: string;
   };
 }
 
@@ -34,13 +35,13 @@ const NoticeDetailBody: FC<Props> = ({ content }) => {
         }
         case "list": {
           return (
-            <div key={i} className="ce-block__content">
+            <S.List key={i} className="ce-block__content">
               {data.items.map((content: string, i: number) => (
-                <div>
-                  {i + 1}. {content}
-                </div>
+                <S.ListItem unOrdered={data.style !== "unordered"}>
+                  {data.style !== "unordered" && `${i + 1}.`} {content}
+                </S.ListItem>
               ))}
-            </div>
+            </S.List>
           );
         }
         case "paragraph": {
