@@ -48,6 +48,9 @@ const TimeTable: FC<Props> = (): ReactElement => {
   return (
     <S.Timetable>
       <S.TimetableTitle>
+        <S.TimetableWhereFrom>
+          * 해당 정보는 나이스에서 조회해왔습니다.
+        </S.TimetableWhereFrom>
         <S.FiltersWrap>
           <S.TimetableSelector aria-label="left" onClick={handlePrevTimetable}>
             <S.TimetableChangerLeft />

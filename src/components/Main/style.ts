@@ -28,7 +28,7 @@ export const MainContentCommon = styled.div`
   background-color: white;
 `;
 
-export const MainContentTitleCommon = styled.h2`
+export const MainContentTitleCommon = styled.div`
   font-size: 18px;
   font-weight: bold;
 `;
@@ -59,12 +59,17 @@ export const Timetable = styled(MainContentCommon)`
   margin-right: 15px;
 `;
 
-export const TimetableTitle = styled(MainContentTitleCommon)`
+export const TimetableTitle = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 8px 4px 8px 12px;
   border-bottom: 2px solid #dddddd;
+`;
+
+export const TimetableWhereFrom = styled.p`
+  font-size: 12px;
+  font-weight: bold;
 `;
 
 export const TimetableList = styled.ul`
