@@ -705,9 +705,9 @@ export const HistoryNoContent = styled.div`
 
 export const HistoryCardWrap = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25%, 30%));
   row-gap: 40px;
-  justify-content: space-between;
+  column-gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 60px;
 `;
 
@@ -720,8 +720,6 @@ export const HistoryCard = styled.div`
   border: 1px solid #dddddd;
   cursor: pointer;
 `;
-
-export const CardTop = styled.div``;
 
 interface Emergency {
   emergency: boolean;
@@ -760,8 +758,6 @@ export const CardPlace = styled.p`
   white-space: nowrap;
   font-size: 12px;
 `;
-
-export const CardBottom = styled.div``;
 
 const REJECT = "#ff6409";
 const PENDING = "#ffeb00";

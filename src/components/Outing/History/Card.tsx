@@ -2,7 +2,6 @@ import React, { FC, ReactElement, useCallback } from "react";
 
 import * as S from "../style";
 import {
-  OutingStatus,
   outingStatusMap,
   ResHistoryItem
 } from "../../../lib/api/payloads/Outing";
@@ -54,22 +53,22 @@ const HistoryCard: FC<Props> = ({
         selectOuting(outing);
       }}
     >
-      <S.CardTop>
+      <div>
         <S.CardDate
           emergency={outing_situation.toUpperCase() === "NORMAL" ? false : true}
         >
           {getLocalDate(start_time)}
         </S.CardDate>
         <S.CardPlace>장소 : {place}</S.CardPlace>
-      </S.CardTop>
-      <S.CardBottom>
+      </div>
+      <div>
         <S.CardStatus status={+outing_status}>
           {outingStatusMap[outing_status]}
         </S.CardStatus>
         <S.CardTime>
           외출 시간 : {getLocalTime(start_time)} ~ {getLocalTime(end_time)}
         </S.CardTime>
-      </S.CardBottom>
+      </div>
     </S.HistoryCard>
   );
 };
