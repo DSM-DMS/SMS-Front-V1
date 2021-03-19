@@ -6,7 +6,7 @@ import { OutingApply } from "../../components";
 import { postOuting } from "../../lib/api/Outing";
 import { ReqOuting } from "../../lib/api/payloads/Outing";
 import useApplyState from "../../lib/hooks/useApplyState";
-import useApplyModal from "../../lib/hooks/useApplyModal";
+import useModalState from "../../lib/hooks/useModalState";
 import { getAxiosError } from "../../lib/utils";
 import WithLoadingContainer, {
   LoadingProps
@@ -39,25 +39,21 @@ const getTodayDateForm = (time: string) => {
 };
 
 const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
-  const applyState = useApplyState();
-  const { formPlaceDetail } = applyState;
-  const [guideModal, openModal, closeModal] = useApplyModal();
-
   const history = useHistory();
+  const applyState = useApplyState();
+  const modalState = useModalState();
+  const [, , closeModal] = modalState;
 
-  const checkOutingValidation = useCallback(
-    (outing: Outing) => {
-      const { startTime, endTime, place, reason } = outing;
-      return (
-        startTime.trim() === "" ||
-        endTime.trim() === "" ||
-        place.trim() === "" ||
-        reason.trim() === "" ||
-        formPlaceDetail.trim() === ""
-      );
-    },
-    [formPlaceDetail]
-  );
+  const checkOutingValidation = useCallback((outing: Outing) => {
+    const { startTime, endTime, place, reason } = outing;
+
+    return (
+      startTime.trim() === "" ||
+      endTime.trim() === "" ||
+      place.trim() === "" ||
+      reason.trim() === ""
+    );
+  }, []);
 
   const checkOutTimeValidation = useCallback((outing: Outing) => {
     const now = +new Date();
@@ -68,69 +64,64 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
     return now > targetStartTime || now > targetEndTime;
   }, []);
 
-  const applyOuting = useCallback(
-    async (outing: Outing) => {
-      const { startTime, endTime, place, reason, situation } = outing;
-      if (checkOutingValidation(outing)) {
-        toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
-        closeModal();
-        return;
-      } else if (checkOutTimeValidation(outing)) {
-        toast.error("현재 시간보다 이후 시간에 신청해야 합니다.");
-        closeModal();
-        return;
-      }
-
-      const getOutingTime = (time: string) =>
-        Math.round(getTodayDateForm(time) / 1000);
-
-      const outingBody: ReqOuting = {
-        start_time: getOutingTime(startTime),
-        end_time: getOutingTime(endTime),
-        place: `${place} / ${formPlaceDetail}`,
-        reason,
-        situation
-      };
-
-      startLoading();
-      try {
-        const {
-          data: { status, code }
-        } = await postOuting(outingBody);
-
-        if (status === 201 && code === 0) {
-          return alert(SUCCESS);
-        }
-        if (status === 201 && code === -1) {
-          return alert(NO_PARENT);
-        }
-        if (status === 201 && code === -2) {
-          return alert(NO_AGREE);
-        }
-
-        history.push("/outing/history");
-      } catch (err) {
-        const { status, code } = getAxiosError(err);
-
-        if (status === 409 && code === -2401) {
-          toast.error("오늘 대기중인 외출 신청이 있습니다.");
-        } else {
-          toast.error("오류가 발생했습니다. 다시 시도해주세요.");
-        }
-      }
+  const applyOuting = useCallback(async (outing: Outing) => {
+    const { startTime, endTime, place, reason, situation } = outing;
+    if (checkOutingValidation(outing)) {
+      toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
       closeModal();
-      endLoading();
-    },
-    [formPlaceDetail]
-  );
+      return;
+    } else if (checkOutTimeValidation(outing)) {
+      toast.error("현재 시간보다 이후 시간에 신청해야 합니다.");
+      closeModal();
+      return;
+    }
+
+    const getOutingTime = (time: string) =>
+      Math.round(getTodayDateForm(time) / 1000);
+
+    const outingBody: ReqOuting = {
+      start_time: getOutingTime(startTime),
+      end_time: getOutingTime(endTime),
+      place,
+      reason,
+      situation
+    };
+
+    startLoading();
+    try {
+      const {
+        data: { status, code }
+      } = await postOuting(outingBody);
+
+      if (status === 201 && code === 0) {
+        return alert(SUCCESS);
+      }
+      if (status === 201 && code === -1) {
+        return alert(NO_PARENT);
+      }
+      if (status === 201 && code === -2) {
+        return alert(NO_AGREE);
+      }
+
+      history.push("/outing/history");
+    } catch (err) {
+      const { status, code } = getAxiosError(err);
+
+      if (status === 409 && code === -2401) {
+        toast.error("오늘 대기중인 외출 신청이 있습니다.");
+      } else {
+        toast.error("오류가 발생했습니다. 다시 시도해주세요.");
+      }
+    }
+    closeModal();
+    endLoading();
+  }, []);
 
   return (
     <OutingApply
       loading={loading}
       applyState={applyState}
-      guideModal={guideModal}
-      openModal={openModal}
-      closeModal={closeModal}
+      modalState={modalState}
       applyOuting={applyOuting}
     />
   );

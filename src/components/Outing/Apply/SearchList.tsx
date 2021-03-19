@@ -5,22 +5,18 @@ import { OutingCloseWhite, OutingPlaceSearch } from "../../../assets";
 import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 
 interface Props {
-  place: string;
   placeResult: ResNaverLocalWithDefault;
   handlePlace: (value: string) => void;
   handleSearchLocation: () => void;
   handleHideModal: () => void;
-  handleSearchWord: (searchWord: string) => void;
   handleSelectedRoadAddress: (selectedRoadAddress: string) => void;
 }
 
 const SearchList: FC<Props> = ({
-  place,
   placeResult,
   handlePlace,
   handleSearchLocation,
   handleHideModal,
-  handleSearchWord,
   handleSelectedRoadAddress
 }) => {
   const [start, setStart] = useState<boolean>(false);
@@ -34,9 +30,7 @@ const SearchList: FC<Props> = ({
   };
 
   const searchEnd = (roadAddress: string) => {
-    handleSearchWord(place);
     handleSelectedRoadAddress(roadAddress);
-    handlePlace(roadAddress);
     handleHideModal();
   };
 
