@@ -35,15 +35,8 @@ const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
   const history = useHistory();
   const [modal, openModal, closeModal] = usePlaceModal();
   const [placeResult, setPlaceResult] = useState<PlaceResult>(null);
-  const [selectedRoadAddress, setModalInputs] = useState<string>("");
-  const { place, handlePlace } = applyState;
 
-  const handleSelectedRoadAddress = useCallback(
-    (selectedRoadAddress: string) => {
-      setModalInputs(selectedRoadAddress);
-    },
-    []
-  );
+  const { place, roadAddress, handlePlace, handleRoadAddress } = applyState;
 
   const handleSearchLocation = () => {
     if (place.trim() === "") {
@@ -89,17 +82,17 @@ const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
         </S.FormPlaceInputWrap>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
-            {selectedRoadAddress ? selectedRoadAddress : "도로명 주소"}
+            {roadAddress ? roadAddress : "도로명 주소"}
           </S.FormPlaceInput>
         </S.FormPlaceInputWrap>
       </S.PlaceSearchWrap>
       {modal && (
         <SearchList
           handlePlace={handlePlace}
+          handleRoadAddress={handleRoadAddress}
           placeResult={placeResult}
           handleSearchLocation={handleSearchLocation}
           handleHideModal={closeModal}
-          handleSelectedRoadAddress={handleSelectedRoadAddress}
         />
       )}
     </S.FormPlace>

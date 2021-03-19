@@ -175,6 +175,12 @@ export const ApplyForm = styled.div`
   margin-bottom: 16px;
 `;
 
+export const ApplyTimeNotice = styled.p`
+  padding: 24px 0;
+  color: #242424;
+  font-size: 14px;
+`;
+
 export const ApplyFormItemTitle = styled.label`
   width: 100px;
   font-size: 14px;

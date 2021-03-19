@@ -7,17 +7,17 @@ import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 interface Props {
   placeResult: ResNaverLocalWithDefault;
   handlePlace: (value: string) => void;
+  handleRoadAddress: (roadAddress: string) => void;
   handleSearchLocation: () => void;
   handleHideModal: () => void;
-  handleSelectedRoadAddress: (selectedRoadAddress: string) => void;
 }
 
 const SearchList: FC<Props> = ({
   placeResult,
   handlePlace,
+  handleRoadAddress,
   handleSearchLocation,
-  handleHideModal,
-  handleSelectedRoadAddress
+  handleHideModal
 }) => {
   const [start, setStart] = useState<boolean>(false);
 
@@ -30,7 +30,7 @@ const SearchList: FC<Props> = ({
   };
 
   const searchEnd = (roadAddress: string) => {
-    handleSelectedRoadAddress(roadAddress);
+    handleRoadAddress(roadAddress);
     handleHideModal();
   };
 

@@ -8,6 +8,9 @@ export type ApplyState = ReturnType<typeof useApplyState>;
 const useApplyState = () => {
   const [startTime, setStartTime] = useState<string>("");
   const [endTime, setEndTime] = useState<string>("");
+
+  const [roadAddress, setRoadAddress] = useState<string>("");
+
   const [place, setPlace] = useState<string>("");
   const [reason, setReason] = useState<string>("");
   const [situation, setSituation] = useState<boolean>(false);
@@ -96,18 +99,24 @@ const useApplyState = () => {
     setReason(e.currentTarget.value);
   }, []);
 
+  const handleRoadAddress = (roadAddress: string) => {
+    setRoadAddress(roadAddress);
+  };
+
   return {
     startTime,
     endTime,
     place,
     reason,
     situation,
+    roadAddress,
     handleStartTime,
     handleEndTime,
     handlePlace,
+    handleReason,
+    handleRoadAddress,
     cancelSickOut,
-    applySickOut,
-    handleReason
+    applySickOut
   };
 };
 

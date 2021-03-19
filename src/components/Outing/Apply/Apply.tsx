@@ -34,7 +34,7 @@ const Apply: FC<Props> = ({
   const {
     startTime,
     endTime,
-    place,
+    roadAddress,
     reason,
     situation,
     handleReason
@@ -45,7 +45,7 @@ const Apply: FC<Props> = ({
     const outing: Outing = {
       startTime,
       endTime,
-      place,
+      place: roadAddress,
       reason,
       situation: situation ? EMERGENCY : NORMAL
     };
@@ -62,7 +62,9 @@ const Apply: FC<Props> = ({
           읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의 책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
-          <div>외출은 오후 4시 20분부터 오후 8시 30분까지 가능합니다.</div>
+          <S.ApplyTimeNotice>
+            외출은 오후 4시 20분부터 오후 8시 30분까지 가능합니다.
+          </S.ApplyTimeNotice>
           <ApplyTime applyState={applyState} />
           <ApplySicOut applyState={applyState} />
           <ApplyReason handleReason={handleReason} />

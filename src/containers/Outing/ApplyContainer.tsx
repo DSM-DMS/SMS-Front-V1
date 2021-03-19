@@ -94,13 +94,11 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       } = await postOuting(outingBody);
 
       if (status === 201 && code === 0) {
-        return alert(SUCCESS);
-      }
-      if (status === 201 && code === -1) {
-        return alert(NO_PARENT);
-      }
-      if (status === 201 && code === -2) {
-        return alert(NO_AGREE);
+        alert(SUCCESS);
+      } else if (status === 201 && code === -1) {
+        alert(NO_PARENT);
+      } else if (status === 201 && code === -2) {
+        alert(NO_AGREE);
       }
 
       history.push("/outing/history");
@@ -113,6 +111,7 @@ const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
         toast.error("오류가 발생했습니다. 다시 시도해주세요.");
       }
     }
+
     closeModal();
     endLoading();
   }, []);
