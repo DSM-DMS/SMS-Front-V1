@@ -1,6 +1,5 @@
-import React, { ChangeEvent, FC, ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import ApplyHead from "./Head";
 import ApplyTime from "./Time";
@@ -15,51 +14,41 @@ import {
   NORMAL,
   Outing
 } from "../../../containers/Outing/ApplyContainer";
-import { subPageMove } from "../../../modules/action/page";
 import { Loading } from "../../default";
+import { ApplyState } from "../../../lib/hooks/useApplyState";
 
 interface Props {
   loading: boolean;
-  formOutTime: string;
-  formInTime: string;
-  formPlace: string;
-  formPlaceDetail: string;
-  formReason: string;
-  formReasonSick: boolean;
+  applyState: ApplyState;
   guideModal: boolean;
-  handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
-  handlePlace: (value: string) => void;
-  handlePlaceDetail: (value: string) => void;
-  openGuideModal: () => void;
-  closeGuideModal: () => void;
-  cancelSickOuting: () => void;
-  applySickOuting: () => void;
-  handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  openModal: () => void;
+  closeModal: () => void;
   applyOuting: (outing: Outing) => Promise<void>;
 }
 
 const Apply: FC<Props> = ({
   loading,
-  formInTime,
-  formOutTime,
-  formPlace,
-  formPlaceDetail,
-  formReason,
-  formReasonSick,
+  applyState,
   guideModal,
-  handleInTime,
-  handleOutTime,
-  handlePlace,
-  handlePlaceDetail,
-  openGuideModal,
-  closeGuideModal,
-  cancelSickOuting,
-  applySickOuting,
-  handleReason,
+  openModal,
+  closeModal,
   applyOuting
 }): ReactElement => {
-  const dispatch = useDispatch();
+  const {
+    formOutTime,
+    formInTime,
+    formPlace,
+    formPlaceDetail,
+    formReason,
+    formReasonSick,
+    handleOutTime,
+    handleInTime,
+    handlePlace,
+    handlePlaceDetail,
+    cancelSickOuting,
+    applySickOuting,
+    handleReason
+  } = applyState;
 
   const handleApplyOuting = () => {
     const outing: Outing = {
@@ -87,17 +76,11 @@ const Apply: FC<Props> = ({
       <ApplyHead />
       <div>
         <S.ApplyDescWarning>
-          외출 신청 시{" "}
-          <Link
-            to="/outing/warning"
-            onClick={() => dispatch(subPageMove("유의사항"))}
-          >
-            유의사항
-          </Link>
-          을 꼭 한번 읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의
-          책임입니다.
+          외출 신청 시 <Link to="/outing/warning">유의사항</Link>을 꼭 한번
+          읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의 책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
+          <div>외출은 오후 4시 30분부터 오후 8시 30분까지 가능합니다.</div>
           <ApplyTime
             formOutTime={formOutTime}
             formInTime={formInTime}
@@ -118,15 +101,13 @@ const Apply: FC<Props> = ({
         </S.ApplyForm>
         {guideModal && (
           <GuideModal
-            closeGuideModal={closeGuideModal}
+            closeModal={closeModal}
             handleApplyOuting={handleApplyOuting}
           />
         )}
         <S.FormButtonWrap>
           {loading && <Loading />}
-          <S.FormButtonSubmit onClick={openGuideModal}>
-            작성완료
-          </S.FormButtonSubmit>
+          <S.FormButtonSubmit onClick={openModal}>작성완료</S.FormButtonSubmit>
         </S.FormButtonWrap>
       </div>
     </S.ApplyWrap>

@@ -4,13 +4,13 @@ import * as S from "../style";
 
 interface Props {
   handleApplyOuting: () => void;
-  closeGuideModal: () => void;
+  closeModal: () => void;
 }
 
-const GuideModal: FC<Props> = ({ closeGuideModal, handleApplyOuting }) => {
+const GuideModal: FC<Props> = ({ closeModal, handleApplyOuting }) => {
   return (
     <>
-      <S.GuideModalBack onClick={closeGuideModal} />
+      <S.GuideModalBack onClick={closeModal} />
       <S.GuideModalWrap>
         <p>
           신청이 완료되면 학부모에게 승인 요청 문자가 전송되고, 승인 후에는
@@ -43,9 +43,7 @@ const GuideModal: FC<Props> = ({ closeGuideModal, handleApplyOuting }) => {
         <S.GuideModalButtons onClick={handleApplyOuting}>
           확인
         </S.GuideModalButtons>
-        <S.GuideModalButtons onClick={closeGuideModal}>
-          취소
-        </S.GuideModalButtons>
+        <S.GuideModalButtons onClick={closeModal}>취소</S.GuideModalButtons>
       </S.GuideModalWrap>
     </>
   );
