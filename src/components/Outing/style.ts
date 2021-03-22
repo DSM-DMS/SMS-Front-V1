@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { OutingWarningRedBase, OutingBalloons } from "../../assets";
+import { OutingWarningRedBase, OutingBalloons, Late } from "../../assets";
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -729,6 +729,7 @@ export const HistoryCard = styled.div`
 
 interface Emergency {
   emergency: boolean;
+  late: boolean;
 }
 
 export const CardDate = styled.p<Emergency>`
@@ -738,22 +739,33 @@ export const CardDate = styled.p<Emergency>`
   margin-bottom: 12px;
   padding-right: 32px;
   border-right: 2px solid #242424;
-  &::after {
+  &::after,
+  &::before {
     content: "";
     position: absolute;
     top: 50%;
-    right: 8px;
     transform: translateY(-50%);
-    ${({ emergency }) =>
-      emergency &&
-      css`
-        background-image: url(${OutingWarningRedBase});
-      `}
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     width: 16px;
     height: 16px;
+  }
+  &::after {
+    right: 32px;
+    ${({ emergency }) =>
+      emergency &&
+      css`
+        background-image: url(${OutingWarningRedBase});
+      `}
+  }
+  &::before {
+    right: 8px;
+    ${({ late }) =>
+      late &&
+      css`
+        background-image: url(${Late});
+      `}
   }
 `;
 
@@ -766,11 +778,12 @@ export const CardPlace = styled.p`
 `;
 
 const REJECT = "#ff6409";
-const PENDING = "#ffeb00";
+const PENDING = "#efdc00";
 const APPROVE = "#7aff00";
 const START = "#1000ff";
 const END = "#ff5555";
 const CERTIFY = "#242424";
+const EXPIRED = "#7f7f7f";
 
 interface Status {
   status: number;
@@ -793,6 +806,8 @@ export const CardStatus = styled.span<Status>`
         return END;
       case 5:
         return CERTIFY;
+      case 6:
+        return EXPIRED;
       default:
         return CERTIFY;
     }
