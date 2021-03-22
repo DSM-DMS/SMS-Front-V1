@@ -80,6 +80,7 @@ const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
             onClick={openModal}
           />
         </S.FormPlaceInputWrap>
+        <S.FormPlaceInput>도로명 주소가 포함되어야 합니다.</S.FormPlaceInput>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
             {roadAddress ? roadAddress : "도로명 주소"}
