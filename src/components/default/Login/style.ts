@@ -39,11 +39,12 @@ export const LoginTypeText = styled.span`
   font-size: 14px;
 `;
 
-export const LoginInputsWrap = styled.div`
+export const LoginInputsWrap = styled.form`
   margin: 8px 0;
 `;
 
 export const LoginLabel = styled.label`
+  position: relative;
   display: block;
   margin-bottom: 24px;
   color: #888888;
@@ -51,12 +52,28 @@ export const LoginLabel = styled.label`
 
 export const LoginInput = styled.input`
   width: 100%;
-  padding: 12px 16px;
+  padding: 12px 24px 12px 16px;
   border: 0;
   box-sizing: border-box;
   &:focus {
     outline: 1px solid rgb(133, 133, 133);
   }
+`;
+
+export const CapsLockImg = styled.img`
+  position: absolute;
+  top: 100%;
+  left: 12px;
+`;
+
+export const Eye = styled.img`
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 `;
 
 export const AutoLogin = styled.div`
@@ -97,6 +114,16 @@ export const AutoLoginLabel = styled.label`
     &:focus ~ #auto-login-checkbox {
       outline: 1px dotted black;
     }
+  }
+`;
+export const HelperWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  > a {
+    color: #5323b2;
+    text-decoration: none;
   }
 `;
 

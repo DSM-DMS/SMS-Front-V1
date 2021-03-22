@@ -38,13 +38,12 @@ export { default as NavIconUnauthorizedMint } from "./navigation/NavIcon-unAutho
 export { default as NavIconExitBlack } from "./navigation/NavIcon-exit-black.svg";
 export { default as NavIconTrashCanYellow } from "./navigation/NavIcon-trashCan-yellow.svg";
 export { default as IconWhite } from "./navigation/Icon-white.svg";
-export { default as IconBlack } from "./navigation/Icon-black.svg";
+export { default as IconBlack } from "./navigation/Icon-Black.svg";
 export { default as CloseMenu } from "./navigation/CloseMenu.svg";
 
-export { default as MainArrow } from "./Main/arrow.svg";
-export { default as MainBike } from "./Main/bike.svg";
-export { default as MainHistory } from "./Main/outingHistory.svg";
-export { default as MainWarning } from "./Main/warning.svg";
+export { default as MainBike } from "./main/bike.svg";
+export { default as MainHistory } from "./main/outingHistory.svg";
+export { default as MainWarning } from "./main/warning.svg";
 
 export { default as SearchIcon } from "./Board/SearchIcon.svg";
 
@@ -52,8 +51,6 @@ export { default as MainSelector } from "./Admin/selector.svg";
 export { default as MainChangeTable } from "./Admin/change.svg";
 
 export { default as OutingWarningRedBase } from "./Outing/warningRedBase.svg";
-export { default as OutingDown } from "./Outing/dropDownButton.svg";
-export { default as OutingTriangle } from "./Outing/triangle.svg";
 export { default as OutingBalloons } from "./Outing/balloons.svg";
 export { default as OutingWarning } from "./Outing/warning.svg";
 export { default as OutingHistory } from "./Outing/history.svg";
@@ -74,12 +71,16 @@ export { default as deleteMember } from "./management/delete.svg";
 export { default as deleteBtn } from "./management/deleteBtn.svg";
 export { default as paperclipClubPicture } from "./management/paperclip.svg";
 export { default as Search } from "./management/search.svg";
+export { default as SettingGear } from "./management/settings.svg";
+export { default as addBtn } from "./management/addBtn.svg";
 
 export { default as PageNotFound } from "./default/page_not_found.svg";
 
 export { default as Check } from "./Login/check.svg";
 export { default as CheckGray } from "./Login/checkGray.svg";
+export { default as CapsLock } from "./Login/caps_lock.svg";
 
 export { default as Eye } from "./PasswordChange/eye.svg";
 export { default as EyeOff } from "./PasswordChange/eyeOff.svg";
-export { default as addBtn } from "./management/addBtn.svg";
+
+export { default as Spinner } from "./default/Spinner.svg";

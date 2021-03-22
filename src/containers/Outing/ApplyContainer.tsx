@@ -1,24 +1,32 @@
-import React, {
-  ChangeEvent,
-  FC,
-  FormEvent,
-  useCallback,
-  useState
-} from "react";
+import React, { FC, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import { OutingApply } from "../../components";
 import { postOuting } from "../../lib/api/Outing";
-import { ReqOuting, ResOutingWithDefault } from "../../lib/api/payloads/Outing";
+import { ReqOuting } from "../../lib/api/payloads/Outing";
+import useApplyState from "../../lib/hooks/useApplyState";
+import useModalState from "../../lib/hooks/useModalState";
+import { getAxiosError } from "../../lib/utils";
+import WithLoadingContainer, {
+  LoadingProps
+} from "../Loading/WithLoadingContainer";
 
-interface Props {}
+interface Props extends LoadingProps {}
 
 export const NORMAL = "normal" as const;
 export const EMERGENCY = "emergency" as const;
 
+const SUCCESS =
+  "외출증 신청이 완료되었습니다. 승인을 받은 후 모바일을 통해 외출을 시작해주세요";
+const NO_PARENT =
+  "연결된 학부모 계정이 존재하지 않습니다. 선생님께 바로 찾아가 승인을 받아주세요.";
+const NO_AGREE =
+  "학부모가 문자 사용을 동의하지 않았습니다. 선생님께 바로 찾아가 승인을 받아주세요.";
+
 export type SituationType = typeof NORMAL | typeof EMERGENCY;
 
 export interface Outing {
-  date: string;
   startTime: string;
   endTime: string;
   place: string;
@@ -26,104 +34,50 @@ export interface Outing {
   situation: SituationType;
 }
 
-const ApplyContainer: FC<Props> = () => {
-  const [formDate, setFormDate] = useState<string>("");
-  const [formOutTime, setFormOutTime] = useState<string>("");
-  const [formInTime, setFormInTime] = useState<string>("");
-  const [formPlace, setFormPlace] = useState<string>("");
-  const [formReason, setFormReason] = useState<string>("");
-  const [formReasonSick, setFormReasonSick] = useState<boolean>(false);
+const getTodayDateForm = (time: string) => {
+  return +new Date(`${new Date().toLocaleDateString()}-${time}`);
+};
 
-  const onInputDate = useCallback((e: FormEvent<HTMLInputElement>) => {
-    setFormDate(e.currentTarget.value);
-  }, []);
-
-  const handleOutTime = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-
-      if (!checkOutTimeValid(value)) {
-        alert("귀교 시간보다 늦을 수 없습니다.");
-        return;
-      }
-
-      setFormOutTime(value);
-    },
-    [formInTime]
-  );
-
-  const handleInTime = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-
-      if (!checkInTimeValid(value)) {
-        alert("외출 시간보다 늦을 수 없습니다.");
-        return;
-      }
-
-      setFormInTime(value);
-    },
-    [formOutTime]
-  );
-
-  const checkOutTimeValid = useCallback(
-    (time: string) => {
-      if (formInTime === "") return true;
-      if (formInTime < time) return false;
-      return true;
-    },
-    [formInTime]
-  );
-
-  const checkInTimeValid = useCallback(
-    (time: string) => {
-      if (formOutTime === "") return true;
-      if (formOutTime > time) return false;
-      return true;
-    },
-    [formOutTime]
-  );
-
-  const handlePlace = useCallback((value: string) => {
-    setFormPlace(value);
-  }, []);
-
-  const cancelSickOuting = useCallback(() => {
-    setFormReasonSick(false);
-  }, []);
-
-  const applySickOuting = useCallback(() => {
-    setFormReasonSick(true);
-  }, []);
-
-  const handleReason = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormReason(e.currentTarget.value);
-  }, []);
+const ApplyContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
+  const history = useHistory();
+  const applyState = useApplyState();
+  const modalState = useModalState();
+  const [, , closeModal] = modalState;
 
   const checkOutingValidation = useCallback((outing: Outing) => {
-    const { date, startTime, endTime, place, reason } = outing;
-    const now = +new Date();
-    const targetStartTime = +new Date(`${date}T${startTime}`);
-    const targetEndTime = +new Date(`${date}T${endTime}`);
+    const { startTime, endTime, place, reason } = outing;
 
-    return date.trim() === "" ||
+    return (
       startTime.trim() === "" ||
       endTime.trim() === "" ||
-      now > targetStartTime ||
-      now > targetEndTime ||
       place.trim() === "" ||
       reason.trim() === ""
-      ? false
-      : true;
+    );
+  }, []);
+
+  const checkOutTimeValidation = useCallback((outing: Outing) => {
+    const now = +new Date();
+    const { startTime, endTime } = outing;
+    const targetStartTime = getTodayDateForm(startTime);
+    const targetEndTime = getTodayDateForm(endTime);
+
+    return now > targetStartTime || now > targetEndTime;
   }, []);
 
   const applyOuting = useCallback(async (outing: Outing) => {
-    const { date, startTime, endTime, place, reason, situation } = outing;
-    if (!checkOutingValidation(outing)) {
-      return alert("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+    const { startTime, endTime, place, reason, situation } = outing;
+    if (checkOutingValidation(outing)) {
+      toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
+      closeModal();
+      return;
+    } else if (checkOutTimeValidation(outing)) {
+      toast.error("현재 시간보다 이후 시간에 신청해야 합니다.");
+      closeModal();
+      return;
     }
+
     const getOutingTime = (time: string) =>
-      Math.round(+new Date(`${date}T${time}`) / 1000);
+      Math.round(getTodayDateForm(time) / 1000);
 
     const outingBody: ReqOuting = {
       start_time: getOutingTime(startTime),
@@ -133,43 +87,43 @@ const ApplyContainer: FC<Props> = () => {
       situation
     };
 
+    startLoading();
     try {
-      await postOuting(outingBody);
+      const {
+        data: { status, code }
+      } = await postOuting(outingBody);
 
-      alert("외출증 신청이 완료되었습니다. 학부모와 선생님께 확인받으세요.");
+      if (status === 201 && code === 0) {
+        alert(SUCCESS);
+      } else if (status === 201 && code === -1) {
+        alert(NO_PARENT);
+      } else if (status === 201 && code === -2) {
+        alert(NO_AGREE);
+      }
+
+      history.push("/outing/history");
     } catch (err) {
-      const data: ResOutingWithDefault = err?.response?.data;
-      const status = data?.status;
-      const code = data?.code;
+      const { status, code } = getAxiosError(err);
 
-      if (status === 400) {
-        alert("외출 시간을 다시 설정해주세요.");
-      } else if (status === 403) {
-        alert("학생 계정이 아닙니다. 학생 계정으로 이용해주세요.");
-      } else if (status === 409 && code === -2401) {
-        alert("해당 날짜에 대기중인 외출 신청이 있습니다.");
+      if (status === 409 && code === -2401) {
+        toast.error("오늘 대기중인 외출 신청이 있습니다.");
+      } else {
+        toast.error("오류가 발생했습니다. 다시 시도해주세요.");
       }
     }
+
+    closeModal();
+    endLoading();
   }, []);
 
   return (
     <OutingApply
-      formDate={formDate}
-      formOutTime={formOutTime}
-      formInTime={formInTime}
-      formPlace={formPlace}
-      formReason={formReason}
-      formReasonSick={formReasonSick}
-      onInputDate={onInputDate}
-      handleOutTime={handleOutTime}
-      handleInTime={handleInTime}
-      handlePlace={handlePlace}
-      cancelSickOuting={cancelSickOuting}
-      applySickOuting={applySickOuting}
-      handleReason={handleReason}
+      loading={loading}
+      applyState={applyState}
+      modalState={modalState}
       applyOuting={applyOuting}
     />
   );
 };
 
-export default ApplyContainer;
+export default WithLoadingContainer(ApplyContainer);

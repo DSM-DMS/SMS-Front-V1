@@ -1,11 +1,11 @@
-import React, { FC, useCallback } from 'react';
-import { stateType } from '../../../../modules/reducer';
-import { useSelector, useDispatch } from 'react-redux';
-import { PageType, SubNavObj } from '../../../../lib/static';
-import * as S from './styles';
-import { subPageMove } from '../../../../modules/action/page';
-import { useHistory } from 'react-router';
-import { changeSubNavOpen } from '../../../../modules/action/subNav';
+import React, { FC, useCallback } from "react";
+import { stateType } from "../../../../modules/reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { PageType, SubNavObj } from "../../../../lib/static";
+import * as S from "./styles";
+import { subPageMove } from "../../../../modules/action/page";
+import { useHistory } from "react-router";
+import { changeSubNavOpen } from "../../../../modules/action/subNav";
 
 interface Props {
   subRouteData: SubNavObj;
@@ -21,6 +21,7 @@ const CloseNavigatin: FC<Props> = ({ subRouteData }) => {
     <S.Container>
       {data.map(({ name, acitveUrl, url, route }) => (
         <S.ImgWrap
+          key={route}
           isActive={name === subUrl}
           onClick={() => {
             if (name === subUrl) dispatch(changeSubNavOpen());

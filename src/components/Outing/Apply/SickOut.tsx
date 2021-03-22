@@ -1,31 +1,45 @@
 import React, { FC, ReactElement } from "react";
 
-import * as S from "../style";
 import ApplyWarning from "./ApplyWarning";
+
+import * as S from "../style";
 import { Check } from "../../../assets";
+import { ApplyState } from "../../../lib/hooks/useApplyState";
 
 interface Props {
-  formReasonSick: boolean;
-  handleSickOut: () => void;
+  applyState: ApplyState;
 }
 
-const SicOut: FC<Props> = ({ formReasonSick, handleSickOut }): ReactElement => {
+const ApplySicOut: FC<Props> = ({ applyState }): ReactElement => {
+  const { situation, cancelSickOut, applySickOut } = applyState;
+
+  const handleSickOut = () => {
+    if (situation) {
+      cancelSickOut();
+      return;
+    }
+
+    applySickOut();
+  };
+
   return (
     <S.FormReasonSick>
-      <S.FormReasonSickCheckboxLabel onClick={handleSickOut}>
-        <S.FormReasonSickCheckbox
-          id="checkbox"
-          className={formReasonSick ? "checked" : ""}
-        >
-          {formReasonSick && (
-            <img src={Check} id="check" alt="checked" title="checked" />
-          )}
-        </S.FormReasonSickCheckbox>
-        <span>질병 외출로 신청</span>
+      <S.FormReasonSickCheckboxLabel>
+        <div id="sickWrap" onClick={handleSickOut}>
+          <S.FormReasonSickCheckbox
+            id="checkbox"
+            className={situation ? "checked" : ""}
+          >
+            {situation && (
+              <img src={Check} id="check" alt="checked" title="checked" />
+            )}
+          </S.FormReasonSickCheckbox>
+          <span>질병 외출</span>
+        </div>
+        <ApplyWarning />
       </S.FormReasonSickCheckboxLabel>
-      <ApplyWarning />
     </S.FormReasonSick>
   );
 };
 
-export default SicOut;
+export default ApplySicOut;

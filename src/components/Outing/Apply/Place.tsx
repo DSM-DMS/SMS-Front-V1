@@ -1,60 +1,47 @@
 import React, { FC, ReactElement, useState, useCallback } from "react";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import SearchList from "./SearchList";
 
 import * as S from "../style";
 import { OutingPlaceSearch } from "../../../assets";
-import {
-  ResNaverLocalItem,
-  ResNaverLocalWithDefault
-} from "../../../lib/api/payloads/Outing";
+import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 import { getNaverSearchLocal } from "../../../lib/api/Outing";
+import { getAxiosError } from "../../../lib/utils";
+import { ApplyState } from "../../../lib/hooks/useApplyState";
 
 interface Props {
-  place: string;
-  handlePlace: (value: string) => void;
+  applyState: ApplyState;
 }
 
-interface ModalInputs {
-  searchWord: string;
-  selectedRoadAddress: string;
-}
-
-const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
+const usePlaceModal = () => {
   const [modal, setModal] = useState<boolean>(false);
-  const [placeResult, setPlaceResult] = useState<ResNaverLocalWithDefault>(
-    null
-  );
-  const [
-    { searchWord, selectedRoadAddress },
-    setModalInputs
-  ] = useState<ModalInputs>({
-    searchWord: "",
-    selectedRoadAddress: ""
-  });
 
-  const handleSearchWord = useCallback((searchWord: string) => {
-    setModalInputs(prev => ({ ...prev, searchWord }));
-  }, []);
-
-  const handleSelectedRoadAddress = useCallback(
-    (selectedRoadAddress: string) => {
-      setModalInputs(prev => ({ ...prev, selectedRoadAddress }));
-    },
-    []
-  );
-
-  const handleShowModal = useCallback(() => {
+  const openModal = useCallback(() => {
     setModal(true);
   }, []);
 
-  const handleHideModal = useCallback(() => {
+  const closeModal = useCallback(() => {
     setModal(false);
   }, []);
 
+  return [modal, openModal, closeModal] as const;
+};
+
+type PlaceResult = ResNaverLocalWithDefault;
+
+const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
+  const history = useHistory();
+  const [modal, openModal, closeModal] = usePlaceModal();
+  const [placeResult, setPlaceResult] = useState<PlaceResult>(null);
+
+  const { place, roadAddress, handlePlace, handleRoadAddress } = applyState;
+
   const handleSearchLocation = () => {
     if (place.trim() === "") {
-      return alert("장소 검색은 최소 1글자 이상 입력해야합니다.");
+      toast.error("장소 검색은 최소 1글자 이상 입력해야합니다.");
+      return;
     }
 
     searchLocation(place);
@@ -66,10 +53,14 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
 
       setPlaceResult(data);
     } catch (err) {
-      const status = err?.response?.status;
+      const { status } = getAxiosError(err);
 
+      if (status === 401) {
+        toast.error("세션이 만료되었습니다. 다시 로그인해 주세요.");
+        history.push("/login");
+      }
       if (status === 423) {
-        return alert("한 번 검색한 후에는 5초 이후에 다시 검색할 수 있습니다.");
+        toast.error("한 번 검색한 후에는 5초 이후에 다시 검색할 수 있습니다.");
       }
     }
   }, []);
@@ -78,33 +69,30 @@ const ApplyPlace: FC<Props> = ({ place, handlePlace }): ReactElement => {
     <S.FormPlace>
       <S.ApplyFormItemTitle htmlFor="place">장소</S.ApplyFormItemTitle>
       <S.PlaceSearchWrap>
-        <span>검색 결과에 도로명 주소가 포함되어야 합니다.</span>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
-            {searchWord === "" ? "외출 장소를 검색하세요" : searchWord}
+            {place ? place : "외출 장소를 검색하세요"}
           </S.FormPlaceInput>
           <S.FormPlaceInputSearch
             src={OutingPlaceSearch}
             alt="show modal"
             title="show modal"
-            onClick={handleShowModal}
+            onClick={openModal}
           />
         </S.FormPlaceInputWrap>
         <S.FormPlaceInputWrap>
           <S.FormPlaceInput>
-            {selectedRoadAddress === "" ? "도로명 주소" : selectedRoadAddress}
+            {roadAddress ? roadAddress : "도로명 주소"}
           </S.FormPlaceInput>
         </S.FormPlaceInputWrap>
       </S.PlaceSearchWrap>
       {modal && (
         <SearchList
-          place={place}
           handlePlace={handlePlace}
+          handleRoadAddress={handleRoadAddress}
           placeResult={placeResult}
           handleSearchLocation={handleSearchLocation}
-          handleHideModal={handleHideModal}
-          handleSearchWord={handleSearchWord}
-          handleSelectedRoadAddress={handleSelectedRoadAddress}
+          handleHideModal={closeModal}
         />
       )}
     </S.FormPlace>

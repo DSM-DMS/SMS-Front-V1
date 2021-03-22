@@ -1,12 +1,12 @@
-import React, { ChangeEvent, FC, FormEvent, ReactElement } from "react";
+import React, { FC, ReactElement } from "react";
 import { Link } from "react-router-dom";
 
 import ApplyHead from "./Head";
-import ApplyDate from "./Date";
 import ApplyTime from "./Time";
 import ApplyPlace from "./Place";
 import ApplyReason from "./Reason";
-import SicOut from "./SickOut";
+import ApplySicOut from "./SickOut";
+import GuideModal from "./GuideModal";
 
 import * as S from "../style";
 import {
@@ -14,63 +14,43 @@ import {
   NORMAL,
   Outing
 } from "../../../containers/Outing/ApplyContainer";
-import { useDispatch } from "react-redux";
-import { pageMove, subPageMove } from "../../../modules/action/page";
+import { Loading } from "../../default";
+import { ApplyState } from "../../../lib/hooks/useApplyState";
+import { ApplyModalState } from "../../../lib/hooks/useModalState";
 
 interface Props {
-  formDate: string;
-  formOutTime: string;
-  formInTime: string;
-  formPlace: string;
-  formReason: string;
-  formReasonSick: boolean;
-  onInputDate: (e: FormEvent<HTMLInputElement>) => void;
-  handleOutTime: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleInTime: (e: ChangeEvent<HTMLInputElement>) => void;
-  handlePlace: (value: string) => void;
-  cancelSickOuting: () => void;
-  applySickOuting: () => void;
-  handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  loading: boolean;
+  applyState: ApplyState;
   applyOuting: (outing: Outing) => Promise<void>;
+  modalState: ApplyModalState;
 }
 
 const Apply: FC<Props> = ({
-  formDate,
-  formInTime,
-  formOutTime,
-  formPlace,
-  formReason,
-  formReasonSick,
-  onInputDate,
-  handleInTime,
-  handleOutTime,
-  handlePlace,
-  cancelSickOuting,
-  applySickOuting,
-  handleReason,
+  loading,
+  applyState,
+  modalState,
   applyOuting
 }): ReactElement => {
-  const dispatch = useDispatch();
+  const {
+    startTime,
+    endTime,
+    roadAddress,
+    reason,
+    situation,
+    handleReason
+  } = applyState;
+  const [guideModal, openModal, closeModal] = modalState;
+
   const handleApplyOuting = () => {
     const outing: Outing = {
-      date: formDate,
-      startTime: formOutTime,
-      endTime: formInTime,
-      place: formPlace,
-      reason: formReason,
-      situation: formReasonSick ? EMERGENCY : NORMAL
+      startTime,
+      endTime,
+      place: roadAddress,
+      reason,
+      situation: situation ? EMERGENCY : NORMAL
     };
 
     applyOuting(outing);
-  };
-
-  const handleSickOut = () => {
-    if (formReasonSick) {
-      cancelSickOuting();
-      return;
-    }
-
-    applySickOuting();
   };
 
   return (
@@ -78,35 +58,27 @@ const Apply: FC<Props> = ({
       <ApplyHead />
       <div>
         <S.ApplyDescWarning>
-          외출 신청 시{" "}
-          <Link
-            to="/outing/warning"
-            onClick={() => dispatch(subPageMove("유의사항"))}
-          >
-            유의사항
-          </Link>
-          을 꼭 한번 읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의
-          책임입니다.
+          외출 신청 시 <Link to="/outing/warning">유의사항</Link>을 꼭 한번
+          읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의 책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
-          <ApplyDate formDate={formDate} onInputDate={onInputDate} />
-          <ApplyTime
-            formOutTime={formOutTime}
-            formInTime={formInTime}
-            handleInTime={handleInTime}
-            handleOutTime={handleOutTime}
-          />
-          <SicOut
-            formReasonSick={formReasonSick}
-            handleSickOut={handleSickOut}
-          />
+          <S.ApplyTimeNotice>
+            외출은 오후 4시 20분부터 오후 8시 30분까지 가능합니다.
+          </S.ApplyTimeNotice>
+          <ApplyTime applyState={applyState} />
+          <ApplySicOut applyState={applyState} />
           <ApplyReason handleReason={handleReason} />
-          <ApplyPlace handlePlace={handlePlace} place={formPlace} />
+          <ApplyPlace applyState={applyState} />
         </S.ApplyForm>
+        {guideModal && (
+          <GuideModal
+            closeModal={closeModal}
+            handleApplyOuting={handleApplyOuting}
+          />
+        )}
         <S.FormButtonWrap>
-          <S.FormButtonSubmit onClick={handleApplyOuting}>
-            작성완료
-          </S.FormButtonSubmit>
+          {loading && <Loading />}
+          <S.FormButtonSubmit onClick={openModal}>작성완료</S.FormButtonSubmit>
         </S.FormButtonWrap>
       </div>
     </S.ApplyWrap>

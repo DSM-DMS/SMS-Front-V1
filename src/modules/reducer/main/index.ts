@@ -4,17 +4,27 @@ import {
   SET_TIMETABLES,
   SET_SCHEDULES,
   SET_SCHEDULER_DATE,
-  SET_TARGET_UUID
+  SET_TARGET_UUID,
+  START_TIMETABLE,
+  END_TIMETABLE,
+  START_SCHEDULE,
+  END_SCHEDULE,
+  SET_SELECTED_DATE
 } from "../../action/main";
 
 export interface TimetableState {
+  timetableLoading: boolean;
+  scheduleLoading: boolean;
   timetable: ResTimetable;
   schedules: ResSchedule[];
   schedulerDate: Date;
   targetUuid: string;
+  selectedDate: string;
 }
 
 const initialState: TimetableState = {
+  timetableLoading: false,
+  scheduleLoading: false,
   timetable: {
     time1: "-",
     time2: "-",
@@ -26,7 +36,8 @@ const initialState: TimetableState = {
   },
   schedules: [],
   schedulerDate: new Date(),
-  targetUuid: ""
+  targetUuid: "",
+  selectedDate: ""
 };
 
 const ManagementInfoReduce = (
@@ -53,6 +64,31 @@ const ManagementInfoReduce = (
       return {
         ...state,
         targetUuid: action.payload.scheduleUuid
+      };
+    case START_TIMETABLE:
+      return {
+        ...state,
+        timetableLoading: true
+      };
+    case END_TIMETABLE:
+      return {
+        ...state,
+        timetableLoading: false
+      };
+    case START_SCHEDULE:
+      return {
+        ...state,
+        scheduleLoading: true
+      };
+    case END_SCHEDULE:
+      return {
+        ...state,
+        scheduleLoading: false
+      };
+    case SET_SELECTED_DATE:
+      return {
+        ...state,
+        selectedDate: action.payload.localDate
       };
     default:
       return state;

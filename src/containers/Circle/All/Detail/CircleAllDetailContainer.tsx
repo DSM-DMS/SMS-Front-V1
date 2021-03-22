@@ -1,19 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { CircleAllDetail } from "../../../../components";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
-import {
-  getCircleInfoDetail,
-  getCircleInfoDetailSaga,
-  updatePosterDetail
-} from "../../../../modules/action/poster";
 import { RouteChildrenProps } from "react-router-dom";
+import { getNoticeSchoolList } from "../../../../modules/action/notice/list";
+import { getClubDetail } from "../../../../modules/action/club/detail";
 
 const CircleAllDetailContainer: FC<RouteChildrenProps> = ({ match }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     const clubUuid = (match.params as any).id;
-    dispatch(getCircleInfoDetailSaga(clubUuid));
+    dispatch(getNoticeSchoolList(0));
+    dispatch(getClubDetail(clubUuid));
   }, []);
   return <CircleAllDetail />;
 };

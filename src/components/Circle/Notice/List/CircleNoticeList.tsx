@@ -1,37 +1,34 @@
-import React, { FC, ChangeEvent } from "react";
-import * as S from "./styles";
-import { Board, ListPageHeader } from "../../../../components/default";
+import React, { ChangeEvent, FC } from "react";
 import { NavIconNoticeBlue } from "../../../../assets";
-import { makeFilterFunc } from "../../../../lib/utils";
-import { BoardObj } from "../../../default/Board/Board";
-import { useState } from "react";
-import { useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
-import { BoardListItem } from "../../../../lib/api/payloads/Board";
-
-const names = ["번호", "제목", "날짜", "동아리", "조회수"];
+import { NoticeList } from "../../../default";
+import { NoticeListSet } from "../../../default/NoticeList/NoticeList";
+import {
+  getNoticeClubList,
+  searchNoticeClubList
+} from "../../../../modules/action/notice/list";
 
 const CircleNoticeList: FC = () => {
-  const data = useSelector((store: stateType) => store.notice.list);
-  const [keyword, setKeyword] = useState<string>("");
-  const onChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setKeyword(e.target.value);
-  }, []);
-  const noticeFilerFunc = makeFilterFunc<BoardListItem>(
-    data,
-    ({ date, title }, keyword) =>
-      title.includes(keyword) || date.includes(keyword)
-  );
+  const dispatch = useDispatch();
+  const { announcements, size, loading } = useSelector((state: stateType) => ({
+    ...state.noticeList,
+    loading: state.loading["notice/GET_NOTICE_LIST"]
+  }));
+
+  const noticeListSet: NoticeListSet = {
+    title: "동아리 공지사항",
+    size,
+    imgSrc: NavIconNoticeBlue,
+    names: ["번호", "제목", "날짜", "동아리", "조회수"]
+  };
+
   return (
-    <S.Container>
-      <ListPageHeader
-        imgSrc={NavIconNoticeBlue}
-        onChange={onChange}
-        title="동아리 공지사항"
-      />
-      <Board names={names} data={noticeFilerFunc(keyword)} />
-    </S.Container>
+    <NoticeList
+      loading={loading}
+      notices={announcements}
+      setting={noticeListSet}
+    />
   );
 };
 

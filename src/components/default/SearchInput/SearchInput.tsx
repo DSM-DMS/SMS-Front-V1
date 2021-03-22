@@ -1,18 +1,23 @@
-import React, { FC, ChangeEvent, memo } from 'react';
-import * as S from './styles';
-import { SearchIcon } from '../../../assets';
+import React, { ChangeEvent, FC, KeyboardEvent, memo } from "react";
+import * as S from "./styles";
+import { SearchIcon } from "../../../assets";
 
 interface Props {
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: KeyboardEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   placeHolder: string;
 }
 
-const SearchInput: FC<Props> = ({ onChange, placeHolder }) => {
+const SearchInput: FC<Props> = ({ onKeyDown, placeHolder, onChange }) => {
   return (
     <S.InputWrap>
       <S.InputBackground>
-        <img src={SearchIcon} />
-        <S.Input onChange={onChange} placeholder={placeHolder} />
+        <img alt="검색 아이콘" src={SearchIcon} />
+        <S.Input
+          onKeyDown={onKeyDown}
+          onChange={onChange}
+          placeholder={placeHolder}
+        />
       </S.InputBackground>
     </S.InputWrap>
   );

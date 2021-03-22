@@ -1,27 +1,23 @@
 import React, { FC, useState } from "react";
-import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 
 import * as S from "../style";
 import { OutingCloseWhite, OutingPlaceSearch } from "../../../assets";
+import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 
 interface Props {
-  place: string;
   placeResult: ResNaverLocalWithDefault;
   handlePlace: (value: string) => void;
+  handleRoadAddress: (roadAddress: string) => void;
   handleSearchLocation: () => void;
   handleHideModal: () => void;
-  handleSearchWord: (searchWord: string) => void;
-  handleSelectedRoadAddress: (selectedRoadAddress: string) => void;
 }
 
 const SearchList: FC<Props> = ({
-  place,
   placeResult,
   handlePlace,
+  handleRoadAddress,
   handleSearchLocation,
-  handleHideModal,
-  handleSearchWord,
-  handleSelectedRoadAddress
+  handleHideModal
 }) => {
   const [start, setStart] = useState<boolean>(false);
 
@@ -34,9 +30,7 @@ const SearchList: FC<Props> = ({
   };
 
   const searchEnd = (roadAddress: string) => {
-    handleSearchWord(place);
-    handleSelectedRoadAddress(roadAddress);
-    handlePlace(roadAddress);
+    handleRoadAddress(roadAddress);
     handleHideModal();
   };
 
@@ -62,6 +56,9 @@ const SearchList: FC<Props> = ({
               id="searchInput"
               placeholder="ex) 장동, 23-9"
               onChange={e => handlePlace(e.currentTarget.value)}
+              onKeyPress={e => {
+                if (e.key === "Enter") searchStart();
+              }}
             />
             <img
               src={OutingPlaceSearch}

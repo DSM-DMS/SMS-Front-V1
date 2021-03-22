@@ -1,23 +1,13 @@
-import React, { FC, ReactElement, ChangeEvent, memo } from "react";
-import { useSelector } from "react-redux";
+import React, { FC, ReactElement, memo, ChangeEvent } from "react";
 
 import * as S from "./style";
 
-import { ManagementInfoHandler } from "../../../modules/action/management/info";
-import { stateType } from "../../../modules/reducer";
+interface Props {
+  link: string;
+  handleLink: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
-interface Props {}
-
-const ClubFacebookLink: FC<Props> = (): ReactElement => {
-  const handler = new ManagementInfoHandler();
-  const { facebookLink } = useSelector(
-    (state: stateType) => state.ManagementInfo
-  );
-
-  const handleChangeFacebookLink = (e: ChangeEvent<HTMLInputElement>) => {
-    handler.handleFacebookLink(e.target.value);
-  };
-
+const ClubFacebookLink: FC<Props> = ({ link, handleLink }): ReactElement => {
   return (
     <S.ClubFacebook>
       <label>
@@ -26,9 +16,9 @@ const ClubFacebookLink: FC<Props> = (): ReactElement => {
           <span>https://www.facebook.com/</span>
           <S.InputCommonStyle
             type="text"
-            defaultValue={facebookLink}
+            defaultValue={link}
             maxLength={100}
-            onChange={handleChangeFacebookLink}
+            onChange={handleLink}
           />
         </S.ClubFacebookFakeLink>
       </label>

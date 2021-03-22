@@ -1,28 +1,21 @@
 import { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import { call, put, takeEvery } from "redux-saga/effects";
 
 import { apiDefault } from "../../../lib/api/client";
 import {
   ResStudentInfo,
-  ResStudentInfoWithDefault,
-  ResTeacherInfo,
-  ResTeacherInfoWithDefault
+  ResStudentInfoWithDefault
 } from "../../../lib/api/payloads/Login";
 import {
   getStudentInfoSaga,
-  getTeacherInfoSaga,
   GET_STUDENT_INFO_SAGA,
-  GET_TEACHER_INFO_SAGA,
   setInit,
   STUDENT,
-  TEACHER,
   UserType
 } from "../../action/header";
 
-const setLocalStorage = (
-  type: UserType,
-  form: ResStudentInfo | ResTeacherInfo
-) => {
+const setLocalStorage = (type: UserType, form: ResStudentInfo) => {
   localStorage.setItem("sms-type", type);
   localStorage.setItem("sms-user", JSON.stringify(form));
 };
@@ -31,7 +24,15 @@ function* setStudentInfoOnStorageSaga(
   action: ReturnType<typeof getStudentInfoSaga>
 ) {
   const {
-    data: { grade, group, name, phone_number, student_number, profile_uri }
+    data: {
+      grade,
+      group,
+      name,
+      phone_number,
+      student_number,
+      profile_uri,
+      parent_status
+    }
   }: AxiosResponse<ResStudentInfoWithDefault> = yield call(
     apiDefault().get,
     `students/uuid/${action.payload.studentUuid}`
@@ -43,38 +44,23 @@ function* setStudentInfoOnStorageSaga(
     student_number,
     name,
     phone_number,
-    profile_uri
+    profile_uri,
+    parent_status
   };
+  const clubUuid = localStorage.getItem("club_uuid");
+
+  if (parent_status.toLowerCase() === "CONNECTED") {
+    toast.info("학부모 계정과 연결되었습니다");
+  } else if (parent_status.toLowerCase() === "UN_CONNECTED") {
+    toast.info("학부모 계정과 연결되었습니다");
+  }
 
   setLocalStorage(STUDENT, studentForm);
-  yield put(setInit(STUDENT, studentForm));
-}
-
-function* setTeacherInfoOnStorageSaga(
-  action: ReturnType<typeof getTeacherInfoSaga>
-) {
-  const {
-    data: { grade, group, name, phone_number }
-  }: AxiosResponse<ResTeacherInfoWithDefault> = yield call(
-    apiDefault().get,
-    `/teachers/uuid/${action.payload.teacherUuid}`
-  );
-
-  const teacherForm: ResTeacherInfo = {
-    grade,
-    group,
-    name,
-    phone_number
-  };
-
-  setLocalStorage(TEACHER, teacherForm);
-  yield put(setInit(TEACHER, teacherForm));
+  yield put(setInit(STUDENT, studentForm, clubUuid));
 }
 
 function* headerSaga() {
   yield takeEvery(GET_STUDENT_INFO_SAGA, setStudentInfoOnStorageSaga);
-
-  yield takeEvery(GET_TEACHER_INFO_SAGA, setTeacherInfoOnStorageSaga);
 }
 
 export default headerSaga;

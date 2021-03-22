@@ -19,8 +19,16 @@ export const HeaderText = styled.div`
   font-weight: bold;
 `;
 
+export const EmptyList = styled.div`
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const CardContainer = styled.div`
-  max-height: 800px;
+  height: 700px;
   overflow-y: auto;
   margin-top: 20px;
   &::-webkit-scrollbar {

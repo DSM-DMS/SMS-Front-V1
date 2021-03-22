@@ -44,6 +44,7 @@ export const WarningOuterItem = styled.li`
 export const WarningInnerItem = styled.li`
   margin: 8px 0;
   padding-left: 12px;
+  font-size: 12px;
   > a {
     color: #5323b2;
     text-decoration: none;
@@ -172,6 +173,12 @@ export const ApplyDescWarning = styled.p`
 
 export const ApplyForm = styled.div`
   margin-bottom: 16px;
+`;
+
+export const ApplyTimeNotice = styled.p`
+  padding: 24px 0;
+  color: #242424;
+  font-size: 14px;
 `;
 
 export const ApplyFormItemTitle = styled.label`
@@ -318,9 +325,30 @@ export const FormPlaceSearchListWrap = styled.div`
   border-radius: 4px;
   background-color: white;
   box-shadow: 0 3px 5px #555;
-  overflow-y: scroll;
   box-sizing: border-box;
   z-index: 10;
+`;
+
+export const PlaceDetailWrap = styled.div`
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  margin: 8px 0;
+  padding: 8px;
+  border: 1px solid #888888;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+export const PlaceDetailInput = styled.input`
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  &::placeholder {
+    color: #dddddd;
+  }
 `;
 
 export const ProgressBar = styled.div`
@@ -396,7 +424,6 @@ export const PlaceSearchListBox = styled.div`
 export const PlaceSearchList = styled.ul`
   height: 400px;
   border-bottom: 1px solid #888888;
-  overflow-y: scroll;
 `;
 
 export const PlaceSearchItem = styled.li<{ time: number }>`
@@ -492,12 +519,17 @@ export const FormReasonSick = styled.div`
 `;
 
 export const FormReasonSickCheckboxLabel = styled.div`
+  position: relative;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  cursor: pointer;
-  &:hover ~ #warning {
-    display: block;
+  > #sickWrap {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover ~ #warning {
+      display: block;
+    }
   }
 `;
 
@@ -679,9 +711,9 @@ export const HistoryNoContent = styled.div`
 
 export const HistoryCardWrap = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(25%, 30%));
   row-gap: 40px;
-  justify-content: space-between;
+  column-gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
   margin-bottom: 60px;
 `;
 
@@ -694,8 +726,6 @@ export const HistoryCard = styled.div`
   border: 1px solid #dddddd;
   cursor: pointer;
 `;
-
-export const CardTop = styled.div``;
 
 interface Emergency {
   emergency: boolean;
@@ -735,14 +765,12 @@ export const CardPlace = styled.p`
   font-size: 12px;
 `;
 
-export const CardBottom = styled.div``;
-
-const PENDING = "#0000fe";
-const REJECT = "#ff9f59";
-const APPROVE = "#62d462";
-const START = "#5741b7";
+const REJECT = "#ff6409";
+const PENDING = "#ffeb00";
+const APPROVE = "#7aff00";
+const START = "#1000ff";
 const END = "#ff5555";
-const CERTIFY = "#0000fe";
+const CERTIFY = "#242424";
 
 interface Status {
   status: number;
@@ -755,8 +783,8 @@ export const CardStatus = styled.span<Status>`
       case -1:
         return REJECT;
       case 0:
-        return PENDING;
       case 1:
+        return PENDING;
       case 2:
         return APPROVE;
       case 3:
@@ -766,10 +794,11 @@ export const CardStatus = styled.span<Status>`
       case 5:
         return CERTIFY;
       default:
-        return PENDING;
+        return CERTIFY;
     }
   }};
-  font-size: 6px;
+  font-size: 14px;
+  font-weight: bold;
 `;
 
 export const CardTime = styled.div`
@@ -828,6 +857,7 @@ export const ModalApply = styled.div`
   position: relative;
   width: 600px;
   padding: 40px 80px;
+  border-radius: 4px;
   background-color: white;
 `;
 
@@ -846,6 +876,12 @@ export const ModalItem = styled.li`
   font-size: 14px;
 `;
 
+export const ModalStatus = styled.p`
+  margin-top: 24px;
+  color: #16191f;
+  font-weight: 300;
+`;
+
 export const ModalCategory = styled.span`
   width: 100px;
   margin-right: 8px;
@@ -859,26 +895,36 @@ export const ModalClose = styled.img`
   cursor: pointer;
 `;
 
+export const ModalButtonWrap = styled.div`
+  text-align: right;
+`;
+
 export const ModalApplyButton = styled.button`
-  position: absolute;
-  background-color: #10012e;
-  color: white;
-  font-size: 16px;
+  margin: 0 12px;
   padding: 10px 20px;
   border: 0;
   border-radius: 4px;
   box-shadow: -3px -3px 2px rgba(255, 255, 255, 0.3),
     5px 5px 5px rgba(0, 0, 0, 0.2), 10px 10px 10px rgba(0, 0, 0, 0.3);
-`;
-
-export const OutingButton = styled(ModalApplyButton)`
-  bottom: 5%;
-  right: 5%;
+  font-size: 16px;
 `;
 
 export const OnlineCardButton = styled(ModalApplyButton)`
-  bottom: 5%;
-  right: 22%;
+  border: 1px solid #10012e;
+  color: #10012e;
+  background-color: white;
+`;
+
+export const OutingStartBtn = styled(ModalApplyButton)`
+  border: 1px solid #10012e;
+  color: white;
+  background-color: #10012e;
+`;
+
+export const OutingEndBtn = styled(ModalApplyButton)`
+  border: 1px solid #ff5555;
+  color: white;
+  background-color: #ff5555;
 `;
 
 export const ModalOnlineCard = styled.div`
@@ -948,5 +994,52 @@ export const WithModalAniWrap = styled.div`
       transform: translateY(0);
       opacity: 1;
     }
+  }
+`;
+
+export const GuideModalWrap = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 500px;
+  line-height: 1.5;
+  padding: 24px;
+  border-radius: 8px;
+  background-color: white;
+  font-size: 14px;
+  p {
+    margin-bottom: 12px;
+  }
+  ul li {
+    margin: 6px 0;
+  }
+`;
+
+export const GuideModalBack = styled.div`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 9;
+`;
+
+export const GuideModalButtons = styled.button`
+  float: right;
+  margin: 0 8px;
+  padding: 4px 16px;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  &:first-of-type {
+    color: white;
+    background-color: #5323b2;
+  }
+  &:last-of-type {
+    color: #242424;
+    background-color: white;
   }
 `;

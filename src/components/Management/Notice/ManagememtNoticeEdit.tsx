@@ -1,64 +1,22 @@
 import React, { FC } from "react";
-import { useEffect } from "react";
 import { NavIconNoticeBlack } from "../../../assets";
-import { PageHeader } from "../../default";
-import * as S from "../../Admin/Notice/writing/styles";
-import EditerJS from "@editorjs/editorjs";
-import Header from "@editorjs/header";
-import List from "@editorjs/list";
-import { useRef } from "react";
-import { useCallback } from "react";
+import { NoticeEdit } from "../../default";
+import { NoticeEditSet } from "../../default/NoticeEdit/NoticeEdit";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../modules/reducer";
 
 const ManagementNoticeEdit: FC = () => {
-  const editerRef = useRef<EditerJS>();
-  useEffect(() => {
-    const editer = new EditerJS({
-      holder: "editer",
-      tools: {
-        header: Header,
-        list: List
-      }
-    });
-    editerRef.current = editer;
-  }, []);
+  const editData = useSelector((state: stateType) => state.noticeDetail);
 
-  const saveHandler = useCallback(async () => {
-    if (!editerRef) return;
-    console.log(await editerRef.current.save());
-  }, []);
+  const setting: NoticeEditSet = {
+    color: "black",
+    imgSrc: NavIconNoticeBlack,
+    title: "동아리 공지사항 수정",
+    type: "club",
+    cancelHref: "/management/notice"
+  };
 
-  return (
-    <S.Container>
-      <PageHeader imgSrc={NavIconNoticeBlack} title="공지사항" type="DETAIL" />
-      <S.Hr />
-      <S.TitleInput type="text" placeholder="제목을 입력하세요" />
-      <S.Hr />
-      <S.EditerBackground>
-        <S.Editer id="editer"></S.Editer>
-      </S.EditerBackground>
-      <S.Footer>
-        <S.Button
-          color="white"
-          borderColor="#23B2AD"
-          backgroundColor="#23B2AD"
-          onClick={saveHandler}
-        >
-          첨부파일
-        </S.Button>
-        <S.Button color="black" borderColor="#DDDDDD" backgroundColor="#FBFBFB">
-          취소
-        </S.Button>
-        <S.Button
-          color="white"
-          borderColor="#23B2AD"
-          backgroundColor="#23B2AD"
-          onClick={saveHandler}
-        >
-          작성
-        </S.Button>
-      </S.Footer>
-    </S.Container>
-  );
+  return <NoticeEdit editData={editData} setting={setting} />;
 };
 
 export default ManagementNoticeEdit;

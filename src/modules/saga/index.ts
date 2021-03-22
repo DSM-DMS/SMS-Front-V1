@@ -1,22 +1,34 @@
 import { all } from "redux-saga/effects";
 
-import jsonSaga from "./json";
 import posterSaga from "./poster";
 import mainSaga from "./main";
-import noticeSaga from "./notion";
 import headerSaga from "./header";
 import outingCardSaga from "./outingCard";
 import writeSaga from "./write";
+import managementSaga from "./management";
+import noticeListSaga from "./notice/list";
+import noticeDetailSaga from "./notice/detail";
+import recruitmentListSaga from "./recruitment/list";
+import recruitmentDetailSaga from "./recruitment/detail";
+import clubListSaga from "./club/list";
+import clubDetailSaga from "./club/detail";
+import checkNoticeSaga from "./checkNotice";
 
 function* rootSaga() {
   yield all([
-    jsonSaga(),
     posterSaga(),
     mainSaga(),
-    noticeSaga(),
     headerSaga(),
     outingCardSaga(),
-    writeSaga()
+    writeSaga(),
+    managementSaga(),
+    noticeListSaga(),
+    noticeDetailSaga(),
+    recruitmentListSaga(),
+    recruitmentDetailSaga(),
+    clubListSaga(),
+    clubDetailSaga(),
+    checkNoticeSaga()
   ]);
 }
 

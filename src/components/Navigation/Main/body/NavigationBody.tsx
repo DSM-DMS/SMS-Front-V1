@@ -1,11 +1,11 @@
-import React from 'react';
-import { FC } from 'react';
-import * as S from './styles';
-import MainNavigationItemContainer from '../../Item/MainNavigationItemContainer';
-import { useSelector } from 'react-redux';
-import { stateType } from '../../../../modules/reducer';
+import React from "react";
+import { FC } from "react";
+import * as S from "./styles";
+import MainNavigationItemContainer from "../../Item/MainNavigationItemContainer";
+import { useSelector } from "react-redux";
+import { stateType } from "../../../../modules/reducer";
 
-import MainSubNavigationItemContainer from '../../Item/MainSubNavigationItemContainer';
+import MainSubNavigationItemContainer from "../../Item/MainSubNavigationItemContainer";
 
 export interface NavItem {
   name: string;
@@ -34,7 +34,7 @@ const NavigationBody: FC<Props> = ({ navItemArr, mainSubArr }) => {
           name={name}
           src={mainUrl === name ? blue : white}
           route={route}
-          key={index}
+          key={route}
         />
       ))}
 
@@ -45,7 +45,7 @@ const NavigationBody: FC<Props> = ({ navItemArr, mainSubArr }) => {
           src={mainUrl === name ? blue : white}
           route={route}
           subUrl={subUrl}
-          key={index}
+          key={route}
         />
       ))}
     </S.Container>

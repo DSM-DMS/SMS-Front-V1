@@ -43,13 +43,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
             schedulerDate.getMonth() + 1
           )
         );
-      } catch (err) {
-        const status = err.response.status;
-
-        if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
-        }
-      }
+      } catch {}
     },
     []
   );
@@ -65,13 +59,7 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
             schedulerDate.getMonth() + 1
           )
         );
-      } catch (err) {
-        const status = err.response.status;
-
-        if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
-        }
-      }
+      } catch {}
     },
     []
   );
@@ -87,31 +75,10 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
             schedulerDate.getMonth() + 1
           )
         );
-      } catch (err) {
-        const status = err.response.status;
-
-        if (status === 403) {
-          return alert("선생님 계정으로 이용해주세요.");
-        }
-      }
+      } catch {}
     },
     []
   );
-
-  const handleShowAdd = useCallback(() => {
-    setModal(true);
-    setModalType(ADD);
-  }, []);
-
-  const handleShowEdit = useCallback(() => {
-    setModal(true);
-    setModalType(EDIT);
-  }, []);
-
-  const handleShowDelete = useCallback(() => {
-    setModal(true);
-    setModalType(DELETE);
-  }, []);
 
   const handleCloseModal = useCallback(() => {
     setModal(false);
@@ -122,9 +89,6 @@ const AdminMainContainer: FC<Props> = (): ReactElement => {
     <AdminMain
       modal={modal}
       modalType={modalType}
-      handleShowAdd={handleShowAdd}
-      handleShowEdit={handleShowEdit}
-      handleShowDelete={handleShowDelete}
       handleCloseModal={handleCloseModal}
       createSchedule={createSchedule}
       editSchedule={editSchedule}

@@ -1,24 +1,23 @@
-import React, { FC, ReactElement, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-import TimetableList from "./TimetableList";
+import TimeTableList from "./TimeTableList";
 
 import * as S from "../style";
-import { SearchIcon } from "../../../assets";
-import { stateType } from "../../../modules/reducer";
 import { getTimetablesSaga } from "../../../modules/action/main";
-import { STUDENT } from "../../../modules/action/header";
+import useDidMountEffect from "../../../lib/hooks/useDidMountEffect";
+import useCustomSelector from "../../../lib/hooks/useCustomSelector";
 
 interface Props {}
 
 const date = new Date();
 
-const Timetable: FC<Props> = (): ReactElement => {
+const TimeTable: FC<Props> = (): ReactElement => {
   const dispatch = useDispatch();
   const {
-    main: { timetable },
-    header: { type }
-  } = useSelector((state: stateType) => state);
+    main: { timetable, timetableLoading }
+  } = useCustomSelector();
   const [tDate, setTDate] = useState<number>(date.getDate());
 
   const handleNextTimetable = () => {
@@ -28,44 +27,45 @@ const Timetable: FC<Props> = (): ReactElement => {
       0
     ).getDate();
     if (tDate === currLastDate) {
-      return alert("이번 달 안에서만 시간표 변경이 가능합니다.");
+      toast.info("이번 달 안에서만 시간표 조회가 가능합니다.");
+      return;
     }
     setTDate(prev => prev + 1);
   };
 
   const handlePrevTimetable = () => {
     if (tDate === 1) {
-      return alert("이번 달 안에서만 시간표 변경이 가능합니다.");
+      toast.info("이번 달 안에서만 시간표 조회가 가능합니다.");
+      return;
     }
     setTDate(prev => prev - 1);
   };
 
-  useEffect(() => {
-    if (type === STUDENT) {
-      dispatch(
-        getTimetablesSaga(date.getFullYear(), date.getMonth() + 1, tDate)
-      );
-    }
-  }, [tDate, type]);
+  useDidMountEffect(() => {
+    dispatch(getTimetablesSaga(date.getFullYear(), date.getMonth() + 1, tDate));
+  }, [tDate]);
 
   return (
     <S.Timetable>
       <S.TimetableTitle>
+        <S.TimetableWhereFrom>
+          * 해당 정보는 나이스에서 조회해왔습니다.
+        </S.TimetableWhereFrom>
         <S.FiltersWrap>
-          <S.TimetableSelector onClick={handlePrevTimetable}>
+          <S.TimetableSelector aria-label="left" onClick={handlePrevTimetable}>
             <S.TimetableChangerLeft />
           </S.TimetableSelector>
           <span>
             {date.getMonth() + 1}/{tDate}
           </span>
-          <S.TimetableSelector onClick={handleNextTimetable}>
+          <S.TimetableSelector aria-label="right" onClick={handleNextTimetable}>
             <S.TimetableChangerRight />
           </S.TimetableSelector>
         </S.FiltersWrap>
       </S.TimetableTitle>
-      <TimetableList timetable={timetable} />
+      <TimeTableList loading={timetableLoading} timetable={timetable} />
     </S.Timetable>
   );
 };
 
-export default Timetable;
+export default TimeTable;

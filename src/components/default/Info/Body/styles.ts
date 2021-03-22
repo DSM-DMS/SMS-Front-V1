@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ export const Flex = styled.div`
   display: flex;
 `;
 
-export const Color = styled.p`
+export const Color = styled.div`
   color: #888888;
 
   b {

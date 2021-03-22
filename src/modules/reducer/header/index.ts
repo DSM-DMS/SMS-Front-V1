@@ -9,7 +9,8 @@ import {
   SET_NAME,
   SET_PHONE,
   SET_PROFILE_URI,
-  SET_INIT
+  SET_INIT,
+  SET_CLUB_UUID
 } from "../../action/header";
 
 export interface PageState {
@@ -19,6 +20,7 @@ export interface PageState {
 
 export interface HeaderState extends ResStudentInfo {
   type: UserType | "";
+  clubUuid: string;
 }
 
 const initialState: HeaderState = {
@@ -28,7 +30,9 @@ const initialState: HeaderState = {
   name: "",
   student_number: 0,
   phone_number: "",
-  profile_uri: ""
+  profile_uri: "",
+  clubUuid: "",
+  parent_status: ""
 };
 
 const headerReducer = (
@@ -39,8 +43,9 @@ const headerReducer = (
     case SET_INIT:
       return {
         ...state,
+        ...action.payload.user,
         type: action.payload.type,
-        ...action.payload.user
+        clubUuid: action.payload.clubUuid
       };
     case SET_GRADE:
       return {
@@ -77,7 +82,11 @@ const headerReducer = (
         ...state,
         profile_uri: action.payload.profileUri
       };
-
+    case SET_CLUB_UUID:
+      return {
+        ...state,
+        clubUuid: action.payload.clubUuid
+      };
     default:
       return state;
   }

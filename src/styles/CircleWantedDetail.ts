@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  padding: 5px 50px;
+  padding: 10px 50px;
+  padding-bottom: 70px;
   position: relative;
 `;
 
@@ -26,6 +27,11 @@ export const Header = styled.div`
   align-items: center;
   border-bottom: 1px solid #f7f6ff;
 
+  > div {
+    display: flex;
+    align-items: flex-end;
+  }
+
   > button {
     height: 40px;
   }
@@ -41,11 +47,13 @@ export const ContentWrap = styled.div`
 `;
 
 export const ContentLeftWrap = styled.div`
-  flex: 7;
+  flex: 8;
+  padding-right: 150px;
 `;
 
 export const ContentRightWrap = styled.div`
-  flex: 3;
+  flex: 2;
+  position: relative;
 `;
 
 export const H2 = styled.h2`
@@ -58,6 +66,8 @@ export const MarginHeight = styled.div<{ height: string }>`
 
 export const IntroduceText = styled.div`
   color: #707070;
+  width: 70%;
+  word-break: keep-all;
   font-size: 15px;
 `;
 
@@ -95,4 +105,10 @@ export const DateWrap = styled.div`
 
 export const InputWrap = styled.div`
   width: 40%;
+`;
+
+export const ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: -80px;
+  left: 0;
 `;

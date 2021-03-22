@@ -1,69 +1,55 @@
+import { ResClubInfo } from "../../../../lib/api/payloads/Management";
 import {
-  Fields,
-  EMBEDDED,
   ManagementInfoAction,
   SET_CONCEPT,
-  SET_FACEBOOK_LINK,
-  SET_FIELD,
-  SET_INTRODUCE,
-  SET_LEADER,
-  SET_LOCATION,
+  SET_LINK,
+  SET_INTRODUCTION,
+  SET_LEADER_UUID,
   SET_MEMBERS,
   SET_NAME,
-  SET_PICTURE_ID
+  SET_LOGO_URI,
+  INIT_INFO
 } from "../../../action/management/info";
 
-export interface ManagementInfoState {
-  name: string;
-  field: Fields;
-  location: string;
-  concept: string;
-  introduce: string;
-  leader: string;
-  members: string[];
-  pictureId: number;
-  facebookLink: string;
-}
-
-const initialState: ManagementInfoState = {
-  name: "DMS",
-  field: EMBEDDED,
-  location: "3층 2학년 1반",
-  concept: "기숙사 관리 시스템을 만드는 동아리입니다.",
-  introduce: `DMS는 기숙사 관리 시스템을 만드는 동아리입니다.
-  현재는 기숙사 뿐만 아니라 학교와 학부모를 위한 서비스도 개발 중입니다.`,
-  leader: "2115 이성진",
-  members: ["2110 손민기"],
-  pictureId: 1,
-  facebookLink: "DMSforDSM"
+const initialState: ResClubInfo = {
+  name: "",
+  club_concept: "",
+  introduction: "",
+  leader_uuid: "",
+  member_uuids: [],
+  field: null,
+  link: "",
+  location: "",
+  logo_uri: ""
 };
 
 const ManagementInfoReduce = (
-  state: ManagementInfoState = initialState,
+  state: ResClubInfo = initialState,
   action: ManagementInfoAction
-): ManagementInfoState => {
+): ResClubInfo => {
   switch (action.type) {
+    case INIT_INFO:
+      return {
+        ...state,
+        ...action.payload.info
+      };
     case SET_CONCEPT:
       return {
         ...state,
-        concept: action.payload.concept
+        club_concept: action.payload.clubConcept
       };
-    case SET_FACEBOOK_LINK:
-      return { ...state, facebookLink: action.payload.facebookLink };
-    case SET_FIELD:
-      return { ...state, field: action.payload.field };
-    case SET_INTRODUCE:
-      return { ...state, introduce: action.payload.introduce };
-    case SET_LEADER:
-      return { ...state, leader: action.payload.leader };
-    case SET_LOCATION:
-      return { ...state, location: action.payload.location };
+    case SET_LINK:
+      return { ...state, link: action.payload.link };
+    case SET_INTRODUCTION:
+      return { ...state, introduction: action.payload.introduction };
+    case SET_LEADER_UUID:
+      return { ...state, leader_uuid: action.payload.leaderUuid };
     case SET_MEMBERS:
-      return { ...state, members: action.payload.members };
+      return { ...state, member_uuids: action.payload.clubMemberUuids };
     case SET_NAME:
       return { ...state, name: action.payload.name };
-    case SET_PICTURE_ID:
-      return { ...state, pictureId: action.payload.pictureId };
+    case SET_LOGO_URI:
+      return { ...state, logo_uri: action.payload.logoUri };
     default:
       return state;
   }

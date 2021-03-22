@@ -1,17 +1,13 @@
-import React, { FC, MouseEvent, ReactElement } from "react";
-import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, memo, ReactElement } from "react";
+
+import ScheduleDetailItem from "./ScheduleDetailItem";
 
 import * as S from "../style";
-import { stateType } from "../../../modules/reducer";
-import { UserType } from "../../../modules/action/header";
-import { setTargetUuid } from "../../../modules/action/main";
+import { Loading } from "../../default";
+import { padNum } from "../../../lib/utils";
+import useCustomSelector from "../../../lib/hooks/useCustomSelector";
 
-interface Props {
-  handleShowAdd?: () => void;
-  handleShowEdit?: () => void;
-  handleShowDelete?: () => void;
-}
+interface Props {}
 
 const date = new Date();
 const fixedDate = new Date(
@@ -21,86 +17,70 @@ const fixedDate = new Date(
   9
 );
 
-const ScheduleDetail: FC<Props> = ({
-  handleShowAdd,
-  handleShowEdit,
-  handleShowDelete
-}): ReactElement => {
-  const location = useLocation();
-  const dispatch = useDispatch();
+const getLocalDate = (dateNum: number) => {
+  const date = new Date(dateNum);
+
+  return `${padNum(date.getMonth() + 1)}.${padNum(date.getDate())}`;
+};
+
+const ScheduleDetail: FC<Props> = (): ReactElement => {
   const {
-    main: { schedules },
-    header: { type }
-  } = useSelector((state: stateType) => state);
-
-  const getLocalDate = (dateNum: number) => {
-    const date = new Date(dateNum);
-    const padNum = (n: number) => (n < 10 ? `0${n}` : n + "");
-
-    return `${padNum(date.getMonth() + 1)}.${padNum(date.getDate())}`;
-  };
-
-  const handleEditSchedule = (e: MouseEvent<HTMLButtonElement>) => {
-    const scheduleUuid = e.currentTarget.dataset.uuid;
-    dispatch(setTargetUuid(scheduleUuid));
-    handleShowEdit();
-  };
-
-  const handleRemoveSchedule = (e: MouseEvent<HTMLButtonElement>) => {
-    const scheduleUuid = e.currentTarget.dataset.uuid;
-    dispatch(setTargetUuid(scheduleUuid));
-    handleShowDelete();
-  };
+    main: { schedules, scheduleLoading, selectedDate }
+  } = useCustomSelector();
 
   return (
     <S.ScheduleDetail>
       <S.DetailHeader>
         <S.DetailHeaderTop>
           <S.DetailTitle>세부내용</S.DetailTitle>
-          {location.pathname.includes("admin") && (
-            <S.DetailAddSchedule onClick={handleShowAdd}>
-              <span>일정 추가</span>
-            </S.DetailAddSchedule>
-          )}
         </S.DetailHeaderTop>
         <S.DetailHead>
           <S.DetailHeadData>일정</S.DetailHeadData>
           <S.DetailHeadData>날짜</S.DetailHeadData>
         </S.DetailHead>
       </S.DetailHeader>
-      <S.DetailBody type={type as UserType}>
-        {schedules.map(({ detail, start_date, end_date, schedule_uuid }) => (
-          <S.DetailBodyItem
-            key={schedule_uuid}
-            className={+fixedDate > end_date ? "prev" : ""}
-          >
-            <S.DetailBodyItemData>{detail}</S.DetailBodyItemData>
-            <S.DetailBodyItemData>
-              {start_date === end_date
-                ? getLocalDate(start_date)
-                : `${getLocalDate(start_date)} - ${getLocalDate(end_date)}`}
-            </S.DetailBodyItemData>
-            {location.pathname.includes("admin") && (
-              <S.DetailBodyItemButtonWrap>
-                <S.DetailBodyItemButton
-                  data-uuid={schedule_uuid}
-                  onClick={handleEditSchedule}
-                >
-                  수정
-                </S.DetailBodyItemButton>
-                <S.DetailBodyItemButton
-                  data-uuid={schedule_uuid}
-                  onClick={handleRemoveSchedule}
-                >
-                  삭제
-                </S.DetailBodyItemButton>
-              </S.DetailBodyItemButtonWrap>
-            )}
-          </S.DetailBodyItem>
-        ))}
+      <S.DetailBody>
+        {scheduleLoading ? (
+          <S.DetailLoadingWrap>
+            <Loading size="100px" />
+          </S.DetailLoadingWrap>
+        ) : (
+          schedules.map(
+            ({ detail, start_date: s, end_date: e, schedule_uuid: uuid }) => {
+              const selectedTime = new Date(selectedDate).getTime();
+              const isPrev = +fixedDate > e;
+
+              if (selectedDate) {
+                if (s <= selectedTime && selectedTime <= e) {
+                  return (
+                    <ScheduleDetailItem
+                      key={uuid}
+                      isPrev={isPrev}
+                      detail={detail}
+                      start={s}
+                      end={e}
+                    />
+                  );
+                }
+
+                return null;
+              }
+
+              return (
+                <ScheduleDetailItem
+                  key={uuid}
+                  isPrev={isPrev}
+                  detail={detail}
+                  start={s}
+                  end={e}
+                />
+              );
+            }
+          )
+        )}
       </S.DetailBody>
     </S.ScheduleDetail>
   );
 };
 
-export default ScheduleDetail;
+export default memo(ScheduleDetail);

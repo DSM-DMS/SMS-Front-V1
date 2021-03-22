@@ -1,7 +1,16 @@
-import { PageState } from "../modules/reducer/page";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { History } from "history";
+
+import { ResDefault } from "./api/payloads";
+import { ResStudentInfo } from "./api/payloads/Login";
+import { ResStudents } from "./api/payloads/Management";
+
+import { PageState } from "../modules/reducer/page";
 import { stateType } from "../modules/reducer";
 import { SERVER } from "../lib/api/client";
+import { BoardType } from "./api/payloads/Board";
 
 type valueType = [string, string];
 
@@ -58,29 +67,30 @@ const subUrlObjWrap = {
 };
 
 const adminUrlObj: SubUrlObj = {
-  certified: "미인증 외출증",
+  certified: "종료된 외출증",
   now: "현재 외출 학생",
   wait: "승인대기 외출증",
   all: "전체 공지",
   mine: "내가 올린 공지",
-  writing: "공지사항 작성"
+  writing: "공지사항 작성",
+  done: "최종 확인 대기 외출증"
 };
 
 export const getNavUrl = (url: string): PageState => {
   const stringArr = url.split("/");
-  const filterStr = stringArr[3] as "home" | "notice" | "circles" | "outing";
+  const filterStr = stringArr[1] as "home" | "notice" | "circles" | "outing";
   const urlArr = urlObj[filterStr] ||
-    (urlObjWrap[stringArr[3]] && urlObjWrap[stringArr[3]][stringArr[4]]) || [
+    (urlObjWrap[stringArr[1]] && urlObjWrap[stringArr[1]][stringArr[2]]) || [
       "",
       ""
     ];
   return {
     mainUrl: urlArr[0],
     subUrl:
-      adminUrlObj[stringArr[5]] ||
-      subUrlObj[stringArr[4]] ||
-      (subUrlObjWrap[stringArr[3]] &&
-        subUrlObjWrap[stringArr[3]][stringArr[4]]) ||
+      adminUrlObj[stringArr[3]] ||
+      subUrlObj[stringArr[2]] ||
+      (subUrlObjWrap[stringArr[1]] &&
+        subUrlObjWrap[stringArr[1]][stringArr[2]]) ||
       urlArr[1]
   };
 };
@@ -97,7 +107,8 @@ export const makeFilterFunc = <T>(
   return (keyword: string) => data.filter(item => callback(item, keyword));
 };
 
-export const getImgUrl = url => `${SERVER.s3Url}/${url}`;
+export const getImgUrl = url =>
+  `${SERVER.s3Url}/${url}?timestamps=${Date.now()}`;
 
 export const makeQuery = (object: any) => {
   return Object.keys(object).reduce(
@@ -149,4 +160,51 @@ export const getWeekOfMonth = (d: Date) => {
 
   // if (week < 2 + index) return week;
   // return week === weeksInMonth ? index + 5 : week;
+};
+
+export const padNum = (n: number) => (n + "").padStart(2, "0");
+
+export const formattingStudent = (student: ResStudents | ResStudentInfo) => {
+  return `${student.grade}${student.group}${padNum(student.student_number)}`;
+};
+
+export const sorting = (student1: ResStudents, student2: ResStudents) => {
+  return formattingStudent(student1) > formattingStudent(student2) ? 1 : -1;
+};
+
+export const errorHandler = (errStatus: number, history: History): void => {
+  switch (errStatus) {
+    case 401:
+    case 403: {
+      toast.error("로그인을 다시 진행해주세요");
+      const href = history.location.pathname;
+      if (href.includes("admin")) {
+        history.push("/admin/login");
+      } else history.push("/login");
+      return;
+    }
+  }
+};
+
+export const getFacebookLink = (id: string) => `https://www.facebook.com/${id}`;
+
+export const getAxiosError = (err: AxiosError<ResDefault>) => {
+  const { status, code } = err.response.data;
+  return { status, code };
+};
+
+export const getSuccessHistory = (type: BoardType) =>
+  type === "school" ? "/admin/notice/mine" : "/management/notice";
+
+export const makePhoneNum = (phoneNum: string) => {
+  let result = "";
+  for (let i = 0; i < phoneNum.length; i++) {
+    if (i === 3 || i === 7) {
+      result += `-${phoneNum[i]}`;
+      continue;
+    }
+    result += phoneNum[i];
+  }
+
+  return result;
 };
