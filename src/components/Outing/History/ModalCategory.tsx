@@ -27,6 +27,7 @@ const ModalCategory: FC<Props> = (): ReactElement => {
   const { end_time, start_time, reason, place, outing_status } = useSelector(
     (state: stateType) => state.outing.selected
   );
+  const isLate = +outing_status >= 2 && new Date().getTime() > end_time;
 
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);
@@ -68,9 +69,18 @@ const ModalCategory: FC<Props> = (): ReactElement => {
       </S.ModalItem>
       <S.ModalItem>
         <S.ModalCategory>상태</S.ModalCategory>
-        <span>{OutingStatus[outing_status]}</span>
+        {isLate ? (
+          <span>만료</span>
+        ) : (
+          <span>{OutingStatus[outing_status]}</span>
+        )}
       </S.ModalItem>
-      <S.ModalStatus>{outParagraph[outing_status]}</S.ModalStatus>
+
+      {isLate ? (
+        <S.ModalStatus>만료되었습니다.</S.ModalStatus>
+      ) : (
+        <S.ModalStatus>{outParagraph[outing_status]}</S.ModalStatus>
+      )}
     </S.ModalList>
   );
 };

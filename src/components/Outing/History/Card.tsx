@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback } from "react";
+import React, { FC, ReactElement, useCallback, useMemo } from "react";
 
 import * as S from "../style";
 import {
@@ -25,8 +25,15 @@ const HistoryCard: FC<Props> = ({
     place,
     start_time,
     outing_situation,
-    outing_status
+    outing_status,
+    arrival_time
   } = outing;
+  const isLate = useMemo(() => {
+    const now = new Date().getTime();
+    if (now > end_time && arrival_time === 0) return true;
+    if (!arrival_time && arrival_time > end_time) return true;
+    return false;
+  }, [end_time, arrival_time]);
 
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);
@@ -34,7 +41,7 @@ const HistoryCard: FC<Props> = ({
     const m = date.getMonth() + 1;
     const d = date.getDate();
 
-    return `${y}년 ${padNum(m)}월 ${d}일`;
+    return `${y}년 ${padNum(m)}월 ${padNum(d)}일`;
   }, []);
 
   const getLocalTime = useCallback((time: number) => {
@@ -45,26 +52,31 @@ const HistoryCard: FC<Props> = ({
     return `${padNum(h)}:${padNum(m)}`;
   }, []);
 
+  const handleHistoryCard = useCallback(() => {
+    openModal();
+    handleCard(outing);
+    selectOuting(outing);
+  }, [outing]);
+
   return (
-    <S.HistoryCard
-      onClick={() => {
-        openModal();
-        handleCard(outing);
-        selectOuting(outing);
-      }}
-    >
+    <S.HistoryCard onClick={handleHistoryCard}>
       <div>
         <S.CardDate
           emergency={outing_situation.toUpperCase() === "NORMAL" ? false : true}
+          late={isLate}
         >
           {getLocalDate(start_time)}
         </S.CardDate>
         <S.CardPlace>장소 : {place}</S.CardPlace>
       </div>
       <div>
-        <S.CardStatus status={+outing_status}>
-          {outingStatusMap[outing_status]}
-        </S.CardStatus>
+        {+outing_status >= 2 && new Date().getTime() > outing.end_time ? (
+          <S.CardStatus status={6}>만료</S.CardStatus>
+        ) : (
+          <S.CardStatus status={+outing_status}>
+            {outingStatusMap[outing_status]}
+          </S.CardStatus>
+        )}
         <S.CardTime>
           외출 시간 : {getLocalTime(start_time)} ~ {getLocalTime(end_time)}
         </S.CardTime>

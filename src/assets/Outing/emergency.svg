@@ -1,0 +1,34 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="13"
+  height="13"
+  viewBox="0 0 13 13"
+>
+  <g
+    id="그룹_450"
+    data-name="그룹 450"
+    transform="translate(0 -0.096)"
+  >
+    <path
+      id="다각형_10"
+      data-name="다각형 10"
+      d="M6.5,0,13,11H0Z"
+      transform="translate(0 0.096)"
+      fill="#f55"
+    />
+    <text
+      id="_"
+      data-name="!"
+      transform="translate(8 10.096)"
+      fill="#fff"
+      font-size="9"
+      font-family="NotoSansCJKkr-Medium, Noto Sans CJK KR"
+      font-weight="500"
+      letter-spacing="-0.02em"
+    >
+      <tspan x="-3.087" y="0">
+        !
+      </tspan>
+    </text>
+  </g>
+</svg>

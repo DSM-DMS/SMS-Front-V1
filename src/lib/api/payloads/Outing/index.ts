@@ -41,6 +41,7 @@ export interface ResHistoryItem {
   place: string;
   reason: string;
   start_time: number;
+  arrival_time: number;
 }
 export interface ResHistory {
   outings: ResHistoryItem[];
