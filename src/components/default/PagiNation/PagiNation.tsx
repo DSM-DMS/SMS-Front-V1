@@ -22,7 +22,6 @@ const PagiNation: FC<Props> = ({ maxSize, page }) => {
   }`;
   useEffect(() => {
     if (page < 0 || page > maxPage) {
-      console.log(page, maxPage);
       history.push(`${pathname}`);
     }
   }, [page]);

@@ -29,7 +29,6 @@ const OutingCardFilter: FC<Props> = ({ onChange }) => {
       filterData.group === 0
     )
       return;
-    console.log(filterData);
     onChange(filterData);
   }, [filterData]);
 
