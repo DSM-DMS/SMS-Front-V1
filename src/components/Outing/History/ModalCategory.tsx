@@ -27,7 +27,7 @@ const ModalCategory: FC<Props> = (): ReactElement => {
   const { end_time, start_time, reason, place, outing_status } = useSelector(
     (state: stateType) => state.outing.selected
   );
-  const isLate = +outing_status >= 2 && new Date().getTime() > end_time;
+  const isLate = +outing_status >= 2 && new Date().getTime() > end_time * 1000;
 
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);

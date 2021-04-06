@@ -70,7 +70,7 @@ const HistoryCard: FC<Props> = ({
         <S.CardPlace>장소 : {place}</S.CardPlace>
       </div>
       <div>
-        {+outing_status >= 2 && new Date().getTime() > outing.end_time ? (
+        {+outing_status >= 2 && new Date().getTime() > end_time * 1000 ? (
           <S.CardStatus status={6}>만료</S.CardStatus>
         ) : (
           <S.CardStatus status={+outing_status}>
