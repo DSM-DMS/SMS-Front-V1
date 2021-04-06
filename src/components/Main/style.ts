@@ -90,7 +90,6 @@ export const TimetableItem = styled.li`
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  word-break: keep-all;
 `;
 
 export const TimetableItemDate = styled.span`
