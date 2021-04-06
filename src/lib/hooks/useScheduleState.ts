@@ -4,7 +4,11 @@ import { useDispatch } from "react-redux";
 import useCustomSelector from "./useCustomSelector";
 import useDidMountEffect from "./useDidMountEffect";
 
-import { getSchedulesSaga, setSchedulerDate } from "../../modules/action/main";
+import {
+  getSchedulesSaga,
+  setSchedulerDate,
+  setSchedules
+} from "../../modules/action/main";
 import { padNum } from "../utils";
 
 const useScheduleState = () => {
@@ -14,6 +18,7 @@ const useScheduleState = () => {
   } = useCustomSelector();
 
   const onClickNextMonth = useCallback(() => {
+    dispatch(setSchedules([]));
     const next = new Date(
       schedulerDate.getFullYear(),
       schedulerDate.getMonth() + 1
@@ -22,6 +27,7 @@ const useScheduleState = () => {
   }, [schedulerDate]);
 
   const onClickPrevMonth = useCallback(() => {
+    dispatch(setSchedules([]));
     const prev = new Date(
       schedulerDate.getFullYear(),
       schedulerDate.getMonth() - 1
