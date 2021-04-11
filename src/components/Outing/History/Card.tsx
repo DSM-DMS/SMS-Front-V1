@@ -28,11 +28,9 @@ const HistoryCard: FC<Props> = ({
     outing_status,
     arrival_time
   } = outing;
+
   const isLate = useMemo(() => {
-    const now = new Date().getTime();
-    if (now > end_time && arrival_time === 0) return true;
-    if (!arrival_time && arrival_time > end_time) return true;
-    return false;
+    return arrival_time && arrival_time > end_time;
   }, [end_time, arrival_time]);
 
   const getLocalDate = useCallback((startTime: number) => {
