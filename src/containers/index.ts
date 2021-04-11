@@ -39,3 +39,5 @@ export { default as ManagementWantedDetailContainer } from "./Management/Wanted/
 export { default as ManagementInfoContainer } from "./Management/Info/ManagementInfoContainer";
 export { default as ManagementNoticeWriteContainer } from "./Management/Notice/ManagementNoticeWriteContainer";
 export { default as ManagementInfoMemberContainer } from "./Management/Info/MemberContainer";
+export { default as ForbiddenContainer } from "./ForBidden/Forbidden";
+export { default as RegisterContainer } from "./Register/RegisterContainer";

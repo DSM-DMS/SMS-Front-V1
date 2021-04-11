@@ -12,6 +12,17 @@ export enum OutingStatus {
   "외출 인증 승인" = 5
 }
 
+export const outingStatusMap = {
+  "-2": "승인 거부",
+  "-1": "승인 거부",
+  "0": "학부모 승인 대기",
+  "1": "선생님 승인 대기",
+  "2": "외출 가능",
+  "3": "외출증",
+  "4": "선생님 방문 인증 필요",
+  "5": "외출 확인 완료"
+};
+
 export interface ReqOuting {
   start_time: number;
   end_time: number;
@@ -30,6 +41,7 @@ export interface ResHistoryItem {
   place: string;
   reason: string;
   start_time: number;
+  arrival_time: number;
 }
 export interface ResHistory {
   outings: ResHistoryItem[];

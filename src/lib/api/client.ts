@@ -74,6 +74,7 @@ export const apiDefault = () => {
         window.location.href = refreshUrl;
       } else if (status === 403) {
         alert("잘못된 접근 입니다.");
+        removeAllStorage();
         window.location.href = refreshUrl;
       } else if (status === 407) {
         toast.error("서버에 요류가 발생했습니다.");

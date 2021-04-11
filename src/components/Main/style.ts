@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import { STUDENT, UserType } from "../../modules/action/header";
+import { UserType } from "../../modules/action/header";
 
 export const MainWrap = styled.div`
   display: flex;
@@ -28,7 +28,7 @@ export const MainContentCommon = styled.div`
   background-color: white;
 `;
 
-export const MainContentTitleCommon = styled.h2`
+export const MainContentTitleCommon = styled.div`
   font-size: 18px;
   font-weight: bold;
 `;
@@ -59,12 +59,17 @@ export const Timetable = styled(MainContentCommon)`
   margin-right: 15px;
 `;
 
-export const TimetableTitle = styled(MainContentTitleCommon)`
+export const TimetableTitle = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 8px 4px 8px 12px;
   border-bottom: 2px solid #dddddd;
+`;
+
+export const TimetableWhereFrom = styled.p`
+  font-size: 12px;
+  font-weight: bold;
 `;
 
 export const TimetableList = styled.ul`
@@ -85,7 +90,6 @@ export const TimetableItem = styled.li`
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  word-break: keep-all;
 `;
 
 export const TimetableItemDate = styled.span`
@@ -189,11 +193,7 @@ export const DetailHeadData = styled.span`
   }
 `;
 
-interface DetailScrollColor {
-  type: UserType;
-}
-
-export const DetailBody = styled.div<DetailScrollColor>`
+export const DetailBody = styled.div`
   height: 470px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
@@ -203,7 +203,7 @@ export const DetailBody = styled.div<DetailScrollColor>`
     background: white;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ type }) => (type === STUDENT ? "#5323b2" : "#23B2AD")};
+    background: "#5323b2";
     border-radius: 16px;
   }
 `;

@@ -20,7 +20,7 @@ const PasswordChangeContainer: FC<Props> = ({
 
   const changePassword = useCallback(
     async (currentPw: string, revisionPw: string) => {
-      const uuid = localStorage.getItem(`uuid`);
+      const uuid = localStorage.getItem("uuid");
 
       startLoading();
       try {

@@ -61,6 +61,8 @@ export { default as OutingCloseWhite } from "./Outing/closeWhite.svg";
 export { default as OutingBike } from "./Outing/bike.svg";
 export { default as OutingUser } from "./Outing/user.svg";
 export { default as Refresh } from "./Outing/refresh.svg";
+export { default as Late } from "./Outing/late.svg";
+export { default as Emergency } from "./Outing/emergency.svg";
 
 export { default as FacebookIcon } from "./Circle/facebookIcon.svg";
 export { default as ReComment } from "./Circle/reComment.svg";

@@ -1,7 +1,8 @@
 import React, { FC } from "react";
+import { useSelector } from "react-redux";
+
 import { NavIconNoticeBlue } from "../../../assets";
 import { NoticeList as NoticeListComponent } from "../../default";
-import { useSelector } from "react-redux";
 import { stateType } from "../../../modules/reducer";
 import { NoticeListSet } from "../../default/NoticeList/NoticeList";
 

@@ -1,11 +1,16 @@
-import React, { FC } from "react";
+import React, { ChangeEvent, FC } from "react";
 import { NavIconNoticeBlue } from "../../../../assets";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../../modules/reducer";
 import { NoticeList } from "../../../default";
 import { NoticeListSet } from "../../../default/NoticeList/NoticeList";
+import {
+  getNoticeClubList,
+  searchNoticeClubList
+} from "../../../../modules/action/notice/list";
 
 const CircleNoticeList: FC = () => {
+  const dispatch = useDispatch();
   const { announcements, size, loading } = useSelector((state: stateType) => ({
     ...state.noticeList,
     loading: state.loading["notice/GET_NOTICE_LIST"]

@@ -10,30 +10,26 @@ import { OutingHistory, Refresh } from "../../../assets";
 import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
 import { subPageMove } from "../../../modules/action/page";
 import { Loading } from "../../default";
+import useHistoryModal from "../../../lib/hooks/useHistoryModal";
+import useHistories from "../../../lib/hooks/useHistories";
+import { setSelectedHistory } from "../../../modules/action/outing";
 
-interface Props {
-  histories: ResHistoryItem[];
-  historyStart: number;
-  modal: boolean;
-  closeModal: () => void;
-  openModal: () => void;
-  getHistories: (historyStart: number) => Promise<void>;
-  refreshOutingHistories: () => void;
-  dispatchSelectedOuting: (histories: ResHistoryItem) => void;
-}
+interface Props {}
 
-const History: FC<Props> = ({
-  histories,
-  historyStart,
-  modal,
-  openModal,
-  closeModal,
-  getHistories,
-  refreshOutingHistories,
-  dispatchSelectedOuting
-}): ReactElement => {
+const History: FC<Props> = ({}): ReactElement => {
   const dispatch = useDispatch();
   const [selectedOuting, setSelectedOuting] = useState<ResHistoryItem>(null);
+  const [modal, openModal, closeModal] = useHistoryModal();
+  const {
+    histories,
+    historyStart,
+    getHistories,
+    refreshOutingHistories
+  } = useHistories();
+
+  const dispatchSelectedOuting = useCallback((outing: ResHistoryItem) => {
+    dispatch(setSelectedHistory(outing));
+  }, []);
 
   const selectOuting = useCallback((outing: ResHistoryItem) => {
     setSelectedOuting(outing);

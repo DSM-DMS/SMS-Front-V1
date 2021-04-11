@@ -1,5 +1,6 @@
 import React, { FC, memo, useEffect } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import qs from "query-string";
 import * as S from "./styles";
 
 interface Props {
@@ -12,11 +13,15 @@ const PagiNation: FC<Props> = ({ maxSize, page }) => {
   const history = useHistory();
 
   const maxPage = Math.ceil(maxSize / 10);
-  const { pathname } = history.location;
-  const baseUrl = `${pathname}?page=`;
-
+  const { pathname, search } = history.location;
+  const query = qs.parse(search);
+  const baseUrl = `${pathname}?${
+    query.search && query.search.length > 0
+      ? `search=${query.search}&page=`
+      : "page="
+  }`;
   useEffect(() => {
-    if (page <= 0 || page >= maxPage) {
+    if (page < 0 || page > maxPage) {
       history.push(`${pathname}`);
     }
   }, [page]);

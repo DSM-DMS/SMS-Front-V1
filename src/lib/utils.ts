@@ -67,13 +67,13 @@ const subUrlObjWrap = {
 };
 
 const adminUrlObj: SubUrlObj = {
-  certified: "미인증 외출증",
+  certified: "종료된 외출증",
   now: "현재 외출 학생",
   wait: "승인대기 외출증",
   all: "전체 공지",
   mine: "내가 올린 공지",
   writing: "공지사항 작성",
-  done: "종료된 외출증"
+  done: "최종 확인 대기 외출증"
 };
 
 export const getNavUrl = (url: string): PageState => {
@@ -195,3 +195,16 @@ export const getAxiosError = (err: AxiosError<ResDefault>) => {
 
 export const getSuccessHistory = (type: BoardType) =>
   type === "school" ? "/admin/notice/mine" : "/management/notice";
+
+export const makePhoneNum = (phoneNum: string) => {
+  let result = "";
+  for (let i = 0; i < phoneNum.length; i++) {
+    if (i === 3 || i === 7) {
+      result += `-${phoneNum[i]}`;
+      continue;
+    }
+    result += phoneNum[i];
+  }
+
+  return result;
+};
