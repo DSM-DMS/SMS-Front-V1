@@ -85,6 +85,11 @@ export const GlobalStyle: GlobalStyleComponent<
     max-width:unset;
     position:static;
   }
+
+  .ce-header {
+    margin:1em 0;
+    padding:0;
+  }
   
     .ce-block__content {
       max-width:unset;
