@@ -6,13 +6,13 @@ import { Login } from "../../components";
 import { postLoginStudent } from "../../lib/api/Login";
 import { getClubUuidFromLeader } from "../../lib/api/Management";
 import {
+  CAN_NOT_FOUND_ACCOUNT,
+  NEED_ADMIN_ACCEPT,
   PASSWORD_NOT_MATCHED,
-  UNABLE_FORM,
-  UNAUTHORIZED
+  UNABLE_FORM
 } from "../../lib/api/payloads/Login";
 import { getAxiosError } from "../../lib/utils";
 import { getStudentInfoSaga, setClubUuid } from "../../modules/action/header";
-import { pageMove } from "../../modules/action/page";
 import WithLoadingContainer, {
   LoadingProps
 } from "../Loading/WithLoadingContainer";
@@ -37,12 +37,7 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
   const [autoLogin, setAutoLogin] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<ErrorState>(initErrorState);
 
-  const errorMessageMacro = (
-    message:
-      | typeof UNABLE_FORM
-      | typeof UNAUTHORIZED
-      | typeof PASSWORD_NOT_MATCHED
-  ) => {
+  const errorMessageMacro = (message: string) => {
     setErrorMessage({
       status: true,
       message
@@ -98,21 +93,25 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
 
   const login = useCallback(
     async (id: string, pw: string, autoLogin: boolean) => {
+      if (id.length < 4 || id.length > 16 || pw.length < 4 || pw.length > 16) {
+        errorMessageMacro(UNABLE_FORM);
+        return;
+      }
+
       startLoading();
       try {
         await studentLogin(id, pw, autoLogin);
         setErrorMessage(initErrorState);
-        dispatch(pageMove("홈"));
         history.push("./home");
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (status === 404) {
-          errorMessageMacro(UNAUTHORIZED);
-        } else if (status === 409 && (code === -401 || code === -411)) {
-          errorMessageMacro(UNAUTHORIZED);
-        } else if (status === 409 && (code === -402 || code === -412)) {
+        if (status === 409 && code === -412) {
           errorMessageMacro(PASSWORD_NOT_MATCHED);
+        } else if (status === 409 && code === -413) {
+          errorMessageMacro(NEED_ADMIN_ACCEPT);
+        } else if (status === 409 && code === -414) {
+          errorMessageMacro(CAN_NOT_FOUND_ACCOUNT);
         }
 
         setPw("");
