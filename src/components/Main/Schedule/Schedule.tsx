@@ -1,5 +1,5 @@
-import React, { FC, ReactElement, useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement, useCallback } from "react";
+import { useDispatch } from "react-redux";
 
 import Calendar from "./Calendar/Calendar";
 
@@ -8,14 +8,17 @@ import {
   getSchedulesSaga,
   setSchedulerDate
 } from "../../../modules/action/main";
-import { stateType } from "../../../modules/reducer";
 import { padNum } from "../../../lib/utils";
+import useDidMountEffect from "../../../lib/hooks/useDidMountEffect";
+import useCustomSelector from "../../../lib/hooks/useCustomSelector";
 
 interface Props {}
 
 const Schedule: FC<Props> = (): ReactElement => {
   const dispatch = useDispatch();
-  const { schedulerDate } = useSelector((state: stateType) => state.main);
+  const {
+    main: { schedulerDate }
+  } = useCustomSelector();
 
   const onClickNextMonth = () => {
     const next = new Date(
@@ -37,7 +40,7 @@ const Schedule: FC<Props> = (): ReactElement => {
     return `${date.getFullYear()}.${padNum(date.getMonth() + 1)}`;
   }, []);
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     const year = schedulerDate.getFullYear();
     const month = schedulerDate.getMonth() + 1;
 

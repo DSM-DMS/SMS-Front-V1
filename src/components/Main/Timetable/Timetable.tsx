@@ -1,12 +1,13 @@
-import React, { FC, ReactElement, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, ReactElement, useState } from "react";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import TimeTableList from "./TimeTableList";
 
 import * as S from "../style";
-import { stateType } from "../../../modules/reducer";
 import { getTimetablesSaga } from "../../../modules/action/main";
+import useDidMountEffect from "../../../lib/hooks/useDidMountEffect";
+import useCustomSelector from "../../../lib/hooks/useCustomSelector";
 
 interface Props {}
 
@@ -15,9 +16,8 @@ const date = new Date();
 const TimeTable: FC<Props> = (): ReactElement => {
   const dispatch = useDispatch();
   const {
-    main: { timetable, timetableLoading },
-    header: { type }
-  } = useSelector((state: stateType) => state);
+    main: { timetable, timetableLoading }
+  } = useCustomSelector();
   const [tDate, setTDate] = useState<number>(date.getDate());
 
   const handleNextTimetable = () => {
@@ -41,9 +41,9 @@ const TimeTable: FC<Props> = (): ReactElement => {
     setTDate(prev => prev - 1);
   };
 
-  useEffect(() => {
+  useDidMountEffect(() => {
     dispatch(getTimetablesSaga(date.getFullYear(), date.getMonth() + 1, tDate));
-  }, [tDate, type]);
+  }, [tDate]);
 
   return (
     <S.Timetable>
