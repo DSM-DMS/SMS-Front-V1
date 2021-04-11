@@ -727,45 +727,34 @@ export const HistoryCard = styled.div`
   cursor: pointer;
 `;
 
-interface Emergency {
-  emergency: boolean;
-  late: boolean;
-}
-
-export const CardDate = styled.p<Emergency>`
+export const CardDate = styled.p`
   position: relative;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
-  padding-right: 32px;
+  padding-right: 12px;
   border-right: 2px solid #242424;
-  &::after,
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    width: 16px;
-    height: 16px;
-  }
-  &::after {
-    right: 32px;
-    ${({ emergency }) =>
-      emergency &&
-      css`
-        background-image: url(${OutingWarningRedBase});
-      `}
-  }
-  &::before {
-    right: 8px;
-    ${({ late }) =>
-      late &&
-      css`
-        background-image: url(${Late});
-      `}
+  svg {
+    float: right;
+    width: 24px;
+    height: 24px;
+    &.emergency {
+      right: 32px;
+    }
+    &.late {
+      right: 8px;
+      animation: tick 1.5s infinite;
+    }
+    @keyframes tick {
+      0%,
+      50% {
+        stroke: black;
+      }
+      51%,
+      100% {
+        stroke: red;
+      }
+    }
   }
 `;
 
