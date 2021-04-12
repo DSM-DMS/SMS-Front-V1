@@ -258,6 +258,67 @@ export const FormTimeItem = styled.li`
   }
 `;
 
+export const TimeList = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 80%;
+  padding: 4px;
+  border: 1px solid #dddddd;
+  background-color: white;
+  z-index: 10;
+  animation: showup 0.6s cubic-bezier(0, 1.2, 1, 1);
+  @keyframes showup {
+    from {
+      transform: scale(0.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    > li {
+      width: calc(100% / 4);
+      padding: 8px 4px;
+      text-align: center;
+      box-sizing: border-box;
+      &:first-child {
+        color: white;
+        background-color: #717171;
+      }
+      &:not(:first-child) {
+        cursor: pointer;
+        &:hover {
+          background-color: #eeeeee;
+        }
+      }
+      &.selected {
+        background-color: #dddddd;
+      }
+    }
+  }
+`;
+
+export const TimeBtn = styled.button`
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  &:focus-within > div {
+    display: block;
+  }
+  > div {
+    display: none;
+  }
+  > img {
+    display: block;
+    width: 12px;
+    height: 12px;
+  }
+`;
+
 export const FormPlace = styled.div`
   display: flex;
   align-items: center;
