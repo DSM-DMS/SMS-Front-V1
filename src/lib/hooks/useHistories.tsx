@@ -14,6 +14,7 @@ const useHistories = () => {
   const dispatch = useDispatch();
   const { histories } = useCustomSelector().outing;
   const [historyStart, setHistoryStart] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getHistories = useCallback(
     async (historyStart: number) => {
@@ -29,12 +30,15 @@ const useHistories = () => {
 
         dispatch(setOutingHistoryList(outings));
         setHistoryStart(prev => (prev += 9));
-      } catch {}
+      } finally {
+        setLoading(false);
+      }
     },
-    [histories]
+    [histories, loading]
   );
 
   const refreshOutingHistories = () => {
+    setLoading(true);
     dispatch(resetOutingHistoryList());
     setHistoryStart(0);
     setTimeout(() => {
@@ -50,6 +54,7 @@ const useHistories = () => {
   return {
     histories,
     historyStart,
+    loading,
     getHistories,
     refreshOutingHistories
   };

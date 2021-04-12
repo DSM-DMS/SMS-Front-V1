@@ -9,49 +9,15 @@ import ApplySicOut from "./SickOut";
 import GuideModal from "./GuideModal";
 
 import * as S from "../style";
-import {
-  EMERGENCY,
-  NORMAL,
-  Outing
-} from "../../../containers/Outing/ApplyContainer";
 import { Loading } from "../../default";
-import { ApplyState } from "../../../lib/hooks/useApplyState";
-import { ApplyModalState } from "../../../lib/hooks/useModalState";
+import useApply from "../../../lib/hooks/useApply";
 
-interface Props {
-  loading: boolean;
-  applyState: ApplyState;
-  applyOuting: (outing: Outing) => Promise<void>;
-  modalState: ApplyModalState;
-}
+interface Props {}
 
-const Apply: FC<Props> = ({
-  loading,
-  applyState,
-  modalState,
-  applyOuting
-}): ReactElement => {
-  const {
-    startTime,
-    endTime,
-    roadAddress,
-    reason,
-    situation,
-    handleReason
-  } = applyState;
+const Apply: FC<Props> = ({}): ReactElement => {
+  const { loading, applyState, modalState, handleApplyOuting } = useApply();
+  const { handleReason } = applyState.handlers;
   const [guideModal, openModal, closeModal] = modalState;
-
-  const handleApplyOuting = () => {
-    const outing: Outing = {
-      startTime,
-      endTime,
-      place: roadAddress,
-      reason,
-      situation: situation ? EMERGENCY : NORMAL
-    };
-
-    applyOuting(outing);
-  };
 
   return (
     <S.ApplyWrap>

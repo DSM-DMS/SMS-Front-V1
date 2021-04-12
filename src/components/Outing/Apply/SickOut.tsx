@@ -11,7 +11,10 @@ interface Props {
 }
 
 const ApplySicOut: FC<Props> = ({ applyState }): ReactElement => {
-  const { situation, cancelSickOut, applySickOut } = applyState;
+  const {
+    values: { situation },
+    handlers: { cancelSickOut, applySickOut }
+  } = applyState;
 
   const handleSickOut = () => {
     if (situation) {

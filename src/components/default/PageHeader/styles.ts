@@ -70,6 +70,7 @@ export const Wrap = styled.div`
 export const InputWrap = styled.div`
   display: flex;
   align-items: flex-end;
+  width: 20%;
 `;
 
 export const Container = styled.div<Type>`

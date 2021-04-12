@@ -258,6 +258,67 @@ export const FormTimeItem = styled.li`
   }
 `;
 
+export const TimeList = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 80%;
+  padding: 4px;
+  border: 1px solid #dddddd;
+  background-color: white;
+  z-index: 10;
+  animation: showup 0.6s cubic-bezier(0, 1.2, 1, 1);
+  @keyframes showup {
+    from {
+      transform: scale(0.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    > li {
+      width: calc(100% / 4);
+      padding: 8px 4px;
+      text-align: center;
+      box-sizing: border-box;
+      &:first-child {
+        color: white;
+        background-color: #717171;
+      }
+      &:not(:first-child) {
+        cursor: pointer;
+        &:hover {
+          background-color: #eeeeee;
+        }
+      }
+      &.selected {
+        background-color: #dddddd;
+      }
+    }
+  }
+`;
+
+export const TimeBtn = styled.button`
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  &:focus-within > div {
+    display: block;
+  }
+  > div {
+    display: none;
+  }
+  > img {
+    display: block;
+    width: 12px;
+    height: 12px;
+  }
+`;
+
 export const FormPlace = styled.div`
   display: flex;
   align-items: center;
@@ -727,53 +788,38 @@ export const HistoryCard = styled.div`
   cursor: pointer;
 `;
 
-interface Emergency {
-  emergency: boolean;
-  late: boolean;
-}
-
-export const CardDate = styled.p<Emergency>`
+export const CardDate = styled.p`
   position: relative;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 12px;
-  padding-right: 32px;
+  padding-right: 12px;
   border-right: 2px solid #242424;
-  &::after,
-  &::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    width: 16px;
-    height: 16px;
-  }
-  &::after {
-    right: 32px;
-    ${({ emergency }) =>
-      emergency &&
-      css`
-        background-image: url(${OutingWarningRedBase});
-      `}
-  }
-  &::before {
-    right: 8px;
-    ${({ late }) =>
-      late &&
-      css`
-        background-image: url(${Late});
-      `}
+  svg {
+    float: right;
+    width: 24px;
+    height: 24px;
+    &.emergency {
+      right: 32px;
+    }
+    &.late {
+      right: 8px;
+      animation: tick 1.5s infinite;
+    }
+    @keyframes tick {
+      0%,
+      50% {
+        stroke: black;
+      }
+      51%,
+      100% {
+        stroke: red;
+      }
+    }
   }
 `;
 
 export const CardPlace = styled.p`
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   font-size: 12px;
 `;
 

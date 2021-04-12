@@ -26,7 +26,7 @@ const ListPageHeader: FC<Props> = ({
         <S.InputWrap>
           <SearchInput
             onChange={onChange}
-            placeHolder="제목 또는 글쓴이를 입력하세요"
+            placeHolder="제목 또는 글쓴이를 입력하세요."
             onKeyDown={onKeyDown}
           />
           {newButton && (

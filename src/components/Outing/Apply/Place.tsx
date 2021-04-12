@@ -35,8 +35,10 @@ const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
   const history = useHistory();
   const [modal, openModal, closeModal] = usePlaceModal();
   const [placeResult, setPlaceResult] = useState<PlaceResult>(null);
-
-  const { place, roadAddress, handlePlace, handleRoadAddress } = applyState;
+  const {
+    values: { place, roadAddress },
+    handlers: { handlePlace, handleRoadAddress }
+  } = applyState;
 
   const handleSearchLocation = () => {
     if (place.trim() === "") {

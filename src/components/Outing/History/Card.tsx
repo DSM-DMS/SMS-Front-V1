@@ -28,11 +28,13 @@ const HistoryCard: FC<Props> = ({
     outing_status,
     arrival_time
   } = outing;
+
+  const isEmergency = useMemo(() => {
+    return outing_situation.toUpperCase() !== "NORMAL";
+  }, [outing_situation]);
+
   const isLate = useMemo(() => {
-    const now = new Date().getTime();
-    if (now > end_time && arrival_time === 0) return true;
-    if (!arrival_time && arrival_time > end_time) return true;
-    return false;
+    return arrival_time && arrival_time > end_time;
   }, [end_time, arrival_time]);
 
   const getLocalDate = useCallback((startTime: number) => {
@@ -61,10 +63,9 @@ const HistoryCard: FC<Props> = ({
   return (
     <S.HistoryCard onClick={handleHistoryCard}>
       <div>
-        <S.CardDate
-          emergency={outing_situation.toUpperCase() === "NORMAL" ? false : true}
-          late={isLate}
-        >
+        <S.CardDate>
+          {isLate && <LateSvg />}
+          {isEmergency && <EmergencySvg />}
           {getLocalDate(start_time)}
         </S.CardDate>
         <S.CardPlace>장소 : {place}</S.CardPlace>
@@ -82,6 +83,65 @@ const HistoryCard: FC<Props> = ({
         </S.CardTime>
       </div>
     </S.HistoryCard>
+  );
+};
+
+const EmergencySvg = () => {
+  return (
+    <svg
+      className="emergency"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 13 13"
+    >
+      <g id="그룹_450" data-name="그룹 450" transform="translate(0 -0.096)">
+        <path
+          id="다각형_10"
+          data-name="다각형 10"
+          d="M6.5,0,13,11H0Z"
+          transform="translate(0 0.096)"
+          fill="#f55"
+        />
+        <text
+          id="_"
+          data-name="!"
+          transform="translate(8 10.096)"
+          fill="#fff"
+          fontSize="9"
+          fontFamily="NotoSansCJKkr-Medium, Noto Sans CJK KR"
+          fontWeight="500"
+          letterSpacing="-0.02em"
+        >
+          <tspan x="-3.087" y="0">
+            !
+          </tspan>
+        </text>
+      </g>
+    </svg>
+  );
+};
+
+const LateSvg = () => {
+  return (
+    <svg
+      className="late"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="#2c3e50"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <circle cx="12" cy="13" r="7" />
+      <polyline points="12 10 12 13 14 13" />
+      <line x1="7" y1="4" x2="4.25" y2="6" />
+      <line x1="17" y1="4" x2="19.75" y2="6" />
+    </svg>
   );
 };
 

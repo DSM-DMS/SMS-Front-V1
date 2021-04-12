@@ -23,6 +23,7 @@ const History: FC<Props> = ({}): ReactElement => {
   const {
     histories,
     historyStart,
+    loading,
     getHistories,
     refreshOutingHistories
   } = useHistories();
@@ -46,7 +47,7 @@ const History: FC<Props> = ({}): ReactElement => {
               src={Refresh}
               alt="refresh outing history"
               title="refresh outing history"
-              onClick={refreshOutingHistories}
+              onClick={loading ? void {} : refreshOutingHistories}
             />
           </S.HistoryRefresh>
         </div>
