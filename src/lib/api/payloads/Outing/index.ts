@@ -1,5 +1,5 @@
 import { ResDefault } from "../";
-import { SituationType } from "../../../../containers/Outing/ApplyContainer";
+import { SituationType } from "../../../hooks/useApply";
 
 export enum OutingStatus {
   "선생님 거절" = -2,
