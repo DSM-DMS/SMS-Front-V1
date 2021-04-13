@@ -7,7 +7,6 @@ import { postLoginStudent } from "../../lib/api/Login";
 import { getClubUuidFromLeader } from "../../lib/api/Management";
 import {
   CAN_NOT_FOUND_ACCOUNT,
-  NEED_ADMIN_ACCEPT,
   PASSWORD_NOT_MATCHED,
   UNABLE_FORM
 } from "../../lib/api/payloads/Login";
@@ -106,12 +105,10 @@ const LoginContainer: FC<Props> = ({ loading, startLoading, endLoading }) => {
       } catch (err) {
         const { status, code } = getAxiosError(err);
 
-        if (status === 409 && code === -412) {
-          errorMessageMacro(PASSWORD_NOT_MATCHED);
-        } else if (status === 409 && code === -413) {
-          errorMessageMacro(NEED_ADMIN_ACCEPT);
-        } else if (status === 409 && code === -414) {
+        if (status === 409 && code === -401) {
           errorMessageMacro(CAN_NOT_FOUND_ACCOUNT);
+        } else if (status === 409 && code === -402) {
+          errorMessageMacro(PASSWORD_NOT_MATCHED);
         }
 
         setPw("");
