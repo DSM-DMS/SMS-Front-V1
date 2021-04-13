@@ -88,13 +88,6 @@ export const TimetableItem = styled.li`
   font-weight: bold;
   box-sizing: border-box;
   text-align: center;
-  > span:last-of-type {
-    position: absolute;
-    left: 4px;
-    bottom: 0;
-    font-size: 10px;
-    font-weight: 400;
-  }
 `;
 
 export const TimetableItemDate = styled.span`
