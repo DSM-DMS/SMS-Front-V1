@@ -65,8 +65,6 @@ const useApply = () => {
     const now = Date.now() - TWELVE_TIME;
     const applyOutTime = getStringTimeToNumberTime(outTime);
 
-    console.log(now, applyOutTime, new Date(now), new Date(applyOutTime));
-
     if (now > applyOutTime) {
       toast.error("이미 지난 시각입니다.");
       return true;
@@ -76,7 +74,7 @@ const useApply = () => {
       return true;
     }
     if (inTime !== ":" && outTime > inTime) {
-      toast.error("외출 시간은 귀교 시간보다 빠른 시간으로 신청해야 합니다.");
+      toast.error("외출 시간을 확인해주세요.");
       return true;
     }
   };
@@ -91,18 +89,24 @@ const useApply = () => {
       toast.error("이미 지난 시각입니다.");
       return true;
     }
-    if (outTime < "4:20" || outTime > "8:30") {
+    if (inTime < "4:20" || inTime > "8:30") {
       toast.error("오후 4시 20분부터 8시30분까지만 가능합니다.");
       return true;
     }
-    if (outTime !== ":" && outTime > inTime) {
-      toast.error("귀교 시간은 외출 시간보다 늦은 시간으로 신청해야 합니다.");
+    if (inTime !== ":" && outTime > inTime) {
+      toast.error("귀교 시간을 확인해주세요.");
       return true;
     }
   };
 
   const applyOuting = async () => {
-    const { outTime, inTime, place, reason, situation } = applyState.values;
+    const {
+      outTime,
+      inTime,
+      reason,
+      situation,
+      roadAddress
+    } = applyState.values;
 
     if (checkOutingValidation() || outTimeValidation() || inTimeValidation()) {
       closeModal();
@@ -112,7 +116,7 @@ const useApply = () => {
     const outingBody: ReqOuting = {
       start_time: getOutingTime(outTime),
       end_time: getOutingTime(inTime),
-      place,
+      place: roadAddress,
       reason,
       situation: situation ? EMERGENCY : NORMAL
     };
