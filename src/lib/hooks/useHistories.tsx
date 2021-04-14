@@ -10,6 +10,8 @@ import {
 } from "../../modules/action/outing";
 import { getHistory } from "../api/Outing";
 
+export const HISTORY_PARAM_COUNT = 9;
+
 const useHistories = () => {
   const dispatch = useDispatch();
   const { histories } = useCustomSelector().outing;
@@ -18,18 +20,18 @@ const useHistories = () => {
 
   const getHistories = useCallback(
     async (historyStart: number) => {
+      setLoading(true);
       if (historyStart > histories.length) {
         toast.error("불러올 외출신청 내역이 없습니다.");
         return;
       }
 
       try {
-        const {
-          data: { outings }
-        } = await getHistory(localStorage.getItem("uuid"), historyStart);
+        const uuid = localStorage.getItem("uuid");
+        const { data } = await getHistory(uuid, historyStart);
 
-        dispatch(setOutingHistoryList(outings));
-        setHistoryStart(prev => (prev += 9));
+        dispatch(setOutingHistoryList(data.outings));
+        setHistoryStart(prev => (prev += HISTORY_PARAM_COUNT));
       } finally {
         setLoading(false);
       }

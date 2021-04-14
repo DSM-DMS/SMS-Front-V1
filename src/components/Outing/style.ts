@@ -885,6 +885,9 @@ export const MoreButton = styled.button`
   &:active {
     transform: scale(0.98);
   }
+  > img {
+    vertical-align: middle;
+  }
 `;
 
 export const HistoryModalWrap = styled.div``;

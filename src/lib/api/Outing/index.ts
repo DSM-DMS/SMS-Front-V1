@@ -9,6 +9,7 @@ import {
   ResNaverLocalWithDefault
 } from "../payloads/Outing";
 import { ResDefault } from "../payloads";
+import { HISTORY_PARAM_COUNT } from "../../hooks/useHistories";
 
 export const START_OUTING = "start" as const;
 export const END_OUTING = "end" as const;
@@ -37,7 +38,7 @@ export const postStudentOutingAction = (
 
 export const getHistory = (studentUuid: string, start: number) => {
   return apiDefault().get<ResHistoryWithDefault>(
-    `/students/uuid/${studentUuid}/outings?start=${start}&count=9`
+    `/students/uuid/${studentUuid}/outings?start=${start}&count=${HISTORY_PARAM_COUNT}`
   );
 };
 
