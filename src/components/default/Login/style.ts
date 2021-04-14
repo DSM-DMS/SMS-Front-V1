@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Check, CheckGray } from "../../../assets";
 
-export const LoginWrap = styled.div`
+export const LoginWrap = styled.form`
   width: 500px;
   margin: 200px auto 0;
   padding-bottom: 24px;
@@ -39,7 +39,7 @@ export const LoginTypeText = styled.span`
   font-size: 14px;
 `;
 
-export const LoginInputsWrap = styled.form`
+export const LoginInputsWrap = styled.div`
   margin: 8px 0;
 `;
 

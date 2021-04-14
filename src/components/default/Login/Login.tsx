@@ -1,55 +1,25 @@
-import React, { ChangeEvent, FC, KeyboardEvent, useState } from "react";
+import React, { FC } from "react";
 
 import * as S from "./style";
 
-import { ErrorState } from "../../../containers/Login/LoginContainer";
 import Loading from "../Loading/Loading";
-import { CapsLock as CapsLockIcon, Eye, EyeOff } from "../../../assets";
+import { Eye, EyeOff } from "../../../assets";
 import { Link } from "react-router-dom";
+import useLogin from "../../../lib/hooks/useLogin";
 
-interface Props {
-  loading: boolean;
-  id: string;
-  pw: string;
-  autoLogin: boolean;
-  errorMessage: ErrorState;
-  handleId: (e: ChangeEvent<HTMLInputElement>) => void;
-  handlePw: (e: ChangeEvent<HTMLInputElement>) => void;
-  toggleAutoLogin: () => void;
-  login: (id: string, pw: string, autoLogin: boolean) => Promise<any>;
-}
+interface Props {}
 
-const Login: FC<Props> = ({
-  loading,
-  id,
-  pw,
-  handleId,
-  handlePw,
-  autoLogin,
-  toggleAutoLogin,
-  errorMessage,
-  login
-}) => {
-  const [capsLock, setCapsLock] = useState<boolean>(false);
-  const [showPw, setShowPw] = useState<boolean>(false);
-
-  const handleCapsLock = (e: KeyboardEvent<HTMLInputElement>) => {
-    const key = e.key;
-    const shiftKey = e.shiftKey;
-
-    if (
-      (key >= "A" && key <= "Z" && !shiftKey) ||
-      (key >= "a" && key <= "z" && shiftKey)
-    ) {
-      setCapsLock(true);
-      return;
-    }
-    setCapsLock(false);
-  };
-
-  const toggleEye = () => {
-    setShowPw(prev => !prev);
-  };
+const Login: FC<Props> = ({}) => {
+  const [
+    showPw,
+    errorMessage,
+    loading,
+    handleId,
+    handlePw,
+    toggleEye,
+    toggleAutoLogin,
+    login
+  ] = useLogin();
 
   return (
     <S.LoginWrap>
@@ -65,7 +35,6 @@ const Login: FC<Props> = ({
               placeholder="아이디"
               id="id"
               onChange={handleId}
-              value={id}
               autoFocus={true}
             />
           </S.LoginLabel>
@@ -74,45 +43,21 @@ const Login: FC<Props> = ({
               type={showPw ? "text" : "password"}
               placeholder="비밀번호"
               id="current-password"
-              onKeyPress={e => {
-                if (e.key === "Enter") {
-                  login(id, pw, autoLogin);
-                  return;
-                }
-                handleCapsLock(e);
-              }}
               onChange={handlePw}
-              value={pw}
             />
-            {showPw ? (
-              <S.Eye
-                src={Eye}
-                alt="see password"
-                title="see password"
-                onClick={toggleEye}
-              />
-            ) : (
-              <S.Eye
-                src={EyeOff}
-                alt="Don't see password"
-                title="Don't see password"
-                onClick={toggleEye}
-              />
-            )}
-            {capsLock && (
-              <S.CapsLockImg
-                src={CapsLockIcon}
-                alt="caps lock is on"
-                title="caps lock is on"
-              />
-            )}
+            <S.Eye
+              src={showPw ? Eye : EyeOff}
+              alt="toggle password"
+              title="toggle password"
+              onClick={toggleEye}
+            />
           </S.LoginLabel>
           <S.ErrorMessage>{errorMessage.message}</S.ErrorMessage>
           {loading && <Loading />}
           <S.LoginButton
             onClick={e => {
               e.preventDefault();
-              login(id, pw, autoLogin);
+              login();
             }}
           >
             로그인
@@ -123,12 +68,6 @@ const Login: FC<Props> = ({
                 type="checkbox"
                 id="auto-login"
                 onChange={toggleAutoLogin}
-                onKeyPress={e => {
-                  if (e.key === "Enter") {
-                    e.currentTarget.checked = !e.currentTarget.checked;
-                    toggleAutoLogin();
-                  }
-                }}
               />
               <S.AutoLoginCheckbox id="auto-login-checkbox" />
             </S.AutoLoginLabel>
