@@ -6,6 +6,8 @@ export { default as HeaderContainer } from "./Header/HeaderContainer";
 
 export { default as PasswordChangeContainer } from "./PasswordChange/PasswordChangeContainer";
 
+export { default as WarningContainer } from "./Outing/WarningContainer";
+
 export { default as NoticeListContainer } from "./Notice/List/NoticeListContainer";
 export { default as NoticeDetailContainer } from "./Notice/Detail/NoticeDetailContainer";
 
@@ -15,9 +17,6 @@ export { default as CircleWantedListContainer } from "./Circle/Wanted/List/Circl
 export { default as CircleAllDetailContainer } from "./Circle/All/Detail/CircleAllDetailContainer";
 export { default as CircleAllContainer } from "./Circle/All/CircleAllContainer";
 export { default as CircleWantedDetailContainer } from "./Circle/Wanted/Detail/CircleWantedDetailContainer";
-
-export { default as WarningContainer } from "./Outing/WarningContainer";
-export { default as HistoryContainer } from "./Outing/HistoryContainer";
 
 export { default as AdminOutingWaitListContainer } from "./Admin/Outing/Wait/List/AdminOutingWaitListContainer";
 export { default as AdminMainContainer } from "./Admin/Main/AdminMainContainer";

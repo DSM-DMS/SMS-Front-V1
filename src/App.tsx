@@ -1,8 +1,10 @@
 import React, { FC, useEffect } from "react";
 import { Switch, Router, Route, Redirect } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./lib/confirm/confirm.css";
+import Channel from "./lib/channel.js";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
 import { PageNotFound, Navigation } from "./components";
 import {
@@ -19,8 +21,6 @@ import {
   ManagementRouter
 } from "./routers";
 import { history } from "./modules/store";
-import { ToastContainer } from "react-toastify";
-import Channel from "./lib/channel.js";
 
 const App: FC<{}> = () => {
   const isIE = /*@cc_on!@*/ false || !!(document as any).documentMode;
