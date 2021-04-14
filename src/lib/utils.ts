@@ -3,13 +3,13 @@ import { toast } from "react-toastify";
 import { AxiosError } from "axios";
 import { History } from "history";
 
+import { SERVER } from "./api/client";
 import { ResDefault } from "./api/payloads";
 import { ResStudentInfo } from "./api/payloads/Login";
 import { ResStudents } from "./api/payloads/Management";
 
 import { PageState } from "../modules/reducer/page";
 import { stateType } from "../modules/reducer";
-import { SERVER } from "../lib/api/client";
 import { BoardType } from "./api/payloads/Board";
 
 type valueType = [string, string];
