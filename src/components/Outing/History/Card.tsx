@@ -64,8 +64,16 @@ const HistoryCard: FC<Props> = ({
     <S.HistoryCard onClick={handleHistoryCard}>
       <div>
         <S.CardDate>
-          {isLate && <LateSvg />}
-          {isEmergency && <EmergencySvg />}
+          {isLate && (
+            <S.CardSituation name="지각">
+              <LateSvg />
+            </S.CardSituation>
+          )}
+          {isEmergency && (
+            <S.CardSituation name="질병외출">
+              <EmergencySvg />
+            </S.CardSituation>
+          )}
           {getLocalDate(start_time)}
         </S.CardDate>
         <S.CardPlace>장소 : {place}</S.CardPlace>

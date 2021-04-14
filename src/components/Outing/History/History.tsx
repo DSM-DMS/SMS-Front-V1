@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useState } from "react";
+import React, { FC, ReactElement, useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -8,18 +8,17 @@ import Modal from "./Modal";
 import * as S from "../style";
 import { OutingHistory, Refresh } from "../../../assets";
 import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
-import { subPageMove } from "../../../modules/action/page";
 import { Loading } from "../../default";
-import useHistoryModal from "../../../lib/hooks/useHistoryModal";
 import useHistories from "../../../lib/hooks/useHistories";
 import { setSelectedHistory } from "../../../modules/action/outing";
+import useModalState from "../../../lib/hooks/useModalState";
 
 interface Props {}
 
 const History: FC<Props> = ({}): ReactElement => {
   const dispatch = useDispatch();
   const [selectedOuting, setSelectedOuting] = useState<ResHistoryItem>(null);
-  const [modal, openModal, closeModal] = useHistoryModal();
+  const [modal, openModal, closeModal] = useModalState();
   const {
     histories,
     historyStart,
@@ -35,6 +34,22 @@ const History: FC<Props> = ({}): ReactElement => {
   const selectOuting = useCallback((outing: ResHistoryItem) => {
     setSelectedOuting(outing);
   }, []);
+
+  const onClickGetHistories = useCallback(() => {
+    getHistories(historyStart);
+  }, [historyStart]);
+
+  const displayOutingCard = useMemo(() => {
+    return histories.map(outing => (
+      <Card
+        key={outing.outing_uuid}
+        outing={outing}
+        openModal={openModal}
+        handleCard={dispatchSelectedOuting}
+        selectOuting={selectOuting}
+      />
+    ));
+  }, [histories]);
 
   return (
     <S.HistoryWrap>
@@ -57,30 +72,15 @@ const History: FC<Props> = ({}): ReactElement => {
         {historyStart !== 0 && histories.length === 0 ? (
           <S.HistoryNoContent>
             외출신청 내역이 없습니다.{" "}
-            <Link
-              to="/outing/apply"
-              onClick={() => dispatch(subPageMove("외출신청"))}
-            >
-              외출신청하러 가기!
-            </Link>
+            <Link to="/outing/apply">외출신청하러 가기!</Link>
           </S.HistoryNoContent>
         ) : (
-          <S.HistoryCardWrap>
-            {histories.map(outing => (
-              <Card
-                key={outing.outing_uuid}
-                outing={outing}
-                openModal={openModal}
-                handleCard={dispatchSelectedOuting}
-                selectOuting={selectOuting}
-              />
-            ))}
-          </S.HistoryCardWrap>
+          <S.HistoryCardWrap>{displayOutingCard}</S.HistoryCardWrap>
         )}
-
         {historyStart === histories.length && (
-          <S.MoreButton onClick={() => getHistories(historyStart)}>
+          <S.MoreButton onClick={onClickGetHistories}>
             더 보기
+            {loading && <Loading size="24px" />}
           </S.MoreButton>
         )}
         {modal && (

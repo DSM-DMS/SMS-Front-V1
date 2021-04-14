@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 import TextareaAutosize from "react-autosize-textarea";
 
-import { OutingWarningRedBase, OutingBalloons, Late } from "../../assets";
+import { OutingWarningRedBase, OutingBalloons } from "../../assets";
+import { SituationType } from "../../lib/hooks/useApply";
 
 export const OutingCommonWrap = styled.div`
   padding: 80px;
@@ -788,7 +789,7 @@ export const HistoryCard = styled.div`
   cursor: pointer;
 `;
 
-export const CardDate = styled.p`
+export const CardDate = styled.div`
   position: relative;
   font-size: 16px;
   font-weight: bold;
@@ -817,6 +818,64 @@ export const CardDate = styled.p`
       }
     }
   }
+`;
+
+export const CardSituation = styled.div<{ name: "지각" | "질병외출" }>`
+  position: relative;
+  float: right;
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 30px;
+    border: 1px solid #dddddd;
+    background-color: white;
+    font-size: 14px;
+    font-weight: 400;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 16%);
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0px;
+    height: 0px;
+
+    border-top: 5px solid white;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+  }
+  &::before,
+  &::after {
+    display: none;
+  }
+  &:hover {
+    &::before,
+    &::after {
+      display: flex;
+    }
+  }
+
+  ${({ name }) =>
+    name === "지각"
+      ? css`
+          &::before {
+            content: "지각";
+          }
+        `
+      : css`
+          &::before {
+            content: "질병외출";
+          }
+        `};
 `;
 
 export const CardPlace = styled.p`
@@ -884,6 +943,9 @@ export const MoreButton = styled.button`
   }
   &:active {
     transform: scale(0.98);
+  }
+  > img {
+    vertical-align: middle;
   }
 `;
 

@@ -55,6 +55,7 @@ const SearchList: FC<Props> = ({
               type="text"
               id="searchInput"
               placeholder="ex) 장동, 23-9"
+              autoFocus={true}
               onChange={e => handlePlace(e.currentTarget.value)}
               onKeyPress={e => {
                 if (e.key === "Enter") searchStart();
