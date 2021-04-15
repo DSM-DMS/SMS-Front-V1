@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, takeLatest } from "redux-saga/effects";
 import { ResBoardList } from "../../../../lib/api/payloads/Board";
 import { finishLoading, startLoading } from "../../../action/loading";
 import {
@@ -91,9 +91,9 @@ function* searchNoticeClubListSaga(
 }
 
 function* noticeListSaga() {
-  yield takeEvery(GET_NOTICE_SCHOOL_LIST, getNoticeSchoolListSaga);
-  yield takeEvery(GET_NOTICE_CLUB_LIST, getNoticeClubListSaga);
-  yield takeEvery(GET_NOTICE_WRITER_LIST, getNoticeWriterListSaga);
+  yield takeLatest(GET_NOTICE_SCHOOL_LIST, getNoticeSchoolListSaga);
+  yield takeLatest(GET_NOTICE_CLUB_LIST, getNoticeClubListSaga);
+  yield takeLatest(GET_NOTICE_WRITER_LIST, getNoticeWriterListSaga);
   yield takeEvery(SEARCH_NOTICE_SCHOOL_LIST_SEARCH, searchNoticeSchoolListSaga);
   yield takeEvery(SEARCH_NOTICE_CLUB_LIST_SEARCH, searchNoticeClubListSaga);
 }
