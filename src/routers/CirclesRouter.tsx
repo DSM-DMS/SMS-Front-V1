@@ -44,6 +44,7 @@ const CirclesRouter: FC<{}> = () => {
         <Redirect to="/circles/notice" />
       </Switch> */}
       <ForbiddenContainer />
+      <Redirect to="/circles/notice" />
     </GlobalInnerBody>
   );
 };
