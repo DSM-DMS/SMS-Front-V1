@@ -17,9 +17,7 @@ export const BASE_URL = `${SERVER.hostUrl}${SERVER.version}`;
 
 const removeAllStorage = () => {
   localStorage.removeItem("access_token");
-  localStorage.removeItem("club_uuid");
   localStorage.removeItem("expiration");
-  localStorage.removeItem("sms-type");
   localStorage.removeItem("sms-user");
   localStorage.removeItem("uuid");
 };

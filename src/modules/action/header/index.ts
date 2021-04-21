@@ -1,30 +1,18 @@
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 
 export const SET_INIT = "header/SET_INIT" as const;
-export const SET_TYPE = "header/SET_TYPE" as const;
 export const SET_GRADE = "header/SET_GRADE" as const;
 export const SET_GROUP = "header/SET_GROUP" as const;
 export const SET_NUMBER = "header/SET_NUMBER" as const;
 export const SET_NAME = "header/SET_NAME" as const;
 export const SET_PHONE = "header/SET_PHONE" as const;
 export const SET_PROFILE_URI = "header/SET_PROFILE_URI" as const;
-export const SET_CLUB_UUID = "header/SET_CLUB_UUID" as const;
 
 export const GET_STUDENT_INFO_SAGA = "header/GET_STUDENT_INFO_SAGA" as const;
 
-export const STUDENT = "student" as const;
-
-export const setInit = (
-  type: UserType | "",
-  user: ResStudentInfo,
-  clubUuid: string
-) => ({
+export const setInit = (user: ResStudentInfo) => ({
   type: SET_INIT,
-  payload: { type, user, clubUuid }
-});
-export const setType = (type: UserType) => ({
-  type: SET_TYPE,
-  payload: { type }
+  payload: { user }
 });
 export const setGrade = (grade: number) => ({
   type: SET_GRADE,
@@ -54,15 +42,8 @@ export const getStudentInfoSaga = (studentUuid: string) => ({
   type: GET_STUDENT_INFO_SAGA,
   payload: { studentUuid }
 });
-export const setClubUuid = (clubUuid: string) => ({
-  type: SET_CLUB_UUID,
-  payload: { clubUuid }
-});
-
-export type UserType = typeof STUDENT;
 
 export type HeaderAction = ReturnType<
-  | typeof setType
   | typeof setGrade
   | typeof setGroup
   | typeof setName
@@ -71,5 +52,4 @@ export type HeaderAction = ReturnType<
   | typeof setProfileUri
   | typeof setInit
   | typeof getStudentInfoSaga
-  | typeof setClubUuid
 >;

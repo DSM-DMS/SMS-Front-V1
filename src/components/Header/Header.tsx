@@ -1,47 +1,29 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
 
 import * as S from "./style";
 
-import { stateType } from "../../modules/reducer";
+import useCustomSelector from "../../lib/hooks/useCustomSelector";
 
 interface Props {
   logout: () => void;
-  moveLogin: () => void;
-  movePasswordChange: () => void;
-  moveManagement: () => void;
 }
 
-const Header: FC<Props> = ({
-  logout,
-  moveLogin,
-  movePasswordChange,
-  moveManagement
-}) => {
-  const { type, grade, group, name, student_number, clubUuid } = useSelector(
-    (state: stateType) => state.header
-  );
+const Header: FC<Props> = ({ logout }) => {
+  const { grade, group, name, student_number } = useCustomSelector().header;
 
-  if (!type) {
+  if (!name) {
     return (
       <S.HeaderWrap>
-        <S.Logout onClick={moveLogin}>로그인</S.Logout>
+        <S.Logout to="/login">로그인</S.Logout>
       </S.HeaderWrap>
     );
   }
 
   return (
     <S.HeaderWrap>
-      <S.UserInfo>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</S.UserInfo>
-      <S.MovePasswordChange onClick={movePasswordChange}>
-        비밀번호 변경
-      </S.MovePasswordChange>
-      <S.Logout
-        onClick={() => {
-          logout();
-          moveLogin();
-        }}
-      >
+      <span>{`${grade}학년 ${group}반 ${student_number}번 ${name}`}</span>
+      <S.MovePasswordChange to="/pw-change">비밀번호 변경</S.MovePasswordChange>
+      <S.Logout to="/login" onClick={logout}>
         로그아웃
       </S.Logout>
     </S.HeaderWrap>
