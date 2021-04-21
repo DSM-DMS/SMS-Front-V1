@@ -19,9 +19,14 @@ import {
   LazyPasswordChange,
   LazyRegister
 } from "./routers/LazyLoaded";
+import { closingCode } from "./lib/utils";
 
 const App: FC<{}> = () => {
   useEffect(() => {
+    if (localStorage.getItem("auto-login") === "true") {
+      window.addEventListener("beforeunload", closingCode);
+    }
+
     Channel(process.env.CHANNEL_PLUGIN_KEY);
   }, []);
 
