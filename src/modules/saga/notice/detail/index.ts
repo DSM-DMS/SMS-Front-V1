@@ -25,7 +25,14 @@ function* getNoticeDetailSaga(action: ReturnType<typeof getNoticeDetail>) {
       action.payload
     );
     yield put(getNoticeDetailSuccess(res.data));
-  } catch (err) {}
+  } catch (err) {
+    const history = yield getContext("history");
+    const status: number = err.response.status;
+    if (status === 404) {
+      toast.error("게시글이 존재하지 않습니다");
+      history.push("/notice");
+    }
+  }
   yield put(finishLoading(GET_NOTICE_DETAIL));
 }
 

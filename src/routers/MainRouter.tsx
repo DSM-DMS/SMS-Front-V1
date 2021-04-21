@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 
 import { PageNotFound } from "../components";
 import { MainContainer } from "../containers";
@@ -11,6 +11,7 @@ const MainRouter: FC<Props> = (): ReactElement => {
     <Switch>
       <Route path="/home/*" component={PageNotFound} />
       <Route path="/home" component={MainContainer} />
+      <Redirect to="/home" />
     </Switch>
   );
 };
