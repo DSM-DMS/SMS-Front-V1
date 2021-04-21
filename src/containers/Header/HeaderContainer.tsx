@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { Header } from "../../components";
 import { ResStudentInfo } from "../../lib/api/payloads/Login";
+import { removeAllStorage } from "../../lib/utils";
 import { getCheckNotice } from "../../modules/action/checkNotice";
 import { setInit } from "../../modules/action/header";
 
@@ -23,19 +24,16 @@ const HeaderContainer: FC<Props> = () => {
         parent_status: ""
       })
     );
-    localStorage.setItem("sms-user", JSON.stringify({}));
-    localStorage.removeItem("access_token");
-    localStorage.removeItem("uuid");
-    localStorage.removeItem("expiration");
+    removeAllStorage();
   }, []);
 
   useEffect(() => {
     const smsUser = JSON.parse(
       localStorage.getItem("sms-user")
     ) as ResStudentInfo;
-    dispatch(setInit(smsUser));
-
     const uuid: string = localStorage.getItem("uuid");
+
+    dispatch(setInit(smsUser));
     if (uuid) {
       dispatch(getCheckNotice(uuid));
     }

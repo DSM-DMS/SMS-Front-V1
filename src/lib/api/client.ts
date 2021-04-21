@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import AES256 from "aes-everywhere";
 
 import { StudentInfo } from "../../modules/type/user";
-import { getAxiosError } from "../utils";
-import { toast } from "react-toastify";
+import { getAxiosError, removeAllStorage } from "../utils";
 
 export const SERVER = {
   hostUrl: process.env.HOST_URL,
@@ -15,13 +15,6 @@ export const SERVER = {
 
 export const BASE_URL = `${SERVER.hostUrl}${SERVER.version}`;
 
-const removeAllStorage = () => {
-  localStorage.removeItem("access_token");
-  localStorage.removeItem("expiration");
-  localStorage.removeItem("sms-user");
-  localStorage.removeItem("uuid");
-};
-
 export const apiDefault = () => {
   const instance = axios.create({
     baseURL: BASE_URL
@@ -30,24 +23,7 @@ export const apiDefault = () => {
 
   instance.interceptors.request.use(config => {
     const accessToken = localStorage.getItem("access_token");
-    const expiration = localStorage.getItem("expiration");
 
-    if (expiration) {
-      const now = new Date().getTime();
-      const expTime = new Date(expiration).getTime();
-
-      if (expTime < now) {
-        localStorage.removeItem("access_token");
-        localStorage.removeItem("uuid");
-        localStorage.removeItem("expiration");
-
-        alert(
-          "자동 로그인 세션이 만료되었습니다. 재로그인 후 다시 실행해주시기 바랍니다."
-        );
-
-        window.location.href = refreshUrl;
-      }
-    }
     config.headers = {
       Authorization: `Bearer ${accessToken}`,
       "Request-Security": AES256.encrypt(
