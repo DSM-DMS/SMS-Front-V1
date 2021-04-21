@@ -1,11 +1,9 @@
 import React, { FC, useCallback, useState } from "react";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import * as S from "./style";
 import PasswordInput from "./PasswordInput";
 
-import { stateType } from "../../../modules/reducer";
 import { Loading } from "../";
 
 interface Props {
@@ -20,7 +18,6 @@ interface Passwords {
 }
 
 const PasswordChange: FC<Props> = ({ loading, changePassword }) => {
-  const { type } = useSelector((state: stateType) => state.header);
   const [pws, setPws] = useState<Passwords>({
     currentPw: "",
     revisionPw: "",
@@ -49,7 +46,7 @@ const PasswordChange: FC<Props> = ({ loading, changePassword }) => {
     }
 
     changePassword(pws.currentPw, pws.revisionPw);
-  }, [type, pws]);
+  }, [pws]);
 
   return (
     <S.PasswordChangeWrap>

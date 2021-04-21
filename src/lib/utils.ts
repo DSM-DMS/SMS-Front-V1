@@ -208,3 +208,15 @@ export const makePhoneNum = (phoneNum: string) => {
 
   return result;
 };
+
+export const removeAllStorage = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("auto-login");
+  localStorage.removeItem("sms-user");
+  localStorage.removeItem("uuid");
+};
+
+export const closingCode = () => {
+  removeAllStorage();
+  return null;
+};

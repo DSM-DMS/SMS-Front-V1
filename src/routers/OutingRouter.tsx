@@ -1,19 +1,16 @@
 import React, { FC, useEffect } from "react";
-import { useSelector } from "react-redux";
 import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { PageNotFound, OutingApply, OutingHistory } from "../components";
 import { WarningContainer } from "../containers";
-import { STUDENT } from "../modules/action/header";
-import { stateType } from "../modules/reducer";
 
 const OutingRouter: FC<{}> = () => {
   const history = useHistory();
-  const { type } = useSelector((state: stateType) => state.header);
 
   useEffect(() => {
-    if (!(type === STUDENT || localStorage.getItem("sms-type") === STUDENT)) {
+    const uuid = localStorage.getItem("uuid");
+    if (!uuid) {
       toast.info("로그인 후 이용해주세요.");
       history.push("/login");
     }

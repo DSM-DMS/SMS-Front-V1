@@ -10,15 +10,8 @@ import {
 import {
   getStudentInfoSaga,
   GET_STUDENT_INFO_SAGA,
-  setInit,
-  STUDENT,
-  UserType
+  setInit
 } from "../../action/header";
-
-const setLocalStorage = (type: UserType, form: ResStudentInfo) => {
-  localStorage.setItem("sms-type", type);
-  localStorage.setItem("sms-user", JSON.stringify(form));
-};
 
 function* setStudentInfoOnStorageSaga(
   action: ReturnType<typeof getStudentInfoSaga>
@@ -47,7 +40,6 @@ function* setStudentInfoOnStorageSaga(
     profile_uri,
     parent_status
   };
-  const clubUuid = localStorage.getItem("club_uuid");
 
   if (parent_status.toLowerCase() === "CONNECTED") {
     toast.info("학부모 계정과 연결되었습니다");
@@ -55,8 +47,8 @@ function* setStudentInfoOnStorageSaga(
     toast.info("학부모 계정과 연결되었습니다");
   }
 
-  setLocalStorage(STUDENT, studentForm);
-  yield put(setInit(STUDENT, studentForm, clubUuid));
+  localStorage.setItem("sms-user", JSON.stringify(studentForm));
+  yield put(setInit(studentForm));
 }
 
 function* headerSaga() {

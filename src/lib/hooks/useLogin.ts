@@ -14,7 +14,7 @@ import {
   CAN_NOT_FOUND_ACCOUNT,
   ResStudentLogin
 } from "../api/payloads/Login";
-import { getAxiosError } from "../utils";
+import { closingCode, getAxiosError } from "../utils";
 
 interface ErrorState {
   status: boolean;
@@ -43,30 +43,25 @@ const useLogin = () => {
 
   const storageHandler = useCallback(
     ({ access_token, student_uuid }: ResStudentLogin) => {
-      const MILLISECOND_TO_HOUR = 3600000;
-      const now = Date.now();
-
       if (autoLogin) {
-        localStorage.removeItem("expiration");
+        localStorage.setItem("auto-login", "true");
+        window.removeEventListener("beforeunload", closingCode);
       } else {
-        localStorage.setItem("expiration", `${now + MILLISECOND_TO_HOUR}`);
+        localStorage.removeItem("auto-login");
       }
       localStorage.setItem("access_token", access_token);
-      localStorage.setItem(`uuid`, student_uuid);
+      localStorage.setItem("uuid", student_uuid);
     },
     [autoLogin]
   );
 
-  const getStudentUuid = useCallback(async () => {
-    const { data } = await postLoginStudent(id, pw);
-    storageHandler(data);
-    return data.student_uuid;
-  }, [id, pw]);
-
   const studentLogin = useCallback(async () => {
-    const teacherUuid = await getStudentUuid();
-    dispatch(getStudentInfoSaga(teacherUuid));
-  }, [id, pw]);
+    const { data } = await postLoginStudent(id, pw);
+    const uuid = data.student_uuid;
+
+    storageHandler(data);
+    dispatch(getStudentInfoSaga(uuid));
+  }, [id, pw, autoLogin]);
 
   const login = useCallback(async () => {
     if (id.length < 4 || id.length > 16 || pw.length < 4 || pw.length > 16) {
@@ -94,6 +89,7 @@ const useLogin = () => {
   return [
     showPw,
     errorMessage,
+    autoLogin,
     loading,
     handleId,
     handlePw,

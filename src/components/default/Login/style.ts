@@ -82,6 +82,7 @@ export const Eye = styled.img`
 export const AutoLogin = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   user-select: none;
   margin: 12px 0;
   #auto-login:checked ~ #auto-login-checkbox {
@@ -89,6 +90,10 @@ export const AutoLogin = styled.div`
     background-image: url(${Check});
     box-shadow: -2px -2px 5px rgba(255, 255, 255, 1),
       3px 3px 5px rgba(0, 0, 0, 0.1);
+  }
+  > a {
+    color: #5323b2;
+    text-decoration: none;
   }
 `;
 
@@ -117,16 +122,6 @@ export const AutoLoginLabel = styled.label`
     &:focus ~ #auto-login-checkbox {
       outline: 1px dotted black;
     }
-  }
-`;
-export const HelperWrap = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-
-  > a {
-    color: #5323b2;
-    text-decoration: none;
   }
 `;
 

@@ -1,16 +1,13 @@
 import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 import {
   HeaderAction,
-  UserType,
   SET_GRADE,
   SET_GROUP,
   SET_NUMBER,
-  SET_TYPE,
   SET_NAME,
   SET_PHONE,
   SET_PROFILE_URI,
-  SET_INIT,
-  SET_CLUB_UUID
+  SET_INIT
 } from "../../action/header";
 
 export interface PageState {
@@ -18,20 +15,15 @@ export interface PageState {
   subUrl: string;
 }
 
-export interface HeaderState extends ResStudentInfo {
-  type: UserType | "";
-  clubUuid: string;
-}
+export type HeaderState = ResStudentInfo;
 
 const initialState: HeaderState = {
-  type: "",
   grade: 0,
   group: 0,
   name: "",
   student_number: 0,
   phone_number: "",
   profile_uri: "",
-  clubUuid: "",
   parent_status: ""
 };
 
@@ -43,9 +35,7 @@ const headerReducer = (
     case SET_INIT:
       return {
         ...state,
-        ...action.payload.user,
-        type: action.payload.type,
-        clubUuid: action.payload.clubUuid
+        ...action.payload.user
       };
     case SET_GRADE:
       return {
@@ -62,11 +52,6 @@ const headerReducer = (
         ...state,
         student_number: action.payload.number
       };
-    case SET_TYPE:
-      return {
-        ...state,
-        type: action.payload.type
-      };
     case SET_NAME:
       return {
         ...state,
@@ -81,11 +66,6 @@ const headerReducer = (
       return {
         ...state,
         profile_uri: action.payload.profileUri
-      };
-    case SET_CLUB_UUID:
-      return {
-        ...state,
-        clubUuid: action.payload.clubUuid
       };
     default:
       return state;

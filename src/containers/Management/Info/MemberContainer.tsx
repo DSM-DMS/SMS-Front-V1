@@ -24,7 +24,6 @@ import { ResStudentInfo } from "../../../lib/api/payloads/Login";
 import { getAxiosError } from "../../../lib/utils";
 import Confirm from "../../../lib/confirm/confirm";
 import { useDispatch } from "react-redux";
-import { setClubUuid } from "../../../modules/action/header";
 
 interface Props {
   leaderUuid: string;
@@ -153,7 +152,6 @@ const ClubMembers: FC<Props> = ({ leaderUuid, clubUuid, memberUuids }) => {
       await getClubInfo(clubUuid);
 
       toast.success("동아리 장을 변경했습니다.");
-      dispatch(setClubUuid(""));
       localStorage.removeItem("club_uuid");
 
       history.push("/home");

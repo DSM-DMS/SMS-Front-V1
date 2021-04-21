@@ -1,10 +1,10 @@
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 
 import * as S from "./style";
 
 import Loading from "../Loading/Loading";
 import { Eye, EyeOff } from "../../../assets";
-import { Link } from "react-router-dom";
 import useLogin from "../../../lib/hooks/useLogin";
 
 interface Props {}
@@ -13,6 +13,7 @@ const Login: FC<Props> = ({}) => {
   const [
     showPw,
     errorMessage,
+    autoLogin,
     loading,
     handleId,
     handlePw,
@@ -63,18 +64,12 @@ const Login: FC<Props> = ({}) => {
             로그인
           </S.LoginButton>
           <S.AutoLogin>
-            <S.AutoLoginLabel htmlFor="auto-login">
-              <input
-                type="checkbox"
-                id="auto-login"
-                onChange={toggleAutoLogin}
-              />
+            <S.AutoLoginLabel htmlFor="auto-login" onChange={toggleAutoLogin}>
+              <input type="checkbox" id="auto-login" defaultChecked={true} />
               <S.AutoLoginCheckbox id="auto-login-checkbox" />
-            </S.AutoLoginLabel>
-            <S.HelperWrap>
               <span>자동로그인</span>
-              <Link to="/register">아직 계정이 없으신가요?</Link>
-            </S.HelperWrap>
+            </S.AutoLoginLabel>
+            <Link to="/register">아직 계정이 없으신가요?</Link>
           </S.AutoLogin>
         </S.LoginInputsWrap>
       </S.LoginForm>

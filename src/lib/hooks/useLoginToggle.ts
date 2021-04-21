@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 
 const useLoginToggle = () => {
   const [showPw, setShowPw] = useState<boolean>(false);
-  const [autoLogin, setAutoLogin] = useState<boolean>(false);
+  const [autoLogin, setAutoLogin] = useState<boolean>(true);
 
   const toggleEye = useCallback(() => {
     setShowPw(prev => !prev);
@@ -10,7 +10,7 @@ const useLoginToggle = () => {
 
   const toggleAutoLogin = useCallback(() => {
     setAutoLogin(prev => !prev);
-  }, [autoLogin]);
+  }, []);
 
   return [showPw, autoLogin, toggleEye, toggleAutoLogin] as const;
 };

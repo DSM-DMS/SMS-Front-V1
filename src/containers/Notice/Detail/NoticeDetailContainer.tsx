@@ -1,10 +1,9 @@
-import React, { FC } from "react";
-import { NoticeDetail } from "../../../components";
-import { useEffect } from "react";
+import React, { FC, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getNoticeDetail } from "../../../modules/action/notice/detail";
 import { RouteChildrenProps } from "react-router-dom";
-import { UserType } from "../../../modules/action/header";
+
+import { NoticeDetail } from "../../../components";
+import { getNoticeDetail } from "../../../modules/action/notice/detail";
 import { getCheckNotice } from "../../../modules/action/checkNotice";
 
 export interface BoardDetail {
@@ -18,10 +17,8 @@ const NoticePageContainer: FC<RouteChildrenProps> = ({ match }) => {
   useEffect(() => {
     dispatch(getNoticeDetail(id));
 
-    const type = localStorage.getItem("sms-type") as UserType;
-
     const uuid: string = localStorage.getItem("uuid");
-    if (uuid && type === "student") {
+    if (uuid) {
       dispatch(getCheckNotice(uuid));
     }
   }, [id]);
