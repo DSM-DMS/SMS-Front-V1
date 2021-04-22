@@ -9,6 +9,7 @@ import {
   setOutingHistoryList
 } from "../../modules/action/outing";
 import { getHistory } from "../api/Outing";
+import useLoading from "./common/useLoading";
 
 export const HISTORY_PARAM_COUNT = 9;
 
@@ -16,11 +17,11 @@ const useHistories = () => {
   const dispatch = useDispatch();
   const { histories } = useCustomSelector().outing;
   const [historyStart, setHistoryStart] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, startLoading, endLoading] = useLoading();
 
   const getHistories = useCallback(
     async (historyStart: number) => {
-      setLoading(true);
+      startLoading();
       if (historyStart > histories.length) {
         toast.error("불러올 외출신청 내역이 없습니다.");
         return;
@@ -33,14 +34,14 @@ const useHistories = () => {
         dispatch(setOutingHistoryList(data.outings));
         setHistoryStart(prev => (prev += HISTORY_PARAM_COUNT));
       } finally {
-        setLoading(false);
+        endLoading();
       }
     },
     [histories, loading]
   );
 
   const refreshOutingHistories = () => {
-    setLoading(true);
+    startLoading();
     dispatch(resetOutingHistoryList());
     setHistoryStart(0);
     setTimeout(() => {

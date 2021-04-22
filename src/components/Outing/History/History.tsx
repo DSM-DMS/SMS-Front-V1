@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useMemo, useState } from "react";
+import React, { FC, useCallback, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -9,23 +9,23 @@ import * as S from "../style";
 import { OutingHistory, Refresh } from "../../../assets";
 import { ResHistoryItem } from "../../../lib/api/payloads/Outing";
 import { Loading } from "../../default";
-import useHistories from "../../../lib/hooks/useHistories";
 import { setSelectedHistory } from "../../../modules/action/outing";
-import useModalState from "../../../lib/hooks/useModalState";
+import useOutingHistories from "../../../lib/hooks/useOutingHistories";
+import useModal from "../../../lib/hooks/common/useModal";
 
 interface Props {}
 
-const History: FC<Props> = ({}): ReactElement => {
+const History: FC<Props> = ({}) => {
   const dispatch = useDispatch();
   const [selectedOuting, setSelectedOuting] = useState<ResHistoryItem>(null);
-  const [modal, openModal, closeModal] = useModalState();
+  const [modal, openModal, closeModal] = useModal();
   const {
     histories,
     historyStart,
     loading,
     getHistories,
     refreshOutingHistories
-  } = useHistories();
+  } = useOutingHistories();
 
   const dispatchSelectedOuting = useCallback((outing: ResHistoryItem) => {
     dispatch(setSelectedHistory(outing));

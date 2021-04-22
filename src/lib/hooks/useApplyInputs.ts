@@ -1,40 +1,22 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import useBool from "./common/useBoolean";
+import useInput from "./common/useInput";
+import useValue from "./common/useValue";
 
 const useApplyInputs = () => {
-  const [roadAddress, setRoadAddress] = useState<string>("");
-  const [place, setPlace] = useState<string>("");
-  const [reason, setReason] = useState<string>("");
-  const [situation, setSituation] = useState<boolean>(false);
-
-  const handlePlace = useCallback((value: string) => {
-    setPlace(value);
-  }, []);
-
-  const cancelSickOut = useCallback(() => {
-    setSituation(false);
-  }, []);
-
-  const applySickOut = useCallback(() => {
-    setSituation(true);
-  }, []);
-
-  const handleReason = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    setReason(e.currentTarget.value);
-  }, []);
-
-  const handleRoadAddress = useCallback((roadAddress: string) => {
-    setRoadAddress(roadAddress);
-  }, []);
+  const [place, handlePlace] = useValue();
+  const [reason, onChangeReason] = useInput();
+  const [roadAddress, handleRoadAddress] = useValue();
+  const [situation, applySickOut, cancelSickOut] = useBool();
 
   return [
-    roadAddress,
     place,
     reason,
+    roadAddress,
     situation,
     handlePlace,
-    cancelSickOut,
+    onChangeReason,
     applySickOut,
-    handleReason,
+    cancelSickOut,
     handleRoadAddress
   ] as const;
 };

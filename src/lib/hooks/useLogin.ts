@@ -1,8 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
-import useLoading from "./useLoading";
+import useLoading from "./common/useLoading";
 import useLoginInputs from "./useLoginInputs";
 import useLoginToggle from "./useLoginToggle";
 
@@ -15,31 +15,15 @@ import {
   ResStudentLogin
 } from "../api/payloads/Login";
 import { closingCode, getAxiosError } from "../utils";
-
-interface ErrorState {
-  status: boolean;
-  message: string;
-}
-
-const initErrorState: ErrorState = {
-  status: false,
-  message: ""
-};
+import useLoginErrorMessage from "./useLoginErrorMessage";
 
 const useLogin = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [loading, startLoading, endLoading] = useLoading();
-  const [id, pw, handleId, handlePw] = useLoginInputs();
+  const [id, pw, onChangeId, onChangePw] = useLoginInputs();
   const [showPw, autoLogin, toggleEye, toggleAutoLogin] = useLoginToggle();
-  const [errorMessage, setErrorMessage] = useState<ErrorState>(initErrorState);
-
-  const errorMessageMacro = (message: string) => {
-    setErrorMessage({
-      status: true,
-      message
-    });
-  };
+  const [errorMessage, errorMessageMacro] = useLoginErrorMessage();
 
   const storageHandler = useCallback(
     ({ access_token, student_uuid }: ResStudentLogin) => {
@@ -82,7 +66,6 @@ const useLogin = () => {
       } else if (status === 409 && code === -402) {
         errorMessageMacro(PASSWORD_NOT_MATCHED);
       }
-
       endLoading();
     }
   }, [id, pw, autoLogin]);
@@ -90,10 +73,9 @@ const useLogin = () => {
   return [
     showPw,
     errorMessage,
-    autoLogin,
     loading,
-    handleId,
-    handlePw,
+    onChangeId,
+    onChangePw,
     toggleEye,
     toggleAutoLogin,
     login
