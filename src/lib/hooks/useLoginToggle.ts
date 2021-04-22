@@ -1,16 +1,8 @@
-import { useCallback, useState } from "react";
+import useToggle from "./common/useToggle";
 
 const useLoginToggle = () => {
-  const [showPw, setShowPw] = useState<boolean>(false);
-  const [autoLogin, setAutoLogin] = useState<boolean>(true);
-
-  const toggleEye = useCallback(() => {
-    setShowPw(prev => !prev);
-  }, []);
-
-  const toggleAutoLogin = useCallback(() => {
-    setAutoLogin(prev => !prev);
-  }, []);
+  const [showPw, toggleEye] = useToggle();
+  const [autoLogin, toggleAutoLogin] = useToggle(true);
 
   return [showPw, autoLogin, toggleEye, toggleAutoLogin] as const;
 };

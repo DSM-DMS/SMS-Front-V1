@@ -1,18 +1,10 @@
-import { ChangeEvent, useCallback, useState } from "react";
+import useInput from "./common/useInput";
 
 const useLoginInputs = () => {
-  const [id, setId] = useState<string>("");
-  const [pw, setPw] = useState<string>("");
+  const [id, onChangeId] = useInput();
+  const [pw, onChangePw] = useInput();
 
-  const handleId = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setId(e.currentTarget.value);
-  }, []);
-
-  const handlePw = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setPw(e.currentTarget.value);
-  }, []);
-
-  return [id, pw, handleId, handlePw] as const;
+  return [id, pw, onChangeId, onChangePw] as const;
 };
 
 export default useLoginInputs;

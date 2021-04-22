@@ -13,14 +13,14 @@ const useApplyState = () => {
     handleInMin
   ] = useApplyTime();
   const [
-    roadAddress,
     place,
     reason,
+    roadAddress,
     situation,
     handlePlace,
-    cancelSickOut,
-    applySickOut,
     handleReason,
+    applySickOut,
+    cancelSickOut,
     handleRoadAddress
   ] = useApplyInputs();
 

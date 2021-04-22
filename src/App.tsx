@@ -23,8 +23,8 @@ import { closingCode } from "./lib/utils";
 
 const App: FC<{}> = () => {
   useEffect(() => {
-    if (localStorage.getItem("auto-login") === "true") {
-      window.addEventListener("beforeunload", closingCode);
+    if (localStorage.getItem("auto-login") !== "true") {
+      window.onbeforeunload = closingCode;
     }
 
     Channel(process.env.CHANNEL_PLUGIN_KEY);

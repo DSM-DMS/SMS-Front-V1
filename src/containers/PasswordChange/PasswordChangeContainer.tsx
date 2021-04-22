@@ -4,19 +4,14 @@ import { toast } from "react-toastify";
 
 import { PasswordChange } from "../../components";
 import { putStudentPassword } from "../../lib/api/PasswordChange";
+import useLoading from "../../lib/hooks/common/useLoading";
 import { getAxiosError } from "../../lib/utils";
-import WithLoadingContainer, {
-  LoadingProps
-} from "../Loading/WithLoadingContainer";
 
-interface Props extends LoadingProps {}
+interface Props {}
 
-const PasswordChangeContainer: FC<Props> = ({
-  loading,
-  startLoading,
-  endLoading
-}) => {
+const PasswordChangeContainer: FC<Props> = () => {
   const history = useHistory();
+  const [loading, startLoading, endLoading] = useLoading();
 
   const changePassword = useCallback(
     async (currentPw: string, revisionPw: string) => {
@@ -42,4 +37,4 @@ const PasswordChangeContainer: FC<Props> = ({
   return <PasswordChange loading={loading} changePassword={changePassword} />;
 };
 
-export default WithLoadingContainer(PasswordChangeContainer);
+export default PasswordChangeContainer;

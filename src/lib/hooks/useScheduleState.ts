@@ -13,9 +13,7 @@ import { padNum } from "../utils";
 
 const useScheduleState = () => {
   const dispatch = useDispatch();
-  const {
-    main: { schedulerDate }
-  } = useCustomSelector();
+  const { schedulerDate } = useCustomSelector().main;
 
   const onClickNextMonth = useCallback(() => {
     dispatch(setSchedules([]));

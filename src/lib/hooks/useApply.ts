@@ -1,13 +1,14 @@
 import { useCallback } from "react";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
+
+import useApplyState from "./useApplyState";
+import useLoading from "./common/useLoading";
+import useModal from "./common/useModal";
+
 import { postOuting } from "../api/Outing";
 import { ReqOuting } from "../api/payloads/Outing";
 import { getAxiosError } from "../utils";
-
-import useApplyState from "./useApplyState";
-import useLoading from "./useLoading";
-import useModalState from "./useModalState";
 
 export const NORMAL = "normal" as const;
 export const EMERGENCY = "emergency" as const;
@@ -41,7 +42,7 @@ const getOutingTime = (time: string) => {
 const useApply = () => {
   const history = useHistory();
   const applyState = useApplyState();
-  const modalState = useModalState();
+  const modalState = useModal();
   const closeModal = modalState[2];
   const [loading, startLoading, endLoading] = useLoading();
 

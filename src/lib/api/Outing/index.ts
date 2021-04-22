@@ -9,7 +9,7 @@ import {
   ResNaverLocalWithDefault
 } from "../payloads/Outing";
 import { ResDefault } from "../payloads";
-import { HISTORY_PARAM_COUNT } from "../../hooks/useHistories";
+import { HISTORY_PARAM_COUNT } from "../../hooks/useOutingHistories";
 
 export const START_OUTING = "start" as const;
 export const END_OUTING = "end" as const;

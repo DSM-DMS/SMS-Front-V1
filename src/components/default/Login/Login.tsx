@@ -9,11 +9,10 @@ import useLogin from "../../../lib/hooks/useLogin";
 
 interface Props {}
 
-const Login: FC<Props> = ({}) => {
+const Login: FC<Props> = () => {
   const [
     showPw,
     errorMessage,
-    autoLogin,
     loading,
     handleId,
     handlePw,
