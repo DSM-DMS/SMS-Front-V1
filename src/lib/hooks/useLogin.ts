@@ -45,9 +45,10 @@ const useLogin = () => {
     ({ access_token, student_uuid }: ResStudentLogin) => {
       if (autoLogin) {
         localStorage.setItem("auto-login", "true");
-        window.removeEventListener("beforeunload", closingCode);
+        window.onbeforeunload = null;
       } else {
         localStorage.removeItem("auto-login");
+        window.onbeforeunload = closingCode;
       }
       localStorage.setItem("access_token", access_token);
       localStorage.setItem("uuid", student_uuid);
