@@ -118,10 +118,10 @@ export const makeQuery = (object: any) => {
 };
 
 export const getHourMinute = (date: Date): string => {
-  const hour = `${date.getHours()}`.padStart(2, "0");
-  const minute = `${date.getMinutes()}`.padStart(2, "0");
+  const h = date.getHours();
+  const m = date.getMinutes();
 
-  return `${hour}:${minute}`;
+  return `${padNum(h)}:${padNum(m)}`;
 };
 
 export const getOutingCardTime = (
@@ -177,10 +177,7 @@ export const errorHandler = (errStatus: number, history: History): void => {
     case 401:
     case 403: {
       toast.error("로그인을 다시 진행해주세요");
-      const href = history.location.pathname;
-      if (href.includes("admin")) {
-        history.push("/admin/login");
-      } else history.push("/login");
+      history.push("/login");
       return;
     }
   }

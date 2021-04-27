@@ -1,34 +1,27 @@
-import React, { FC, ReactElement } from "react";
+import React, { FC, memo, ReactElement } from "react";
 
 import ApplyWarning from "./ApplyWarning";
 
 import * as S from "../style";
 import { Check } from "../../../assets";
-import { ApplyState } from "../../../lib/hooks/useApplyState";
 
 interface Props {
-  applyState: ApplyState;
+  situation: boolean;
+  applySickOut: () => void;
+  cancelSickOut: () => void;
 }
 
-const ApplySicOut: FC<Props> = ({ applyState }): ReactElement => {
-  const {
-    values: { situation },
-    handlers: { cancelSickOut, applySickOut }
-  } = applyState;
-
-  const handleSickOut = () => {
-    if (situation) {
-      cancelSickOut();
-      return;
-    }
-
-    applySickOut();
-  };
+const ApplySicOut: FC<Props> = ({
+  situation,
+  applySickOut,
+  cancelSickOut
+}): ReactElement => {
+  const onClickSickOut = () => (situation ? cancelSickOut() : applySickOut());
 
   return (
     <S.FormReasonSick>
       <S.FormReasonSickCheckboxLabel>
-        <div id="sickWrap" onClick={handleSickOut}>
+        <div id="sickWrap" onClick={onClickSickOut}>
           <S.FormReasonSickCheckbox
             id="checkbox"
             className={situation ? "checked" : ""}
@@ -45,4 +38,4 @@ const ApplySicOut: FC<Props> = ({ applyState }): ReactElement => {
   );
 };
 
-export default ApplySicOut;
+export default memo(ApplySicOut);

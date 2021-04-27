@@ -3,9 +3,9 @@ import useInput from "./common/useInput";
 import useValue from "./common/useValue";
 
 const useApplyInputs = () => {
-  const [place, handlePlace] = useValue();
+  const [place, onChangePlace] = useInput();
   const [reason, onChangeReason] = useInput();
-  const [roadAddress, handleRoadAddress] = useValue();
+  const [roadAddress, handleRoadAddr] = useValue();
   const [situation, applySickOut, cancelSickOut] = useBool();
 
   return [
@@ -13,11 +13,11 @@ const useApplyInputs = () => {
     reason,
     roadAddress,
     situation,
-    handlePlace,
+    onChangePlace,
     onChangeReason,
+    handleRoadAddr,
     applySickOut,
-    cancelSickOut,
-    handleRoadAddress
+    cancelSickOut
   ] as const;
 };
 
