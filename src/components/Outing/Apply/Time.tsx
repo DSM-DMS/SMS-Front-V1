@@ -1,36 +1,28 @@
-import React, { FC, ReactElement } from "react";
+import React, { ChangeEvent, FC, memo, ReactElement } from "react";
 
 import ApplyTimeInput from "./TimeInput";
 
 import * as S from "../style";
-import { ApplyState } from "../../../lib/hooks/useApplyState";
 
 interface Props {
-  applyState: ApplyState;
+  outTime: string;
+  inTime: string;
+  onChangeOut: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeIn: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ApplyTime: FC<Props> = ({ applyState }): ReactElement => {
-  const {
-    values: { outTime, inTime },
-    handlers: { handleOutHour, handleOutMin, handleInHour, handleInMin }
-  } = applyState;
-
+const ApplyTime: FC<Props> = ({
+  outTime,
+  inTime,
+  onChangeOut,
+  onChangeIn
+}): ReactElement => {
   return (
     <S.FormTime>
-      <ApplyTimeInput
-        type="외출"
-        time={outTime}
-        handleHour={handleOutHour}
-        handleMin={handleOutMin}
-      />
-      <ApplyTimeInput
-        type="귀교"
-        time={inTime}
-        handleHour={handleInHour}
-        handleMin={handleInMin}
-      />
+      <ApplyTimeInput type="외출" time={outTime} onChange={onChangeOut} />
+      <ApplyTimeInput type="귀교" time={inTime} onChange={onChangeIn} />
     </S.FormTime>
   );
 };
 
-export default ApplyTime;
+export default memo(ApplyTime);

@@ -1,10 +1,9 @@
-import { useCallback } from "react";
+import { useMemo } from "react";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 
 import useApplyState from "./useApplyState";
 import useLoading from "./common/useLoading";
-import useModal from "./common/useModal";
 
 import { postOuting } from "../api/Outing";
 import { ReqOuting } from "../api/payloads/Outing";
@@ -35,24 +34,24 @@ const getStringTimeToNumberTime = (time: string) => {
 };
 
 const getOutingTime = (time: string) => {
-  const TWELVE_TIME = 43200;
-  return Math.round(getStringTimeToNumberTime(time) / 1000) + TWELVE_TIME;
+  return Math.round(getStringTimeToNumberTime(time) / 1000);
 };
 
 const useApply = () => {
   const history = useHistory();
   const applyState = useApplyState();
-  const modalState = useModal();
-  const closeModal = modalState[2];
   const [loading, startLoading, endLoading] = useLoading();
+  const {
+    values: { outTime, inTime, reason, place, situation, roadAddress }
+  } = applyState;
 
-  const checkOutingValidation = () => {
-    const { outTime, inTime, place, reason } = applyState.values;
-
+  const checkOutingValid = () => {
     if (
-      outTime.trim() === ":" ||
-      inTime.trim() === ":" ||
+      outTime === "" ||
+      inTime === "" ||
+      outTime > inTime ||
       place.trim() === "" ||
+      roadAddress.trim() === "" ||
       reason.trim() === ""
     ) {
       toast.error("외출 작성 입력칸을 모두 정상적으로 입력해주세요.");
@@ -60,57 +59,18 @@ const useApply = () => {
     }
   };
 
-  const outTimeValidation = () => {
-    const { outTime, inTime } = applyState.values;
-    const TWELVE_TIME = 43200000;
-    const now = Date.now() - TWELVE_TIME;
-    const applyOutTime = getStringTimeToNumberTime(outTime);
+  const timeValid = (time: string) => {
+    const now = Date.now();
+    const applyTime = getStringTimeToNumberTime(time);
 
-    if (now > applyOutTime) {
+    if (now > applyTime) {
       toast.error("이미 지난 시각입니다.");
-      return true;
-    }
-    if (outTime < "4:20" || outTime > "8:30") {
-      toast.error("오후 4시 20분부터 8시30분까지만 가능합니다.");
-      return true;
-    }
-    if (inTime !== ":" && outTime > inTime) {
-      toast.error("외출 시간을 확인해주세요.");
-      return true;
-    }
-  };
-
-  const inTimeValidation = () => {
-    const { outTime, inTime } = applyState.values;
-    const TWELVE_TIME = 43200000;
-    const now = Date.now() - TWELVE_TIME;
-    const applyInTime = getStringTimeToNumberTime(inTime);
-
-    if (now > applyInTime) {
-      toast.error("이미 지난 시각입니다.");
-      return true;
-    }
-    if (inTime < "4:20" || inTime > "8:30") {
-      toast.error("오후 4시 20분부터 8시30분까지만 가능합니다.");
-      return true;
-    }
-    if (inTime !== ":" && outTime > inTime) {
-      toast.error("귀교 시간을 확인해주세요.");
       return true;
     }
   };
 
   const applyOuting = async () => {
-    const {
-      outTime,
-      inTime,
-      reason,
-      situation,
-      roadAddress
-    } = applyState.values;
-
-    if (checkOutingValidation() || outTimeValidation() || inTimeValidation()) {
-      closeModal();
+    if (checkOutingValid() || timeValid(outTime) || timeValid(inTime)) {
       return;
     }
 
@@ -143,21 +103,15 @@ const useApply = () => {
       if (status === 409 && code === -2401) {
         toast.error("오늘 대기중인 외출 신청이 있습니다.");
       }
+
+      endLoading();
     }
-
-    closeModal();
-    endLoading();
   };
-
-  const handleApplyOuting = useCallback(() => {
-    applyOuting();
-  }, [applyState]);
 
   return {
     loading,
     applyState,
-    modalState,
-    handleApplyOuting
+    applyOuting
   };
 };
 
