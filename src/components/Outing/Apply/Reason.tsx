@@ -1,12 +1,13 @@
-import React, { FC, ReactElement, ChangeEvent } from "react";
+import React, { FC, ReactElement, memo } from "react";
 
 import * as S from "../style";
+import { OnChangeEvent } from "../../../lib/hooks/common/useInput";
 
 interface Props {
-  handleReason: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeReason: (e: OnChangeEvent) => void;
 }
 
-const ApplyReason: FC<Props> = ({ handleReason }): ReactElement => {
+const ApplyReason: FC<Props> = ({ onChangeReason }): ReactElement => {
   return (
     <S.FormReason>
       <S.FormInnerReason>
@@ -17,7 +18,7 @@ const ApplyReason: FC<Props> = ({ handleReason }): ReactElement => {
             id="reason"
             placeholder="외출사유를 입력하세요"
             rows={2}
-            onChange={handleReason}
+            onChange={onChangeReason}
             maxLength={150}
           />
         </S.ApplyFormInputWrap>
@@ -26,4 +27,4 @@ const ApplyReason: FC<Props> = ({ handleReason }): ReactElement => {
   );
 };
 
-export default ApplyReason;
+export default memo(ApplyReason);

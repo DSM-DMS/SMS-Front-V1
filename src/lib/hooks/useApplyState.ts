@@ -4,24 +4,17 @@ import useApplyTime from "./useApplyTime";
 export type ApplyState = ReturnType<typeof useApplyState>;
 
 const useApplyState = () => {
-  const [
-    outTime,
-    inTime,
-    handleOutHour,
-    handleOutMin,
-    handleInHour,
-    handleInMin
-  ] = useApplyTime();
+  const [outTime, inTime, onChangeOut, onChangeIn] = useApplyTime();
   const [
     place,
     reason,
     roadAddress,
     situation,
-    handlePlace,
-    handleReason,
+    onChangePlace,
+    onChangeReason,
+    handleRoadAddr,
     applySickOut,
-    cancelSickOut,
-    handleRoadAddress
+    cancelSickOut
   ] = useApplyInputs();
 
   const values = {
@@ -33,13 +26,11 @@ const useApplyState = () => {
     roadAddress
   };
   const handlers = {
-    handleOutHour,
-    handleOutMin,
-    handleInHour,
-    handleInMin,
-    handlePlace,
-    handleReason,
-    handleRoadAddress,
+    onChangeOut,
+    onChangeIn,
+    onChangePlace,
+    onChangeReason,
+    handleRoadAddr,
     cancelSickOut,
     applySickOut
   };

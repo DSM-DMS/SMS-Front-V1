@@ -1,9 +1,9 @@
-import React, { FC, ReactElement } from 'react';
+import React, { FC, memo, ReactElement } from "react";
 
-import CircleBack from './CircleBack';
+import CircleBack from "./CircleBack";
 
-import * as S from '../style';
-import { OutingBike } from '../../../assets';
+import * as S from "../style";
+import { OutingBike } from "../../../assets";
 
 interface Props {}
 
@@ -19,4 +19,4 @@ const ApplyHead: FC<Props> = (): ReactElement => {
   );
 };
 
-export default ApplyHead;
+export default memo(ApplyHead);

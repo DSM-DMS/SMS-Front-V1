@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState, useCallback } from "react";
+import React, { FC, ReactElement, useState, useCallback, memo } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -9,36 +9,27 @@ import { OutingPlaceSearch } from "../../../assets";
 import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
 import { getNaverSearchLocal } from "../../../lib/api/Outing";
 import { getAxiosError } from "../../../lib/utils";
-import { ApplyState } from "../../../lib/hooks/useApplyState";
+import useModal from "../../../lib/hooks/common/useModal";
+import { OnChangeEvent } from "../../../lib/hooks/common/useInput";
 
 interface Props {
-  applyState: ApplyState;
+  place: string;
+  roadAddress: string;
+  onChangePlace: (e: OnChangeEvent) => void;
+  handleRoadAddr: (value: string) => void;
 }
-
-const usePlaceModal = () => {
-  const [modal, setModal] = useState<boolean>(false);
-
-  const openModal = useCallback(() => {
-    setModal(true);
-  }, []);
-
-  const closeModal = useCallback(() => {
-    setModal(false);
-  }, []);
-
-  return [modal, openModal, closeModal] as const;
-};
 
 type PlaceResult = ResNaverLocalWithDefault;
 
-const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
+const ApplyPlace: FC<Props> = ({
+  place,
+  roadAddress,
+  onChangePlace,
+  handleRoadAddr
+}): ReactElement => {
   const history = useHistory();
-  const [modal, openModal, closeModal] = usePlaceModal();
+  const [modal, openModal, closeModal] = useModal();
   const [placeResult, setPlaceResult] = useState<PlaceResult>(null);
-  const {
-    values: { place, roadAddress },
-    handlers: { handlePlace, handleRoadAddress }
-  } = applyState;
 
   const handleSearchLocation = () => {
     if (place.trim() === "") {
@@ -91,9 +82,9 @@ const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
       </S.PlaceSearchWrap>
       {modal && (
         <SearchList
-          handlePlace={handlePlace}
-          handleRoadAddress={handleRoadAddress}
           placeResult={placeResult}
+          onChangePlace={onChangePlace}
+          handleRoadAddr={handleRoadAddr}
           handleSearchLocation={handleSearchLocation}
           handleHideModal={closeModal}
         />
@@ -102,4 +93,4 @@ const ApplyPlace: FC<Props> = ({ applyState }): ReactElement => {
   );
 };
 
-export default ApplyPlace;
+export default memo(ApplyPlace);

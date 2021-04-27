@@ -11,13 +11,25 @@ import GuideModal from "./GuideModal";
 import * as S from "../style";
 import { Loading } from "../../default";
 import useApply from "../../../lib/hooks/useApply";
+import useModal from "../../../lib/hooks/common/useModal";
 
 interface Props {}
 
 const Apply: FC<Props> = ({}): ReactElement => {
-  const { loading, applyState, modalState, handleApplyOuting } = useApply();
-  const { handleReason } = applyState.handlers;
-  const [guideModal, openModal, closeModal] = modalState;
+  const { loading, applyState, applyOuting } = useApply();
+  const [modal, openModal, closeModal] = useModal();
+  const {
+    values: { outTime, inTime, situation, place, roadAddress },
+    handlers: {
+      onChangeOut,
+      onChangeIn,
+      onChangePlace,
+      onChangeReason,
+      handleRoadAddr,
+      applySickOut,
+      cancelSickOut
+    }
+  } = applyState;
 
   return (
     <S.ApplyWrap>
@@ -28,19 +40,27 @@ const Apply: FC<Props> = ({}): ReactElement => {
           읽어주세요. 유의사항을 지키지 않아 발생한 피해는 본인의 책임입니다.
         </S.ApplyDescWarning>
         <S.ApplyForm>
-          <S.ApplyTimeNotice>
-            외출은 오후 4시 20분부터 오후 8시 30분까지 가능합니다.
-          </S.ApplyTimeNotice>
-          <ApplyTime applyState={applyState} />
-          <ApplySicOut applyState={applyState} />
-          <ApplyReason handleReason={handleReason} />
-          <ApplyPlace applyState={applyState} />
-        </S.ApplyForm>
-        {guideModal && (
-          <GuideModal
-            closeModal={closeModal}
-            handleApplyOuting={handleApplyOuting}
+          <ApplyTime
+            outTime={outTime}
+            inTime={inTime}
+            onChangeOut={onChangeOut}
+            onChangeIn={onChangeIn}
           />
+          <ApplySicOut
+            situation={situation}
+            applySickOut={applySickOut}
+            cancelSickOut={cancelSickOut}
+          />
+          <ApplyReason onChangeReason={onChangeReason} />
+          <ApplyPlace
+            place={place}
+            roadAddress={roadAddress}
+            onChangePlace={onChangePlace}
+            handleRoadAddr={handleRoadAddr}
+          />
+        </S.ApplyForm>
+        {modal && (
+          <GuideModal closeModal={closeModal} applyOuting={applyOuting} />
         )}
         <S.FormButtonWrap>
           {loading && <Loading />}

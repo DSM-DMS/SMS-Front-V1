@@ -1,10 +1,10 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 
 import * as S from "../style";
 
 interface Props {
-  handleApplyOuting: () => void;
   closeModal: () => void;
+  applyOuting: () => Promise<void>;
 }
 
 const guideTexts = [
@@ -16,7 +16,12 @@ const guideTexts = [
   "* 해당 계정과 연결된 학무보 계정이 존재하지 않을 시, 학부모에게 외출 통보 문자가 전송되지 않습니다."
 ];
 
-const GuideModal: FC<Props> = ({ closeModal, handleApplyOuting }) => {
+const GuideModal: FC<Props> = ({ closeModal, applyOuting }) => {
+  const onClickApply = () => {
+    applyOuting();
+    closeModal();
+  };
+
   return (
     <>
       <S.GuideModalBack onClick={closeModal} />
@@ -24,13 +29,11 @@ const GuideModal: FC<Props> = ({ closeModal, handleApplyOuting }) => {
         {guideTexts.map((text, i) => {
           return <p key={i} dangerouslySetInnerHTML={{ __html: text }} />;
         })}
-        <S.GuideModalButtons onClick={handleApplyOuting}>
-          확인
-        </S.GuideModalButtons>
+        <S.GuideModalButtons onClick={onClickApply}>확인</S.GuideModalButtons>
         <S.GuideModalButtons onClick={closeModal}>취소</S.GuideModalButtons>
       </S.GuideModalWrap>
     </>
   );
 };
 
-export default GuideModal;
+export default memo(GuideModal);

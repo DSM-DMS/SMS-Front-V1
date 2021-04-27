@@ -1,21 +1,22 @@
-import React, { FC, useState } from "react";
+import React, { FC, MouseEvent, useCallback, useState } from "react";
 
 import * as S from "../style";
 import { OutingCloseWhite, OutingPlaceSearch } from "../../../assets";
 import { ResNaverLocalWithDefault } from "../../../lib/api/payloads/Outing";
+import { OnChangeEvent } from "../../../lib/hooks/common/useInput";
 
 interface Props {
   placeResult: ResNaverLocalWithDefault;
-  handlePlace: (value: string) => void;
-  handleRoadAddress: (roadAddress: string) => void;
+  onChangePlace: (e: OnChangeEvent) => void;
+  handleRoadAddr: (value: string) => void;
   handleSearchLocation: () => void;
   handleHideModal: () => void;
 }
 
 const SearchList: FC<Props> = ({
   placeResult,
-  handlePlace,
-  handleRoadAddress,
+  onChangePlace,
+  handleRoadAddr,
   handleSearchLocation,
   handleHideModal
 }) => {
@@ -29,10 +30,10 @@ const SearchList: FC<Props> = ({
     }, 1000);
   };
 
-  const searchEnd = (roadAddress: string) => {
-    handleRoadAddress(roadAddress);
+  const searchEnd = useCallback((e: MouseEvent<HTMLLIElement>) => {
+    handleRoadAddr(e.currentTarget.dataset.road_addr);
     handleHideModal();
-  };
+  }, []);
 
   return (
     <>
@@ -56,10 +57,8 @@ const SearchList: FC<Props> = ({
               id="searchInput"
               placeholder="ex) 장동, 23-9"
               autoFocus={true}
-              onChange={e => handlePlace(e.currentTarget.value)}
-              onKeyPress={e => {
-                if (e.key === "Enter") searchStart();
-              }}
+              onChange={onChangePlace}
+              onKeyPress={e => e.key === "Enter" && searchStart()}
             />
             <img
               src={OutingPlaceSearch}
@@ -83,7 +82,8 @@ const SearchList: FC<Props> = ({
               placeResult.item.map(({ title, address, roadAddress }, i) => (
                 <S.PlaceSearchItem
                   key={title + address + roadAddress + i}
-                  onClick={() => searchEnd(roadAddress)}
+                  data-road_addr={roadAddress}
+                  onClick={searchEnd}
                   time={200 * i}
                 >
                   <S.PlaceSearchResultText id="title">
