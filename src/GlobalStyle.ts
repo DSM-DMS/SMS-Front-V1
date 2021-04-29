@@ -63,7 +63,7 @@ export const GlobalStyle: GlobalStyleComponent<
     cursor: pointer;
   }
   * {
-    font-family:"Noto Sans KR" !important;
+    font-family: 'Noto Sans KR', sans-serif !important;
   }
 
   input[type="number"]::-webkit-outer-spin-button,
