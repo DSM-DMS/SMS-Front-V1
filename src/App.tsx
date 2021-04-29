@@ -6,18 +6,21 @@ import "react-toastify/dist/ReactToastify.css";
 import "./lib/confirm/confirm.css";
 import Channel from "./lib/channel.js";
 import { GlobalStyle, GlobalContainer, GlobalBody } from "./GlobalStyle";
-import { PageNotFound, Navigation, Loading } from "./components";
-import { HeaderContainer } from "./containers";
+import {
+  PageNotFound,
+  Navigation,
+  Loading,
+  Login,
+  Register
+} from "./components";
+import { HeaderContainer, PasswordChangeContainer } from "./containers";
 import { history } from "./modules/store";
 import {
   LazyCircles,
-  LazyLogin,
   LazyMain,
   LazyManagement,
   LazyNotice,
-  LazyOuting,
-  LazyPasswordChange,
-  LazyRegister
+  LazyOuting
 } from "./routers/LazyLoaded";
 import { closingCode } from "./lib/utils";
 
@@ -40,9 +43,9 @@ const App: FC<{}> = () => {
           <HeaderContainer />
           <Suspense fallback={<Loading />}>
             <Switch>
-              <Route path="/pw-change" component={LazyPasswordChange} />
-              <Route path="/login" component={LazyLogin} />
-              <Route path="/register" component={LazyRegister} />
+              <Route path="/pw-change" component={PasswordChangeContainer} />
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
               <Route path="/home" component={LazyMain} />
               <Route path="/notice" component={LazyNotice} />
               <Route path="/circles" component={LazyCircles} />
