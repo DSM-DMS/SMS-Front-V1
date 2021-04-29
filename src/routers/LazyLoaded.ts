@@ -1,16 +1,21 @@
 import { lazy } from "react";
 
-export const LazyLogin = lazy(
-  () => import("../components/default/Login/Login")
+export const LazyMain = lazy(
+  () => import(/*  webpackChunkName: "home" */ "./MainRouter")
 );
-export const LazyPasswordChange = lazy(
-  () => import("../containers/PasswordChange/PasswordChangeContainer")
+
+export const LazyNotice = lazy(
+  () => import(/*  webpackChunkName: "notice" */ "./NoticeRouter")
 );
-export const LazyRegister = lazy(
-  () => import("../containers/Register/RegisterContainer")
+
+export const LazyCircles = lazy(
+  () => import(/*  webpackChunkName: "circles" */ "./CirclesRouter")
 );
-export const LazyMain = lazy(() => import("./MainRouter"));
-export const LazyNotice = lazy(() => import("./NoticeRouter"));
-export const LazyCircles = lazy(() => import("./CirclesRouter"));
-export const LazyOuting = lazy(() => import("./OutingRouter"));
-export const LazyManagement = lazy(() => import("./ManagementRouter"));
+
+export const LazyOuting = lazy(
+  () => import(/*  webpackChunkName: "outing" */ "./OutingRouter")
+);
+
+export const LazyManagement = lazy(
+  () => import(/*  webpackChunkName: "management" */ "./ManagementRouter")
+);
