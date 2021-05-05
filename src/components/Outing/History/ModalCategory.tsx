@@ -5,6 +5,7 @@ import * as S from "../style";
 import { stateType } from "../../../modules/reducer";
 import { OutingStatus } from "../../../lib/api/payloads/Outing";
 import { padNum } from "../../../lib/utils";
+import useCustomSelector from "../../../lib/hooks/useCustomSelector";
 
 interface Props {}
 
@@ -24,10 +25,15 @@ const outParagraph = {
 };
 
 const ModalCategory: FC<Props> = (): ReactElement => {
-  const { end_time, start_time, reason, place, outing_status } = useSelector(
-    (state: stateType) => state.outing.selected
-  );
-  const isLate = +outing_status >= 2 && new Date().getTime() > end_time * 1000;
+  const {
+    end_time,
+    start_time,
+    reason,
+    place,
+    outing_status
+  } = useCustomSelector().outing.selected;
+  const isExpired =
+    +outing_status >= 1 && new Date().getTime() > end_time * 1000;
 
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);
@@ -69,14 +75,14 @@ const ModalCategory: FC<Props> = (): ReactElement => {
       </S.ModalItem>
       <S.ModalItem>
         <S.ModalCategory>상태</S.ModalCategory>
-        {isLate ? (
+        {isExpired ? (
           <span>만료</span>
         ) : (
           <span>{OutingStatus[outing_status]}</span>
         )}
       </S.ModalItem>
 
-      {isLate ? (
+      {isExpired ? (
         <S.ModalStatus>만료되었습니다.</S.ModalStatus>
       ) : (
         <S.ModalStatus>{outParagraph[outing_status]}</S.ModalStatus>

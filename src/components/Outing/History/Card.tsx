@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useCallback, useMemo } from "react";
+import React, { FC, ReactElement, useCallback } from "react";
 
 import * as S from "../style";
 import {
@@ -28,14 +28,10 @@ const HistoryCard: FC<Props> = ({
     outing_status,
     arrival_time
   } = outing;
-
-  const isEmergency = useMemo(() => {
-    return outing_situation.toUpperCase() !== "NORMAL";
-  }, [outing_situation]);
-
-  const isLate = useMemo(() => {
-    return arrival_time && arrival_time > end_time;
-  }, [end_time, arrival_time]);
+  const isExpired =
+    +outing_status >= 1 && new Date().getTime() > end_time * 1000;
+  const isEmergency = outing_situation.toUpperCase() !== "NORMAL";
+  const isLate = arrival_time && arrival_time > end_time;
 
   const getLocalDate = useCallback((startTime: number) => {
     const date = new Date(startTime * 1000);
@@ -79,7 +75,7 @@ const HistoryCard: FC<Props> = ({
         <S.CardPlace>장소 : {place}</S.CardPlace>
       </div>
       <div>
-        {+outing_status >= 2 && new Date().getTime() > end_time * 1000 ? (
+        {isExpired ? (
           <S.CardStatus status={6}>만료</S.CardStatus>
         ) : (
           <S.CardStatus status={+outing_status}>
